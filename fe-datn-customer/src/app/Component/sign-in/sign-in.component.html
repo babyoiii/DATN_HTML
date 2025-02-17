@@ -1,0 +1,54 @@
+<dialog
+    class="overflow-x-hidden rounded border border-gray-700 bg-black p-0 text-white backdrop:bg-black backdrop:opacity-50 [&amp;:has(.modal-loader)]:border-0 [&amp;:has(.modal-loader)]:bg-transparent"
+    open="" style="max-width: 97dvw; max-height: 97dvh;">
+    <div class="max-h-[99dvh] max-w-[800px]">
+        <header
+            class="sticky top-0 z-10 flex items-center border-b border-gray-700 bg-black px-8 py-4 text-500 headline"
+            data-modal-header="true">Sign In<button type="button"
+                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 text-white hocus:text-blue-500 text-sm md:text-base ml-auto aspect-square rounded-full bg-black p-3"
+                aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
+                    viewBox="0 0 45 45" width="1em" height="100%" class="h-full w-full">
+                    <title>Close</title>
+                    <path stroke-width="4.0358"
+                        d="M40.341 4.769a1.112 1.112 0 0 1-.022 1.587L24.071 22.604 40.32 38.85a1.112 1.112 0 0 1-1.566 1.566L22.506 24.169 6.236 40.417a1.112 1.112 0 0 1-1.565-1.566l16.27-16.247L4.67 6.356a1.125 1.125 0 0 1-.303-.767A1.13 1.13 0 0 1 5.49 4.465c.285 0 .56.11.768.304l16.248 16.269 16.268-16.27a1.117 1.117 0 0 1 1.566 0Z">
+                    </path>
+                </svg></button></header>
+        <div class="px-8 py-8 relative" data-modal-body="true">
+            <form class="grid gap-4">
+                <div class="flex flex-wrap items-start gap-4"><label
+                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed min-w-[300px] flex-1"><span
+                            class="label">Email</span>
+                        <div class="amc-input amc-input--box"><input class="input" id="email" autocomplete="email"
+                                type="text" name="email"></div>
+                    </label><label
+                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed min-w-[300px] flex-1"><span
+                            class="label">Password</span>
+                        <div class="amc-input amc-input--box"><input class="input" id="password"
+                                autocomplete="current-password" type="password" name="password"><button type="button"
+                                class="cursor-pointer" aria-label="Show Password" tabindex="-1"><svg
+                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
+                                    width="1em" height="100%" class="transition-all duration-200 hover:fill-blue-500">
+                                    <title>Show Password</title>
+                                    <path
+                                        d="M22.253 17.544a10.428 10.428 0 1 0 10.427 10.54 10.456 10.456 0 0 0-10.427-10.54zm0 15.825a5.397 5.397 0 1 1 5.396-5.285 5.397 5.397 0 0 1-5.396 5.285z">
+                                    </path>
+                                    <path
+                                        d="M44.26 17.235a28.107 28.108 0 0 0-44.044 0 2.53 2.53 0 0 0 4.104 2.81 22.964 22.964 0 0 1 35.837 0 2.53 2.53 0 1 0 4.104-2.81z">
+                                    </path>
+                                </svg></button></div>
+                    </label></div><button type="button"
+                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-sm md:text-base">Forgot
+                    Password?</button>
+                <p>Not a member? <a
+                        class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-sm md:text-base"
+                        href="/sign-up">Join Now</a> and start enjoying savings, rewards, and more at movies.</p>
+                <p>Already joined AMC Stubs at a theatre? <a
+                        class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-sm md:text-base"
+                        href="/sign-up/register">Register your account</a> to create a login.</p>
+                <div class="flex flex-wrap items-center gap-4 py-4 justify-end"><button type="submit"
+                        class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">Sign
+                        in</button></div>
+            </form>
+        </div>
+    </div>
+</dialog>
