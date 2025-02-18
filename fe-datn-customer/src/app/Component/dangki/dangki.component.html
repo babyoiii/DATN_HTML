@@ -268,17 +268,27 @@
                                             <path
                                                 d="M37.151 17.176A17.176 17.176 0 1 0 19.976 34.35 17.204 17.204 0 0 0 37.15 17.176zM19.976 32.27A15.095 15.095 0 1 1 35.07 17.176 15.095 15.095 0 0 1 19.976 32.27zm13.493.393a1.05 1.05 0 0 0-1.63 1.322l8.573 10.625a1.05 1.05 0 1 0 1.63-1.32z">
                                             </path>
-                                        </svg></button></div><button type="button"
-                                    class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white flex items-center gap-2 text-sm md:text-base"><svg
-                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
-                                        width="1em" height="100%">
-                                        <path
-                                            d="M45 22.5a1.012 1.012 0 0 0-1.013-1.012h-4.612A16.875 16.875 0 0 0 23.512 5.625V1.013a1.012 1.012 0 0 0-2.024 0v4.612A16.875 16.875 0 0 0 5.963 21.488h-4.95a1.012 1.012 0 0 0 0 2.024H5.99A16.706 16.706 0 0 0 21.488 39.01v4.978a1.012 1.012 0 0 0 2.024 0v-4.95a16.875 16.875 0 0 0 15.863-15.524h4.64A1.012 1.012 0 0 0 45 22.5zM22.669 37.097A14.766 14.766 0 1 1 37.434 22.33 14.794 14.794 0 0 1 22.67 37.097z">
-                                        </path>
-                                        <path
-                                            d="M22.669 12.769a9.563 9.563 0 1 0 9.562 9.562 9.59 9.59 0 0 0-9.562-9.562zm0 17.128a7.566 7.566 0 1 1 7.565-7.538 7.566 7.566 0 0 1-7.565 7.538z">
-                                        </path>
-                                    </svg>Use Current Location</button>
+                                        </svg></button></div>
+                                        <button type="button" [routerLink]="['/selector-Map']" class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hover:text-white flex items-center gap-2 text-sm md:text-base">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%">
+                                                <path d="M45 22.5a1.012 1.012 0 0 0-1.013-1.012h-4.612A16.875 16.875 0 0 0 23.512 5.625V1.013a1.012 1.012 0 0 0-2.024 0v4.612A16.875 16.875 0 0 0 5.963 21.488h-4.95a1.012 1.012 0 0 0 0 2.024H5.99A16.706 16.706 0 0 0 21.488 39.01v4.978a1.012 1.012 0 0 0 2.024 0v-4.95a16.875 16.875 0 0 0 15.863-15.524h4.64A1.012 1.012 0 0 0 45 22.5zM22.669 37.097A14.766 14.766 0 1 1 37.434 22.33 14.794 14.794 0 0 1 22.67 37.097z"></path>
+                                                <path d="M22.669 12.769a9.563 9.563 0 1 0 9.562 9.562 9.59 9.59 0 0 0-9.562-9.562zm0 17.128a7.566 7.566 0 1 1 7.565-7.538 7.566 7.566 0 0 1-7.565 7.538z"></path>
+                                            </svg>
+                                            Use Current Location
+                                        </button>
+                                        
+                                        <p>Current Address: {{ currentAddress }}</p>
+                                        <google-map
+                                          *ngIf="latitude && longitude"
+                                          [center]="{lat: latitude, lng: longitude}"
+                                          [zoom]="15"
+                                          height="400px"
+                                          width="100%">
+                                          <map-marker
+                                            [position]="{lat: latitude, lng: longitude}"
+                                            [title]="'Your Location'">
+                                          </map-marker>
+                                        </google-map>
                             </label>
                             <div role="radiogroup" aria-labelledby="stockholder-group"
                                 class="col-span-6 grid gap-2 border-t border-gray-500 pt-6"><span id="stockholder-group"
