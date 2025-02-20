@@ -4,12 +4,12 @@ import { AuthServiceService } from '../../Service/auth-service.service';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { GoogleMapsModule } from '@angular/google-maps';
+// import { GoogleMapsModule } from '@angular/google-maps';
 import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-dangki',
   standalone: true,
-  imports: [CommonModule,FormsModule,GoogleMapsModule,RouterModule],
+  imports: [CommonModule,FormsModule,RouterModule],
   templateUrl: './dangki.component.html',
   styleUrls: ['./dangki.component.css']
 })
