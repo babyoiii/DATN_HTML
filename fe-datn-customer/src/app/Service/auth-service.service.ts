@@ -34,12 +34,12 @@ export class AuthServiceService {
   }
 
   getToken(): string | null {
-    if (!this.token) {
-      this.token = localStorage.getItem('accessToken');
+    try {
+      return localStorage.getItem('accessToken');
+    } catch (error) {
+      return null;
     }
-    return this.token;
   }
-
   saveRefreshToken(refreshToken: string) {
     this.refreshToken = refreshToken;
     localStorage.setItem('refreshToken', refreshToken);
