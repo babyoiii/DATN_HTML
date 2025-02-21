@@ -5,7 +5,7 @@ import { SeatsComponent } from '../seats/seats.component';
 @Component({
   selector: 'app-showtimes',
   standalone: true,
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './showtimes.component.html',
   styleUrl: './showtimes.component.css'
 })

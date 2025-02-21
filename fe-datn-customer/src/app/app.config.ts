@@ -4,7 +4,6 @@ import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptorFn } from './Interceptors/auth.interceptor';
-import { handleErrorInterceptorFn } from './Interceptors/handleError.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
@@ -13,7 +12,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(),
     provideHttpClient(),
-    provideHttpClient(withInterceptors([authInterceptorFn,handleErrorInterceptorFn])),
+    provideHttpClient(withInterceptors([authInterceptorFn])),
     importProvidersFrom([BrowserAnimationsModule])
   ]
 };
