@@ -67,7 +67,6 @@ function handle401Error(request: HttpRequest<any>, next: HttpHandlerFn, authServ
       })
     );
   }
-
   return refreshTokenSubject.pipe(
     filter(token => token !== null),
     take(1),

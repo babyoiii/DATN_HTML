@@ -17,6 +17,7 @@ import { OrdersComponent } from './Component/orders/orders.component';
 import { PurchaseComponent } from './Component/purchase/purchase.component';
 import { sign } from 'crypto';
 import { SignInComponent } from './Component/sign-in/sign-in.component';
+import { TimkiemrapComponent } from './Component/timkiemrap/timkiemrap.component';
 
 export const routes: Routes = [
     {
