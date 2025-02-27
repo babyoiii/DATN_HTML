@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MovieService } from '../../Service/movie.service';
 import { GetAllNameMovie, GetShowTimeLandingRes } from '../../Models/MovieModel';
 import { FormsModule } from '@angular/forms';
@@ -9,14 +9,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DurationFormatPipe } from '../../duration-format.pipe';
-import { SafePipe } from '../../safe.pipe';
 import { log } from 'node:console';
-import { RouterModule } from '@angular/router';
+import { SafePipe } from "../../safe.pipe";
 
 @Component({
   selector: 'app-showtimes',
   standalone: true,
-  imports: [FormsModule, CommonModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, DurationFormatPipe, SafePipe, RouterModule],
+  imports: [FormsModule,RouterLink,CommonModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, DurationFormatPipe, SafePipe],
   templateUrl: './showtimes.component.html',
   styleUrls: ['./showtimes.component.css']
 })
@@ -29,6 +28,12 @@ export class ShowtimesComponent implements OnInit {
   date: string = new Date().toISOString().split('T')[0]; 
   currentPage = 1;
   recordPerPage = 100;
+  selectedMovie: {
+    name: string;
+    thumbnail: string;
+    trailer: string;
+    duration: number;
+  } | null = null;
 
   constructor(private movieService: MovieService, private route: ActivatedRoute) { }
 
@@ -82,7 +87,7 @@ export class ShowtimesComponent implements OnInit {
       if (!acc[item.movieName]) {
         acc[item.movieName] = {
           thumbnail: item.thumbnail, 
-          trailer: this.getYouTubeEmbedUrl(item.trailer) ?? '', // Chuyển đổi URL
+          trailer: item.trailer ?? '', // Sửa lại thành trailer
           duration: item.duration,
           theaters: {}
         };
@@ -100,27 +105,13 @@ export class ShowtimesComponent implements OnInit {
     }, {});
 
     console.log('Dữ liệu sau khi nhóm:', this.groupedData);
-  }
+}
 
-  // Hàm chuyển đổi URL YouTube thành URL embed
-  private getYouTubeEmbedUrl(url: string): string {
-    if (!url) return '';
-    
-    // Xử lý URL dạng watch?v=
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    const match = url.match(regExp);
-    
-    if (match && match[2].length === 11) {
-      return `https://www.youtube.com/embed/${match[2]}`;
-    }
-    
-    return url; // Trả về URL gốc nếu không phải URL YouTube hoặc không thể chuyển đổi
-  }
-
+  
   onMovieChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
-    this.movieId = selectElement.value;
-    this.getShowTimes();
+    this.movieId = selectElement.value; // Nếu chọn All Movies, giá trị sẽ là rỗng
+    this.getShowTimes(); // Gọi API để lấy danh sách phim
   }
 
   onDateChange(event: MatDatepickerInputEvent<Date>) {
@@ -136,9 +127,23 @@ export class ShowtimesComponent implements OnInit {
     return d ? d >= today : false;
   };
   Trailer :string = '';
-  getTrailler(trailer :string){
+  getTrailer(trailer :string){
     console.log('Trailer: abc', trailer);
   return this.Trailer = trailer;
   }
 
+  selectMovie(movieName: string, movieData: any) {
+    this.selectedMovie = {
+      name: movieName,
+      thumbnail: movieData.thumbnail,
+      trailer: movieData.trailer,
+      duration: movieData.duration
+    };
+    this.Trailer = movieData.trailer;
+  }
+  getShowtime(roomId: string) {
+    console.log('Room ID:', roomId);
+    // Điều hướng đến trang booking
+    window.location.href = `/booking/${roomId}`;
+  }
 }
