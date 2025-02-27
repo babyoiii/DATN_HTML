@@ -1,0 +1,138 @@
+.QQRhU-pointer-events-none {
+    pointer-events: none
+}
+
+.QQRhU-absolute {
+    position: absolute
+}
+
+.QQRhU-relative {
+    position: relative
+}
+
+.QQRhU-inset-0 {
+    inset: 0
+}
+
+.QQRhU-z-0 {
+    z-index: 0
+}
+
+.QQRhU-mx-auto {
+    margin-left: auto;
+    margin-right: auto
+}
+
+.QQRhU-mb-10 {
+    margin-bottom: 2.5rem
+}
+
+.QQRhU-mb-4 {
+    margin-bottom: 1rem
+}
+
+.QQRhU-block {
+    display: block
+}
+
+.QQRhU-flex {
+    display: flex
+}
+
+.QQRhU-grid {
+    display: grid
+}
+
+.QQRhU-hidden {
+    display: none
+}
+
+.QQRhU-w-full {
+    width: 100%
+}
+
+.QQRhU-max-w-\[1248px\] {
+    max-width: 1248px
+}
+
+.QQRhU-items-end {
+    align-items: flex-end
+}
+
+.QQRhU-gap-2 {
+    gap: .5rem
+}
+
+.QQRhU-gap-4 {
+    gap: 1rem
+}
+
+.QQRhU-bg-hero-gradient {
+    background-image: radial-gradient(ellipse at center, transparent 50%, #000 100%), linear-gradient(45deg, #000, transparent 50%)
+}
+
+.QQRhU-object-cover {
+    -o-object-fit: cover;
+    object-fit: cover
+}
+
+.QQRhU-object-right {
+    -o-object-position: right;
+    object-position: right
+}
+
+.QQRhU-px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem
+}
+
+.QQRhU-text-500 {
+    font-size: var(--font-size-500)
+}
+
+.QQRhU-outline {
+    outline-style: solid
+}
+
+.QQRhU-copy {
+    font-weight: 400;
+    line-height: 1.75;
+    letter-spacing: 0
+}
+
+@media (min-width:768px) {
+    .QQRhU-md\:mb-0 {
+        margin-bottom: 0
+    }
+
+    .QQRhU-md\:mr-auto {
+        margin-right: auto
+    }
+
+    .QQRhU-md\:block {
+        display: block
+    }
+
+    .QQRhU-md\:hidden {
+        display: none
+    }
+
+    .QQRhU-md\:w-\[var\(--desktop-content-width\)\] {
+        width: var(--desktop-content-width)
+    }
+
+    .QQRhU-md\:justify-start {
+        justify-content: flex-start
+    }
+
+    .QQRhU-md\:pb-10 {
+        padding-bottom: 2.5rem
+    }
+}
+
+@media (min-width:1280px) {
+    .QQRhU-xl\:px-0 {
+        padding-left: 0;
+        padding-right: 0
+    }
+}
