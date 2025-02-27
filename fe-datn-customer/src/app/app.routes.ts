@@ -32,10 +32,11 @@ export const routes: Routes = [
             { path: 'on-demand', component: OnDemandComponent },
         ]
     },
-    { path: 'showtimes', component: ShowtimesComponent },
+    { path: 'showtimes/:id', component: ShowtimesComponent },
     { path: 'signup', component: DangkiComponent },
+    { path: 'timkiemrap', component: TimkiemrapComponent },
     { path: 'signin', component: SignInComponent },
-    { path: 'seats', component: SeatsComponent },
+    { path: 'booking/:id', component: SeatsComponent },
     { path: 'chon-ve', component: TicketSeatsComponent },
     { path: 'orders', component: OrdersComponent },
     { path: 'thanh-toan', component: PurchaseComponent },

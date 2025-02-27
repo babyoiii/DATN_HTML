@@ -17,6 +17,10 @@ export const authInterceptorFn: HttpInterceptorFn = (req: HttpRequest<any>, next
   if (req.url.includes('esgoo.net')) {
     return next(req);
   }
+  if (req.url.includes('maps.googleapis.com')) {
+    return next(req);
+  }
+
   let authReq = req;
   const token = authService.getToken();
   if (token != null) {
@@ -26,7 +30,6 @@ export const authInterceptorFn: HttpInterceptorFn = (req: HttpRequest<any>, next
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
       // Bypass CORS errors
-      
 
       // Nếu lỗi là 401, xử lý refresh token
       if (error instanceof HttpErrorResponse && error.status === 401 && !authReq.url.includes('/auth/signin')) {
@@ -45,28 +48,33 @@ function handle401Error(request: HttpRequest<any>, next: HttpHandlerFn, authServ
     refreshTokenSubject.next(null);
 
     const token = authService.getRefreshToken();
+    console.log("Refresh Token:", token);  // Kiểm tra token có bị null không
 
     if (!token) {
+      console.error("Lỗi: Refresh token bị null!");
       authService.signOut();
       router.navigate(['/login']);
-      return throwError(() => new Error('Refresh token is missing'));
+      return throwError(() => new Error('Refresh token bị thiếu'));
     }
 
     return authService.newRefreshToken(token).pipe(
       switchMap((response: any) => {
+        console.log("Token mới:", response.accessToken);
         isRefreshing.next(false);
         authService.saveToken(response.accessToken);
         refreshTokenSubject.next(response.accessToken);
         return next(addTokenHeader(request, response.accessToken));
       }),
       catchError((err) => {
+        console.error("Lỗi khi refresh token:", err);
         isRefreshing.next(false);
         authService.signOut();
         router.navigate(['/login']);
-        return throwError(() => err);
+        return throwError(() => new Error('Refresh token không hợp lệ'));
       })
     );
   }
+
   return refreshTokenSubject.pipe(
     filter(token => token !== null),
     take(1),
@@ -74,6 +82,10 @@ function handle401Error(request: HttpRequest<any>, next: HttpHandlerFn, authServ
   );
 }
 
-function addTokenHeader(request: HttpRequest<any>, token: string) {
-  return request.clone({ headers: request.headers.set(TOKEN_HEADER_KEY, `Bearer ${token}`) });
+function addTokenHeader(request: HttpRequest<any>, token: string): HttpRequest<any> {
+  return request.clone({
+    setHeaders: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 }
