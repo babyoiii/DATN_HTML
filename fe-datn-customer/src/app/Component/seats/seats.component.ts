@@ -79,20 +79,42 @@ export class SeatsComponent implements OnInit {
   }
   
 
-  // Tổ chức ghế theo hàng dựa trên thuộc tính row
+  // Tổ chức ghế theo hàng và cột
   organizeSeatsByRow() {
+    // Reset dữ liệu
     this.seatsPerRow = {};
+    
+    // Nhóm ghế theo hàng
     this.seats.forEach(seat => {
       if (!this.seatsPerRow[seat.row]) {
         this.seatsPerRow[seat.row] = [];
       }
-      this.seatsPerRow[seat.row].push(seat);
+      
+      // Nếu là ghế đôi, đảm bảo ghế được đặt cạnh nhau
+      if (seat.pairSeatId) {
+        const pairedSeat = this.findPairedSeat(seat);
+        if (pairedSeat) {
+          // Thêm cả cặp ghế vào mảng
+          const seatPair = [seat, pairedSeat].sort((a, b) => a.number - b.number);
+          // Chỉ thêm nếu chưa có trong hàng
+          if (!this.seatsPerRow[seat.row].some(s => s.id === seat.id || s.id === pairedSeat.id)) {
+            this.seatsPerRow[seat.row].push(...seatPair);
+          }
+        }
+      } else {
+        // Với ghế đơn, thêm trực tiếp vào hàng
+        if (!this.seatsPerRow[seat.row].some(s => s.id === seat.id)) {
+          this.seatsPerRow[seat.row].push(seat);
+        }
+      }
     });
+
     // Sắp xếp ghế trong mỗi hàng theo số thứ tự
     Object.keys(this.seatsPerRow).forEach(row => {
       this.seatsPerRow[row].sort((a, b) => a.number - b.number);
     });
-    // Cập nhật danh sách hàng và sắp xếp theo thứ tự chữ cái
+
+    // Cập nhật danh sách hàng và sắp xếp theo thứ tự
     this.rows = Object.keys(this.seatsPerRow).sort();
   }
 
@@ -139,14 +161,12 @@ export class SeatsComponent implements OnInit {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
   }
 
-  // Tính số cột tối đa (cho grid-template-columns)
   getColumnCount(): number {
     let maxCount = 0;
     this.rows.forEach(row => {
       const seatsInRow = this.getSeatsInRow(row);
       let count = 0;
       seatsInRow.forEach(seat => {
-        // Nếu ghế là couple (ghế đôi) tính là 2, ngược lại là 1
         count += (seat.type === 'couple') ? 2 : 1;
       });
       if (count > maxCount) {
@@ -157,7 +177,6 @@ export class SeatsComponent implements OnInit {
   }
 
   getSeatFillClass(seat: SeatInfo): string {
-      
     switch(seat.status) {
       case 'available': return '' ;
       case 'selected': return `fill-red-500`;
@@ -165,6 +184,12 @@ export class SeatsComponent implements OnInit {
       case 'unavailable': return `cursor-not-allowed invisible`;
       default: return '';
     }
+  }
+
+  // Tìm ghế đôi tương ứng
+  findPairedSeat(seat: SeatInfo): SeatInfo | null {
+    if (!seat || !seat.pairSeatId) return null;
+    return this.seats.find(s => s.id === seat.pairSeatId) || null;
   }
 
   proceedToCheckout() {
