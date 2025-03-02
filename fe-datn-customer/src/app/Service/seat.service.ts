@@ -47,18 +47,34 @@ export class SeatService {
     return of(mockShowtime);
   };
   private generateSeats(): SeatInfo[] {
-    return [
-      { id: 'A1', row: 'A', number: 1, type: 'couple', price: 200, status: 'available', pairSeatId: 'A2' },
-      { id: 'A2', row: 'A', number: 2, type: 'couple', price: 200, status: 'available', pairSeatId: 'A1' },
-      { id: 'B1', row: 'B', number: 1, type: 'standard', price: 100, status: 'booked', pairSeatId: null },
-      { id: 'C1', row: 'C', number: 1, type: 'couple', price: 250, status: 'available', pairSeatId: 'C2' },
-      { id: 'C2', row: 'C', number: 2, type: 'couple', price: 250, status: 'available', pairSeatId: 'C1' },
-      { id: 'D1', row: 'D', number: 1, type: 'standard', price: 120, status: 'available', pairSeatId: null },
-      { id: 'E1', row: 'E', number: 1, type: 'couple', price: 220, status: 'available', pairSeatId: 'E2' },
-      { id: 'E2', row: 'E', number: 2, type: 'couple', price: 220, status: 'available', pairSeatId: 'E1' },
-    ];
-
-  };
+    const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+    const seats: SeatInfo[] = [];
+    let rowIndex = 0;
+  
+    while (rowIndex < rows.length) {
+      const row = rows[rowIndex];
+      for (let i = 1; i <= 10; i++) {
+        const seatId = `${row}${i}`;
+        const seatType = (row === 'G' || row === 'H') ? 'couple' : this.getSeatType(row, i);
+        const seatPrice = this.getSeatPrice(row, i);
+        const seatStatus = this.getRandomStatus();
+        
+        const pairSeatId = (row === 'G' || row === 'H') && i % 2 !== 0 ? `${row}${i + 1}` : (row === 'G' || row === 'H') && i % 2 === 0 ? `${row}${i - 1}` : null;
+        seats.push({
+          id: seatId,
+          row: row,
+          number: i,
+          type: seatType,
+          price: seatPrice,
+          status: seatStatus,
+          pairSeatId: pairSeatId
+        });
+      }
+      rowIndex++;
+    }
+  
+    return seats;
+  }
 
   private getSeatType(row: string, number: number): 'standard' | 'vip' | 'couple' | 'wheelchair' {
     if (row === 'A' || row === 'B') return 'standard';
