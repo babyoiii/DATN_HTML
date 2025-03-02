@@ -28,4 +28,8 @@ export class MovieService {
 getAllNameMovies(): Observable<GetAllNameMovie[]> {
   return this.http.get<GetAllNameMovie[]>(`${this.baseUrl}/Movie/GetAllNameMovie`);
 }
+
+// getMovieById(id: string): Observable<any> {
+//   return this.http.get<any>(`${this.baseUrl}/Movie/GetMovieById/${id}`);
+// }
 }
