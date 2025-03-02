@@ -129,7 +129,7 @@
                 <div class="relative z-10 grid gap-4" style="grid-template-columns: repeat(20, 60px);">
                   
                   <ng-container *ngFor="let seat of seats">
-                    <!-- Nếu có pairSeatId, hiển thị ghế đôi -->
+                    <!-- Nếu có pairSeatId, thì hiển thị ghế đôi -->
                     <ng-container *ngIf="seat && seat.pairSeatId; else singleSeat" class="grid grid-cols-2 gap-0">
                       <ng-container class="flex mx-1 my-4"><svg class=" fill-purple-500  translate-x-1" viewBox="0 0 50 50"
                           version="1.1" xmlns="http://www.w3.org/2000/svg" xml:space="preserve">
@@ -144,7 +144,7 @@
                             </path>
                           </g>
                           <g transform="matrix(1,0,0,1,25,25)"><text text-anchor="middle" dominant-baseline="middle"
-                              class="fill-white" font-size="10">{{seat.id}}</text></g>
+                              class="fill-white" font-size="10">{{ seat.id}}</text></g>
                         </svg>
                       </ng-container>
                       <ng-container class="flex mx-1 my-4"><svg class="fill-purple-500 -translate-x-4" viewBox="0 0 50 50"
