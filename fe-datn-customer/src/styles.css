@@ -3353,7 +3353,9 @@ input[type=number] {
 .fill-red-500 {
     fill: #ce0e2d
 }
-
+.fill-purple-500 {
+    fill: #58146d
+}
 .fill-white {
     fill: #fff
 }

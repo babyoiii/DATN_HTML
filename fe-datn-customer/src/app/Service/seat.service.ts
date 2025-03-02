@@ -53,7 +53,7 @@ export class SeatService {
   
     while (rowIndex < rows.length) {
       const row = rows[rowIndex];
-      for (let i = 1; i <= 10; i++) {
+      for (let i = 1; i <= 20; i++) {
         const seatId = `${row}${i}`;
         const seatType = (row === 'G' || row === 'H') ? 'couple' : this.getSeatType(row, i);
         const seatPrice = this.getSeatPrice(row, i);
