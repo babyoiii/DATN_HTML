@@ -89,10 +89,10 @@
                     class="relative flex w-full max-w-[25%] flex-col items-center justify-between gap-2 p-2 text-xs transition-all duration-200 focus-within:text-blue-500 hover:text-blue-500 md:w-auto md:flex-row md:p-4 md:text-base"><select
                         (change)="onMovieChange($event)"
                         class="absolute inset-0 w-full cursor-pointer appearance-none bg-transparent text-transparent [&amp;>option]:text-black"
-                        name="movie">
+                        name="movie" [(ngModel)]="movieId">
                         <option value="">All Movies</option>
                         @for (item of listMoive; track $index) {
-                            <option value="{{item.id}}">{{item.movieName}}</option> 
+                            <option value="{{item.id}}" [selected]="item.id === movieId">{{item.movieName}}</option> 
                         }
                     </select>
                     <div class="text-2xl" role="presentation" aria-hidden="true" tabindex="-1"><svg
@@ -114,7 +114,7 @@
                                 d="M19.703 19.907a.646.646 0 1 0-.899-.899.646.646 0 0 0 .9.9zM18.635 26.4a.646.646 0 1 0 .197-.45.646.646 0 0 0-.197.45zm-3.26-3.963a.646.646 0 1 0 .45-.197.646.646 0 0 0-.45.197zm7.898.871a.646.646 0 0 0 0-.899.646.646 0 1 0 0 .9z">
                             </path>
                         </svg></div>
-                    <div><span class="line-clamp-2 text-ellipsis text-center">All Movies</span></div>
+                    <div><span class="line-clamp-2 text-ellipsis text-center">{{getSelectedMovieName()}}</span></div>
                     <div><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em"
                             height="100%" class="text-sm">
                             <title>Expand Options</title>
@@ -293,13 +293,13 @@
                                 @if (selectedMovie) {
                                     <div class="space-y-4">
                                        
-                                        <p class="mb-2 line-clamp-2 text-balance text-2xl font-semibold">Movie Name: {{selectedMovie?.name}}</p>
+                                        <p class="mb-2 line-clamp-2 text-balance text-2xl font-semibold">Movie Name: {{selectedMovie.name}}</p>
                                         
                                         <div class="flex items-center gap-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
-                                            <span class="text-sm">{{selectedMovie?.duration ?? 0 | durationFormat}}</span>
+                                            <span class="text-sm">{{selectedMovie.duration | durationFormat}}</span>
                                         </div>
                                     </div>
                                 } @else {

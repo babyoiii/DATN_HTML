@@ -33,7 +33,7 @@ export const routes: Routes = [
         ]
     },
     { path: 'showtimes/:id', component: ShowtimesComponent },
-    { path: 'signup', component: DangkiComponent },
+    { path: 'dangki', component: DangkiComponent },
     { path: 'timkiemrap', component: TimkiemrapComponent },
     { path: 'signin', component: SignInComponent },
     { path: 'booking/:id', component: SeatsComponent },

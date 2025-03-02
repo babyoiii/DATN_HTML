@@ -39,10 +39,12 @@ export class ShowtimesComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.movieId = params.get('id') || '';
-      this.getShowTimes();
+      const id = params.get('id');
+      if (id) {
+        this.movieId = id;
+      }
       this.getmovieName();
-      this.groupShowtimesByMovieAndTheater();
+      this.getShowTimes();
     });
   }
 
@@ -50,7 +52,18 @@ export class ShowtimesComponent implements OnInit {
     this.movieService.getAllNameMovies().subscribe({
       next: (res: any) => {
         this.listMoive = res.data;
-        console.log('Movies:', this.listMoive);
+        // Nếu có movieId từ param, tìm phim tương ứng trong listMoive
+        if (this.movieId) {
+          const selectedMovie = this.listMoive.find(movie => movie.id === this.movieId);
+          if (selectedMovie) {
+            this.selectedMovie = {
+              name: selectedMovie.movieName,
+              thumbnail: selectedMovie.thumbnail || '',
+              trailer: selectedMovie.trailer || '',
+              duration: selectedMovie.duration || 0
+            };
+          }
+        }
       },
       error: (err) => {
         console.error('Error fetching movies:', err);
@@ -82,12 +95,12 @@ export class ShowtimesComponent implements OnInit {
       } 
     }, item: any) => {
       
-      console.log('Trailer của phim:', item.movieName, item.trailer); // Debug
+      console.log('Trailer của phim:', item.movieName, item.trailer); 
 
       if (!acc[item.movieName]) {
         acc[item.movieName] = {
           thumbnail: item.thumbnail, 
-          trailer: item.trailer ?? '', // Sửa lại thành trailer
+          trailer: item.trailer ?? '', 
           duration: item.duration,
           theaters: {}
         };
@@ -145,5 +158,11 @@ export class ShowtimesComponent implements OnInit {
     console.log('Room ID:', roomId);
     // Điều hướng đến trang booking
     window.location.href = `/booking/${roomId}`;
+  }
+
+  getSelectedMovieName(): string {
+    if (!this.movieId) return 'All Movies';
+    const selectedMovie = this.listMoive.find(movie => movie.id === this.movieId);
+    return selectedMovie ? selectedMovie.movieName : 'All Movies';
   }
 }

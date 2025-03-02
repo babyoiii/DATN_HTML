@@ -25,6 +25,9 @@ export interface GetShowTimeLandingRes {
   showtimes: ShowtimesLandingRes[];
 }
 export interface GetAllNameMovie {
-  id : string,
+  id: string;
   movieName: string;
+  thumbnail?: string;
+  trailer?: string;
+  duration?: number;
 }
