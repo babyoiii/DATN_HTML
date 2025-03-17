@@ -22,8 +22,14 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMovies();
+    this.loadScript('./JavaScript/Slide.js');
   }
-
+  loadScript(src: string): void {
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    document.body.appendChild(script);
+  }
   getMovies() {
     this.movieService.getMovies(this.selectedType, this.pageIndex, this.pageSize).subscribe({
       next: (res) => {
