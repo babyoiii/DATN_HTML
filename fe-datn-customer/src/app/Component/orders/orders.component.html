@@ -5,7 +5,7 @@
             <div class="border-b border-gray-700 bg-checkout-black">
                 <div
                     class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative flex items-center justify-center py-4 text-400 label">
-                    <button type="button"
+                    <button  (click)="goBackToSeats()" type="button"
                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute left-0 z-10"
                         aria-label="Browser Back"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 45 45" width="1em" height="100%" class="m-2 h-5 w-5">
@@ -16,9 +16,17 @@
                         </svg></button>
                     <div class="relative flex w-full items-center justify-center">
                         <h1>Food &amp; Drinks</h1>
-                        <div class="absolute right-0 mr-8 text-300 font-semibold md:mr-12">6:20 <span
-                                class="hidden md:inline-block">left</span></div>
-                    </div><a
+                        <div class="absolute right-0 mr-8 text-300 font-semibold md:mr-12">
+                            <div class="countdown-container">
+                                <div class="countdown-timer">
+                                    <span class="countdown-label">Time Remaining: </span>
+                                    <span class="countdown-value">{{ countdown }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a
                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute right-0"
                         href="/"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
                             viewBox="0 0 45 45" width="1em" height="100%" class="m-2 h-5 w-5">
@@ -112,7 +120,8 @@
                     <section>
                         <h1 class="sr-only">Food &amp; Drink Menu</h1>
                         <div class="grid gap-4" data-orientation="vertical">
-                            <div data-state="closed" data-orientation="vertical"><button type="button"
+                            @for (item of listService; track $index) {
+                            <div (click)="addService(item)"  data-state="closed" data-orientation="vertical"><button type="button"
                                     aria-controls="radix-:rh:" aria-expanded="false" data-state="closed"
                                     data-orientation="vertical" id="radix-:rg:"
                                     class="accordion__trigger relative h-[150px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-900"
@@ -120,12 +129,12 @@
                                         fetchpriority="high" width="830" height="150" decoding="async" data-nimg="1"
                                         class="pointer-events-none absolute top-0 h-full w-full object-cover"
                                         sizes="(max-width: 1024px) 100vw, 75vw"
-                                        srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_640/f_auto/q_auto/v1650660797/amc-cdn/production/2/product-categories/2/137739.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_750/f_auto/q_auto/v1650660797/amc-cdn/production/2/product-categories/2/137739.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_828/f_auto/q_auto/v1650660797/amc-cdn/production/2/product-categories/2/137739.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1650660797/amc-cdn/production/2/product-categories/2/137739.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1650660797/amc-cdn/production/2/product-categories/2/137739.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1650660797/amc-cdn/production/2/product-categories/2/137739.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1650660797/amc-cdn/production/2/product-categories/2/137739.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1650660797/amc-cdn/production/2/product-categories/2/137739.jpg 3840w"
+                                        srcset="{{item.imageUrl}}"
                                         src="https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1650660797/amc-cdn/production/2/product-categories/2/137739.jpg"
                                         style="color: transparent;">
                                     <div
                                         class="absolute bottom-0 flex w-full items-center justify-between p-2 backdrop-blur-xl backdrop-brightness-50">
-                                        <h2 class="text-left text-600 headline">Combos</h2><svg
+                                        <h2 class="text-left text-600 headline">{{item.serviceName}}</h2><svg
                                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
                                             width="1em" height="100%" class="accordion__chevron text-600">
                                             <title>Toggle Content</title>
@@ -141,180 +150,7 @@
                                     style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width);">
                                 </div>
                             </div>
-                            <div data-state="closed" data-orientation="vertical"><button type="button"
-                                    aria-controls="radix-:rj:" aria-expanded="false" data-state="closed"
-                                    data-orientation="vertical" id="radix-:ri:"
-                                    class="accordion__trigger relative h-[150px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-900"
-                                    data-radix-collection-item=""><img alt="" config="[object Object]"
-                                        fetchpriority="high" width="830" height="150" decoding="async" data-nimg="1"
-                                        class="pointer-events-none absolute top-0 h-full w-full object-cover"
-                                        sizes="(max-width: 1024px) 100vw, 75vw"
-                                        srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_640/f_auto/q_auto/v1693539241/amc-cdn/production/2/product-categories/4/156692.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_750/f_auto/q_auto/v1693539241/amc-cdn/production/2/product-categories/4/156692.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_828/f_auto/q_auto/v1693539241/amc-cdn/production/2/product-categories/4/156692.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1693539241/amc-cdn/production/2/product-categories/4/156692.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1693539241/amc-cdn/production/2/product-categories/4/156692.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1693539241/amc-cdn/production/2/product-categories/4/156692.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1693539241/amc-cdn/production/2/product-categories/4/156692.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1693539241/amc-cdn/production/2/product-categories/4/156692.jpg 3840w"
-                                        src="https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1693539241/amc-cdn/production/2/product-categories/4/156692.jpg"
-                                        style="color: transparent;">
-                                    <div
-                                        class="absolute bottom-0 flex w-full items-center justify-between p-2 backdrop-blur-xl backdrop-brightness-50">
-                                        <h2 class="text-left text-600 headline">Beverages</h2><svg
-                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
-                                            width="1em" height="100%" class="accordion__chevron text-600">
-                                            <title>Toggle Content</title>
-                                            <path
-                                                d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                </button>
-                                <div data-state="closed" id="radix-:rj:" hidden="" role="region"
-                                    aria-labelledby="radix-:ri:" data-orientation="vertical"
-                                    class="accordion__content overflow-clip relative overflow-clip"
-                                    style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width);">
-                                </div>
-                            </div>
-                            <div data-state="closed" data-orientation="vertical"><button type="button"
-                                    aria-controls="radix-:rl:" aria-expanded="false" data-state="closed"
-                                    data-orientation="vertical" id="radix-:rk:"
-                                    class="accordion__trigger relative h-[150px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-900"
-                                    data-radix-collection-item=""><img alt="" config="[object Object]"
-                                        fetchpriority="high" width="830" height="150" decoding="async" data-nimg="1"
-                                        class="pointer-events-none absolute top-0 h-full w-full object-cover"
-                                        sizes="(max-width: 1024px) 100vw, 75vw"
-                                        srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_640/f_auto/q_auto/v1725563462/amc-cdn/production/2/product-categories/3/167118.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_750/f_auto/q_auto/v1725563462/amc-cdn/production/2/product-categories/3/167118.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_828/f_auto/q_auto/v1725563462/amc-cdn/production/2/product-categories/3/167118.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1725563462/amc-cdn/production/2/product-categories/3/167118.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1725563462/amc-cdn/production/2/product-categories/3/167118.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1725563462/amc-cdn/production/2/product-categories/3/167118.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1725563462/amc-cdn/production/2/product-categories/3/167118.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1725563462/amc-cdn/production/2/product-categories/3/167118.jpg 3840w"
-                                        src="https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1725563462/amc-cdn/production/2/product-categories/3/167118.jpg"
-                                        style="color: transparent;">
-                                    <div
-                                        class="absolute bottom-0 flex w-full items-center justify-between p-2 backdrop-blur-xl backdrop-brightness-50">
-                                        <h2 class="text-left text-600 headline">Popcorn</h2><svg
-                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
-                                            width="1em" height="100%" class="accordion__chevron text-600">
-                                            <title>Toggle Content</title>
-                                            <path
-                                                d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                </button>
-                                <div data-state="closed" id="radix-:rl:" hidden="" role="region"
-                                    aria-labelledby="radix-:rk:" data-orientation="vertical"
-                                    class="accordion__content overflow-clip relative overflow-clip"
-                                    style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width);">
-                                </div>
-                            </div>
-                            <div data-state="closed" data-orientation="vertical"><button type="button"
-                                    aria-controls="radix-:rn:" aria-expanded="false" data-state="closed"
-                                    data-orientation="vertical" id="radix-:rm:"
-                                    class="accordion__trigger relative h-[150px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-900"
-                                    data-radix-collection-item=""><img alt="" config="[object Object]"
-                                        fetchpriority="high" width="830" height="150" decoding="async" data-nimg="1"
-                                        class="pointer-events-none absolute top-0 h-full w-full object-cover"
-                                        sizes="(max-width: 1024px) 100vw, 75vw"
-                                        srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_640/f_auto/q_auto/v1686753351/amc-cdn/production/2/product-categories/7/153646.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_750/f_auto/q_auto/v1686753351/amc-cdn/production/2/product-categories/7/153646.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_828/f_auto/q_auto/v1686753351/amc-cdn/production/2/product-categories/7/153646.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1686753351/amc-cdn/production/2/product-categories/7/153646.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1686753351/amc-cdn/production/2/product-categories/7/153646.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1686753351/amc-cdn/production/2/product-categories/7/153646.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1686753351/amc-cdn/production/2/product-categories/7/153646.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1686753351/amc-cdn/production/2/product-categories/7/153646.jpg 3840w"
-                                        src="https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1686753351/amc-cdn/production/2/product-categories/7/153646.jpg"
-                                        style="color: transparent;">
-                                    <div
-                                        class="absolute bottom-0 flex w-full items-center justify-between p-2 backdrop-blur-xl backdrop-brightness-50">
-                                        <h2 class="text-left text-600 headline">Snacks</h2><svg
-                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
-                                            width="1em" height="100%" class="accordion__chevron text-600">
-                                            <title>Toggle Content</title>
-                                            <path
-                                                d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                </button>
-                                <div data-state="closed" id="radix-:rn:" hidden="" role="region"
-                                    aria-labelledby="radix-:rm:" data-orientation="vertical"
-                                    class="accordion__content overflow-clip relative overflow-clip"
-                                    style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width);">
-                                </div>
-                            </div>
-                            <div data-state="closed" data-orientation="vertical"><button type="button"
-                                    aria-controls="radix-:rp:" aria-expanded="false" data-state="closed"
-                                    data-orientation="vertical" id="radix-:ro:"
-                                    class="accordion__trigger relative h-[150px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-900"
-                                    data-radix-collection-item=""><img alt="" config="[object Object]"
-                                        fetchpriority="high" width="830" height="150" decoding="async" data-nimg="1"
-                                        class="pointer-events-none absolute top-0 h-full w-full object-cover"
-                                        sizes="(max-width: 1024px) 100vw, 75vw"
-                                        srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_640/f_auto/q_auto/v1715969449/amc-cdn/production/2/product-categories/6/165161.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_750/f_auto/q_auto/v1715969449/amc-cdn/production/2/product-categories/6/165161.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_828/f_auto/q_auto/v1715969449/amc-cdn/production/2/product-categories/6/165161.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1715969449/amc-cdn/production/2/product-categories/6/165161.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1715969449/amc-cdn/production/2/product-categories/6/165161.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1715969449/amc-cdn/production/2/product-categories/6/165161.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1715969449/amc-cdn/production/2/product-categories/6/165161.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1715969449/amc-cdn/production/2/product-categories/6/165161.jpg 3840w"
-                                        src="https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1715969449/amc-cdn/production/2/product-categories/6/165161.jpg"
-                                        style="color: transparent;">
-                                    <div
-                                        class="absolute bottom-0 flex w-full items-center justify-between p-2 backdrop-blur-xl backdrop-brightness-50">
-                                        <h2 class="text-left text-600 headline">Treats</h2><svg
-                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
-                                            width="1em" height="100%" class="accordion__chevron text-600">
-                                            <title>Toggle Content</title>
-                                            <path
-                                                d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                </button>
-                                <div data-state="closed" id="radix-:rp:" hidden="" role="region"
-                                    aria-labelledby="radix-:ro:" data-orientation="vertical"
-                                    class="accordion__content overflow-clip relative overflow-clip"
-                                    style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width);">
-                                </div>
-                            </div>
-                            <div data-state="closed" data-orientation="vertical"><button type="button"
-                                    aria-controls="radix-:rr:" aria-expanded="false" data-state="closed"
-                                    data-orientation="vertical" id="radix-:rq:"
-                                    class="accordion__trigger relative h-[150px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-900"
-                                    data-radix-collection-item=""><img alt="" config="[object Object]" loading="lazy"
-                                        width="830" height="150" decoding="async" data-nimg="1"
-                                        class="pointer-events-none absolute top-0 h-full w-full object-cover"
-                                        sizes="(max-width: 1024px) 100vw, 75vw"
-                                        srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_640/f_auto/q_auto/v1608218482/amc-cdn/production/2/product-categories/9901524/113128.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_750/f_auto/q_auto/v1608218482/amc-cdn/production/2/product-categories/9901524/113128.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_828/f_auto/q_auto/v1608218482/amc-cdn/production/2/product-categories/9901524/113128.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1608218482/amc-cdn/production/2/product-categories/9901524/113128.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1608218482/amc-cdn/production/2/product-categories/9901524/113128.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1608218482/amc-cdn/production/2/product-categories/9901524/113128.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1608218482/amc-cdn/production/2/product-categories/9901524/113128.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1608218482/amc-cdn/production/2/product-categories/9901524/113128.jpg 3840w"
-                                        src="https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1608218482/amc-cdn/production/2/product-categories/9901524/113128.jpg"
-                                        style="color: transparent;">
-                                    <div
-                                        class="absolute bottom-0 flex w-full items-center justify-between p-2 backdrop-blur-xl backdrop-brightness-50">
-                                        <h2 class="text-left text-600 headline">Party Packs</h2><svg
-                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
-                                            width="1em" height="100%" class="accordion__chevron text-600">
-                                            <title>Toggle Content</title>
-                                            <path
-                                                d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                </button>
-                                <div data-state="closed" id="radix-:rr:" hidden="" role="region"
-                                    aria-labelledby="radix-:rq:" data-orientation="vertical"
-                                    class="accordion__content overflow-clip relative overflow-clip"
-                                    style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width);">
-                                </div>
-                            </div>
-                            <div data-state="closed" data-orientation="vertical"><button type="button"
-                                    aria-controls="radix-:rt:" aria-expanded="false" data-state="closed"
-                                    data-orientation="vertical" id="radix-:rs:"
-                                    class="accordion__trigger relative h-[150px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-900"
-                                    data-radix-collection-item=""><img alt="" config="[object Object]" loading="lazy"
-                                        width="830" height="150" decoding="async" data-nimg="1"
-                                        class="pointer-events-none absolute top-0 h-full w-full object-cover"
-                                        sizes="(max-width: 1024px) 100vw, 75vw"
-                                        srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_640/f_auto/q_auto/v1721923963/amc-cdn/production/2/product-categories/9901586/166342.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_750/f_auto/q_auto/v1721923963/amc-cdn/production/2/product-categories/9901586/166342.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/c_limit,w_828/f_auto/q_auto/v1721923963/amc-cdn/production/2/product-categories/9901586/166342.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1721923963/amc-cdn/production/2/product-categories/9901586/166342.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1721923963/amc-cdn/production/2/product-categories/9901586/166342.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1721923963/amc-cdn/production/2/product-categories/9901586/166342.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1721923963/amc-cdn/production/2/product-categories/9901586/166342.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1721923963/amc-cdn/production/2/product-categories/9901586/166342.jpg 3840w"
-                                        src="https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1721923963/amc-cdn/production/2/product-categories/9901586/166342.jpg"
-                                        style="color: transparent;">
-                                    <div
-                                        class="absolute bottom-0 flex w-full items-center justify-between p-2 backdrop-blur-xl backdrop-brightness-50">
-                                        <h2 class="text-left text-600 headline">Carryout</h2><svg
-                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
-                                            width="1em" height="100%" class="accordion__chevron text-600">
-                                            <title>Toggle Content</title>
-                                            <path
-                                                d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                </button>
-                                <div data-state="closed" id="radix-:rt:" hidden="" role="region"
-                                    aria-labelledby="radix-:rs:" data-orientation="vertical"
-                                    class="accordion__content overflow-clip relative overflow-clip"
-                                    style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width);">
-                                </div>
-                            </div>
+                        }
                         </div>
                     </section>
                 </div>
@@ -324,41 +160,77 @@
                         <div class="divide-y divide-gray-700">
                             <section class="">
                                 <header class="mt-6 flex items-baseline justify-between">
-                                    <h2
-                                        class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
-                                        Tickets</h2><a
-                                        class="group transition-colors text-blue-500 hocus:text-white text-sm font-semibold leading-tight tracking-normal"
-                                        aria-label="Edit Tickets"
-                                        href="/showtimes/129218000?order-token=d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2&amp;seats=B3%2CB4">Edit</a>
+                                    <h2 class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
+                                        Tickets
+                                    </h2>
+                                    <a class="group transition-colors text-blue-500 hocus:text-white text-sm font-semibold leading-tight tracking-normal"
+                                       aria-label="Edit Tickets"
+                                       href="/showtimes/129218000?order-token=d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2&amp;seats=B3%2CB4">
+                                       Edit
+                                    </a>
                                 </header>
+                                
                                 <ul class="mb-4 grid gap-2">
-                                    <li class="pt-2 font-semibold">
-                                        <div class="flex justify-between gap-3">
-                                            <div class="flex-1">
-                                                <h4
-                                                    class="my-auto text-base font-semibold leading-tight tracking-normal">
-                                                    Adult Ticket</h4>
+                                    <ng-container *ngFor="let ticketType of seatSummary | keyvalue">
+                                        <li class="pt-2 font-semibold">
+                                            <div class="flex justify-between gap-3">
+                                                <div class="flex-1">
+                                                    <h4 class="my-auto text-base font-semibold leading-tight tracking-normal">
+                                                        {{ ticketType.key }}
+                                                    </h4>
+                                                </div>
+                                                <p class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
+                                                    ${{ (ticketType.value.total / ticketType.value.count).toFixed(2) }}
+                                                </p>
                                             </div>
-                                            <p
-                                                class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                $20.99</p>
-                                        </div>
-                                    </li>
-                                    <li class="pt-2 font-semibold">
-                                        <div class="flex justify-between gap-3">
-                                            <div class="flex-1">
-                                                <h4
-                                                    class="my-auto text-base font-semibold leading-tight tracking-normal">
-                                                    Child Ticket</h4>
-                                            </div>
-                                            <p
-                                                class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                $18.69</p>
-                                        </div>
-                                    </li>
-                                    <li class="text-white text-xs font-semibold leading-tight tracking-normal">Seats B3,
-                                        B4</li>
+                                        </li>
+                                        <li class="text-white text-xs font-semibold leading-tight tracking-normal">
+                                            Seats {{ getSeatNamesByType(ticketType.key) }}
+                                        </li>
+                                    </ng-container>
+                                    <!-- Hiển thị tổng tiền vé -->
+                                    <div class="mt-4 text-right text-white text-lg font-bold">
+                                        Tổng cộng: ${{ getTotalTicketPrice() | number:'1.2-2' }}
+                                    </div>
                                 </ul>
+                                
+                                <h2 class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
+                                    Service
+                                </h2>
+                                
+                                <ul class="mb-4 grid gap-2">
+                                    <li *ngFor="let item of selectedServices" class="pt-2 font-semibold">
+                                        <div class="flex justify-between items-center gap-3">
+                                            <div class="flex-1">
+                                                <h4 class="my-auto text-base font-semibold leading-tight tracking-normal">
+                                                    {{ item.service.serviceName }}
+                                                </h4>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <button 
+                                                    class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition duration-300" 
+                                                    (click)="removeService(item.service)">
+                                                    -
+                                                </button>
+                                                <span class="text-white">{{ item.quantity }}</span>
+                                                <button 
+                                                    class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition duration-300" 
+                                                    (click)="addService(item.service)">
+                                                    +
+                                                </button>
+                                            </div>
+                                            <p class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
+                                                ${{ item.service.price * item.quantity | number:'1.2-2' }}
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                
+                                <!-- Hiển thị tổng tiền -->
+                                <div class="mt-4 text-right text-white text-lg font-bold">
+                                    Tổng cộng: ${{ getTotalService() | number:'1.2-2' }}
+                                </div>
+
                                 <h2 class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
                                     Fees</h2>
                                 <ul class="mb-4 grid gap-2">
@@ -371,79 +243,11 @@
                                             </div>
                                             <p
                                                 class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                $4.38</p>
+                                                Phí dịch vụ: ${{ calculateFee() | number:'1.2-2' }}</p>
                                         </div>
                                     </li>
                                 </ul>
-                                <style>
-                                    .PPsXr-mr-1 {
-                                        margin-right: .25rem
-                                    }
-
-                                    .PPsXr-flex {
-                                        display: flex
-                                    }
-
-                                    .PPsXr-grid {
-                                        display: grid
-                                    }
-
-                                    .PPsXr-flex-1 {
-                                        flex: 1 1 0%
-                                    }
-
-                                    .PPsXr-flex-wrap {
-                                        flex-wrap: wrap
-                                    }
-
-                                    .PPsXr-items-center {
-                                        align-items: center
-                                    }
-
-                                    .PPsXr-justify-center {
-                                        justify-content: center
-                                    }
-
-                                    .PPsXr-gap-1 {
-                                        gap: .25rem
-                                    }
-
-                                    .PPsXr-gap-4 {
-                                        gap: 1rem
-                                    }
-
-                                    .PPsXr-py-8 {
-                                        padding-top: 2rem;
-                                        padding-bottom: 2rem
-                                    }
-
-                                    .PPsXr-text-sm {
-                                        font-size: .875rem
-                                    }
-
-                                    .PPsXr-text-xs {
-                                        font-size: .75rem
-                                    }
-
-                                    .PPsXr-font-bold {
-                                        font-weight: 700
-                                    }
-
-                                    .PPsXr-font-semibold {
-                                        font-weight: 500
-                                    }
-
-                                    .PPsXr-text-gray-300 {
-                                        --tw-text-opacity: 1;
-                                        color: rgb(119 143 150/var(--tw-text-opacity))
-                                    }
-
-                                    @media (min-width:768px) {
-                                        .PPsXr-md\:justify-start {
-                                            justify-content: flex-start
-                                        }
-                                    }
-                                </style>
+                              
                                 <div
                                     class="PPsXr-flex PPsXr-flex-wrap PPsXr-gap-4 PPsXr-items-center PPsXr-py-8 PPsXr-justify-center PPsXr-md:justify-start">
                                     <div class="PPsXr-grid PPsXr-flex-1 PPsXr-gap-1">
@@ -462,7 +266,7 @@
                             <p
                                 class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                 <span
-                                    class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>$44.06
+                                    class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>${{getTotalAmount() | currency}}
                             </p>
                         </div>
                     </div>
@@ -475,7 +279,7 @@
                     <div class="flex flex-wrap items-center gap-4 py-4 justify-between lg:justify-end">
                         <section>
                             <div aria-label="Order Total" class="hidden gap-2 lg:flex"><span
-                                    class="font-bold">$44.06</span></div>
+                                    class="font-bold">{{getTotalAmount() | number:'1.2-2'}}</span></div>
                             <div class="lg:hidden">
                                 <div><button type="button"
                                         class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 text-sm md:text-base flex items-center gap-3">
@@ -491,7 +295,7 @@
                                                 class="absolute inset-0 grid -translate-y-[2px] translate-x-1 place-items-center leading-none">
                                                 <span aria-label="Number of Items in Order" class="text-xs">2</span>
                                             </div>
-                                        </div>$44.06
+                                        </div>${{getTotalAmount() | number:'1.2-2'}}
                                     </button>
                                     <div
                                         class="fixed inset-0 z-40 bg-black transition-opacity duration-300 pointer-events-none opacity-0">
@@ -517,34 +321,25 @@
                                                                     href="/showtimes/129218000?order-token=d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2&amp;seats=B3%2CB4">Edit</a>
                                                             </header>
                                                             <ul class="mb-4 grid gap-2">
-                                                                <li class="pt-2 font-semibold">
-                                                                    <div class="flex justify-between gap-3">
-                                                                        <div class="flex-1">
-                                                                            <h4
-                                                                                class="my-auto text-base font-semibold leading-tight tracking-normal">
-                                                                                Adult Ticket</h4>
+                                                                <ng-container *ngFor="let ticketType of seatSummary | keyvalue">
+                                                                    <li class="pt-2 font-semibold">
+                                                                        <div class="flex justify-between gap-3">
+                                                                            <div class="flex-1">
+                                                                                <h4 class="my-auto text-base font-semibold leading-tight tracking-normal">
+                                                                                    {{ ticketType.key }}
+                                                                                </h4>
+                                                                            </div>
+                                                                            <p class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
+                                                                                ${{ (ticketType.value.total / ticketType.value.count).toFixed(2) }}
+                                                                            </p>
                                                                         </div>
-                                                                        <p
-                                                                            class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                                            $20.99</p>
-                                                                    </div>
-                                                                </li>
-                                                                <li class="pt-2 font-semibold">
-                                                                    <div class="flex justify-between gap-3">
-                                                                        <div class="flex-1">
-                                                                            <h4
-                                                                                class="my-auto text-base font-semibold leading-tight tracking-normal">
-                                                                                Child Ticket</h4>
-                                                                        </div>
-                                                                        <p
-                                                                            class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                                            $18.69</p>
-                                                                    </div>
-                                                                </li>
-                                                                <li
-                                                                    class="text-white text-xs font-semibold leading-tight tracking-normal">
-                                                                    Seats B3, B4</li>
+                                                                    </li>
+                                                                    <li class="text-white text-xs font-semibold leading-tight tracking-normal">
+                                                                        Seats {{ getSeatNamesByType(ticketType.key) }}
+                                                                    </li>
+                                                                </ng-container>
                                                             </ul>
+                                                          
                                                             <h2
                                                                 class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
                                                                 Fees</h2>
@@ -562,75 +357,7 @@
                                                                     </div>
                                                                 </li>
                                                             </ul>
-                                                            <style>
-                                                                .PPsXr-mr-1 {
-                                                                    margin-right: .25rem
-                                                                }
-
-                                                                .PPsXr-flex {
-                                                                    display: flex
-                                                                }
-
-                                                                .PPsXr-grid {
-                                                                    display: grid
-                                                                }
-
-                                                                .PPsXr-flex-1 {
-                                                                    flex: 1 1 0%
-                                                                }
-
-                                                                .PPsXr-flex-wrap {
-                                                                    flex-wrap: wrap
-                                                                }
-
-                                                                .PPsXr-items-center {
-                                                                    align-items: center
-                                                                }
-
-                                                                .PPsXr-justify-center {
-                                                                    justify-content: center
-                                                                }
-
-                                                                .PPsXr-gap-1 {
-                                                                    gap: .25rem
-                                                                }
-
-                                                                .PPsXr-gap-4 {
-                                                                    gap: 1rem
-                                                                }
-
-                                                                .PPsXr-py-8 {
-                                                                    padding-top: 2rem;
-                                                                    padding-bottom: 2rem
-                                                                }
-
-                                                                .PPsXr-text-sm {
-                                                                    font-size: .875rem
-                                                                }
-
-                                                                .PPsXr-text-xs {
-                                                                    font-size: .75rem
-                                                                }
-
-                                                                .PPsXr-font-bold {
-                                                                    font-weight: 700
-                                                                }
-
-                                                                .PPsXr-font-semibold {
-                                                                    font-weight: 500
-                                                                }
-
-                                                                .PPsXr-text-gray-300 {
-                                                                    --tw-text-opacity: 1;
-                                                                    color: rgb(119 143 150/var(--tw-text-opacity))
-                                                                }
-
-                                                                @media (min-width:768px) {
-                                                                    .PPsXr-md\:justify-start {
-                                                                        justify-content: flex-start
-                                                                    }
-                                                                }
-                                                            </style>
+                                                       
                                                             <div
                                                                 class="PPsXr-flex PPsXr-flex-wrap PPsXr-gap-4 PPsXr-items-center PPsXr-py-8 PPsXr-justify-center PPsXr-md:justify-start">
                                                                 <div class="PPsXr-grid PPsXr-flex-1 PPsXr-gap-1">
@@ -673,7 +400,7 @@
                             </div>
                         </section><a
                             class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12"
-                            href="https://www.amctheatres.com/orders/d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2/purchase">Continue</a>
+                            (click)="continue()">Continue</a>
                     </div>
                 </div>
             </div>

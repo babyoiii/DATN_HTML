@@ -1,3 +1,7 @@
+@import 'ngx-toastr/toastr';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 *,
 :after,
@@ -6340,3 +6344,7 @@ iframe#ibody {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@tailwind components;
+@tailwind utilities;
+@import 'ngx-toastr/toastr';

@@ -26,7 +26,7 @@ export interface ShowtimeResponse {
   providedIn: 'root'
 })
 export class ShowtimeService {
-  private baseUrl = environment.apiUrl;
+  private baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient) { }
 

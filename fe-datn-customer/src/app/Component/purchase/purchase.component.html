@@ -5,7 +5,7 @@
             <div class="border-b border-gray-700 bg-checkout-black">
                 <div
                     class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative flex items-center justify-center py-4 text-400 label">
-                    <button type="button"
+                    <button routerLink="/Orders" type="button"
                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute left-0 z-10"
                         aria-label="Browser Back"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 45 45" width="1em" height="100%" class="m-2 h-5 w-5">
@@ -16,8 +16,14 @@
                         </svg></button>
                     <div class="relative flex w-full items-center justify-center text-sm md:text-base">
                         <h1>Confirm Purchase</h1>
-                        <div class="absolute right-0 mr-8 text-300 font-semibold md:mr-12">4:27 <span
-                                class="hidden md:inline-block">left</span></div>
+                        <div class="absolute right-0 mr-8 text-300 font-semibold md:mr-12">
+                            <div class="countdown-container">
+                                <div class="countdown-timer">
+                                    <span class="countdown-label">Time Remaining: </span>
+                                    <span class="countdown-value">{{ countdown }}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div><a
                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute right-0"
                         href="/"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
@@ -101,98 +107,7 @@
                 <div class="mx-auto w-full px-4 xl:px-0 grid max-w-[1000px] grid-cols-2 gap-20">
                     <div class="col-span-2 pt-4 md:col-span-1">
                         <div class="mb-12 divide-y divide-gray-700">
-                            <style>
-                                .qcALx-col-span-1 {
-                                    grid-column: span 1/span 1
-                                }
-
-                                .qcALx-col-span-2 {
-                                    grid-column: span 2/span 2
-                                }
-
-                                .qcALx-my-auto {
-                                    margin-top: auto;
-                                    margin-bottom: auto
-                                }
-
-                                .qcALx-flex {
-                                    display: flex
-                                }
-
-                                .qcALx-grid {
-                                    display: grid
-                                }
-
-                                .qcALx-h-\[35px\] {
-                                    height: 35px
-                                }
-
-                                .qcALx-h-fit {
-                                    height: -moz-fit-content;
-                                    height: fit-content
-                                }
-
-                                .qcALx-w-\[200px\] {
-                                    width: 200px
-                                }
-
-                                .qcALx-w-auto {
-                                    width: auto
-                                }
-
-                                .qcALx-w-full {
-                                    width: 100%
-                                }
-
-                                .qcALx-grid-cols-2 {
-                                    grid-template-columns: repeat(2, minmax(0, 1fr))
-                                }
-
-                                .qcALx-justify-end {
-                                    justify-content: flex-end
-                                }
-
-                                .qcALx-rounded-xl {
-                                    border-radius: .75rem
-                                }
-
-                                .qcALx-p-4 {
-                                    padding: 1rem
-                                }
-
-                                .qcALx-pt-2 {
-                                    padding-top: .5rem
-                                }
-
-                                .qcALx-text-200 {
-                                    font-size: var(--font-size-200)
-                                }
-
-                                .qcALx-text-400 {
-                                    font-size: var(--font-size-400)
-                                }
-
-                                .qcALx-text-black {
-                                    --tw-text-opacity: 1;
-                                    color: rgb(0 0 0/var(--tw-text-opacity))
-                                }
-
-                                .qcALx-underline {
-                                    text-decoration-line: underline
-                                }
-
-                                .qcALx-copy {
-                                    font-weight: 400;
-                                    line-height: 1.75;
-                                    letter-spacing: 0
-                                }
-
-                                .qcALx-label {
-                                    font-weight: 700;
-                                    line-height: 1.5;
-                                    letter-spacing: -.03em
-                                }
-                            </style>
+                         
                             <div class="qcALx-grid qcALx-grid-cols-2 qcALx-w-full qcALx-h-fit qcALx-rounded-xl qcALx-p-4"
                                 style="background-image: url(&quot;https://amc-theatres-res.cloudinary.com/image/upload/amc-cdn/static/images/2024/bg-banner-premiere.png&quot;); background-size: cover;">
                                 <div class="qcALx-col-span-1 qcALx-flex align-center"><img alt="AMC Stubs"
@@ -222,9 +137,18 @@
                                 <div class="flex flex-wrap justify-between gap-2"><label
                                         class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
                                             class="label">Email</span>
-                                        <div class="amc-input amc-input--box"><input class="input" inputmode="email"
-                                                autocomplete="email" placeholder="Email Address" type="email" value=""
-                                                name="email"></div>
+                                            <div class="amc-input amc-input--box">
+                                                <input 
+                                                    class="input" 
+                                                    inputmode="email"
+                                                    autocomplete="email" 
+                                                    placeholder="Email Address" 
+                                                    type="email" 
+                                                    name="email"
+                                                    [(ngModel)]="email"
+                                                >
+
+                                            </div>
                                         <p class="text-gray-subtle text-sm font-semibold leading-tight tracking-normal">
                                             Your receipt and order confirmation will be sent to this email address</p>
                                     </label></div>
@@ -325,36 +249,51 @@
                                             Tickets</h2><a
                                             class="group transition-colors text-blue-500 hocus:text-white text-sm font-semibold leading-tight tracking-normal"
                                             aria-label="Edit Tickets"
-                                            href="/showtimes/129218000?order-token=d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2&amp;seats=B3%2CB4">Edit</a>
+                                            href="/showtimes/129218000?order-token=d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2&amp;seats=B3%2CB4"></a>
                                     </header>
                                     <ul class="mb-4 grid gap-2">
-                                        <li class="pt-2 font-semibold">
+                                        <li *ngFor="let seat of seats" class="pt-2 font-semibold">
                                             <div class="flex justify-between gap-3">
                                                 <div class="flex-1">
-                                                    <h4
-                                                        class="my-auto text-base font-semibold leading-tight tracking-normal">
-                                                        Adult Ticket</h4>
+                                                    <h4 class="my-auto text-base font-semibold leading-tight tracking-normal">
+                                                        {{ seat.type }} Ticket
+                                                    </h4>
                                                 </div>
-                                                <p
-                                                    class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                    $20.99</p>
+                                                <p class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
+                                                    ${{ seat.total }}
+                                                </p>
                                             </div>
+                                            <p class="text-white text-xs font-semibold leading-tight tracking-normal">
+                                                Quantity: {{ seat.count }}
+                                            </p>
                                         </li>
-                                        <li class="pt-2 font-semibold">
-                                            <div class="flex justify-between gap-3">
-                                                <div class="flex-1">
-                                                    <h4
-                                                        class="my-auto text-base font-semibold leading-tight tracking-normal">
-                                                        Child Ticket</h4>
-                                                </div>
-                                                <p
-                                                    class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                    $18.69</p>
-                                            </div>
-                                        </li>
-                                        <li class="text-white text-xs font-semibold leading-tight tracking-normal">Seats
-                                            B3, B4</li>
                                     </ul>
+                                    <div class="mt-4 text-right text-white text-lg font-bold">
+                                        Total: ${{ totalTicketPrice | number:'1.2-2' }}
+                                    </div>
+                                    <h2
+                                    class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
+                                    Service</h2>
+                                    <ul class="mb-4 grid gap-2">
+                                        <li *ngFor="let sv of services" class="pt-2 font-semibold">
+                                            <div class="flex justify-between gap-3">
+                                                <div class="flex-1">
+                                                    <h4 class="my-auto text-base font-semibold leading-tight tracking-normal">
+                                                        {{ sv.name }} Ticket
+                                                    </h4>
+                                                </div>
+                                                <p class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
+                                                    ${{ sv.price }}
+                                                </p>
+                                            </div>
+                                            <p class="text-white text-xs font-semibold leading-tight tracking-normal">
+                                                Quantity: {{ sv.quantity }}
+                                            </p>
+                                        </li>
+                                    </ul>
+                                    <div class="mt-4 text-right text-white text-lg font-bold">
+                                        Total: ${{ totalServiceAmount | number:'1.2-2' }}
+                                    </div>
                                     <h2
                                         class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
                                         Fees</h2>
@@ -368,79 +307,11 @@
                                                 </div>
                                                 <p
                                                     class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                    $4.38</p>
+                                                    ${{fee}}</p>
                                             </div>
                                         </li>
                                     </ul>
-                                    <style>
-                                        .PPsXr-mr-1 {
-                                            margin-right: .25rem
-                                        }
-
-                                        .PPsXr-flex {
-                                            display: flex
-                                        }
-
-                                        .PPsXr-grid {
-                                            display: grid
-                                        }
-
-                                        .PPsXr-flex-1 {
-                                            flex: 1 1 0%
-                                        }
-
-                                        .PPsXr-flex-wrap {
-                                            flex-wrap: wrap
-                                        }
-
-                                        .PPsXr-items-center {
-                                            align-items: center
-                                        }
-
-                                        .PPsXr-justify-center {
-                                            justify-content: center
-                                        }
-
-                                        .PPsXr-gap-1 {
-                                            gap: .25rem
-                                        }
-
-                                        .PPsXr-gap-4 {
-                                            gap: 1rem
-                                        }
-
-                                        .PPsXr-py-8 {
-                                            padding-top: 2rem;
-                                            padding-bottom: 2rem
-                                        }
-
-                                        .PPsXr-text-sm {
-                                            font-size: .875rem
-                                        }
-
-                                        .PPsXr-text-xs {
-                                            font-size: .75rem
-                                        }
-
-                                        .PPsXr-font-bold {
-                                            font-weight: 700
-                                        }
-
-                                        .PPsXr-font-semibold {
-                                            font-weight: 500
-                                        }
-
-                                        .PPsXr-text-gray-300 {
-                                            --tw-text-opacity: 1;
-                                            color: rgb(119 143 150/var(--tw-text-opacity))
-                                        }
-
-                                        @media (min-width:768px) {
-                                            .PPsXr-md\:justify-start {
-                                                justify-content: flex-start
-                                            }
-                                        }
-                                    </style>
+                               
                                     <div
                                         class="PPsXr-flex PPsXr-flex-wrap PPsXr-gap-4 PPsXr-items-center PPsXr-py-8 PPsXr-justify-center PPsXr-md:justify-start">
                                         <div class="PPsXr-grid PPsXr-flex-1 PPsXr-gap-1">
@@ -465,11 +336,11 @@
                                 <p class="py-10 text-xs italic leading-5 text-gray-200">Discount Matinee ticket prices
                                     are UP TO 20% OFF the evening base ticket price every day. You are receiving the
                                     displayed Discount Matinee ticket prices.</p>
-                                <p
-                                    class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
-                                    <span
-                                        class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>$44.06
-                                </p>
+                                    <p
+                                        class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
+                                        <span
+                                            class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>{{totalAmount}}
+                                    </p>
                             </div>
                         </div>
                     </aside>
@@ -495,7 +366,7 @@
                                     class="hidden text-sm font-semibold uppercase text-gray-200 lg:block">Total</span>
                                 <section>
                                     <div aria-label="Order Total" class="hidden gap-2 lg:flex"><span
-                                            class="font-bold">$44.06</span></div>
+                                            class="font-bold">${{totalAmount}}</span></div>
                                     <div class="lg:hidden">
                                         <div><button type="button"
                                                 class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 text-sm md:text-base flex items-center gap-3">
@@ -511,7 +382,7 @@
                                                         class="absolute inset-0 grid -translate-y-[2px] translate-x-1 place-items-center leading-none">
                                                         <span aria-label="Number of Items in Order"
                                                             class="text-xs">2</span></div>
-                                                </div>$44.06
+                                                </div> ${{totalAmount}}
                                             </button>
                                             <div
                                                 class="fixed inset-0 z-40 bg-black transition-opacity duration-300 pointer-events-none opacity-0">
@@ -547,28 +418,16 @@
                                                                                 </div>
                                                                                 <p
                                                                                     class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                                                    $20.99</p>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li class="pt-2 font-semibold">
-                                                                            <div class="flex justify-between gap-3">
-                                                                                <div class="flex-1">
-                                                                                    <h4
-                                                                                        class="my-auto text-base font-semibold leading-tight tracking-normal">
-                                                                                        Child Ticket</h4>
-                                                                                </div>
-                                                                                <p
-                                                                                    class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                                                    $18.69</p>
+                                                                                        $20.99</p>
                                                                             </div>
                                                                         </li>
                                                                         <li
                                                                             class="text-white text-xs font-semibold leading-tight tracking-normal">
-                                                                            Seats B3, B4</li>
+                                                                                Seats B3, B4</li>
                                                                     </ul>
                                                                     <h2
                                                                         class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
-                                                                        Fees</h2>
+                                                                            Fees</h2>
                                                                     <ul class="mb-4 grid gap-2">
                                                                         <li class="pt-2 font-semibold">
                                                                             <div class="flex justify-between gap-3">
@@ -579,79 +438,11 @@
                                                                                 </div>
                                                                                 <p
                                                                                     class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                                                    $4.38</p>
+                                                                                        $4.38</p>
                                                                             </div>
                                                                         </li>
                                                                     </ul>
-                                                                    <style>
-                                                                        .PPsXr-mr-1 {
-                                                                            margin-right: .25rem
-                                                                        }
-
-                                                                        .PPsXr-flex {
-                                                                            display: flex
-                                                                        }
-
-                                                                        .PPsXr-grid {
-                                                                            display: grid
-                                                                        }
-
-                                                                        .PPsXr-flex-1 {
-                                                                            flex: 1 1 0%
-                                                                        }
-
-                                                                        .PPsXr-flex-wrap {
-                                                                            flex-wrap: wrap
-                                                                        }
-
-                                                                        .PPsXr-items-center {
-                                                                            align-items: center
-                                                                        }
-
-                                                                        .PPsXr-justify-center {
-                                                                            justify-content: center
-                                                                        }
-
-                                                                        .PPsXr-gap-1 {
-                                                                            gap: .25rem
-                                                                        }
-
-                                                                        .PPsXr-gap-4 {
-                                                                            gap: 1rem
-                                                                        }
-
-                                                                        .PPsXr-py-8 {
-                                                                            padding-top: 2rem;
-                                                                            padding-bottom: 2rem
-                                                                        }
-
-                                                                        .PPsXr-text-sm {
-                                                                            font-size: .875rem
-                                                                        }
-
-                                                                        .PPsXr-text-xs {
-                                                                            font-size: .75rem
-                                                                        }
-
-                                                                        .PPsXr-font-bold {
-                                                                            font-weight: 700
-                                                                        }
-
-                                                                        .PPsXr-font-semibold {
-                                                                            font-weight: 500
-                                                                        }
-
-                                                                        .PPsXr-text-gray-300 {
-                                                                            --tw-text-opacity: 1;
-                                                                            color: rgb(119 143 150/var(--tw-text-opacity))
-                                                                        }
-
-                                                                        @media (min-width:768px) {
-                                                                            .PPsXr-md\:justify-start {
-                                                                                justify-content: flex-start
-                                                                            }
-                                                                        }
-                                                                    </style>
+                                                                
                                                                     <div
                                                                         class="PPsXr-flex PPsXr-flex-wrap PPsXr-gap-4 PPsXr-items-center PPsXr-py-8 PPsXr-justify-center PPsXr-md:justify-start">
                                                                         <div
@@ -687,7 +478,7 @@
                                                                 <p
                                                                     class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                                                     <span
-                                                                        class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>$44.06
+                                                                        class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>${{totalAmount}}
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -700,10 +491,12 @@
                             </div>
                             <div class="flex items-center gap-2 ">
                                 <p class="hidden text-xs font-semibold italic text-gray-100 lg:block">You must complete
-                                    all required fields.</p><button type="submit"
+                                    all required fields.</p>
+                                    <button (click)="onPurchase()" 
                                     class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12"
-                                    disabled="">Purchase</button><button hidden="" type="submit"
-                                    aria-label="Purchase"></button>
+                                   >Purchase</button>
+                                    <!-- <button hidden="" type="submit"
+                                    aria-label="Purchase"></button> -->
                             </div>
                         </div>
                     </div>
