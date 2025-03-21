@@ -17,6 +17,7 @@ import { OrdersComponent } from './Component/orders/orders.component';
 import { PurchaseComponent } from './Component/purchase/purchase.component';
 import { SignInComponent } from './Component/sign-in/sign-in.component';
 import { TimkiemrapComponent } from './Component/timkiemrap/timkiemrap.component';
+import { PaymentCallBackComponent } from './Component/payment-call-back/payment-call-back.component';
 
 export const routes: Routes = [
     {
@@ -39,4 +40,5 @@ export const routes: Routes = [
     { path: 'chon-ve', component: TicketSeatsComponent },
     { path: 'orders', component: OrdersComponent },
     { path: 'thanh-toan', component: PurchaseComponent },
+    { path: 'payment-callback', component: PaymentCallBackComponent }
 ];

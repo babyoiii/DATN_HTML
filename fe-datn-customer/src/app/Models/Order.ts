@@ -25,3 +25,14 @@ export interface Service {
     tickets: TicketReq[];
   }
   
+  export interface PaymentModelReq {
+    orderId: string;
+    amount: number;
+    orderDesc: string;
+    createdDate: string;
+    status: string;
+    paymentTranId: number;
+    bankCode: string;
+    payStatus: string;
+    orderInfo: string; 
+  }

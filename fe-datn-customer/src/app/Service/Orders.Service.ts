@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { OrderModelReq, Service } from '../Models/Order';
+import { OrderModelReq, PaymentModelReq, Service } from '../Models/Order';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,5 +16,8 @@ export class OrdersService {
     }
     createOrder(orderData: OrderModelReq): Observable<any> {
         return this.http.post<any>(`${this.baseUrl}/Movie/CreateOrder`, orderData)
+    }
+    createPayment(orderData: PaymentModelReq): Observable<PaymentResponse> {
+        return this.http.post<any>(`${this.baseUrl}/Movie/create-payment`, orderData);
     }
 }

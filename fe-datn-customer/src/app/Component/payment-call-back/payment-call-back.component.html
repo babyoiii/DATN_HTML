@@ -1,0 +1,33 @@
+<div class="payment-result-container">
+  <div class="payment-result-card">
+    <h2 class="text-center mb-4">Kết quả thanh toán</h2>
+    
+    <div *ngIf="isSuccess; else errorContent">
+      <div class="success-content">
+        <div class="icon-container mb-3">
+          <span class="success-icon">✓</span>
+        </div>
+        <h3>Thanh toán thành công!</h3>
+        <p>Mã đơn hàng: {{ orderId }}</p>
+        <p>Cảm ơn bạn đã thực hiện thanh toán.</p>
+      </div>
+    </div>
+    <ng-template #errorContent>
+      <div class="error-content">
+        <div class="icon-container mb-3">
+          <span class="error-icon">✗</span>
+        </div>
+        <h3>Thanh toán thất bại!</h3>
+        <p>Mã lỗi: {{ responseCode }}</p>
+        <p>Vui lòng thử lại hoặc chọn phương thức thanh toán khác.</p>
+      </div>
+    </ng-template>
+    
+    <div class="action-buttons mt-4">
+      <button class="btn btn-primary" (click)="backToHome()">
+        Quay lại trang chủ
+      </button>
+    </div>
+  </div>
+</div>
+
