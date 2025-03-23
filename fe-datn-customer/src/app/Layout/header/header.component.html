@@ -88,11 +88,16 @@
                                         <path
                                             d="M22.525 0A22.504 22.5 0 0 0 5.647 37.406l.169.197A22.504 22.5 0 1 0 22.525 0zm0 43.088a20.535 20.531 0 0 1-14.937-6.525c1.8-4.95 6.245-6.975 15.134-6.975 11.927 0 14.318 4.753 14.796 6.946a20.535 20.531 0 0 1-14.993 6.554zm.197-15.329c-9.17 0-14.234 2.194-16.54 7.257a20.59 20.588 0 1 1 32.77 0c-1.18-3.038-4.838-7.257-16.23-7.257z">
                                         </path>
-                                    </svg>
-                                    <div
-                                        class="flex flex-grow items-center text-sm font-semibold leading-tight tracking-normal">
-                                        Sign In</div>
-                                </div>
+                                        </svg>
+                                        
+                                        <div class="flex flex-grow items-center text-sm font-semibold leading-tight tracking-normal">
+                                            Sign In</div>
+                                        <!-- Example of sign-in button in header.component.html -->
+                                        <button (click)="openSignIn()" class="sign-in-button">
+                                            Sign In
+                                        </button>
+                                        
+                                        </div>
                             </li>
                             <li aria-label="AMC Stubs" class="flex items-center"><button
                                     id="radix-:r0:-trigger-radix-:r9:" data-state="closed" aria-expanded="false"

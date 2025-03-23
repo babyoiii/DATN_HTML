@@ -18,6 +18,7 @@ import { PurchaseComponent } from './Component/purchase/purchase.component';
 import { SignInComponent } from './Component/sign-in/sign-in.component';
 import { TimkiemrapComponent } from './Component/timkiemrap/timkiemrap.component';
 import { PaymentCallBackComponent } from './Component/payment-call-back/payment-call-back.component';
+import { MovieDetailNghiaComponent } from './Component/movie-detail-nghia/movie-detail-nghia.component';
 
 export const routes: Routes = [
     {
@@ -30,6 +31,7 @@ export const routes: Routes = [
             { path: 'offers', component: OffersComponent },
             { path: 'discounts', component: DiscountsComponent },
             { path: 'on-demand', component: OnDemandComponent },
+            { path: 'movies/:id', component: MovieDetailNghiaComponent},
         ]
     },
     { path: 'showtimes/:id', component: ShowtimesComponent },
@@ -40,5 +42,6 @@ export const routes: Routes = [
     { path: 'chon-ve', component: TicketSeatsComponent },
     { path: 'orders', component: OrdersComponent },
     { path: 'thanh-toan', component: PurchaseComponent },
-    { path: 'payment-callback', component: PaymentCallBackComponent }
+    { path: 'payment-callback', component: PaymentCallBackComponent },
+
 ];

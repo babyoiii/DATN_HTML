@@ -1,0 +1,581 @@
+<div class="document-toast-container"></div>
+<div class="document-alert-popup-container"></div>
+
+<main class="bg-gray-900 text-white">
+  <div *ngIf="movie; else loading">
+
+
+
+
+    <!-- Breadcrumb navigation -->
+    <div class="bg-gray-900 border-b border-gray-800">
+      <div class="mx-auto w-full max-w-6xl px-4 py-3">
+        <nav aria-label="breadcrumb">
+          <ol class="flex items-center space-x-2 text-sm">
+            <li class="flex items-center">
+              <a routerLink="/" class="text-gray-400 hover:text-pink-500 transition duration-200 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                <span>Trang chủ</span>
+              </a>
+            </li>
+            <li class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mx-2 text-gray-500" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+              <a routerLink="/movies" class="text-gray-400 hover:text-pink-500 transition duration-200">
+                Phim
+              </a>
+            </li>
+            <li class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mx-2 text-gray-500" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+              <span class="text-pink-500 font-medium truncate max-w-xs">{{ movie.movieName }}</span>
+            </li>
+            <h3><------ ( Hiện tại nghĩa đang test cái này, khả năng nếu thấy hợp thì cho vào luôn các page khác nhé
+                )</h3>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+
+
+
+    <!-- Hero section with backdrop -->
+    <div class="relative z-10 bg-black text-white">
+      <!-- Backdrop with overlay -->
+      <div class="absolute inset-0 z-0 opacity-40 bg-cover bg-center bg-no-repeat"
+        [style.background-image]="'url(' + (movie.banner || movie.thumbnail) + ')'">
+      </div>
+      <!-- Gradient overlay -->
+      <div class="absolute inset-0 z-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-black/50"></div>
+
+      <div class="relative z-10 container mx-auto px-4 py-8 md:py-12">
+        <div class="flex flex-col md:flex-row items-start gap-8">
+
+
+
+
+
+
+          <!-- Movie poster -->
+          <div
+            class="w-full max-w-[450px] mx-auto md:mx-0 md:w-1/4 lg:w-1/5 rounded-lg overflow-hidden shadow-2xl relative group movie-poster">
+            <img [src]="movie.thumbnail" [alt]="movie.movieName"
+              class="w-full h-auto object-cover transition duration-300 group-hover:scale-105">
+
+            <div *ngIf="movie.trailer" (click)="openTrailer()" class="absolute left-1/2 top-1/2 z-10 h-12 w-12 -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-transform 
+    hover:scale-110 bg-black/30 rounded-full flex items-center justify-center group-hover:bg-black/60">
+              <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8">
+                <g fill="none">
+                  <circle stroke="#FFF" stroke-width="2" fill-opacity=".6" fill="#000" cx="24" cy="24" r="23"></circle>
+                  <path d="M32 24l-12 8V16z" fill="#FFF"></path>
+                </g>
+              </svg>
+            </div>
+          </div>
+
+
+
+
+
+
+
+          <!-- Movie details -->
+          <div class="w-full md:w-2/3 lg:w-3/4 mt-6 md:mt-0">
+            <div
+              class="inline-flex h-6 items-center justify-center rounded-md bg-opacity-80 px-2 py-1 text-xs font-semibold"
+              [ngClass]="{
+                'bg-green-600': movie.status === 0,
+                'bg-yellow-600': movie.status === 1,
+                'bg-red-600': movie.status === 2
+              }">
+              {{ movie.status === 1 ? '16+' : movie.status === 0 ? 'P' : '18+' }}
+            </div>
+
+            <h1 class="mt-3 text-3xl md:text-4xl lg:text-5xl font-bold">{{ movie.movieName }}</h1>
+
+            <ul class="mt-3 flex flex-wrap items-center text-sm md:text-base text-gray-300">
+              <li>{{ movie.movieName }}</li>
+              <li class="mx-2">•</li>
+              <li>{{ movie.releaseDate | date:'yyyy' }}</li>
+              <li class="mx-2">•</li>
+              <li>{{ movie.duration }} phút</li>
+            </ul>
+
+            <!-- <p class="mt-4 text-gray-300 italic">{{ movie.description | slice:0:200 }}...</p> -->
+
+            <div class="mt-5 font-bold text-xl">Nội dung</div>
+            <div class="mt-2 text-sm md:text-base leading-relaxed text-gray-300">
+              {{ movie.description }}
+              <!-- <span class="read-or-hide cursor-pointer ml-2 text-pink-500 hover:underline">...Xem thêm</span> -->
+            </div>
+
+            <div class="mt-6 text-sm text-gray-300">
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                <div>
+                  <div class="font-bold text-lg text-white mb-2">Sản xuất năm</div>
+                  <div class="mt-1 font-bold">{{ movie.releaseDate | date:'dd/MM/yyyy' }}</div>
+                </div>
+                <div>
+
+
+                  <div class="font-bold text-lg text-white mb-2">Thể loại</div>
+                  <div class="flex flex-wrap gap-2">
+                    <span *ngFor="let genre of movie.genres"
+                      class="px-3 py-1 bg-gray-700 text-white rounded-full text-sm hover:bg-gray-600 transition duration-300">
+                      {{ genre.genreName }}
+                    </span>
+                  </div>
+
+
+                  <!-- <div class="mt-1 font-bold">
+                    {{ movie.status === 0 ? 'Phim đang chiếu' : movie.status === 1 ? 'Phim sắp chiếu' : 'Phim ngừng
+                    chiếu' }}
+                  </div> -->
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 flex flex-wrap items-center gap-4">
+              <button *ngIf="movie.trailer" (click)="openTrailer()"
+                class="flex items-center gap-2 px-6 py-3 bg-pink-600 hover:bg-pink-700 transition duration-300 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
+                  <path fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                    clip-rule="evenodd"></path>
+                </svg>
+                <span>Xem trailer</span>
+              </button>
+
+
+
+
+
+
+              <!-- Nút đặt vé ở phần này SƠN tự gắn route nhé -->
+              <!-- Phần này nghĩa đang test chưa thay đổi gì -->
+              <a href="/movies/128797D4-271F-4B2D-8CB5-34EF4FCB2879"
+                class="btn flex items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 transition duration-300 rounded-full"
+                style="background-image: linear-gradient(to right, #8b5cf6, #6d28d9) !important; box-shadow: 0 10px 15px -3px rgba(109, 40, 217, 0.2) !important; position: relative !important; z-index: 10 !important;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
+                  <path fill-rule="evenodd"
+                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                    clip-rule="evenodd"></path>
+                </svg>
+                <span>Đặt vé</span>
+              </a>
+
+
+
+            </div>
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content area -->
+    <div class="container mx-auto px-4 py-8">
+      <div class="grid grid-cols-1 grid-cols-3 gap-8">
+        <!-- Phần nội dung chính (3 columns) -->
+        <div class="col-span-2">
+          <!-- Cast section -->
+
+
+          <section *ngIf="movie.listdienvien && movie.listdienvien.length > 0" class="border-t border-gray-700 py-8">
+            <h2 class="text-2xl font-bold mb-6">Diễn viên & Đoàn làm phim</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+              <div *ngFor="let actor of movie.listdienvien" class="text-center">
+                <div class="mx-auto h-24 w-24 overflow-hidden rounded-full bg-gray-700 border-2 border-gray-600">
+
+
+
+                  <img [src]="actor.photo || 'assets/images/default-avatar.png'" [alt]="actor.name"
+                    class="h-full w-full object-cover transition duration-300 hover:scale-110">
+
+                </div>
+                <div class="mt-3 font-semibold">{{ actor.name }}</div>
+                <div class="text-xs text-gray-400">Diễn viên</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Gallery section -->
+          <section class="border-t border-gray-700 py-8">
+            <h2 class="text-2xl font-bold mb-6">Hình ảnh & Video</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              <a class="block cursor-pointer overflow-hidden rounded-lg bg-gray-800 aspect-video">
+                <img [src]="movie.thumbnail" class="h-full w-full object-cover transition duration-300 hover:scale-105"
+                  loading="lazy">
+              </a>
+              <a *ngIf="movie.banner" class="block cursor-pointer overflow-hidden rounded-lg bg-gray-800 aspect-video">
+                <img [src]="movie.banner" class="h-full w-full object-cover transition duration-300 hover:scale-105"
+                  loading="lazy">
+              </a>
+            </div>
+          </section>
+
+
+
+
+
+
+
+
+
+
+
+          <!-- Comments section -->
+          <section class="border-t border-gray-700 py-8">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+              </svg>
+              Bình luận ({{ totalCommentRecords }})
+            </h2>
+
+            <!-- Loading state -->
+            <div *ngIf="isLoadingComments" class="flex justify-center my-8">
+              <div class="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-pink-500"></div>
+            </div>
+
+            <!-- Error state -->
+            <div *ngIf="commentError" class="bg-red-500 bg-opacity-20 text-red-100 p-4 rounded-lg mb-6">
+              {{ commentError }}
+            </div>
+
+            <!-- Comment list -->
+            <div *ngIf="!isLoadingComments && comments && comments.length > 0; else noComments" class="space-y-6">
+              <div *ngFor="let comment of comments" class="bg-gray-800 rounded-lg p-4">
+
+
+
+                <div class="flex gap-3" style="border-bottom: 1px solid rgba(127, 127, 127, 0.279); padding-bottom: 2rem;">
+                  <!-- User avatar -->
+                  <div class="flex-none">
+                    <div class="h-10 w-10 rounded-full bg-gray-700 overflow-hidden">
+                      <img src="https://miro.medium.com/v2/resize:fit:1024/1*FAXybf4Rt8QXT9o7KES9Zw.png"
+                        alt="User avatar" class="h-full w-full object-cover">
+                    </div>
+                  </div>
+
+                  <!-- Comment content -->
+                  <div class="flex-1">
+                    <div class="flex justify-between items-start">
+                      <div>
+                        <p class="text-white font-semibold">{{ comment.username }}</p>
+                        <p class="text-xs text-gray-400">{{ comment.createDate | relativeTime }}</p>
+                      </div>
+                      <div class="flex items-center">
+                        <!-- <div *ngIf="comment.status === 0" class="bg-green-600 text-xs text-white px-2 py-1 rounded">Hiển
+                          thị</div>
+                        <div *ngIf="comment.status === 1" class="bg-yellow-600 text-xs text-white px-2 py-1 rounded">
+                          Đang duyệt</div>
+                        <div *ngIf="comment.status === 2" class="bg-red-600 text-xs text-white px-2 py-1 rounded">Đã ẩn
+                        </div> -->
+
+                        <!-- Delete button (only for comment owner) -->
+                        <button *ngIf="isCommentOwner(comment.userId)" (click)="deleteComment(comment.id)"
+                          class="ml-2 text-gray-400 hover:text-red-500">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                              d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                              clip-rule="evenodd" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="mt-2 text-gray-300">
+                      {{ comment.content }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pagination -->
+              <div *ngIf="totalCommentRecords > recordsPerPage" class="flex justify-center mt-8">
+                <div class="pagination-container">
+                  <ul class="pagination flex space-x-1">
+                    <li><a (click)="prevCommentPage()"
+                        class="prev cursor-pointer px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded-md">&laquo;</a>
+                    </li>
+                    <li *ngFor="let page of commentPages">
+                      <a (click)="changeCommentPage(page)"
+                        [ngClass]="{ 'bg-pink-600': page === currentCommentPage, 'bg-gray-700 hover:bg-gray-600': page !== currentCommentPage }"
+                        class="cursor-pointer px-3 py-1 text-white rounded-md">
+                        {{ page }}
+                      </a>
+                    </li>
+                    <li><a (click)="nextCommentPage()"
+                        class="next cursor-pointer px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded-md">&raquo;</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <ng-template #noComments>
+              <div class="bg-gray-800 rounded-lg p-6 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-500 mb-4" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                </svg>
+                <p class="text-gray-400">Chưa có bình luận nào cho phim này</p>
+                <p class="text-gray-500 text-sm mt-2">Hãy là người đầu tiên bình luận!</p>
+              </div>
+            </ng-template>
+
+            <!-- Comment form (only for logged-in users) -->
+            <div *ngIf="isLoggedIn" class="mt-8">
+              <h3 class="text-xl font-semibold mb-4">Thêm bình luận</h3>
+              <form (submit)="submitComment($event)">
+                <textarea [(ngModel)]="newComment" name="comment" rows="4"
+                  class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-white placeholder-gray-400 focus:border-pink-500 focus:ring focus:ring-pink-500 focus:ring-opacity-50"
+                  placeholder="Viết bình luận của bạn..."></textarea>
+                <div class="mt-3 flex justify-end">
+                  <button type="submit" [disabled]="isSubmittingComment || !newComment.trim()"
+                    class="px-6 py-2 bg-pink-600 hover:bg-pink-700 transition duration-300 rounded-lg text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span *ngIf="isSubmittingComment">
+                      <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline-block"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                      </svg>
+                      Đang gửi...
+                    </span>
+                    <span *ngIf="!isSubmittingComment">Gửi bình luận</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div *ngIf="!isLoggedIn" class="mt-8 bg-gray-800 rounded-lg p-4 text-center">
+              <p class="text-gray-300 mb-2">Bạn cần đăng nhập để bình luận</p>
+              <a routerLink="/login"
+                class="px-6 py-2 bg-pink-600 hover:bg-pink-700 transition duration-300 rounded-lg text-white font-semibold inline-block">
+                Đăng nhập
+              </a>
+            </div>
+          </section>
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+        <!-- Phần Related movies (1 column) -->
+        <div class="col-span-1">
+          <div class="bg-gray-800 rounded-lg p-6 sticky top-4"
+            style="position: sticky !important; top: 20px !important; z-index: 10 !important; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3) !important; border-radius: 0.5rem !important;">
+            <h2 class="text-xl font-bold mb-4 border-b border-gray-700 pb-3"
+              style="color: white !important; font-size: 1.25rem !important; font-weight: bold !important;">Phim đang
+              chiếu</h2>
+            <div class="space-y-4">
+              <div *ngFor="let relatedMovie of relatedMovies; let i = index" class="group">
+                <div class="flex gap-3">
+                  <div class="w-20 flex-none">
+                    <a [routerLink]="'/movies/' + relatedMovie.id" class="block relative">
+                      <div class="overflow-hidden rounded-md"
+                        style="border-radius: 0.375rem !important; overflow: hidden !important;">
+                        <img [src]="relatedMovie.thumbnail" [alt]="relatedMovie.movieName"
+                          class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                          style="height: 100% !important; width: 100% !important; object-fit: cover !important; transition: transform 0.3s !important;">
+                        <div
+                          class="absolute bottom-1 left-1 z-10 w-5 h-5 flex items-center justify-center bg-pink-600 rounded-full text-xs font-bold"
+                          style="position: absolute !important; bottom: 0.25rem !important; left: 0.25rem !important; z-index: 10 !important; width: 1.25rem !important; height: 1.25rem !important; display: flex !important; align-items: center !important; justify-content: center !important; background-color: #db2777 !important; border-radius: 9999px !important; font-size: 0.75rem !important; font-weight: bold !important;">
+                          {{ i + 1 }}
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="flex-1" style="flex: 1 1 0% !important;">
+                    <div class="flex gap-2 mb-1"
+                      style="display: flex !important; gap: 0.5rem !important; margin-bottom: 0.25rem !important;">
+                      <div class="inline-flex h-5 items-center justify-center rounded-sm px-1 text-xs font-semibold"
+                        [ngClass]="{
+                  'bg-green-600': relatedMovie.status === 0,
+                  'bg-yellow-600': relatedMovie.status === 1,
+                  'bg-red-600': relatedMovie.status === 2
+                }" style="display: inline-flex !important; height: 1.25rem !important; align-items: center !important; justify-content: center !important; border-radius: 0.125rem !important; padding-left: 0.25rem !important; padding-right: 0.25rem !important; font-size: 0.75rem !important; font-weight: 600 !important;">
+                        {{ relatedMovie.status === 0 ? 'P' : relatedMovie.status === 1 ? '16+' : '18+' }}
+                      </div>
+                    </div>
+                    <a [routerLink]="'/movies/' + relatedMovie.id"
+                      class="block font-semibold leading-tight group-hover:text-pink-500 transition duration-300"
+                      style="display: block !important; font-weight: 600 !important; line-height: 1.25 !important; transition: color 0.3s !important;">
+                      {{ relatedMovie.movieName }}
+                    </a>
+                    <div class="mt-1 text-xs text-gray-400"
+                      style="margin-top: 0.25rem !important; font-size: 0.75rem !important; color: #9ca3af !important;">
+                      {{ relatedMovie.status === 0 ? 'Đang chiếu' : relatedMovie.status === 1 ? 'Sắp chiếu' : 'Ngừng
+                      chiếu' }}
+                    </div>
+                    <div class="mt-1 flex items-center text-xs text-gray-400"
+                      style="margin-top: 0.25rem !important; display: flex !important; align-items: center !important; font-size: 0.75rem !important; color: #9ca3af !important;">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                        class="mr-1 h-4 w-4 text-yellow-500"
+                        style="margin-right: 0.25rem !important; height: 1rem !important; width: 1rem !important; color: #eab308 !important;">
+                        <path
+                          d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                        </path>
+                      </svg>
+                      {{ relatedMovie.duration }} phút
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+  </div>
+
+
+  <ng-template #loading>
+    <div class="flex justify-center items-center min-h-[70vh]">
+      <div class="flex flex-col items-center">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-pink-500 mb-4"></div>
+        <p class="text-gray-400 text-lg">Đang tải thông tin phim...</p>
+      </div>
+    </div>
+  </ng-template>
+
+
+
+
+
+  <!-- Trailer modal với container thông tin phim -->
+  <div *ngIf="isTrailerOpen" class="fixed inset-0 z-[99999] backdrop-blur-sm backdrop-brightness-20"
+    style="position: fixed !important; z-index: 999999 !important; display: flex !important; align-items: center !important; justify-content: center !important;">
+    <div class="relative w-full mx-auto flex flex-col items-center"
+      style="width: 80% !important; max-width: 1000px !important; position: relative !important; z-index: 999999 !important;">
+
+      <button (click)="closeTrailer()"
+        style="position: absolute !important; top: -3rem !important; right: 0 !important; z-index: 9999999 !important;"
+        class="text-white hover:text-red-500 p-2 transition-colors duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 h-8">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <!-- Video container -->
+      <div class="w-full bg-black overflow-hidden shadow-2xl rounded-lg"
+        style="height: 60vh !important; max-height: 600px !important; position: relative !important; z-index: 999999 !important;">
+        <iframe *ngIf="isYoutubeTrailer && safeTrailerUrl" [src]="safeTrailerUrl" class="w-full h-full" frameborder="0"
+          style="z-index: 999999 !important;"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+        <video *ngIf="!isYoutubeTrailer && safeTrailerUrl" [src]="safeTrailerUrl" class="w-full h-full" controls
+          autoplay style="z-index: 999999 !important;">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Thông tin phim container -->
+      <div
+        class="relative z-[9999] flex flex-nowrap bg-black/40 px-6 py-4 backdrop-blur sm:space-x-5 w-full mt-4 rounded-lg shadow-xl"
+        style="background-color: rgb(30, 30, 30) !important; z-index: 999999 !important; width: 100% !important; margin-top: 1rem !important; border-radius: 0.5rem !important; box-shadow: 0 20px 25px -5px rgb(0, 0, 0) !important;">
+        <div class="hidden w-20 min-w-0 flex-shrink-0 sm:block"
+          style="display: block !important; width: 5rem !important; min-width: 5rem !important; flex-shrink: 0 !important;">
+          <div class="aspect-w-7 aspect-h-10 w-full"
+            style="position: relative !important; width: 100% !important; padding-bottom: 150% !important;">
+            <img [src]="movie.thumbnail" [alt]="movie.movieName"
+              class="h-full w-full object-cover object-center rounded-md"
+              style="position: absolute !important; height: 100% !important; width: 100% !important; object-fit: cover !important; border-radius: 0.375rem !important; top: 0 !important; left: 0 !important;"
+              loading="lazy">
+          </div>
+        </div>
+        <div class="min-w-0" style="min-width: 0 !important; margin-left: 1.25rem !important;">
+          <h3 class="text-xl font-bold text-white"
+            style="font-size: 1.25rem !important; font-weight: bold !important; color: white !important; margin: 0 !important;">
+            {{ movie.movieName }}
+
+          </h3>
+          <p class="mt-2 line-clamp-3 text-sm text-white text-opacity-70"
+            style="margin-top: 0.5rem !important; font-size: 0.875rem !important; color: rgba(255,255,255,0.7) !important; overflow: hidden !important; display: -webkit-box !important; -webkit-line-clamp: 3 !important; -webkit-box-orient: vertical !important;">
+            {{ movie.description }}
+          </p>
+          <div class="mt-3 flex space-x-3"
+            style="margin-top: 0.75rem !important; display: flex !important; gap: 0.75rem !important;">
+
+
+
+            <!-- Phần đặt vé trong này sẽ cài ROUTE SAU -->
+            <a class="btn inline-block cursor-pointer rounded-md bg-pink-700 px-5 py-1.5 text-center text-sm font-bold text-white text-opacity-90 transition-all hover:bg-pink-800"
+              style="display: inline-block !important; cursor: pointer !important; border-radius: 0.375rem !important; background-color: #911d19 !important; padding: 0.375rem 1.25rem !important; text-align: center !important; font-size: 0.875rem !important; font-weight: bold !important; color: rgba(255,255,255,0.9) !important; transition: all 0.3s !important;">
+              Đặt vé
+            </a>
+            <button (click)="closeTrailer()"
+              class="btn inline-block cursor-pointer rounded-md bg-gray-500 px-5 py-1.5 text-center text-sm font-bold text-gray-100 text-opacity-90 transition-all hover:bg-gray-600"
+              style="display: inline-block !important; cursor: pointer !important; border-radius: 0.375rem !important; background-color: #6b7280 !important; padding: 0.375rem 1.25rem !important; text-align: center !important; font-size: 0.875rem !important; font-weight: bold !important; color: rgba(243,244,246,0.9) !important; transition: all 0.3s !important;">
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</main>
