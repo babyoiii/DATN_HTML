@@ -2,7 +2,8 @@
     class="fixed inset-0 z-[99999] backdrop-blur-sm backdrop-brightness-20 flex items-center justify-center">
     <div class="relative max-w-[800px] w-[90%] max-h-[90vh] bg-black rounded border border-gray-700 overflow-hidden">
         <header
-            class="sticky top-0 z-10 flex items-center border-b border-gray-700 bg-black px-8 py-4 text-500 headline">
+            class="sticky top-0 z-10 flex items-center border-b border-gray-700 bg-black px-8 py-4 text-500 headline"
+            style="color: white !important;">
             Sign In
             <button type="button" (click)="closeModal()"
                 class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 text-white hocus:text-blue-500 text-sm md:text-base ml-auto aspect-square rounded-full bg-black p-3"
@@ -21,18 +22,19 @@
                 <div class="flex flex-wrap items-start gap-4">
                     <label
                         class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed min-w-[300px] flex-1">
-                        <span class="label">Email</span>
+                        <span class="label" style="color: white !important;">Email</span>
                         <div class="amc-input amc-input--box">
                             <input class="input" [(ngModel)]="SignInData.userName" id="email" autocomplete="email"
-                                type="text" name="email">
+                                type="text" name="email" style="color: rgb(177, 177, 177) !important;">
                         </div>
                     </label>
                     <label
                         class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed min-w-[300px] flex-1">
-                        <span class="label">Password</span>
+                        <span class="label" style="color: white !important;">Password</span>
                         <div class="amc-input amc-input--box">
                             <input class="input" id="password" autocomplete="current-password" type="password"
-                                name="password" [(ngModel)]="SignInData.password">
+                                name="password" [(ngModel)]="SignInData.password"
+                                style="color: rgb(177, 177, 177) !important;">
                             <button type="button" class="cursor-pointer" aria-label="Show Password" tabindex="-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
                                     width="1em" height="100%" class="transition-all duration-200 hover:fill-blue-500">
@@ -52,10 +54,11 @@
                     class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-sm md:text-base">
                     Forgot Password?
                 </button>
-                <p>Not a member? <a
+
+                <p style="color: white !important;">Not a member? <a
                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-sm md:text-base"
                         href="/sign-up">Join Now</a> and start enjoying savings, rewards, and more at movies.</p>
-                <p>Already joined AMC Stubs at a theatre? <a
+                <p style="color: white !important;">Already joined AMC Stubs at a theatre? <a
                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-sm md:text-base"
                         href="/sign-up/register">Register your account</a> to create a login.</p>
                 <div class="flex flex-wrap items-center gap-4 py-4 justify-end">
