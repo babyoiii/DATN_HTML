@@ -1,30 +1,34 @@
 import { Component } from '@angular/core';
-import { AuthServiceService } from '../../Service/auth-service.service';
-import { SignIn } from '../../Models/AuthModel';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthServiceService } from '../../Service/auth-service.service';
+import { ModalService } from '../../Service/modal.service';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent {
-  SignInData: SignIn = {
+  SignInData: any = {
     userName: '',
     password: ''
   };
 
-  constructor(private AuthService: AuthServiceService, private http: HttpClient, private router: Router) {}
+  constructor(
+    private authService: AuthServiceService, 
+    private router: Router,
+    public modalService: ModalService
+  ) {}
 
   onSubmit() {
-    console.log(">> signInData: ",this.SignInData);
-    this.AuthService.SignIn(this.SignInData).subscribe({
+    console.log(">> signInData: ", this.SignInData);
+    this.authService.SignIn(this.SignInData).subscribe({
       next: (result: any) => {
-        console.log('Response:', result); // nó chưua log đc vào đây anh
+        console.log('Response:', result);
         console.log('Message:', result.message);
         console.log('Data:', result.data);
 
@@ -34,15 +38,20 @@ export class SignInComponent {
           console.log('Refresh Token:', refreshToken);
           console.log('Roles:', roles);
 
-          this.AuthService.saveToken(accessToken);
-          this.router.navigate(['/']); // Navigate to the desired route
+          this.authService.saveToken(accessToken);
+          this.modalService.closeSignInModal();
+          this.router.navigate(['/']); 
         } else {
           console.error('No data found in the response');
         }
       },
-      error: (error) => {
+      error: (error: any) => {
         console.log('Error:', error);
       }
     });
+  }
+  
+  closeModal() {
+    this.modalService.closeSignInModal();
   }
 }
