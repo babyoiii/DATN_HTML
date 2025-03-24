@@ -3,11 +3,14 @@ import { CommonModule } from '@angular/common';
 import { DurationFormatPipe } from '../../duration-format.pipe';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SeatService } from '../../Service/seat.service';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil, catchError, finalize } from 'rxjs/operators';
 import { SeatInfo } from '../../Models/SeatModel';
 import { GroupByPipe } from '../../GroupByPipe.pipe';
 import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogData, NotificationDialogComponent } from '../notification-dialog/notification-dialog.component';
+import { SeatDataService } from '../../Service/SeatData.service';
 
 enum SeatStatus {
   Available = 0,
@@ -31,10 +34,8 @@ interface SeatStatusUpdateRequest {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SeatsComponent implements OnInit, OnDestroy {
-  // Quản lý lifecycle của subscriptions
   private readonly destroy$ = new Subject<void>();
 
-  // Các thuộc tính
   seats: SeatInfo[] = [];
   seatsCore: SeatInfo[] = [];
   selectedSeats: SeatInfo[] = [];
@@ -47,11 +48,14 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
   constructor(
     private seatService: SeatService,
+    private seatDataService: SeatDataService,
     private route: ActivatedRoute,
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private dialog: MatDialog 
   ) { }
+
   ngOnInit(): void {
     this.route.params
       .pipe(takeUntil(this.destroy$))
@@ -59,9 +63,56 @@ export class SeatsComponent implements OnInit, OnDestroy {
         const showtimeId = params['id'];
         localStorage.setItem('currentShowtimeId', showtimeId);
         const userId = this.ensureUserId();
-        this.loadSeats(showtimeId, userId);
+        console.log(userId);
+        
+        if (showtimeId) {
+          const navigation = this.router.getCurrentNavigation();
+          if (navigation?.extras.state) {
+            const state = navigation.extras.state as { seats: SeatInfo[], selectedSeats: SeatInfo[], totalAmount: number };
+            this.seats = state.seats;
+            this.selectedSeats = state.selectedSeats;
+            this.totalAmount = state.totalAmount;
+            this.isLoading = false;
+            this.cdr.markForCheck();
+          } else {
+            this.loadSeats(showtimeId, userId);
+          }
+        }
       });
+
+    const shouldReload = sessionStorage.getItem('reloadOnce');
+    if (shouldReload) {
+      sessionStorage.removeItem('reloadOnce'); 
+      this.reloadCurrentRoute();
+    }
+
+    this.seatDataService.seats$.pipe(takeUntil(this.destroy$)).subscribe(seats => {
+      this.seats = seats;
+      this.cdr.markForCheck();
+    });
+
+    this.seatDataService.selectedSeats$.pipe(takeUntil(this.destroy$)).subscribe(selectedSeats => {
+      this.selectedSeats = selectedSeats;
+      this.cdr.markForCheck();
+    });
+    this.seatDataService.seatCore$.pipe(takeUntil(this.destroy$)).subscribe(seatCore => {
+      this.seatsCore = seatCore;
+      this.cdr.markForCheck();
+    });
+
+    this.seatDataService.totalAmount$.pipe(takeUntil(this.destroy$)).subscribe(totalAmount => {
+      this.totalAmount = totalAmount;
+      this.cdr.markForCheck();
+    });
   }
+
+  private reloadCurrentRoute(): void {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+  }
+
   private loadSeats(showtimeId: string, userId: string): void {
     this.seats = [];
     this.selectedSeats = [];
@@ -69,6 +120,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.error = null;
     this.cdr.markForCheck();
+
     const selectedSeatsStr = localStorage.getItem('selectedSeats');
     const selectedSeats = selectedSeatsStr ? JSON.parse(selectedSeatsStr) : [];
 
@@ -78,7 +130,6 @@ export class SeatsComponent implements OnInit, OnDestroy {
   }
 
   private initializeWebSocket(showtimeId: string, userId: string): void {
-    // Kết nối WebSocket
     this.seatService.connect(showtimeId, userId);
 
     this.seatService.getMessages()
@@ -104,7 +155,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
       .pipe()
       .subscribe({
         next: (count: number | null) => {
-          if (count !== null) {
+          if (count !== null && count > 0) {
             this.handleCountdown(count);
           }
         },
@@ -113,12 +164,19 @@ export class SeatsComponent implements OnInit, OnDestroy {
   }
 
   private processSeatData(data: SeatInfo[]): void {
-    this.seats = this.filterAndSortSeats([...data].flat());
+
     this.seatsCore = [...data].flat();
+    this.seatDataService.setSeatCore(this.seatsCore);
+    this.seats = this.filterAndSortSeats(this.seatsCore);
     this.selectedSeats = this.seats.filter(seat => seat.Status === SeatStatus.Selected);
     this.groupSeatsByRow();
     this.calculateTotal();
     this.cdr.markForCheck();
+  
+    // Save seat data to the service
+    this.seatDataService.setSeats(this.seats);
+    this.seatDataService.setSelectedSeats(this.selectedSeats);
+    this.seatDataService.setTotalAmount(this.totalAmount);
   }
 
   private groupSeatsByRow(): void {
@@ -143,13 +201,15 @@ export class SeatsComponent implements OnInit, OnDestroy {
   }
 
   private handleCountdown(count: number): void {
-  
     const minutes = Math.floor(count / 60);
     const seconds = count % 60;
     this.countdown = `${minutes}:${seconds.toString().padStart(2, '0')}`;
     this.cdr.markForCheck();
+    if (count === 0) {
+      this.notifyAndRedirect();
+    }
   }
-  
+
   private handleCountdownError(error: any): void {
     console.error('Lỗi khi nhận countdown:', error);
   }
@@ -178,7 +238,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
   }
 
   toggleSeatStatus(seat: SeatInfo): void {
-    if (seat.Status === SeatStatus.Unavailable || seat.Status === SeatStatus.Booked) {
+    if (seat.Status !== SeatStatus.Available && seat.Status !== SeatStatus.Selected) {
       return;
     }
 
@@ -186,14 +246,14 @@ export class SeatsComponent implements OnInit, OnDestroy {
     const newStatus = seat.Status === SeatStatus.Available
       ? SeatStatus.Selected
       : SeatStatus.Available;
-    
+
     if (newStatus === SeatStatus.Selected) {
       const pairedSeat = this.findPairedSeat(seat);
-    
+
       const totalSelectedSeats = this.selectedSeats.reduce((count, s) => {
-        return count + (s.PairId ? 2 : 1); 
+        return count + (s.PairId ? 2 : 1);
       }, 0);
-    
+
       const seatsToAdd = pairedSeat ? 2 : 1;
       if (totalSelectedSeats + seatsToAdd > 8) {
         this.toastr.warning('Bạn chỉ được chọn tối đa 8 ghế!', 'Cảnh báo');
@@ -264,10 +324,15 @@ export class SeatsComponent implements OnInit, OnDestroy {
         return '';
     }
   }
-
-  // Các phương thức hỗ trợ khác
+  private notifyAndRedirect(): void {
+    this.toastr.warning('Thời gian giữ ghế đã hết, bạn sẽ được chuyển hướng.', 'Cảnh báo');
+    setTimeout(() => {
+      this.router.navigate(['/']); 
+    }, 3000); 
+  }
   getSeatNameByPairId(pairId: string): string | undefined {
-    return this.seatsCore.find(seat => seat.SeatId === pairId)?.SeatName;
+    var result = this.seatsCore.find(seat => seat.SeatId === pairId)?.SeatName;
+    return result;
   }
 
   getRowLabel(rowNumber: number): string {
@@ -276,31 +341,29 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
   private filterAndSortSeats(seats: SeatInfo[]): SeatInfo[] {
     const displayedSeats = new Set<string>();
-
-    // Sắp xếp theo hàng và cột
+  
     const sortedSeats = seats.sort((a, b) => {
       if (a.RowNumber === b.RowNumber) {
         return a.ColNumber - b.ColNumber;
       }
       return a.RowNumber - b.RowNumber;
     });
-
+  
     return sortedSeats.filter(seat => {
       if (!seat.PairId) {
         return true;
       }
-
+  
       const seatPairKey = [seat.SeatId, seat.PairId].sort().join('-');
       if (displayedSeats.has(seatPairKey)) {
         return false;
       }
-
+  
       displayedSeats.add(seatPairKey);
       return true;
     });
   }
 
-  // Validate việc chọn ghế
   validateRowSeats(seats: SeatInfo[]): boolean {
     const hasSelected = seats.some(seat => seat.Status === SeatStatus.Selected);
     if (!hasSelected) return true;
@@ -313,7 +376,12 @@ export class SeatsComponent implements OnInit, OnDestroy {
       if (occupancy[i] === 0) {
         const leftOccupied = (i === 0) ? true : (occupancy[i - 1] === 1);
         const rightOccupied = (i === seats.length - 1) ? true : (occupancy[i + 1] === 1);
-        if (leftOccupied && rightOccupied) {
+
+        const seat = seats[i];
+        const pairedSeat = this.findPairedSeat(seat);
+        const isPairedSeatSelected = pairedSeat && pairedSeat.Status === SeatStatus.Selected;
+
+        if (leftOccupied && rightOccupied && !isPairedSeatSelected) {
           this.toastr.error(`Không thể bỏ trống ghế lẻ ở hàng ${this.getRowLabel(seats[i].RowNumber)} số ${seats[i].ColNumber}`, 'Lỗi');
           return false;
         }
@@ -322,14 +390,19 @@ export class SeatsComponent implements OnInit, OnDestroy {
     return true;
   }
 
+  showNotification(type: 'success' | 'error' | 'warning', message: string): void {
+    const dialogData: DialogData = { type, message };
+    this.dialog.open(NotificationDialogComponent, {
+      data: dialogData
+    });
+  }
+
   validateSeats(): boolean {
-    // Kiểm tra xem có ghế nào được chọn không
     if (this.selectedSeats.length === 0) {
-      this.toastr.warning('Vui lòng chọn ít nhất một ghế!', 'Cảnh báo');
+      this.showNotification('warning', 'Vui lòng chọn ít nhất một ghế!');
       return false;
     }
 
-    // Kiểm tra từng hàng có ghế được chọn
     for (const row of this.Rows) {
       const rowSeats = this.seatsPerRow[row];
       if (!this.validateRowSeats(rowSeats)) {
@@ -344,16 +417,16 @@ export class SeatsComponent implements OnInit, OnDestroy {
     if (this.validateSeats()) {
       const selectedSeatsInfo = this.selectedSeats.flatMap(seat => {
         const pairedSeat = this.findPairedSeat(seat);
-  
+
         if (!seat.SeatStatusByShowTimeId) {
           return [];  
         }
-  
+
         if (pairedSeat && seat.PairId) {
           const isPairedAlreadyAdded = this.selectedSeats.some(
             (s) => s.SeatId === pairedSeat.SeatId
           );
-  
+
           if (!isPairedAlreadyAdded && pairedSeat.SeatStatusByShowTimeId) {
             return [
               {
@@ -371,7 +444,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
             ];
           }
         }
-  
+
         return {
           seatId: seat.SeatStatusByShowTimeId,
           seatName: seat.SeatName,
@@ -379,10 +452,9 @@ export class SeatsComponent implements OnInit, OnDestroy {
           SeatTypeName: seat.SeatTypeName
         };
       });
-  
+
       localStorage.setItem('selectedSeats', JSON.stringify(selectedSeatsInfo));
-      this.router.navigate(['/orders']);
+      this.router.navigate(['/orders'], { state: { seats: this.seats, selectedSeats: this.selectedSeats, totalAmount: this.totalAmount } });
     }
   }
-  
 }

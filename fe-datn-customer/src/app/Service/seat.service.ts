@@ -217,6 +217,9 @@ export class SeatService {
   getList(): void {
     this.sendMessage('GetList');
   }
+  payment(): void {
+    this.sendMessage('Payment');
+  }
 
   joinRoom(): void {
     this.sendMessage('JoinRoom');
@@ -270,5 +273,14 @@ export class SeatService {
     this.currentUserId = null;
     this.isConnected = false;
     this.reconnectAttempts = 0;
+  }
+  disconnect(): void {
+    if (this.socket) {
+      this.socket.close();
+      this.socket = null;
+      this.isConnected = false;
+      console.log('WebSocket connection disconnected');
+    }
+ 
   }
 }

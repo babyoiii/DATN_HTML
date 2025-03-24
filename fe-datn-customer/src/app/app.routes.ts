@@ -18,7 +18,6 @@ import { PurchaseComponent } from './Component/purchase/purchase.component';
 import { SignInComponent } from './Component/sign-in/sign-in.component';
 import { TimkiemrapComponent } from './Component/timkiemrap/timkiemrap.component';
 import { PaymentCallBackComponent } from './Component/payment-call-back/payment-call-back.component';
-
 export const routes: Routes = [
     {
         path: '', component: MainComponent, children: [

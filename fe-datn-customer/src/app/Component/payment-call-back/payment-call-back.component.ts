@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { OrdersService } from '../../Service/Orders.Service';
 import { OrderModelReq } from '../../Models/Order';
 import { ToastrService } from 'ngx-toastr';
-import { log } from 'node:console';
+import { SeatService } from '../../Service/seat.service';
 
 @Component({
   selector: 'app-payment-callback',
@@ -24,7 +24,8 @@ export class PaymentCallBackComponent implements OnInit {
     private router: Router,
     private ordersService: OrdersService,
     private http: HttpClient,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private seatService: SeatService // Inject SeatService
   ) {}
 
   ngOnInit() {
@@ -32,11 +33,10 @@ export class PaymentCallBackComponent implements OnInit {
       this.responseCode = params['vnp_ResponseCode'];
       this.orderId = params['vnp_TxnRef'];
       const orderDataString = localStorage.getItem('orderDataPayment');
-      console.log(orderDataString,'dataaaaa');
+      console.log(orderDataString, 'dataaaaa');
       
       this.isSuccess = this.responseCode === '00';
-      console.log('🔔 [PaymentCallBackComponent] - responseCode:', this.responseCode);
-      if (this.isSuccess = true) {
+      if (this.isSuccess) {
         this.createOrder();
       } else {
         this.toastr.error('❌ Thanh toán thất bại.', "Thông Báo");
@@ -54,6 +54,9 @@ export class PaymentCallBackComponent implements OnInit {
             this.toastr.success('✅ Đơn hàng đã được tạo thành công:', "Thông Báo!");
             localStorage.removeItem('selectedSeats');
             localStorage.removeItem('orderData');
+            localStorage.removeItem('orderDataPayment');
+            localStorage.removeItem('userId');
+            // this.seatService.payment(); // Call the payment method
             this.router.navigate(['/']);
           },
           error: (error) => {
