@@ -1,5 +1,6 @@
 <div *ngIf="modalService.showSignInModal$ | async"
-    class="fixed inset-0 z-[99999] backdrop-blur-sm backdrop-brightness-20 flex items-center justify-center">
+    class="fixed inset-0 z-[99999] backdrop-blur-sm backdrop-brightness-20"
+    style="position: fixed !important; z-index: 999999 !important; display: flex !important; align-items: center !important; justify-content: center !important;">
     <div class="relative max-w-[800px] w-[90%] max-h-[90vh] bg-black rounded border border-gray-700 overflow-hidden">
         <header
             class="sticky top-0 z-10 flex items-center border-b border-gray-700 bg-black px-8 py-4 text-500 headline"
@@ -57,10 +58,10 @@
 
                 <p style="color: white !important;">Not a member? <a
                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-sm md:text-base"
-                        href="/sign-up">Join Now</a> and start enjoying savings, rewards, and more at movies.</p>
+                        href="/dangki">Join Now</a> and start enjoying savings, rewards, and more at movies.</p>
                 <p style="color: white !important;">Already joined AMC Stubs at a theatre? <a
                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-sm md:text-base"
-                        href="/sign-up/register">Register your account</a> to create a login.</p>
+                        href="/dangki">Register your account</a> to create a login.</p>
                 <div class="flex flex-wrap items-center gap-4 py-4 justify-end">
                     <button (click)="onSubmit()" type="submit"
                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">
