@@ -1,54 +1,327 @@
-<div>
 <dialog
-        class="overflow-x-hidden rounded border border-gray-700 bg-black p-0 text-white backdrop:bg-black backdrop:opacity-50 [&amp;:has(.modal-loader)]:border-0 [&amp;:has(.modal-loader)]:bg-transparent"
-        style="max-width: 97dvw; max-height: 97dvh;" >
-        <div class="h-[800px] max-h-[97dvh] w-[99dvw] max-w-[650px]">
-            <header
-                class="sticky top-0 z-10 flex items-center border-b border-gray-700 bg-black px-8 py-4 text-500 headline"
-                data-modal-header="true">
-                <h1>Find a Theatre</h1><button type="button"
-                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 text-white hocus:text-blue-500 text-sm md:text-base ml-auto aspect-square rounded-full bg-black p-3"
-                    aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
-                        viewBox="0 0 45 45" width="1em" height="100%" class="h-full w-full">
-                        <title>Close</title>
-                        <path stroke-width="4.0358"
-                            d="M40.341 4.769a1.112 1.112 0 0 1-.022 1.587L24.071 22.604 40.32 38.85a1.112 1.112 0 0 1-1.566 1.566L22.506 24.169 6.236 40.417a1.112 1.112 0 0 1-1.565-1.566l16.27-16.247L4.67 6.356a1.125 1.125 0 0 1-.303-.767A1.13 1.13 0 0 1 5.49 4.465c.285 0 .56.11.768.304l16.248 16.269 16.268-16.27a1.117 1.117 0 0 1 1.566 0Z">
-                        </path>
-                    </svg></button>
-            </header>
-            <div class="px-8 py-8 relative grid content-start gap-4 pt-4" data-modal-body="true">
-                <form role="search" aria-label="Search for Your Theatre" class="sticky top-2 z-10 bg-black py-2 "><label
-                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed flex-1"><span
-                            class="sr-only">Search for theatres by city, zip or name</span>
-                        <div class="amc-input amc-input--box"><input class="input"
-                                placeholder="Search by City, Zip or Theatre" type="text" name="query"><button
-                                type="submit" disabled=""
-                                class="transition-colors hover:text-blue-500 disabled:brightness-25 disabled:grayscale"><svg
-                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
-                                    width="1em" height="100%">
-                                    <title>Submit</title>
-                                    <path
-                                        d="M37.151 17.176A17.176 17.176 0 1 0 19.976 34.35 17.204 17.204 0 0 0 37.15 17.176zM19.976 32.27A15.095 15.095 0 1 1 35.07 17.176 15.095 15.095 0 0 1 19.976 32.27zm13.493.393a1.05 1.05 0 0 0-1.63 1.322l8.573 10.625a1.05 1.05 0 1 0 1.63-1.32z">
-                                    </path>
-                                </svg></button></div>
-                    </label></form><button type="button"
-                    class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white flex items-center gap-2 text-sm md:text-base"><svg
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em"
-                        height="100%">
-                        <path
-                            d="M45 22.5a1.012 1.012 0 0 0-1.013-1.012h-4.612A16.875 16.875 0 0 0 23.512 5.625V1.013a1.012 1.012 0 0 0-2.024 0v4.612A16.875 16.875 0 0 0 5.963 21.488h-4.95a1.012 1.012 0 0 0 0 2.024H5.99A16.706 16.706 0 0 0 21.488 39.01v4.978a1.012 1.012 0 0 0 2.024 0v-4.95a16.875 16.875 0 0 0 15.863-15.524h4.64A1.012 1.012 0 0 0 45 22.5zM22.669 37.097A14.766 14.766 0 1 1 37.434 22.33 14.794 14.794 0 0 1 22.67 37.097z">
-                        </path>
-                        <path
-                            d="M22.669 12.769a9.563 9.563 0 1 0 9.562 9.562 9.59 9.59 0 0 0-9.562-9.562zm0 17.128a7.566 7.566 0 1 1 7.565-7.538 7.566 7.566 0 0 1-7.565 7.538z">
-                        </path>
-                    </svg>Use Current Location</button>
-                <form>
-                    <div class="flex flex-wrap items-center gap-4 justify-end sticky bottom-0 bg-black p-4"><button
-                            type="submit"
-                            class="text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12 hidden"
-                            disabled="">Continue</button></div>
-                </form>
-            </div>
+    class="overflow-x-hidden rounded border border-gray-700 bg-black p-0 text-white backdrop:bg-black backdrop:opacity-50 [&amp;:has(.modal-loader)]:border-0 [&amp;:has(.modal-loader)]:bg-transparent"
+    open="" style="max-width: 97dvw; max-height: 97dvh;">
+    <div class="h-[800px] max-h-[97dvh] w-[99dvw] max-w-[650px]">
+        <header
+            class="sticky top-0 z-10 flex items-center border-b border-gray-700 bg-black px-8 py-4 text-500 headline"
+            data-modal-header="true">
+            <h1>Find a Theatre</h1><button type="button"
+                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 text-white hocus:text-blue-500 text-sm md:text-base ml-auto aspect-square rounded-full bg-black p-3"
+                aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
+                    viewBox="0 0 45 45" width="1em" height="100%" class="h-full w-full">
+                    <title>Close</title>
+                    <path stroke-width="4.0358"
+                        d="M40.341 4.769a1.112 1.112 0 0 1-.022 1.587L24.071 22.604 40.32 38.85a1.112 1.112 0 0 1-1.566 1.566L22.506 24.169 6.236 40.417a1.112 1.112 0 0 1-1.565-1.566l16.27-16.247L4.67 6.356a1.125 1.125 0 0 1-.303-.767A1.13 1.13 0 0 1 5.49 4.465c.285 0 .56.11.768.304l16.248 16.269 16.268-16.27a1.117 1.117 0 0 1 1.566 0Z">
+                    </path>
+                </svg></button>
+        </header>
+        <div class="px-8 py-8 relative grid content-start gap-4 pt-4" data-modal-body="true">
+            <form role="search" aria-label="Search for Your Theatre" class="sticky top-2 z-10 bg-black py-2 "
+                data-gtm-form-interact-id="0"><label
+                    class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed flex-1"><span
+                        class="sr-only">Search for theatres by city, zip or name</span>
+                    <div class="amc-input amc-input--box"><input class="input"
+                            placeholder="Search by City, Zip or Theatre" type="text" name="query"
+                            data-gtm-form-interact-field-id="0"><button type="submit"
+                            class="transition-colors hover:text-blue-500 disabled:brightness-25 disabled:grayscale"><svg
+                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em"
+                                height="100%">
+                                <title>Submit</title>
+                                <path
+                                    d="M37.151 17.176A17.176 17.176 0 1 0 19.976 34.35 17.204 17.204 0 0 0 37.15 17.176zM19.976 32.27A15.095 15.095 0 1 1 35.07 17.176 15.095 15.095 0 0 1 19.976 32.27zm13.493.393a1.05 1.05 0 0 0-1.63 1.322l8.573 10.625a1.05 1.05 0 1 0 1.63-1.32z">
+                                </path>
+                            </svg></button></div>
+                </label></form><button type="button"
+                class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white flex items-center gap-2 text-sm md:text-base"><svg
+                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em"
+                    height="100%">
+                    <path
+                        d="M45 22.5a1.012 1.012 0 0 0-1.013-1.012h-4.612A16.875 16.875 0 0 0 23.512 5.625V1.013a1.012 1.012 0 0 0-2.024 0v4.612A16.875 16.875 0 0 0 5.963 21.488h-4.95a1.012 1.012 0 0 0 0 2.024H5.99A16.706 16.706 0 0 0 21.488 39.01v4.978a1.012 1.012 0 0 0 2.024 0v-4.95a16.875 16.875 0 0 0 15.863-15.524h4.64A1.012 1.012 0 0 0 45 22.5zM22.669 37.097A14.766 14.766 0 1 1 37.434 22.33 14.794 14.794 0 0 1 22.67 37.097z">
+                    </path>
+                    <path
+                        d="M22.669 12.769a9.563 9.563 0 1 0 9.562 9.562 9.59 9.59 0 0 0-9.562-9.562zm0 17.128a7.566 7.566 0 1 1 7.565-7.538 7.566 7.566 0 0 1-7.565 7.538z">
+                    </path>
+                </svg>Use Current Location</button>
+            <!-- <form data-gtm-form-interact-id="1">
+                <div class="divide-y divide-gray-500"><label
+                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed p-2 first:pt-0 md:p-4"><span
+                            class="label flex gap-2 md:gap-4"><input
+                                class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
+                                type="radio" value="amc-katy-mills-20" name="theatreSlug"
+                                data-gtm-form-interact-field-id="1">
+                            <div class="grid flex-1 gap-1">
+                                <div class="flex justify-between gap-2">
+                                    <h2 class="text-300 label">AMC Katy Mills 20</h2>
+                                    <div class="min-w-max text-200">0 mi</div>
+                                </div>
+                                <address class="line-clamp-2 text-200 not-italic">5000 Katy Mills Circle, #131 Katy,
+                                    Texas 77494</address>
+                                <ul class="flex flex-wrap gap-y-2 leading-none line-clamp-2 text-100 text-gray-200">
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        AMC Signature Recliners</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Reserved Seating</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Dolby Cinema at AMC</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Discount Matinees</li>
+                                </ul>
+                            </div>
+                        </span></label><label
+                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed p-2 first:pt-0 md:p-4"><span
+                            class="label flex gap-2 md:gap-4"><input
+                                class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
+                                type="radio" value="amc-the-parks-at-arlington-18" name="theatreSlug"
+                                data-gtm-form-interact-field-id="2">
+                            <div class="grid flex-1 gap-1">
+                                <div class="flex justify-between gap-2">
+                                    <h2 class="text-300 label">AMC The Parks At Arlington 18</h2>
+                                    <div class="min-w-max text-200">0 mi</div>
+                                </div>
+                                <address class="line-clamp-2 text-200 not-italic">3861 South Cooper Street Arlington,
+                                    Texas 76015</address>
+                                <ul class="flex flex-wrap gap-y-2 leading-none line-clamp-2 text-100 text-gray-200">
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Reserved Seating</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        IMAX at AMC</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Dolby Cinema at AMC</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Discount Matinees</li>
+                                </ul>
+                            </div>
+                        </span></label><label
+                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed p-2 first:pt-0 md:p-4"><span
+                            class="label flex gap-2 md:gap-4"><input
+                                class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
+                                type="radio" value="amc-northpark-15" name="theatreSlug"
+                                data-gtm-form-interact-field-id="3">
+                            <div class="grid flex-1 gap-1">
+                                <div class="flex justify-between gap-2">
+                                    <h2 class="text-300 label">AMC NorthPark 15</h2>
+                                    <div class="min-w-max text-200">0 mi</div>
+                                </div>
+                                <address class="line-clamp-2 text-200 not-italic">8687 N Central Expy Dallas, Texas
+                                    75225</address>
+                                <ul class="flex flex-wrap gap-y-2 leading-none line-clamp-2 text-100 text-gray-200">
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Reserved Seating</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        IMAX with Laser at AMC</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Dolby Cinema at AMC</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Discount Matinees</li>
+                                </ul>
+                            </div>
+                        </span></label><label
+                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed p-2 first:pt-0 md:p-4"><span
+                            class="label flex gap-2 md:gap-4"><input
+                                class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
+                                type="radio" value="amc-highland-village-12" name="theatreSlug">
+                            <div class="grid flex-1 gap-1">
+                                <div class="flex justify-between gap-2">
+                                    <h2 class="text-300 label">AMC Highland Village 12</h2>
+                                    <div class="min-w-max text-200">0 mi</div>
+                                </div>
+                                <address class="line-clamp-2 text-200 not-italic">4090 Barton Creek Highland Village,
+                                    Texas 75077</address>
+                                <ul class="flex flex-wrap gap-y-2 leading-none line-clamp-2 text-100 text-gray-200">
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Reserved Seating</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        IMAX at AMC</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Discount Matinees</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Laser at AMC</li>
+                                </ul>
+                            </div>
+                        </span></label><label
+                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed p-2 first:pt-0 md:p-4"><span
+                            class="label flex gap-2 md:gap-4"><input
+                                class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
+                                type="radio" value="amc-lakeline-9" name="theatreSlug">
+                            <div class="grid flex-1 gap-1">
+                                <div class="flex justify-between gap-2">
+                                    <h2 class="text-300 label">AMC Lakeline 9</h2>
+                                    <div class="min-w-max text-200">0 mi</div>
+                                </div>
+                                <address class="line-clamp-2 text-200 not-italic">11200 Lakeline Mall Dr Cedar Park,
+                                    Texas 78613</address>
+                                <ul class="flex flex-wrap gap-y-2 leading-none line-clamp-2 text-100 text-gray-200">
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        AMC Signature Recliners</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Reserved Seating</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Discount Matinees</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Sensory Friendly Films</li>
+                                </ul>
+                            </div>
+                        </span></label><label
+                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed p-2 first:pt-0 md:p-4"><span
+                            class="label flex gap-2 md:gap-4"><input
+                                class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
+                                type="radio" value="amc-willowbrook-24" name="theatreSlug">
+                            <div class="grid flex-1 gap-1">
+                                <div class="flex justify-between gap-2">
+                                    <h2 class="text-300 label">AMC Willowbrook 24</h2>
+                                    <div class="min-w-max text-200">0 mi</div>
+                                </div>
+                                <address class="line-clamp-2 text-200 not-italic">17145 Tomball Parkway Houston, Texas
+                                    77064</address>
+                                <ul class="flex flex-wrap gap-y-2 leading-none line-clamp-2 text-100 text-gray-200">
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        AMC Signature Recliners</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Reserved Seating</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        IMAX with Laser at AMC</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Dolby Cinema at AMC</li>
+                                </ul>
+                            </div>
+                        </span></label><label
+                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed p-2 first:pt-0 md:p-4"><span
+                            class="label flex gap-2 md:gap-4"><input
+                                class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
+                                type="radio" value="amc-village-on-the-parkway-9" name="theatreSlug">
+                            <div class="grid flex-1 gap-1">
+                                <div class="flex justify-between gap-2">
+                                    <h2 class="text-300 label">AMC Village On The Parkway 9</h2>
+                                    <div class="min-w-max text-200">0 mi</div>
+                                </div>
+                                <address class="line-clamp-2 text-200 not-italic">5100 Belt Line Rd Addison, Texas 75254
+                                </address>
+                                <ul class="flex flex-wrap gap-y-2 leading-none line-clamp-2 text-100 text-gray-200">
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        AMC Signature Recliners</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Reserved Seating</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Dolby Cinema at AMC</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Discount Matinees</li>
+                                </ul>
+                            </div>
+                        </span></label><label
+                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed p-2 first:pt-0 md:p-4"><span
+                            class="label flex gap-2 md:gap-4"><input
+                                class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
+                                type="radio" value="amc-eastchase-9" name="theatreSlug">
+                            <div class="grid flex-1 gap-1">
+                                <div class="flex justify-between gap-2">
+                                    <h2 class="text-300 label">AMC Eastchase 9</h2>
+                                    <div class="min-w-max text-200">0 mi</div>
+                                </div>
+                                <address class="line-clamp-2 text-200 not-italic">8301 Ederville Road Fort Worth, Texas
+                                    76120</address>
+                                <ul class="flex flex-wrap gap-y-2 leading-none line-clamp-2 text-100 text-gray-200">
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        AMC Signature Recliners</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Reserved Seating</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Discount Matinees</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Laser at AMC</li>
+                                </ul>
+                            </div>
+                        </span></label><label
+                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed p-2 first:pt-0 md:p-4"><span
+                            class="label flex gap-2 md:gap-4"><input
+                                class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
+                                type="radio" value="amc-burleson-14" name="theatreSlug">
+                            <div class="grid flex-1 gap-1">
+                                <div class="flex justify-between gap-2">
+                                    <h2 class="text-300 label">AMC Burleson 14</h2>
+                                    <div class="min-w-max text-200">0 mi</div>
+                                </div>
+                                <address class="line-clamp-2 text-200 not-italic">301 W Rendon Crowley Road Burleson,
+                                    Texas 76028</address>
+                                <ul class="flex flex-wrap gap-y-2 leading-none line-clamp-2 text-100 text-gray-200">
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        AMC Signature Recliners</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Reserved Seating</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Discount Matinees</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Open Caption (On-Screen Subtitles)</li>
+                                </ul>
+                            </div>
+                        </span></label><label
+                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed p-2 first:pt-0 md:p-4"><span
+                            class="label flex gap-2 md:gap-4"><input
+                                class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
+                                type="radio" value="amc-dine-in-tech-ridge-10" name="theatreSlug">
+                            <div class="grid flex-1 gap-1">
+                                <div class="flex justify-between gap-2">
+                                    <h2 class="text-300 label">AMC DINE-IN Tech Ridge 10</h2>
+                                    <div class="min-w-max text-200">0 mi</div>
+                                </div>
+                                <address class="line-clamp-2 text-200 not-italic">12625 N Interstate Hwy 35 Austin,
+                                    Texas 78753</address>
+                                <ul class="flex flex-wrap gap-y-2 leading-none line-clamp-2 text-100 text-gray-200">
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Heated AMC Signature Recliners</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        AMC Signature Recliners</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Reserved Seating</li>
+                                    <li
+                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
+                                        Dolby Cinema at AMC</li>
+                                </ul>
+                            </div>
+                        </span></label></div>
+                <div class="flex flex-wrap items-center gap-4 justify-end sticky bottom-0 bg-black p-4"><button
+                        type="submit"
+                        class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">Continue</button>
+                </div>
+            </form> -->
         </div>
-    </dialog>
     </div>
+</dialog>
