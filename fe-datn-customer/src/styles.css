@@ -3357,9 +3357,11 @@ input[type=number] {
 .fill-red-500 {
     fill: #ce0e2d
 }
+
 .fill-purple-500 {
     fill: #58146d
 }
+
 .fill-white {
     fill: #fff
 }
@@ -6182,27 +6184,29 @@ iframe#ibody {
         display: none
     }
 }
-.rich-text:not(.copy,.label,.footnote,.caption,.headline) p:not(.label,.footnote,.caption,.headline,.copy),.rich-text:not(.copy,.label,.footnote,.caption,.headline) p:not(:has(.copy,.label,.footnote,.caption,.headline)) {
+
+.rich-text:not(.copy, .label, .footnote, .caption, .headline) p:not(.label, .footnote, .caption, .headline, .copy),
+.rich-text:not(.copy, .label, .footnote, .caption, .headline) p:not(:has(.copy, .label, .footnote, .caption, .headline)) {
     line-height: 1.75
 }
 
-.rich-text:not(.copy,.label,.footnote,.caption,.headline) p:has(.copy) {
+.rich-text:not(.copy, .label, .footnote, .caption, .headline) p:has(.copy) {
     line-height: 1.75
 }
 
-.rich-text:not(.copy,.label,.footnote,.caption,.headline) p:has(.footnote) {
+.rich-text:not(.copy, .label, .footnote, .caption, .headline) p:has(.footnote) {
     line-height: 1.75
 }
 
-.rich-text:not(.copy,.label,.footnote,.caption,.headline) p:has(.label) {
+.rich-text:not(.copy, .label, .footnote, .caption, .headline) p:has(.label) {
     line-height: 1.5
 }
 
-.rich-text:not(.copy,.label,.footnote,.caption,.headline) p:has(.caption) {
+.rich-text:not(.copy, .label, .footnote, .caption, .headline) p:has(.caption) {
     line-height: 1.25
 }
 
-.rich-text:not(.copy,.label,.footnote,.caption,.headline) p:has(.headline) {
+.rich-text:not(.copy, .label, .footnote, .caption, .headline) p:has(.headline) {
     line-height: 1.25
 }
 
@@ -6253,6 +6257,7 @@ iframe#ibody {
 .rich-text:not([class*=text-]) p:has(.text-50) {
     font-size: var(--font-size-50)
 }
+
 .amc-input {
     position: relative;
     display: flex;
@@ -6264,7 +6269,8 @@ iframe#ibody {
     font-size: var(--font-size-300)
 }
 
-.amc-input>input,.amc-input>select {
+.amc-input>input,
+.amc-input>select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -6273,9 +6279,12 @@ iframe#ibody {
     padding-bottom: .75rem
 }
 
-.amc-input>input:-webkit-autofill,.amc-input>input:-webkit-autofill:focus,.amc-input>select:-webkit-autofill,.amc-input>select:-webkit-autofill:focus {
-    -webkit-transition: background-color 0s 100000s,color 0s 100000s!important;
-    transition: background-color 0s 100000s,color 0s 100000s!important
+.amc-input>input:-webkit-autofill,
+.amc-input>input:-webkit-autofill:focus,
+.amc-input>select:-webkit-autofill,
+.amc-input>select:-webkit-autofill:focus {
+    -webkit-transition: background-color 0s 100000s, color 0s 100000s !important;
+    transition: background-color 0s 100000s, color 0s 100000s !important
 }
 
 .amc-input input {
@@ -6291,54 +6300,58 @@ iframe#ibody {
     color: rgb(0 0 0/var(--tw-text-opacity))
 }
 
-.amc-input--none:not(:has([type=hidden],[type=radio],[type=checkbox]))>input,.amc-input--none:not(:has([type=hidden],[type=radio],[type=checkbox]))>select {
+.amc-input--none:not(:has([type=hidden], [type=radio], [type=checkbox]))>input,
+.amc-input--none:not(:has([type=hidden], [type=radio], [type=checkbox]))>select {
     padding-left: .5rem
 }
 
 .amc-input--box:has(.braintree-hosted-fields-focused) {
-    background-color: rgba(174,205,224,.2);
+    background-color: rgba(174, 205, 224, .2);
     --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
     --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)
+    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)
 }
 
-.amc-input--box:not(:has([type=hidden],[type=radio],[type=checkbox])) {
+.amc-input--box:not(:has([type=hidden], [type=radio], [type=checkbox])) {
     border-radius: .25rem;
-    background-color: rgba(174,205,224,.15);
+    background-color: rgba(174, 205, 224, .15);
     --tw-ring-inset: inset;
-    --tw-ring-color: hsla(0,0%,100%,.5);
+    --tw-ring-color: hsla(0, 0%, 100%, .5);
     font-weight: 500;
     line-height: 1.25;
     letter-spacing: 0
 }
 
-.amc-input--box:not(:has([type=hidden],[type=radio],[type=checkbox])):focus-within {
-    background-color: rgba(174,205,224,.2);
+.amc-input--box:not(:has([type=hidden], [type=radio], [type=checkbox])):focus-within {
+    background-color: rgba(174, 205, 224, .2);
     --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
     --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)
+    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)
 }
 
-.amc-input--box:not(:has([type=hidden],[type=radio],[type=checkbox]))[data-size="500"] {
+.amc-input--box:not(:has([type=hidden], [type=radio], [type=checkbox]))[data-size="500"] {
     font-size: var(--font-size-500)
 }
 
-.amc-input--box:not(:has([type=hidden],[type=radio],[type=checkbox]))[data-size="700"] {
+.amc-input--box:not(:has([type=hidden], [type=radio], [type=checkbox]))[data-size="700"] {
     font-size: var(--font-size-700)
 }
 
-.amc-input--box:not(:has([type=hidden],[type=radio],[type=checkbox]))>input,.amc-input--box:not(:has([type=hidden],[type=radio],[type=checkbox]))>select {
+.amc-input--box:not(:has([type=hidden], [type=radio], [type=checkbox]))>input,
+.amc-input--box:not(:has([type=hidden], [type=radio], [type=checkbox]))>select {
     width: 100%;
     outline: 2px solid transparent;
     outline-offset: 2px
 }
 
-.amc-input--box:not(:has([type=hidden],[type=radio],[type=checkbox]))>input::-moz-placeholder,.amc-input--box:not(:has([type=hidden],[type=radio],[type=checkbox]))>select::-moz-placeholder {
-    color: hsla(0,0%,100%,.4)
+.amc-input--box:not(:has([type=hidden], [type=radio], [type=checkbox]))>input::-moz-placeholder,
+.amc-input--box:not(:has([type=hidden], [type=radio], [type=checkbox]))>select::-moz-placeholder {
+    color: hsla(0, 0%, 100%, .4)
 }
 
-.amc-input--box:not(:has([type=hidden],[type=radio],[type=checkbox]))>input::placeholder,.amc-input--box:not(:has([type=hidden],[type=radio],[type=checkbox]))>select::placeholder {
-    color: hsla(0,0%,100%,.4)
+.amc-input--box:not(:has([type=hidden], [type=radio], [type=checkbox]))>input::placeholder,
+.amc-input--box:not(:has([type=hidden], [type=radio], [type=checkbox]))>select::placeholder {
+    color: hsla(0, 0%, 100%, .4)
 }
 
 
@@ -6348,3 +6361,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @tailwind components;
 @tailwind utilities;
 @import 'ngx-toastr/toastr';
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+

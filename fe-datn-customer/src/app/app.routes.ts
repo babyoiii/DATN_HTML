@@ -18,6 +18,8 @@ import { PurchaseComponent } from './Component/purchase/purchase.component';
 import { SignInComponent } from './Component/sign-in/sign-in.component';
 import { TimkiemrapComponent } from './Component/timkiemrap/timkiemrap.component';
 import { PaymentCallBackComponent } from './Component/payment-call-back/payment-call-back.component';
+import { MovieDetailNghiaComponent } from './Component/movie-detail-nghia/movie-detail-nghia.component';
+import { Test1Component } from './Component/test1/test1.component';
 export const routes: Routes = [
     {
         path: '', component: MainComponent, children: [
@@ -29,9 +31,11 @@ export const routes: Routes = [
             { path: 'offers', component: OffersComponent },
             { path: 'discounts', component: DiscountsComponent },
             { path: 'on-demand', component: OnDemandComponent },
+            { path: 'movies/:id', component: MovieDetailNghiaComponent},
         ]
     },
-    { path: 'showtimes/:id', component: ShowtimesComponent },
+    { path: 'a', component: ShowtimesComponent },
+    { path: 'showtimes/:id', component: Test1Component },
     { path: 'dangki', component: DangkiComponent },
     { path: 'timkiemrap', component: TimkiemrapComponent },
     { path: 'signin', component: SignInComponent },

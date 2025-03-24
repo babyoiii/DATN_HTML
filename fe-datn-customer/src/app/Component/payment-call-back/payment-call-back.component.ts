@@ -51,18 +51,18 @@ export class PaymentCallBackComponent implements OnInit {
         const orderData: OrderModelReq = JSON.parse(orderDataString);
         this.ordersService.createOrder(orderData).subscribe({
           next: (response) => {
+
             const seatsToUpdate: SeatStatusUpdateRequest[] = orderData.tickets.map((ticket: TicketReq) => ({
               SeatId: ticket.seatByShowTimeId,
               Status: 5
             }));
             this.seatService.payment(seatsToUpdate);
+
             this.toastr.success('✅ Đơn hàng đã được tạo thành công:', "Thông Báo!");
             localStorage.removeItem('selectedSeats');
             localStorage.removeItem('orderData');
             localStorage.removeItem('orderDataPayment');
             localStorage.removeItem('userId');
-         
-
             this.router.navigate(['/']);
           },
           error: (error) => {

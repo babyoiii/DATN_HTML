@@ -4,8 +4,10 @@ export interface GetMovieLandingRes {
   description: string;
   thumbnail: string;
   banner: string;
+  trailer?: string; // Thêm trailer dưới dạng optional
   duration: number;
   releaseDate: Date;
+  status: number; // Thêm thuộc tính status
 }
 export interface ShowtimesLandingRes {
   id: string;
