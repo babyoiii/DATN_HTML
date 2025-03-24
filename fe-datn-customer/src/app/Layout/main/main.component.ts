@@ -6,6 +6,7 @@ import { FooterComponent } from '../footer/footer.component';
 @Component({
   selector: 'app-main',
   standalone: true,
+  // imports: [RouterOutlet],
   imports: [RouterOutlet,HeaderComponent,FooterComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
@@ -13,3 +14,4 @@ import { FooterComponent } from '../footer/footer.component';
 export class MainComponent {
 
 }
+

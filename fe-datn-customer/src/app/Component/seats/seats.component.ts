@@ -1,221 +1,460 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DurationFormatPipe } from '../../duration-format.pipe';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SeatService, SeatInfo, ShowtimeDetail } from '../../Service/seat.service';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { SeatService } from '../../Service/seat.service';
+import { Subject } from 'rxjs';
+import { takeUntil, catchError, finalize } from 'rxjs/operators';
+import { SeatInfo } from '../../Models/SeatModel';
+import { GroupByPipe } from '../../GroupByPipe.pipe';
+import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogData, NotificationDialogComponent } from '../notification-dialog/notification-dialog.component';
+import { SeatDataService } from '../../Service/SeatData.service';
+
+enum SeatStatus {
+  Available = 0,
+  Selected = 1,
+  Booked = 5,
+  Unavailable = 3,
+  Busy = 4
+}
+
+interface SeatStatusUpdateRequest {
+  SeatId: string;
+  Status: SeatStatus;
+}
 
 @Component({
   selector: 'app-seats',
   standalone: true,
-  imports: [CommonModule, DurationFormatPipe],
+  imports: [CommonModule, DurationFormatPipe, GroupByPipe, RouterLink],
   templateUrl: './seats.component.html',
-  styleUrls: ['./seats.component.css']  // Lưu ý: styleUrls (số nhiều)
+  styleUrls: ['./seats.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SeatsComponent implements OnInit {
+export class SeatsComponent implements OnInit, OnDestroy {
+  private readonly destroy$ = new Subject<void>();
+
   seats: SeatInfo[] = [];
-  movieInfo: ShowtimeDetail | null = null;
+  seatsCore: SeatInfo[] = [];
   selectedSeats: SeatInfo[] = [];
-  totalAmount: number = 0;
-  isLoading: boolean = true;
+  totalAmount = 0;
+  isLoading = true;
   error: string | null = null;
-  rows: string[] = [];
-  seatsPerRow: { [key: string]: SeatInfo[] } = {};
+  Rows: string[] = [];
+  seatsPerRow: Record<string, SeatInfo[]> = {};
+  countdown: string | null = null;
 
   constructor(
     private seatService: SeatService,
+    private seatDataService: SeatDataService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private toastr: ToastrService,
+    private dialog: MatDialog 
+  ) { }
 
-  ngOnInit() {
-    this.route.params.subscribe(params => {
-      const showtimeId = params['id'];
-      if (showtimeId) {
-        this.loadShowtimeDetail(showtimeId);
-      } else {
-        this.error = 'Không tìm thấy mã suất chiếu';
-      }
-    });
-  }
-
-  loadShowtimeDetail(showtimeId: string) {
-    this.isLoading = true;
-    this.error = null;
-  
-    this.seatService.getShowtimeDetail(showtimeId).subscribe({
-      next: (data) => {
-        this.movieInfo = data;
-        this.seats = this.filterDuplicateSeats(data.seats); // Lọc ghế trùng lặp
-        console.log('Danh sách ghế sau khi lọc:', this.seats);
-        this.organizeSeatsByRow();
-        this.isLoading = false;
-  
-        console.log('Thông tin suất chiếu:', this.movieInfo);
-      },
-      error: (err) => {
-        this.error = 'Có lỗi xảy ra khi tải thông tin suất chiếu';
-        this.isLoading = false;
-        console.error('Lỗi khi tải suất chiếu:', err);
-      }
-    });
-  }
-  
-  // Hàm loại bỏ cặp ghế trùng lặp
-  private filterDuplicateSeats(seats: SeatInfo[]): SeatInfo[] {
-    const displayedSeats = new Set<string>();
-    return seats.filter(seat => {
-      if (!seat.pairSeatId) {
-        return true; // Giữ nguyên ghế đơn
-      }
-  
-      const seatPairKey = [seat.id, seat.pairSeatId].sort().join('-'); // Định dạng chuẩn
-      if (displayedSeats.has(seatPairKey)) {
-        return false; // Nếu cặp đã tồn tại, bỏ qua
-      }
-  
-      displayedSeats.add(seatPairKey);
-      return true; // Nếu chưa có, giữ lại ghế đôi
-    });
-  }
-  
-
-  // Tổ chức ghế theo hàng và cột
-  organizeSeatsByRow() {
-    // Reset dữ liệu
-    this.seatsPerRow = {};
-    
-    // Nhóm ghế theo hàng
-    this.seats.forEach(seat => {
-      if (!this.seatsPerRow[seat.row]) {
-        this.seatsPerRow[seat.row] = [];
-      }
-      
-      // Nếu là ghế đôi, đảm bảo ghế được đặt cạnh nhau
-      if (seat.pairSeatId) {
-        const pairedSeat = this.findPairedSeat(seat);
-        if (pairedSeat) {
-          // Thêm cả cặp ghế vào mảng
-          const seatPair = [seat, pairedSeat].sort((a, b) => a.number - b.number);
-          // Chỉ thêm nếu chưa có trong hàng
-          if (!this.seatsPerRow[seat.row].some(s => s.id === seat.id || s.id === pairedSeat.id)) {
-            this.seatsPerRow[seat.row].push(...seatPair);
+  ngOnInit(): void {
+    this.route.params
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        const showtimeId = params['id'];
+        localStorage.setItem('currentShowtimeId', showtimeId);
+        const userId = this.ensureUserId();
+        console.log(userId);
+        
+        if (showtimeId) {
+          const navigation = this.router.getCurrentNavigation();
+          if (navigation?.extras.state) {
+            const state = navigation.extras.state as { seats: SeatInfo[], selectedSeats: SeatInfo[], totalAmount: number };
+            this.seats = state.seats;
+            this.selectedSeats = state.selectedSeats;
+            this.totalAmount = state.totalAmount;
+            this.isLoading = false;
+            this.cdr.markForCheck();
+          } else {
+            this.loadSeats(showtimeId, userId);
           }
         }
-      } else {
-        // Với ghế đơn, thêm trực tiếp vào hàng
-        if (!this.seatsPerRow[seat.row].some(s => s.id === seat.id)) {
-          this.seatsPerRow[seat.row].push(seat);
+      });
+
+    const shouldReload = sessionStorage.getItem('reloadOnce');
+    if (shouldReload) {
+      sessionStorage.removeItem('reloadOnce'); 
+      this.reloadCurrentRoute();
+    }
+
+    this.seatDataService.seats$.pipe(takeUntil(this.destroy$)).subscribe(seats => {
+      this.seats = seats;
+      this.cdr.markForCheck();
+    });
+
+    this.seatDataService.selectedSeats$.pipe(takeUntil(this.destroy$)).subscribe(selectedSeats => {
+      this.selectedSeats = selectedSeats;
+      this.cdr.markForCheck();
+    });
+    this.seatDataService.seatCore$.pipe(takeUntil(this.destroy$)).subscribe(seatCore => {
+      this.seatsCore = seatCore;
+      this.cdr.markForCheck();
+    });
+
+    this.seatDataService.totalAmount$.pipe(takeUntil(this.destroy$)).subscribe(totalAmount => {
+      this.totalAmount = totalAmount;
+      this.cdr.markForCheck();
+    });
+  }
+
+  private reloadCurrentRoute(): void {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
+  }
+
+  private loadSeats(showtimeId: string, userId: string): void {
+    this.seats = [];
+    this.selectedSeats = [];
+    this.totalAmount = 0;
+    this.isLoading = true;
+    this.error = null;
+    this.cdr.markForCheck();
+
+    const selectedSeatsStr = localStorage.getItem('selectedSeats');
+    const selectedSeats = selectedSeatsStr ? JSON.parse(selectedSeatsStr) : [];
+
+    this.initializeWebSocket(showtimeId, userId);
+
+    this.selectedSeats = selectedSeats;
+  }
+
+  private initializeWebSocket(showtimeId: string, userId: string): void {
+    this.seatService.connect(showtimeId, userId);
+
+    this.seatService.getMessages()
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError(error => {
+          this.handleSeatError(error);
+          throw error;
+        }),
+        finalize(() => {
+          this.isLoading = false;
+          this.cdr.markForCheck();
+        })
+      )
+      .subscribe({
+        next: (data: SeatInfo[]) => {
+          this.processSeatData(data);
+          this.calculateTotal();
         }
-      }
-    });
+      });
 
-    // Sắp xếp ghế trong mỗi hàng theo số thứ tự
-    Object.keys(this.seatsPerRow).forEach(row => {
-      this.seatsPerRow[row].sort((a, b) => a.number - b.number);
-    });
-
-    // Cập nhật danh sách hàng và sắp xếp theo thứ tự
-    this.rows = Object.keys(this.seatsPerRow).sort();
+    this.seatService.getJoinRoomMessages()
+      .pipe()
+      .subscribe({
+        next: (count: number | null) => {
+          if (count !== null && count > 0) {
+            this.handleCountdown(count);
+          }
+        },
+        error: (error) => this.handleCountdownError(error)
+      });
   }
 
-  getSeatsInRow(row: string): SeatInfo[] {
-    return this.seatsPerRow[row] || [];
-  }
+  private processSeatData(data: SeatInfo[]): void {
 
-  selectSeat(seat: SeatInfo): void {
-    if (seat.status === 'available') {
-      seat.status = 'selected';
-      this.selectedSeats.push(seat);
-    } else if (seat.status === 'selected') {
-      seat.status = 'available';
-      this.selectedSeats = this.selectedSeats.filter(s => s.id !== seat.id);
-    }
+    this.seatsCore = [...data].flat();
+    this.seatDataService.setSeatCore(this.seatsCore);
+    this.seats = this.filterAndSortSeats(this.seatsCore);
+    this.selectedSeats = this.seats.filter(seat => seat.Status === SeatStatus.Selected);
+    this.groupSeatsByRow();
     this.calculateTotal();
+    this.cdr.markForCheck();
+  
+    // Save seat data to the service
+    this.seatDataService.setSeats(this.seats);
+    this.seatDataService.setSelectedSeats(this.selectedSeats);
+    this.seatDataService.setTotalAmount(this.totalAmount);
   }
 
-  calculateTotal() {
-    this.totalAmount = this.selectedSeats.reduce((sum, seat) => sum + seat.price, 0);
+  private groupSeatsByRow(): void {
+    this.seatsPerRow = this.seats.reduce((acc, seat) => {
+      const rowKey = seat.RowNumber.toString();
+      if (!acc[rowKey]) {
+        acc[rowKey] = [];
+        this.Rows.push(rowKey);
+      }
+      acc[rowKey].push(seat);
+      return acc;
+    }, {} as Record<string, SeatInfo[]>);
+
+    this.Rows.sort((a, b) => parseInt(a) - parseInt(b));
   }
 
-  // Các hàm trả về class dựa trên trạng thái, kiểu ghế…
-  getSeatStatusClass(status: string): string {
-    switch(status) {
-      case 'available': return 'bg-white text-black hover:bg-blue-200';
-      case 'selected': return 'bg-blue-500 text-white';
-      case 'booked': return 'bg-red-500 text-white cursor-not-allowed';
-      case 'unavailable': return 'bg-gray-800 text-gray-500 cursor-not-allowed';
-      default: return '';
+  private handleSeatError(error: any): void {
+    console.error('Error receiving seats:', error);
+    this.error = 'Error loading seat data';
+    this.isLoading = false;
+    this.cdr.markForCheck();
+  }
+
+  private handleCountdown(count: number): void {
+    const minutes = Math.floor(count / 60);
+    const seconds = count % 60;
+    this.countdown = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    this.cdr.markForCheck();
+    if (count === 0) {
+      this.notifyAndRedirect();
     }
   }
 
-  getSeatTypeClass(type: string): string {
-    switch(type) {
-      case 'vip': return 'border-2 border-yellow-500';
-      case 'couple': return 'border-2 border-pink-500';
-      case 'wheelchair': return 'border-2 border-blue-500';
-      default: return 'border border-gray-300';
+  private handleCountdownError(error: any): void {
+    console.error('Lỗi khi nhận countdown:', error);
+  }
+
+  private ensureUserId(): string {
+    let userId = localStorage.getItem('userId');
+
+    if (!userId) {
+      userId = this.generateUserId();
+      localStorage.setItem('userId', userId);
     }
+    return userId;
+  }
+
+  private generateUserId(): string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  toggleSeatStatus(seat: SeatInfo): void {
+    if (seat.Status !== SeatStatus.Available && seat.Status !== SeatStatus.Selected) {
+      return;
+    }
+
+    const updateRequests: SeatStatusUpdateRequest[] = [];
+    const newStatus = seat.Status === SeatStatus.Available
+      ? SeatStatus.Selected
+      : SeatStatus.Available;
+
+    if (newStatus === SeatStatus.Selected) {
+      const pairedSeat = this.findPairedSeat(seat);
+
+      const totalSelectedSeats = this.selectedSeats.reduce((count, s) => {
+        return count + (s.PairId ? 2 : 1);
+      }, 0);
+
+      const seatsToAdd = pairedSeat ? 2 : 1;
+      if (totalSelectedSeats + seatsToAdd > 8) {
+        this.toastr.warning('Bạn chỉ được chọn tối đa 8 ghế!', 'Cảnh báo');
+        return;
+      }
+    }
+
+    const seatsToUpdate = [seat];
+    const pairedSeat = this.findPairedSeat(seat);
+    if (pairedSeat) {
+      seatsToUpdate.push(pairedSeat);
+    }
+
+    seatsToUpdate.forEach(s => {
+      s.Status = newStatus;
+      updateRequests.push({
+        SeatId: s.SeatStatusByShowTimeId,
+        Status: newStatus
+      });
+    });
+
+    this.selectedSeats = this.seats.filter(s => s.Status === SeatStatus.Selected);
+    this.calculateTotal();
+
+    if (updateRequests.length > 0) {
+      this.seatService.updateStatus(updateRequests);
+    }
+
+    this.cdr.markForCheck();
+  }
+
+  calculateTotal(): void {
+    this.totalAmount = this.selectedSeats.reduce((sum, seat) => {
+      const pairedSeat = this.findPairedSeat(seat);
+      if (pairedSeat && seat.PairId) {
+        return sum + seat.SeatPrice + pairedSeat.SeatPrice;
+      }
+      return sum + seat.SeatPrice;
+    }, 0);
   }
 
   formatPrice(price: number): string {
-    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+    return new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND'
+    }).format(price);
   }
 
-  getColumnCount(): number {
-    let maxCount = 0;
-    this.rows.forEach(row => {
-      const seatsInRow = this.getSeatsInRow(row);
-      let count = 0;
-      seatsInRow.forEach(seat => {
-        count += (seat.type === 'couple') ? 2 : 1;
-      });
-      if (count > maxCount) {
-        maxCount = count;
-      }
-    });
-    return maxCount;
+  findPairedSeat(seat: SeatInfo): SeatInfo | null {
+    if (!seat.PairId) return null;
+    return this.seatsCore.find(s => s.SeatId === seat.PairId) || null;
   }
 
   getSeatFillClass(seat: SeatInfo): string {
-    switch(seat.status) {
-      case 'available': return '' ;
-      case 'selected': return `fill-red-500`;
-      case 'booked': return `fill-gray-200 `;
-      case 'unavailable': return `cursor-not-allowed invisible`;
-      default: return '';
+    switch (seat.Status) {
+      case SeatStatus.Available:
+        return '';
+      case SeatStatus.Selected:
+        return 'fill-red-500';
+      case SeatStatus.Booked:
+        return 'fill-gray-500';
+      case SeatStatus.Busy:
+        return 'fill-gray-200';
+      case SeatStatus.Unavailable:
+        return 'cursor-not-allowed invisible';
+      default:
+        console.warn(`Unexpected seat status: ${seat.Status}`);
+        return '';
     }
   }
-
-  // Tìm ghế đôi tương ứng
-  findPairedSeat(seat: SeatInfo): SeatInfo | null {
-    if (!seat || !seat.pairSeatId) return null;
-    return this.seats.find(s => s.id === seat.pairSeatId) || null;
+  private notifyAndRedirect(): void {
+    this.toastr.warning('Thời gian giữ ghế đã hết, bạn sẽ được chuyển hướng.', 'Cảnh báo');
+    setTimeout(() => {
+      this.router.navigate(['/']); 
+    }, 3000); 
+  }
+  getSeatNameByPairId(pairId: string): string | undefined {
+    var result = this.seatsCore.find(seat => seat.SeatId === pairId)?.SeatName;
+    return result;
   }
 
-  proceedToCheckout() {
-    if (this.selectedSeats.length === 0 || !this.movieInfo) return;
+  getRowLabel(rowNumber: number): string {
+    return String.fromCharCode(64 + rowNumber);
+  }
 
-    this.seatService.bookSeats(
-      this.movieInfo.id,
-      this.selectedSeats.map(seat => seat.id)
-    ).subscribe({
-      next: (success) => {
-        if (success) {
-          this.router.navigate(['/payment'], {
-            state: {
-              showtimeId: this.movieInfo?.id,
-              selectedSeats: this.selectedSeats,
-              totalAmount: this.totalAmount
-            }
-          });
-        } else {
-          this.error = 'Không thể đặt ghế. Vui lòng thử lại.';
-        }
-      },
-      error: (err) => {
-        this.error = 'Có lỗi xảy ra khi đặt ghế';
-        console.error('Error booking seats:', err);
+  private filterAndSortSeats(seats: SeatInfo[]): SeatInfo[] {
+    const displayedSeats = new Set<string>();
+  
+    const sortedSeats = seats.sort((a, b) => {
+      if (a.RowNumber === b.RowNumber) {
+        return a.ColNumber - b.ColNumber;
       }
+      return a.RowNumber - b.RowNumber;
     });
+  
+    return sortedSeats.filter(seat => {
+      if (!seat.PairId) {
+        return true;
+      }
+  
+      const seatPairKey = [seat.SeatId, seat.PairId].sort().join('-');
+      if (displayedSeats.has(seatPairKey)) {
+        return false;
+      }
+  
+      displayedSeats.add(seatPairKey);
+      return true;
+    });
+  }
+
+  validateRowSeats(seats: SeatInfo[]): boolean {
+    const hasSelected = seats.some(seat => seat.Status === SeatStatus.Selected);
+    if (!hasSelected) return true;
+
+    const occupancy = seats.map(seat =>
+      (seat.Status === SeatStatus.Selected || seat.Status === SeatStatus.Booked) ? 1 : 0
+    );
+
+    for (let i = 0; i < seats.length; i++) {
+      if (occupancy[i] === 0) {
+        const leftOccupied = (i === 0) ? true : (occupancy[i - 1] === 1);
+        const rightOccupied = (i === seats.length - 1) ? true : (occupancy[i + 1] === 1);
+
+        const seat = seats[i];
+        const pairedSeat = this.findPairedSeat(seat);
+        const isPairedSeatSelected = pairedSeat && pairedSeat.Status === SeatStatus.Selected;
+
+        if (leftOccupied && rightOccupied && !isPairedSeatSelected) {
+          this.toastr.error(`Không thể bỏ trống ghế lẻ ở hàng ${this.getRowLabel(seats[i].RowNumber)} số ${seats[i].ColNumber}`, 'Lỗi');
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  showNotification(type: 'success' | 'error' | 'warning', message: string): void {
+    const dialogData: DialogData = { type, message };
+    this.dialog.open(NotificationDialogComponent, {
+      data: dialogData
+    });
+  }
+
+  validateSeats(): boolean {
+    if (this.selectedSeats.length === 0) {
+      this.showNotification('warning', 'Vui lòng chọn ít nhất một ghế!');
+      return false;
+    }
+
+    for (const row of this.Rows) {
+      const rowSeats = this.seatsPerRow[row];
+      if (!this.validateRowSeats(rowSeats)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  onContinue(): void {
+    if (this.validateSeats()) {
+      const selectedSeatsInfo = this.selectedSeats.flatMap(seat => {
+        const pairedSeat = this.findPairedSeat(seat);
+
+        if (!seat.SeatStatusByShowTimeId) {
+          return [];  
+        }
+
+        if (pairedSeat && seat.PairId) {
+          const isPairedAlreadyAdded = this.selectedSeats.some(
+            (s) => s.SeatId === pairedSeat.SeatId
+          );
+
+          if (!isPairedAlreadyAdded && pairedSeat.SeatStatusByShowTimeId) {
+            return [
+              {
+                seatId: seat.SeatStatusByShowTimeId,
+                seatName: seat.SeatName,
+                price: seat.SeatPrice,
+                SeatTypeName: seat.SeatTypeName
+              },
+              {
+                seatId: pairedSeat.SeatStatusByShowTimeId,
+                seatName: pairedSeat.SeatName,
+                price: pairedSeat.SeatPrice,
+                SeatTypeName: pairedSeat.SeatTypeName
+              }
+            ];
+          }
+        }
+
+        return {
+          seatId: seat.SeatStatusByShowTimeId,
+          seatName: seat.SeatName,
+          price: seat.SeatPrice,
+          SeatTypeName: seat.SeatTypeName
+        };
+      });
+
+      localStorage.setItem('selectedSeats', JSON.stringify(selectedSeatsInfo));
+      this.router.navigate(['/orders'], { state: { seats: this.seats, selectedSeats: this.selectedSeats, totalAmount: this.totalAmount } });
+    }
   }
 }

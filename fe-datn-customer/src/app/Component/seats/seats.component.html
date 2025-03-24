@@ -17,7 +17,19 @@
                 d="M14.974 22.5 34.321 3.153A2.09 2.09 0 0 0 31.46.291l-20.892 20.75a2.09 2.09 0 0 0 0 2.861L31.373 44.71a2.09 2.09 0 0 0 2.862-2.862z">
               </path>
             </svg></button>
-          <h1>Select Seats</h1>
+            <div class="relative flex w-full items-center justify-center">
+              <h1>Select Seats</h1>
+              <div class="absolute right-0 mr-8 text-300 font-semibold md:mr-12">
+                <div class="countdown-container">
+                    <div class="countdown-timer">
+                        <span class="countdown-label">Time Remaining: </span>
+                        <span class="countdown-value">{{ countdown }}</span>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+
           <a class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute right-0"
             href="/"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
               viewBox="0 0 45 45" width="1em" height="100%" class="m-2 h-5 w-5">
@@ -90,7 +102,9 @@
     <main id="main" class="relative flex-1 overflow-auto flex h-full flex-col">
       <div role="banner" class="relative caption text-200 bg-[#3B0249]">
         <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative flex items-center justify-center gap-4 py-2">
-          <p>If you're a member, sign in now to take advantage of AMC Stubs benefits.</p><button
+          <p>If you're a member, sign in now to take advantage of AMC Stubs benefits.</p>
+          
+          <button
             class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm h-11"
             type="button">Sign In</button>
         </div>
@@ -126,12 +140,12 @@
                       </svg></div>
                   </div>
                 </div>
-                <div class="relative z-10 grid gap-4" style="grid-template-columns: repeat(20, 60px);">
-                  
-                  <ng-container *ngFor="let seat of seats">
+                <div *ngFor="let row of seats | groupBy: 'RowNumber'; let i = index" class="relative z-10 grid gap-4" style="grid-template-columns: repeat(13, 60px);">
+                  <span class="font-bold">{{ getRowLabel(i + 1) }}</span>
+                  <ng-container *ngFor="let seat of row">
                     <!-- Nếu có pairSeatId, thì hiển thị ghế đôi -->
-                    <ng-container *ngIf="seat && seat.pairSeatId; else singleSeat" class="grid grid-cols-2 gap-0">
-                      <ng-container class="flex mx-1 my-4"><svg class=" fill-purple-500  translate-x-1" viewBox="0 0 50 50"
+                    <ng-container *ngIf="seat && seat.PairId; else singleSeat" class="grid grid-cols-2 gap-0">
+                      <ng-container class="flex mx-1 my-4"><svg (click)="toggleSeatStatus(seat)" [ngClass]="getSeatFillClass(seat)" class=" translate-x-1" viewBox="0 0 50 50"
                           version="1.1" xmlns="http://www.w3.org/2000/svg" xml:space="preserve">
                           <g transform="matrix(0.0653851,0,0,0.0653851,-0.13077,1.65751)">
                             <path
@@ -144,10 +158,10 @@
                             </path>
                           </g>
                           <g transform="matrix(1,0,0,1,25,25)"><text text-anchor="middle" dominant-baseline="middle"
-                              class="fill-white" font-size="10">{{ seat.id}}</text></g>
+                              class="fill-white" font-size="10">{{ seat.SeatName}}</text></g>
                         </svg>
                       </ng-container>
-                      <ng-container class="flex mx-1 my-4"><svg class="fill-purple-500 -translate-x-4" viewBox="0 0 50 50"
+                      <ng-container class="flex mx-1 my-4"><svg (click)="toggleSeatStatus(seat)"  [ngClass]="getSeatFillClass(seat)" class="getSeatFillClass(seat) -translate-x-4" viewBox="0 0 50 50"
                           version="1.1" xmlns="http://www.w3.org/2000/svg" xml:space="preserve">
                           <g transform="matrix(0.0653851,0,0,0.0653851,-0.13077,1.65751)">
                             <path
@@ -160,16 +174,14 @@
                             </path>
                           </g>
                           <g transform="matrix(1,0,0,1,25,25)"><text text-anchor="middle" dominant-baseline="middle"
-                              class="fill-white" font-size="10">{{seat.pairSeatId}}</text></g>
+                              class="fill-white" font-size="10">{{getSeatNameByPairId(seat.PairId)}}</text></g>
                         </svg>
                       </ng-container>
-
-
                     </ng-container>
 
                     <!-- Nếu không có pairSeatId, hiển thị ghế đơn -->
                     <ng-template #singleSeat  class="mx-2 my-4">
-                      <button *ngIf="seat.id" ><svg class=" translate-x-1" viewBox="0 0 50 50" version="1.1"
+                      <button *ngIf="seat.SeatId" (click)="toggleSeatStatus(seat)"><svg [ngClass]="getSeatFillClass(seat)" class=" translate-x-1" viewBox="0 0 50 50" version="1.1"
                           xmlns="http://www.w3.org/2000/svg" xml:space="preserve">
                           <g transform="matrix(0.0704424,0,0,0.0704424,-2.06396,-5.61074)">
                             <path
@@ -182,7 +194,7 @@
                             </path>
                           </g>
                           <g transform="matrix(1,0,0,1,25,25)"><text text-anchor="middle" dominant-baseline="middle"
-                              class="fill-white" font-size="10">{{seat.id}}</text></g>
+                              class="fill-white" font-size="10">{{seat.SeatName}}</text></g>
                         </svg>
                       </button>
                     </ng-template>
@@ -266,13 +278,18 @@
     </main>
     <footer class="border-t border-gray-700 bg-checkout-black">
       <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0">
-        <div class="flex items-center justify-end gap-4">
-          <div class="flex flex-wrap items-center gap-4 py-4 justify-end"><button type="button"
-              class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12"
-              disabled="">Continue</button></div>
-        </div>
+          <div class="flex items-center justify-end gap-4">
+              <div class="flex flex-col items-end">
+                  <p class="text-200 uppercase text-gray-200">{{ selectedSeats.length }} Ghế Đã Chọn</p>
+                  <p class="text-200 text-gray-200">Tổng Tiền: {{ formatPrice(totalAmount) }}</p>
+              </div>
+              <div class="flex flex-wrap items-center gap-4 py-4 justify-end">
+                  <a class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12"
+                      (click)="onContinue()">Tiếp Tục</a>
+              </div>
+          </div>
       </div>
-    </footer>
+  </footer>
     <!--/$-->
     <!--/$-->
     <!--/$-->
