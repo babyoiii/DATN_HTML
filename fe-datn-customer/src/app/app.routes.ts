@@ -19,6 +19,7 @@ import { SignInComponent } from './Component/sign-in/sign-in.component';
 import { TimkiemrapComponent } from './Component/timkiemrap/timkiemrap.component';
 import { PaymentCallBackComponent } from './Component/payment-call-back/payment-call-back.component';
 import { MovieDetailNghiaComponent } from './Component/movie-detail-nghia/movie-detail-nghia.component';
+import { Test1Component } from './Component/test1/test1.component';
 
 export const routes: Routes = [
     {
@@ -34,7 +35,8 @@ export const routes: Routes = [
             { path: 'movies/:id', component: MovieDetailNghiaComponent},
         ]
     },
-    { path: 'showtimes/:id', component: ShowtimesComponent },
+    { path: 'a', component: ShowtimesComponent },
+    { path: 'showtimes/:id', component: Test1Component },
     { path: 'dangki', component: DangkiComponent },
     { path: 'timkiemrap', component: TimkiemrapComponent },
     { path: 'signin', component: SignInComponent },
