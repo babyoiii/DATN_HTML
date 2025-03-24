@@ -217,10 +217,6 @@ export class SeatService {
   getList(): void {
     this.sendMessage('GetList');
   }
-  payment(): void {
-    this.sendMessage('Payment');
-  }
-
   joinRoom(): void {
     this.sendMessage('JoinRoom');
   }
@@ -282,5 +278,20 @@ export class SeatService {
       console.log('WebSocket connection disconnected');
     }
  
+  }
+
+  // Add the payment method to handle the payment status update
+  payment(seats: SeatStatusUpdateRequest[]): void {
+    if (!seats || seats.length === 0) {
+      console.warn('⚠️ Không có ghế nào để cập nhật.');
+      return;
+    }
+
+    const requestData = {
+      Action: 'Payment',
+      SeatStatusUpdateRequests: seats
+    };
+
+    this.sendMessage('Payment', requestData);
   }
 }

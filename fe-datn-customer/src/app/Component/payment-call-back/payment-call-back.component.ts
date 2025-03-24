@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { OrdersService } from '../../Service/Orders.Service';
-import { OrderModelReq } from '../../Models/Order';
+import { OrderModelReq, TicketReq } from '../../Models/Order';
 import { ToastrService } from 'ngx-toastr';
-import { SeatService } from '../../Service/seat.service';
+import { SeatService, SeatStatusUpdateRequest } from '../../Service/seat.service';
 
 @Component({
   selector: 'app-payment-callback',
@@ -51,12 +51,18 @@ export class PaymentCallBackComponent implements OnInit {
         const orderData: OrderModelReq = JSON.parse(orderDataString);
         this.ordersService.createOrder(orderData).subscribe({
           next: (response) => {
+
+            const seatsToUpdate: SeatStatusUpdateRequest[] = orderData.tickets.map((ticket: TicketReq) => ({
+              SeatId: ticket.seatByShowTimeId,
+              Status: 5
+            }));
+            this.seatService.payment(seatsToUpdate);
+
             this.toastr.success('✅ Đơn hàng đã được tạo thành công:', "Thông Báo!");
             localStorage.removeItem('selectedSeats');
             localStorage.removeItem('orderData');
             localStorage.removeItem('orderDataPayment');
             localStorage.removeItem('userId');
-            // this.seatService.payment(); // Call the payment method
             this.router.navigate(['/']);
           },
           error: (error) => {

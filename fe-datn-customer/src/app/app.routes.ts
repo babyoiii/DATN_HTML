@@ -20,7 +20,6 @@ import { TimkiemrapComponent } from './Component/timkiemrap/timkiemrap.component
 import { PaymentCallBackComponent } from './Component/payment-call-back/payment-call-back.component';
 import { MovieDetailNghiaComponent } from './Component/movie-detail-nghia/movie-detail-nghia.component';
 import { Test1Component } from './Component/test1/test1.component';
-
 export const routes: Routes = [
     {
         path: '', component: MainComponent, children: [
