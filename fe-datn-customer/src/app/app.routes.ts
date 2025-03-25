@@ -43,5 +43,6 @@ export const routes: Routes = [
     { path: 'chon-ve', component: TicketSeatsComponent },
     { path: 'orders', component: OrdersComponent },
     { path: 'thanh-toan', component: PurchaseComponent },
-    { path: 'payment-callback', component: PaymentCallBackComponent }
+    { path: 'payment-callback', component: PaymentCallBackComponent },
+
 ];
