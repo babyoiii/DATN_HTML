@@ -24,7 +24,6 @@ export class OrdersComponent implements OnInit {
   seatSummary: { [key: string]: { count: number; total: number } } = {};
   listService: Service[] = [];
   selectedServices: { service: Service; quantity: number }[] = [];  
-  fee: number = 0;
 
   constructor(
     private seatService: SeatService,
@@ -43,6 +42,9 @@ export class OrdersComponent implements OnInit {
           const seconds = count % 60;
           this.countdown = `${minutes}:${seconds.toString().padStart(2, '0')}`;
           this.cdr.markForCheck();
+          if (count === 0) {
+            this.notifyAndRedirect();
+          }
         }
       },
       error: (err) => console.error('❌ Lỗi khi nhận countdown:', err)
@@ -71,9 +73,11 @@ export class OrdersComponent implements OnInit {
           console.error('❌ Dữ liệu ghế không hợp lệ:', error);
       }
   }
-  
   }
-
+  private notifyAndRedirect(): void {
+    alert('Thời gian giữ ghế đã hết, bạn sẽ được chuyển hướng.');
+    this.router.navigate(['/']); 
+  }
   getTotalAmount(): number {
     const totalSeatsAmount = Object.values(this.seatSummary).reduce(
       (sum, seat) => sum + seat.total,
@@ -87,7 +91,7 @@ export class OrdersComponent implements OnInit {
   
     const subtotal = totalSeatsAmount + totalServiceAmount;
   
-    return subtotal + this.calculateFee(); 
+    return subtotal; 
   }
   
   getTotalTicketPrice(): number {
@@ -118,9 +122,16 @@ export class OrdersComponent implements OnInit {
   goBackToSeats(): void {
     const showtimeId = localStorage.getItem('currentShowtimeId');
     if (showtimeId) {
-      this.router.navigate(['/booking/', showtimeId], { queryParams: { reload: true } });
+      sessionStorage.setItem('reloadOnce', 'true'); // Đánh dấu cần reload
+      this.router.navigate(['/booking/', showtimeId], {
+        state: {
+          seats: this.seatSummary,
+          selectedSeats: this.selectedServices,
+          totalAmount: this.getTotalAmount()
+        }
+      });
     } else {
-      this.router.navigate(['/showtimes'], { queryParams: { reload: true } });
+      this.router.navigate(['/showtimes'], { queryParams: { reload: 'true' } });
     }
   }
   getService() {
@@ -162,47 +173,29 @@ export class OrdersComponent implements OnInit {
 
     console.log('✅ Dịch vụ sau khi xóa:', this.selectedServices);
   }
-  calculateFee(): number {
-    const totalSeatsAmount = Object.values(this.seatSummary).reduce(
-      (sum, seat) => sum + seat.total,
-      0
-    );
-  
-    const totalServiceAmount = this.selectedServices.reduce(
-      (sum, item) => sum + item.service.price * item.quantity,
-      0
-    );
-  
-    const subtotal = totalSeatsAmount + totalServiceAmount;
-  
-    this.fee = subtotal * 0.1; 
-  
-    return this.fee;
-  }
   continue(): void {
-    console.log(this.seatSummary,'dataSeatOrder');
-    
+    console.log(this.seatSummary, 'dataSeatOrder');
+  
     const orderData = {
-        seats: Object.entries(this.seatSummary).map(([type, data]: any) => ({
-            type,
-            count: data.count,
-            total: data.total,
-            seatIds: data.seatIds || [] 
-        })),
-        services: this.selectedServices.map(item => ({
-            id: item.service.id,
-            name: item.service.serviceName,
-            price: item.service.price,
-            quantity: item.quantity
-        })),
-        totalAmount: this.getTotalAmount(),
-        totalTicketPrice: this.getTotalTicketPrice(),
-        totalServiceAmount: this.getTotalService(),
-        fee: this.calculateFee()
+      seats: Object.entries(this.seatSummary).map(([type, data]: any) => ({
+        type,
+        count: data.count,
+        total: data.total,
+        seatIds: data.seatIds || []
+      })),
+      services: this.selectedServices.map(item => ({
+        id: item.service.id,
+        name: item.service.serviceName,
+        price: item.service.price,
+        quantity: item.quantity
+      })),
+      totalAmount: this.getTotalAmount(),
+      totalTicketPrice: this.getTotalTicketPrice(),
+      totalServiceAmount: this.getTotalService(),
     };
-
+  
     localStorage.setItem('orderData', JSON.stringify(orderData));
-    this.router.navigate(['/thanh-toan']);
+    this.router.navigate(['/thanh-toan'], { state: { seats: this.seatSummary, selectedSeats: this.selectedServices, totalAmount: this.getTotalAmount() } });
     console.log('✅ Dữ liệu đã lưu:', orderData);
-}
+  }
 }

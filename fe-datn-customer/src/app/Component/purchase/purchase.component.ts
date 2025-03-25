@@ -40,6 +40,9 @@ export class PurchaseComponent implements OnInit {
           const seconds = count % 60;
           this.countdown = `${minutes}:${seconds.toString().padStart(2, '0')}`;
           this.cdr.markForCheck();
+          if (count === 0) {
+            this.notifyAndRedirect();
+          }
         }
       },
       error: (err) => console.error('❌ Lỗi khi nhận countdown:', err)
@@ -47,7 +50,12 @@ export class PurchaseComponent implements OnInit {
 
     this.loadData();
   }
-
+  private notifyAndRedirect(): void {
+    this.toastr.warning('Thời gian giữ ghế đã hết, bạn sẽ được chuyển hướng.', 'Cảnh báo');
+    setTimeout(() => {
+      this.router.navigate(['/']); 
+    }, 3000); 
+  }
   loadData() {
     const orderDataString = localStorage.getItem('orderData');
     if (orderDataString) {

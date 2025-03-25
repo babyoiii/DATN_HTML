@@ -7,6 +7,7 @@ import { authInterceptorFn } from './Interceptors/auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SeatService } from './Service/seat.service';
 import { ToastrModule } from 'ngx-toastr';
+import { WebSocketInterceptor } from './Interceptors/WebSocket.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,6 +33,7 @@ export const appConfig: ApplicationConfig = {
         messageClass: 'toast-message'
       })
     ]),
-    SeatService
+    SeatService,
+    WebSocketInterceptor
   ]
 };

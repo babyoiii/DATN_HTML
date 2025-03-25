@@ -1,0 +1,86 @@
+.dialog-container {
+    text-align: center;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    width: 350px;
+    margin: 0 auto;
+    position: relative;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .dialog-header {
+    font-size: 50px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  .icon-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .icon {
+    font-size: 50px;
+  }
+  
+  .icon.success {
+    color: #28a745;
+  }
+  
+  .icon.error {
+    color: #dc3545;
+  }
+  
+  .icon.warning {
+    color: #ffc107;
+  }
+  
+  .circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    margin-top: -40px;
+    margin-left: -40px;
+    border: 3px solid currentColor;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+  }
+  
+  .dialog-body {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+  
+  .close-button:hover {
+    color: #000;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
