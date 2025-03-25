@@ -5,7 +5,7 @@
             <div class="border-b border-gray-700 bg-checkout-black">
                 <div
                     class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative flex items-center justify-center py-4 text-400 label">
-                    <button  (click)="goBackToSeats()" type="button"
+                    <button (click)="goBackToSeats()" type="button"
                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute left-0 z-10"
                         aria-label="Browser Back"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 45 45" width="1em" height="100%" class="m-2 h-5 w-5">
@@ -25,9 +25,8 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <a
-                        class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute right-0"
+
+                    <a class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute right-0"
                         href="/"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
                             viewBox="0 0 45 45" width="1em" height="100%" class="m-2 h-5 w-5">
                             <title>Close</title>
@@ -79,11 +78,13 @@
                                         <path
                                             d="M15.75 17.55c0-3.6 3.15-6.075 6.75-6.075 3.15 0 6.75 2.25 6.75 5.625 0 2.25-1.125 3.825-2.925 4.95-.675.45-1.35.9-1.8 1.575-.675.675-.9 1.575-.9 2.7H20.7c-.225-.45-.225-.9-.225-1.35 0-4.5 5.4-4.725 5.4-7.875 0-1.575-1.575-2.7-3.15-2.7-2.025 0-3.375 1.575-3.375 3.375v.675l-3.375-.225c-.225.225-.225-.225-.225-.675zm6.3 15.75c1.125 0 2.025-.9 2.025-2.025s-.9-2.025-2.025-2.025-2.025.9-2.025 2.025c-.225.9.9 2.025 2.025 2.025z">
                                         </path>
-                                    </svg></button></span></li>
+                                    </svg></button></span>
+                        </li>
                         <li
                             class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
                             <span class="inline-flex items-center gap-1 uppercase" aria-label="MPAA Rating: PG13"
-                                role="group">PG13</span></li>
+                                role="group">PG13</span>
+                        </li>
                         <li
                             class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
                             AMC Signature Recliners</li>
@@ -109,7 +110,8 @@
                         <p
                             class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
                             <span class="text-200 caption">If you're a member, sign in now to take advantage of AMC
-                                Stubs benefits and quickly reorder your favorites.</span></p>
+                                Stubs benefits and quickly reorder your favorites.</span>
+                        </p>
                     </div><button
                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm h-11"
                         id="65bd4af1aea5fcb5003cf328" type="button">Sign In</button>
@@ -641,15 +643,14 @@
                         <h1 class="sr-only">Food &amp; Drink Menu</h1>
                         <div class="grid gap-4" data-orientation="vertical">
                             @for (item of listService; track $index) {
-                            <div (click)="addService(item)"  data-state="closed" data-orientation="vertical"><button type="button"
-                                    aria-controls="radix-:rh:" aria-expanded="false" data-state="closed"
+                            <div (click)="addService(item)" data-state="closed" data-orientation="vertical"><button
+                                    type="button" aria-controls="radix-:rh:" aria-expanded="false" data-state="closed"
                                     data-orientation="vertical" id="radix-:rg:"
                                     class="accordion__trigger relative h-[150px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-500 to-red-900"
                                     data-radix-collection-item=""><img alt="" config="[object Object]"
                                         fetchpriority="high" width="830" height="150" decoding="async" data-nimg="1"
                                         class="pointer-events-none absolute top-0 h-full w-full object-cover"
-                                        sizes="(max-width: 1024px) 100vw, 75vw"
-                                        srcset="{{item.imageUrl}}"
+                                        sizes="(max-width: 1024px) 100vw, 75vw" srcset="{{item.imageUrl}}"
                                         src="https://amc-theatres-res.cloudinary.com/image/upload/c_fill,w_830,h_150,g_auto/f_auto/q_auto/v1650660797/amc-cdn/production/2/product-categories/2/137739.jpg"
                                         style="color: transparent;">
                                     <div
@@ -670,8 +671,8 @@
                                     style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width);">
                                 </div>
                             </div>
-                        }
-                        </div> -->
+                            }
+                        </div>
 
 
 
@@ -704,8 +705,7 @@
                                 <div data-state="open" id="radix-:Rcd9hiv9fmnpuiv4ja:" role="region"
                                     aria-labelledby="radix-:R4d9hiv9fmnpuiv4ja:" data-orientation="vertical"
                                     class="accordion__content overflow-clip relative overflow-clip"
-                                    style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width); --radix-collapsible-content-height: 604px; --radix-collapsible-content-width: 733.34375px;"
-                                    >
+                                    style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width); --radix-collapsible-content-height: 604px; --radix-collapsible-content-width: 733.34375px;">
                                     <img alt="" config="[object Object]" loading="lazy" width="830" height="150"
                                         decoding="async" data-nimg="1"
                                         class="pointer-events-none absolute top-0 h-full w-full object-cover"
@@ -1182,33 +1182,42 @@
 
                         </div>
                     </section> -->
-                </div>
+
+
+                </div>ss
+
+
+
+
                 <aside class="hidden w-[400px] pt-4 lg:block">
                     <h1 class="hidden text-500 headline lg:block">Order Details</h1>
                     <div class="max-w-full">
                         <div class="divide-y divide-gray-700">
                             <section class="">
                                 <header class="mt-6 flex items-baseline justify-between">
-                                    <h2 class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
+                                    <h2
+                                        class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
                                         Tickets
                                     </h2>
                                     <a class="group transition-colors text-blue-500 hocus:text-white text-sm font-semibold leading-tight tracking-normal"
-                                       aria-label="Edit Tickets"
-                                       href="/showtimes/129218000?order-token=d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2&amp;seats=B3%2CB4">
-                                       Edit
+                                        aria-label="Edit Tickets"
+                                        href="/showtimes/129218000?order-token=d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2&amp;seats=B3%2CB4">
+                                        Edit
                                     </a>
                                 </header>
-                                
+
                                 <ul class="mb-4 grid gap-2">
                                     <ng-container *ngFor="let ticketType of seatSummary | keyvalue">
                                         <li class="pt-2 font-semibold">
                                             <div class="flex justify-between gap-3">
                                                 <div class="flex-1">
-                                                    <h4 class="my-auto text-base font-semibold leading-tight tracking-normal">
+                                                    <h4
+                                                        class="my-auto text-base font-semibold leading-tight tracking-normal">
                                                         {{ ticketType.key }}
                                                     </h4>
                                                 </div>
-                                                <p class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
+                                                <p
+                                                    class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
                                                     ${{ (ticketType.value.total / ticketType.value.count).toFixed(2) }}
                                                 </p>
                                             </div>
@@ -1222,39 +1231,41 @@
                                         Tổng cộng: ${{ getTotalTicketPrice() | number:'1.2-2' }}
                                     </div>
                                 </ul>
-                                
+
                                 <h2 class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
                                     Service
                                 </h2>
-                                
+
                                 <ul class="mb-4 grid gap-2">
                                     <li *ngFor="let item of selectedServices" class="pt-2 font-semibold">
                                         <div class="flex justify-between items-center gap-3">
                                             <div class="flex-1">
-                                                <h4 class="my-auto text-base font-semibold leading-tight tracking-normal">
+                                                <h4
+                                                    class="my-auto text-base font-semibold leading-tight tracking-normal">
                                                     {{ item.service.serviceName }}
                                                 </h4>
                                             </div>
                                             <div class="flex items-center gap-2">
-                                                <button 
-                                                    class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition duration-300" 
+                                                <button
+                                                    class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition duration-300"
                                                     (click)="removeService(item.service)">
                                                     -
                                                 </button>
                                                 <span class="text-white">{{ item.quantity }}</span>
-                                                <button 
-                                                    class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition duration-300" 
+                                                <button
+                                                    class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition duration-300"
                                                     (click)="addService(item.service)">
                                                     +
                                                 </button>
                                             </div>
-                                            <p class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
+                                            <p
+                                                class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
                                                 ${{ item.service.price * item.quantity | number:'1.2-2' }}
                                             </p>
                                         </div>
                                     </li>
                                 </ul>
-                                
+
                                 <!-- Hiển thị tổng tiền -->
                                 <div class="mt-4 text-right text-white text-lg font-bold">
                                     Tổng cộng: ${{ getTotalService() | number:'1.2-2' }}
@@ -1277,11 +1288,15 @@
                             <p
                                 class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                 <span
-                                    class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>${{getTotalAmount() | currency}}
+                                    class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>${{getTotalAmount()
+                                | currency}}
                             </p>
                         </div>
                     </div>
                 </aside>
+
+
+
             </div>
         </main>
         <footer class="border-t border-gray-700 bg-checkout-black">
@@ -1332,25 +1347,30 @@
                                                                     href="/showtimes/129218000?order-token=d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2&amp;seats=B3%2CB4">Edit</a>
                                                             </header>
                                                             <ul class="mb-4 grid gap-2">
-                                                                <ng-container *ngFor="let ticketType of seatSummary | keyvalue">
+                                                                <ng-container
+                                                                    *ngFor="let ticketType of seatSummary | keyvalue">
                                                                     <li class="pt-2 font-semibold">
                                                                         <div class="flex justify-between gap-3">
                                                                             <div class="flex-1">
-                                                                                <h4 class="my-auto text-base font-semibold leading-tight tracking-normal">
+                                                                                <h4
+                                                                                    class="my-auto text-base font-semibold leading-tight tracking-normal">
                                                                                     {{ ticketType.key }}
                                                                                 </h4>
                                                                             </div>
-                                                                            <p class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                                                ${{ (ticketType.value.total / ticketType.value.count).toFixed(2) }}
+                                                                            <p
+                                                                                class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
+                                                                                ${{ (ticketType.value.total /
+                                                                                ticketType.value.count).toFixed(2) }}
                                                                             </p>
                                                                         </div>
                                                                     </li>
-                                                                    <li class="text-white text-xs font-semibold leading-tight tracking-normal">
+                                                                    <li
+                                                                        class="text-white text-xs font-semibold leading-tight tracking-normal">
                                                                         Seats {{ getSeatNamesByType(ticketType.key) }}
                                                                     </li>
                                                                 </ng-container>
                                                             </ul>
-                                                          
+
                                                             <h2
                                                                 class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
                                                                 Fees</h2>
@@ -1368,7 +1388,7 @@
                                                                     </div>
                                                                 </li>
                                                             </ul>
-                                                       
+
                                                             <div
                                                                 class="PPsXr-flex PPsXr-flex-wrap PPsXr-gap-4 PPsXr-items-center PPsXr-py-8 PPsXr-justify-center PPsXr-md:justify-start">
                                                                 <div class="PPsXr-grid PPsXr-flex-1 PPsXr-gap-1">
@@ -1424,9 +1444,3 @@
         class="flex items-center justify-center empty:hidden w-[100vw] h-[100dvh] bg-transparent max-w-[100vw] max-h-[100dvh]">
     </dialog>
 </body>
-
-
-
-
-
-
