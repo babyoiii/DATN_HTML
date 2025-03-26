@@ -20,6 +20,7 @@ import { TimkiemrapComponent } from './Component/timkiemrap/timkiemrap.component
 import { PaymentCallBackComponent } from './Component/payment-call-back/payment-call-back.component';
 import { MovieDetailNghiaComponent } from './Component/movie-detail-nghia/movie-detail-nghia.component';
 import { Test1Component } from './Component/test1/test1.component';
+import { TestBlockChainComponent } from './Component/test-block-chain/test-block-chain.component';
 export const routes: Routes = [
     {
         path: '', component: MainComponent, children: [
@@ -34,8 +35,8 @@ export const routes: Routes = [
             { path: 'movies/:id', component: MovieDetailNghiaComponent},
         ]
     },
-    { path: 'a', component: ShowtimesComponent },
-    { path: 'showtimes/:id', component: Test1Component },
+    { path: 'showtimes/:id', component: ShowtimesComponent },
+    // { path: 'showtimes/:id', component: Test1Component },
     { path: 'dangki', component: DangkiComponent },
     { path: 'timkiemrap', component: TimkiemrapComponent },
     { path: 'signin', component: SignInComponent },
@@ -44,5 +45,5 @@ export const routes: Routes = [
     { path: 'orders', component: OrdersComponent },
     { path: 'thanh-toan', component: PurchaseComponent },
     { path: 'payment-callback', component: PaymentCallBackComponent },
-
+    { path: 'Test123', component: TestBlockChainComponent }
 ];

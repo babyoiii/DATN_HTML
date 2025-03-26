@@ -4,6 +4,8 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { OrdersService } from '../../Service/Orders.Service';
 import { Service } from '../../Models/Order';
+import { ServiceService } from '../../Service/Service.service';
+import { GetServiceType } from '../../Models/Service';
 
 interface Seat {
   seatId: string;
@@ -22,19 +24,19 @@ interface Seat {
 export class OrdersComponent implements OnInit {
   countdown: string | null = null;
   seatSummary: { [key: string]: { count: number; total: number } } = {};
-  listService: Service[] = [];
   selectedServices: { service: Service; quantity: number }[] = [];  
-
+  listServiceTypes : GetServiceType[] = [];
+  accordionStates: boolean[] = [];
   constructor(
     private seatService: SeatService,
     private cdr: ChangeDetectorRef,
     private router: Router,
-    private orderService: OrdersService
+    private orderService: OrdersService,
+    private serviceService: ServiceService 
   ) {}
 
   ngOnInit(): void {
-    this.getService();
-
+    this.getListServiceType();
     this.seatService.getJoinRoomMessages().subscribe({
       next: (count) => {
         if (count !== null) {
@@ -74,6 +76,26 @@ export class OrdersComponent implements OnInit {
       }
   }
   }
+  selectService(service: Service): void {
+    console.log('Selected service:', service);
+  }
+  getListServiceType(): void {
+    this.serviceService.getAllServiceTypes(1, 11).subscribe({
+      next: (res: any) => {
+        console.log('✅ Danh sách loại dịch vụ:', res.data);
+        this.listServiceTypes = res.data;
+        this.accordionStates = new Array(res.data.length).fill(false); 
+      },
+      error: (err) => {
+        console.error('❌ Lỗi khi lấy danh sách loại dịch vụ:', err);
+      },
+    });
+  }
+
+  toggleAccordion(index: number): void {
+    this.accordionStates[index] = !this.accordionStates[index]; 
+  }
+
   private notifyAndRedirect(): void {
     alert('Thời gian giữ ghế đã hết, bạn sẽ được chuyển hướng.');
     this.router.navigate(['/']); 
@@ -134,21 +156,7 @@ export class OrdersComponent implements OnInit {
       this.router.navigate(['/showtimes'], { queryParams: { reload: 'true' } });
     }
   }
-  getService() {
-    const currentPage = 1;
-    const recordPerPage = 10;
-    this.orderService.getMovies(currentPage, recordPerPage).subscribe({
-      next: (result: any) => {
-        console.log('🎬 Danh sách dịch vụ:', result);
-        this.listService = result.data;
-      },
-      error: (error) => {
-        console.error('❌ Lỗi khi lấy dữ liệu dịch vụ:', error);
-      }
-    });
-  }
-
-  addService(service: Service): void {
+  addService(service: any): void {
     const existingService = this.selectedServices.find(s => s.service.id === service.id);
 
     if (existingService) {
