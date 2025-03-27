@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { MovieByShowtimeData } from '../Models/MovieModel';
 
 export interface ShowtimeResponse {
   id: string;
@@ -39,5 +40,8 @@ export class ShowtimeService {
       showtimeId,
       seatIds
     });
+  }
+  getMovieByShowtime(showtimeId: string): Observable<any> {
+    return this.http.get<MovieByShowtimeData>(`${this.baseUrl}/Movie/GetMovieByShowTime?showtimeId=${showtimeId}`);
   }
 } 

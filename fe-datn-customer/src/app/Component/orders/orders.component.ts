@@ -6,6 +6,8 @@ import { OrdersService } from '../../Service/Orders.Service';
 import { Service } from '../../Models/Order';
 import { ServiceService } from '../../Service/Service.service';
 import { GetServiceType } from '../../Models/Service';
+import { ModalService } from '../../Service/modal.service';
+import { AuthServiceService } from '../../Service/auth-service.service';
 
 interface Seat {
   seatId: string;
@@ -32,7 +34,9 @@ export class OrdersComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private orderService: OrdersService,
-    private serviceService: ServiceService 
+    private serviceService: ServiceService,
+    private modalService: ModalService,
+    private authServiceService: AuthServiceService
   ) {}
 
   ngOnInit(): void {
@@ -75,6 +79,12 @@ export class OrdersComponent implements OnInit {
           console.error('❌ Dữ liệu ghế không hợp lệ:', error);
       }
   }
+  }
+  checkLogin(): boolean {
+    return this.authServiceService.isLoggedIn();
+    }
+  openSignIn() {
+    this.modalService.openSignInModal();
   }
   selectService(service: Service): void {
     console.log('Selected service:', service);

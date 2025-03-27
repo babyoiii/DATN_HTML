@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { OrdersService } from '../../Service/Orders.Service';
 import { OrderModelReq, PaymentModelReq } from '../../Models/Order';
 import { SeatService } from '../../Service/seat.service';
+import { ModalService } from '../../Service/modal.service';
+import { AuthServiceService } from '../../Service/auth-service.service';
 
 @Component({
   selector: 'app-purchase',
@@ -29,7 +31,9 @@ export class PurchaseComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private orderService: OrdersService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private modalService: ModalService,
+    private authServiceService: AuthServiceService
   ) {}
 
   ngOnInit(): void {
@@ -50,12 +54,24 @@ export class PurchaseComponent implements OnInit {
 
     this.loadData();
   }
+  openSignIn() {
+    this.modalService.openSignInModal();
+  }
   private notifyAndRedirect(): void {
     this.toastr.warning('Thời gian giữ ghế đã hết, bạn sẽ được chuyển hướng.', 'Cảnh báo');
     setTimeout(() => {
       this.router.navigate(['/']); 
     }, 3000); 
   }
+  scrollToSection(sectionId: string): void {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
+    }
+  }
+  checkLogin(): boolean {
+    return this.authServiceService.isLoggedIn();
+    }
   loadData() {
     const orderDataString = localStorage.getItem('orderData');
     if (orderDataString) {
