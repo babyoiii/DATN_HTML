@@ -15,7 +15,7 @@ import { SafePipe } from "../../safe.pipe";
 @Component({
   selector: 'app-showtimes',
   standalone: true,
-  imports: [FormsModule,RouterLink,CommonModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, DurationFormatPipe, SafePipe],
+  imports: [FormsModule, RouterLink, CommonModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule, DurationFormatPipe, SafePipe],
   templateUrl: './showtimes.component.html',
   styleUrls: ['./showtimes.component.css']
 })
@@ -24,8 +24,8 @@ export class ShowtimesComponent implements OnInit {
   groupedData: { [key: string]: { thumbnail: string; trailer: string; duration: number; theaters: { [key: string]: { address: string; showtimes: any[] } } } } = {};
   listMoive: GetAllNameMovie[] = [];
   movieId: string = '';
-  location: string = 'Hà Nội'; 
-  date: string = new Date().toISOString().split('T')[0]; 
+  location: string = 'Hà Nội';
+  date: string = new Date().toISOString().split('T')[0];
   currentPage = 1;
   recordPerPage = 100;
   selectedMovie: {
@@ -42,6 +42,12 @@ export class ShowtimesComponent implements OnInit {
       const id = params.get('id');
       if (id) {
         this.movieId = id;
+        // Tìm trailer từ ID phim ngay từ đầu
+        this.movieService.getMovieDetail(id).subscribe(movieDetail => {
+          if (movieDetail && movieDetail.data && movieDetail.data.trailer) {
+            this.Trailer = movieDetail.data.trailer;
+          }
+        });
       }
       this.getmovieName();
       this.getShowTimes();
@@ -86,41 +92,41 @@ export class ShowtimesComponent implements OnInit {
   }
 
   groupShowtimesByMovieAndTheater() {
-    this.groupedData = this.listData.reduce((acc: { 
-      [key: string]: { 
+    this.groupedData = this.listData.reduce((acc: {
+      [key: string]: {
         thumbnail: string;
         trailer: string;
         duration: number;
         theaters: { [key: string]: { address: string; showtimes: any[] } }
-      } 
+      }
     }, item: any) => {
-      
-      console.log('Trailer của phim:', item.movieName, item.trailer); 
+
+      console.log('Trailer của phim:', item.movieName, item.trailer);
 
       if (!acc[item.movieName]) {
         acc[item.movieName] = {
-          thumbnail: item.thumbnail, 
-          trailer: item.trailer ?? '', 
+          thumbnail: item.thumbnail,
+          trailer: item.trailer ?? '',
           duration: item.duration,
           theaters: {}
         };
       }
-      
+
       if (!acc[item.movieName].theaters[item.name]) {
         acc[item.movieName].theaters[item.name] = {
-            address: item.address,
-            showtimes: []
+          address: item.address,
+          showtimes: []
         };
       }
-      
+
       acc[item.movieName].theaters[item.name].showtimes.push(...item.showtimes);
       return acc;
     }, {});
 
     console.log('Dữ liệu sau khi nhóm:', this.groupedData);
-}
+  }
 
-  
+
   onMovieChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
     this.movieId = selectElement.value; // Nếu chọn All Movies, giá trị sẽ là rỗng
@@ -129,20 +135,20 @@ export class ShowtimesComponent implements OnInit {
 
   onDateChange(event: MatDatepickerInputEvent<Date>) {
     if (event.value) {
-      this.date = event.value.toISOString().split('T')[0]; 
+      this.date = event.value.toISOString().split('T')[0];
       this.getShowTimes();
     }
   }
 
   dateFilter = (d: Date | null): boolean => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); 
+    today.setHours(0, 0, 0, 0);
     return d ? d >= today : false;
   };
-  Trailer :string = '';
-  getTrailer(trailer :string){
+  Trailer: string = '';
+  getTrailer(trailer: string) {
     console.log('Trailer: abc', trailer);
-  return this.Trailer = trailer;
+    return this.Trailer = trailer;
   }
 
   selectMovie(movieName: string, movieData: any) {

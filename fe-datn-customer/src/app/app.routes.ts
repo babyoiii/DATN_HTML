@@ -35,7 +35,7 @@ export const routes: Routes = [
         ]
     },
     { path: 'a', component: ShowtimesComponent },
-    { path: 'showtimes/:id', component: Test1Component },
+    { path: 'showtimes/:id', component: ShowtimesComponent },
     { path: 'dangki', component: DangkiComponent },
     { path: 'timkiemrap', component: TimkiemrapComponent },
     { path: 'signin', component: SignInComponent },
