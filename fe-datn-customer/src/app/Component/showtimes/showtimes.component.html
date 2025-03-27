@@ -182,11 +182,17 @@
                             data-active-section-id="captain-america-brave-new-world-67472" data-active="true">
                             <header role="group" aria-label="Captain America: Brave New World Details"
                                 class="sticky top-0 z-20 -mx-4 flex items-center gap-4 bg-gradient-to-t from-transparent from-5% to-black to-20% px-4 pb-4 pt-4"
-                                data-sticky-id="captain-america-brave-new-world-67472"><img alt=""
-                                    config="[object Object]" loading="lazy" width="90" height="90" decoding="async"
-                                    data-nimg="1" class="inline-block aspect-square w-[90px] min-w-[90px]"
+                                data-sticky-id="captain-america-brave-new-world-67472">
+
+
+
+                                <img alt="" config="[object Object]" loading="lazy" decoding="async" data-nimg="1"
+                                    class="inline-block aspect-square w-[90px] min-w-[90px]"
                                     srcset="{{movieName.value.thumbnail}}" src="{{movieName.value.thumbnail}}"
-                                    style="color: transparent;">
+                                    style="color: transparent; min-width: 90px; height: auto">
+
+
+
                                 <div class="flex flex-col justify-center gap-2">
                                     <h1 (click)="selectMovie(movieName.key, movieName.value)"
                                         class="text-balance text-lg font-bold md:text-3xl cursor-pointer hover:text-blue-500">
@@ -241,7 +247,8 @@
                                                                 </path>
                                                             </svg>
                                                         </button>
-                                                    </span></div>
+                                                    </span>
+                                                </div>
                                             </h3><img alt="RealD 3D" config="[object Object]" loading="lazy" width="100"
                                                 height="35" decoding="async" data-nimg="1"
                                                 class="hidden md:inline-block"

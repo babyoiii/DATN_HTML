@@ -152,23 +152,133 @@ export class ShowtimesComponent implements OnInit {
   }
 
   selectMovie(movieName: string, movieData: any) {
+    const duration = movieData.duration;
+
     this.selectedMovie = {
       name: movieName,
-      thumbnail: movieData.thumbnail,
-      trailer: movieData.trailer,
-      duration: movieData.duration
+      thumbnail: movieData.thumbnail || 'assets/images/default-movie-poster.jpg',
+      trailer: movieData.trailer || '',
+      duration: duration
     };
-    this.Trailer = movieData.trailer;
+    this.Trailer = movieData.trailer || '';
+
+    console.log('Đã chọn phim:', this.selectedMovie);
+    localStorage.setItem('selectedMovieData', JSON.stringify(this.selectedMovie));
   }
-  getShowtime(roomId: string) {
-    console.log('Room ID:', roomId);
-    // Điều hướng đến trang booking
-    window.location.href = `/booking/${roomId}`;
-  }
+
+
+
+
+
+
+
+
 
   getSelectedMovieName(): string {
     if (!this.movieId) return 'All Movies';
     const selectedMovie = this.listMoive.find(movie => movie.id === this.movieId);
     return selectedMovie ? selectedMovie.movieName : 'All Movies';
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  getShowtime(roomId: string) {
+    console.log('Room ID:', roomId);
+
+    // Lưu thông tin phim vào localStorage trước khi chuyển trang
+    const currentMovie = this.selectedMovie ||
+      (this.movieId ? this.listMoive.find(movie => movie.id === this.movieId) : null);
+
+    if (currentMovie) {
+      // Tìm thumbnail từ dữ liệu đã nhóm nếu không có trong currentMovie
+      let thumbnailUrl = currentMovie.thumbnail;
+
+      // Tìm thông tin phim đầy đủ từ groupedData
+      let movieName = 'name' in currentMovie ? currentMovie.name : currentMovie.movieName;
+      let movieDuration = currentMovie.duration;
+
+      // Nếu không có duration hoặc duration = 0, tìm trong groupedData
+      if ((!movieDuration || movieDuration === 0) && this.groupedData && this.groupedData[movieName]) {
+        movieDuration = this.groupedData[movieName].duration;
+      }
+
+      // Nếu vẫn không có, đặt giá trị mặc định hợp lý
+      if (!movieDuration || movieDuration === 0) {
+        movieDuration = 120; // Mặc định 2 tiếng nếu không có thông tin
+      }
+
+      // Nếu thumbnail vẫn trống, tìm trong groupedData
+      if (!thumbnailUrl && this.groupedData && this.groupedData[movieName]) {
+        thumbnailUrl = this.groupedData[movieName].thumbnail;
+      }
+
+      // Nếu vẫn trống, dùng đường dẫn ảnh mặc định
+      if (!thumbnailUrl) {
+        thumbnailUrl = 'assets/images/default-movie-poster.jpg';
+      }
+
+      const movieInfo = {
+        name: movieName,
+        duration: movieDuration,
+        thumbnail: thumbnailUrl,
+        theater: this.findTheaterNameByRoomId(roomId),
+        showtime: this.findShowtimeByRoomId(roomId),
+        date: this.date
+      };
+
+      console.log('Movie info being saved:', movieInfo); // Thêm log để debug
+      localStorage.setItem('currentMovieInfo', JSON.stringify(movieInfo));
+    }
+
+    // Điều hướng đến trang booking
+    window.location.href = `/booking/${roomId}`;
+  }
+
+
+
+  // Thêm 2 phương thức mới để tìm thông tin theater và showtime dựa vào roomId
+  private findTheaterNameByRoomId(roomId: string): string {
+    for (const movieName in this.groupedData) {
+      const movie = this.groupedData[movieName];
+      for (const theaterName in movie.theaters) {
+        const theater = movie.theaters[theaterName];
+        for (const showtime of theater.showtimes) {
+          if (showtime.id === roomId) {
+            return theaterName;
+          }
+        }
+      }
+    }
+    return '';
+  }
+
+  private findShowtimeByRoomId(roomId: string): string {
+    for (const movieName in this.groupedData) {
+      const movie = this.groupedData[movieName];
+      for (const theaterName in movie.theaters) {
+        const theater = movie.theaters[theaterName];
+        for (const showtime of theater.showtimes) {
+          if (showtime.id === roomId) {
+            return showtime.startTime;
+          }
+        }
+      }
+    }
+    return '';
+  }
+
+
+
 }
