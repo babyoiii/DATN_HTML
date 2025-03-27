@@ -31,10 +31,11 @@ export const routes: Routes = [
             { path: 'offers', component: OffersComponent },
             { path: 'discounts', component: DiscountsComponent },
             { path: 'on-demand', component: OnDemandComponent },
-            { path: 'movies/:id', component: MovieDetailNghiaComponent},
+            { path: 'movies/:id', component: MovieDetailNghiaComponent },
         ]
     },
     { path: 'a', component: ShowtimesComponent },
+    { path: 'showtimes', component: ShowtimesComponent },
     { path: 'showtimes/:id', component: ShowtimesComponent },
     { path: 'dangki', component: DangkiComponent },
     { path: 'timkiemrap', component: TimkiemrapComponent },

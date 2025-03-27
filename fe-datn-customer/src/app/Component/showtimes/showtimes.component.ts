@@ -11,6 +11,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { DurationFormatPipe } from '../../duration-format.pipe';
 import { log } from 'node:console';
 import { SafePipe } from "../../safe.pipe";
+import { CinemaService, CinemaRes } from '../../Service/cinema.service';
 
 @Component({
   selector: 'app-showtimes',
@@ -35,7 +36,17 @@ export class ShowtimesComponent implements OnInit {
     duration: number;
   } | null = null;
 
-  constructor(private movieService: MovieService, private route: ActivatedRoute) { }
+
+
+  cinemas: CinemaRes[] = [];
+  selectedCinemaId: string = '';
+
+
+  constructor(
+    private movieService: MovieService,
+    private route: ActivatedRoute,
+    private cinemaService: CinemaService,
+  ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -49,9 +60,50 @@ export class ShowtimesComponent implements OnInit {
           }
         });
       }
+      // Initialize with current date if not set
+      if (!this.date) {
+        this.date = new Date().toISOString().split('T')[0];
+      }
       this.getmovieName();
       this.getShowTimes();
+      this.loadCinemas();
     });
+  }
+
+
+  loadCinemas(): void {
+    this.cinemaService.getListCinemas().subscribe({
+      next: (response) => {
+        if (response.responseCode === 200 && response.data) {
+          this.cinemas = response.data;
+          if (this.cinemas.length > 0) {
+            this.selectedCinemaId = this.cinemas[0].cinemasId;
+          }
+        }
+      },
+      error: (error) => {
+        console.error('Error loading cinemas:', error);
+      }
+    });
+  }
+  onCinemaChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedCinemaId = selectElement.value;
+
+    // Update location based on selected cinema
+    const selectedCinema = this.cinemas.find(c => c.cinemasId === this.selectedCinemaId);
+    if (selectedCinema && selectedCinema.address) {
+      this.location = selectedCinema.address;
+    }
+
+    this.getShowTimes(); // Call API to get movies for the selected cinema
+  }
+
+
+  getSelectedCinemaName(): string {
+    if (!this.selectedCinemaId) return 'Tất cả các rạp';
+    const cinema = this.cinemas.find(c => c.cinemasId === this.selectedCinemaId);
+    return cinema ? cinema.name : 'Tất cả các rạp';
   }
 
   getmovieName() {
@@ -78,12 +130,48 @@ export class ShowtimesComponent implements OnInit {
   }
 
   getShowTimes() {
-    this.movieService.getShowtimes(this.movieId, this.location, new Date(this.date), this.currentPage, this.recordPerPage).subscribe({
+    // Get the selected cinema's address to use as location filter if a cinema is selected
+    if (this.selectedCinemaId) {
+      const selectedCinema = this.cinemas.find(c => c.cinemasId === this.selectedCinemaId);
+      if (selectedCinema && selectedCinema.address) {
+        this.location = selectedCinema.address;
+      }
+    }
+  
+    // Đảm bảo ngày là một đối tượng Date hợp lệ
+    let dateObj: Date;
+    try {
+      dateObj = new Date(this.date);
+      
+      // Kiểm tra xem dateObj có hợp lệ không
+      if (isNaN(dateObj.getTime())) {
+        // Nếu không hợp lệ, sử dụng ngày hiện tại
+        console.error("Invalid date, using current date instead");
+        dateObj = new Date();
+      }
+    } catch (error) {
+      console.error("Error parsing date, using current date instead", error);
+      dateObj = new Date();
+    }
+  
+    console.log('Filtering with criteria:', {
+      movieId: this.movieId || 'All movies',
+      location: this.location,
+      date: dateObj.toISOString(),
+      dateString: this.date
+    });
+  
+    this.movieService.getShowtimes(
+      this.movieId || '', // If movieId is empty, pass empty string to get all movies
+      this.location,
+      dateObj,
+      this.currentPage,
+      this.recordPerPage
+    ).subscribe({
       next: (data: any) => {
         this.listData = data.data;
         this.groupShowtimesByMovieAndTheater();
-        console.log('Data:', this.listData);
-        console.log('Showtimes:', this.groupedData);
+        console.log('Data received:', this.listData);
       },
       error: (err) => {
         console.error('Error fetching showtimes:', err);
@@ -91,6 +179,8 @@ export class ShowtimesComponent implements OnInit {
     });
   }
 
+
+  
   groupShowtimesByMovieAndTheater() {
     this.groupedData = this.listData.reduce((acc: {
       [key: string]: {
@@ -129,9 +219,25 @@ export class ShowtimesComponent implements OnInit {
 
   onMovieChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
-    this.movieId = selectElement.value; // Nếu chọn All Movies, giá trị sẽ là rỗng
-    this.getShowTimes(); // Gọi API để lấy danh sách phim
+    this.movieId = selectElement.value;
+
+    if (this.movieId) {
+      const selectedMovie = this.listMoive.find(movie => movie.id === this.movieId);
+      if (selectedMovie) {
+        this.selectedMovie = {
+          name: selectedMovie.movieName,
+          thumbnail: selectedMovie.thumbnail || '',
+          trailer: selectedMovie.trailer || '',
+          duration: selectedMovie.duration || 0
+        };
+      }
+    } else {
+      this.selectedMovie = null;
+    }
+
+    this.getShowTimes();
   }
+
 
   onDateChange(event: MatDatepickerInputEvent<Date>) {
     if (event.value) {
@@ -139,6 +245,7 @@ export class ShowtimesComponent implements OnInit {
       this.getShowTimes();
     }
   }
+
 
   dateFilter = (d: Date | null): boolean => {
     const today = new Date();
@@ -177,7 +284,7 @@ export class ShowtimesComponent implements OnInit {
   getSelectedMovieName(): string {
     if (!this.movieId) return 'All Movies';
     const selectedMovie = this.listMoive.find(movie => movie.id === this.movieId);
-    return selectedMovie ? selectedMovie.movieName : 'All Movies';
+    return selectedMovie ? selectedMovie.movieName : 'Tất cả các phim';
   }
 
 
@@ -280,5 +387,128 @@ export class ShowtimesComponent implements OnInit {
   }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  showDatepicker() {
+    // Hiển thị date-picker-container khi mở datepicker
+    const container = document.querySelector('.date-picker-container') as HTMLElement;
+    if (container) {
+      container.style.display = 'block';
+    }
+  }
+
+  hideDatepicker() {
+    // Ẩn date-picker-container khi đóng datepicker
+    const container = document.querySelector('.date-picker-container') as HTMLElement;
+    if (container) {
+      container.style.display = 'none';
+    }
+  }
 
 }
