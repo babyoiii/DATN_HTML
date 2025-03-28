@@ -84,43 +84,34 @@
                                         Showtimes</div>
                                 </div>
                             </a></li>
-                        <div
-                            class="flex h-full w-full items-center gap-x-4 bg-gradient-to-r from-black via-[#1c082b] to-[#340c43] pr-8">
-                            <li aria-label="Sign In">
-                                <div tabindex="0" role="button"
-                                    class="flex justify-center transition-all ease-in-out hover:text-blue-500 hover:decoration-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
-                                        width="1em" height="100%" class="mr-2 w-5">
-                                        <path
-                                            d="M22.525 7.031a9.17 9.169 0 0 0-8.608 9.59 9.17 9.169 0 0 0 8.608 9.592 9.17 9.169 0 0 0 8.608-9.591 9.17 9.169 0 0 0-8.608-9.59zm0 17.269a7.257 7.256 0 0 1-6.695-7.678 7.257 7.256 0 0 1 6.695-7.706 7.257 7.256 0 0 1 6.695 7.678 7.257 7.256 0 0 1-6.695 7.706z">
-                                        </path>
-                                        <path
-                                            d="M22.525 0A22.504 22.5 0 0 0 5.647 37.406l.169.197A22.504 22.5 0 1 0 22.525 0zm0 43.088a20.535 20.531 0 0 1-14.937-6.525c1.8-4.95 6.245-6.975 15.134-6.975 11.927 0 14.318 4.753 14.796 6.946a20.535 20.531 0 0 1-14.993 6.554zm.197-15.329c-9.17 0-14.234 2.194-16.54 7.257a20.59 20.588 0 1 1 32.77 0c-1.18-3.038-4.838-7.257-16.23-7.257z">
-                                        </path>
-                                    </svg>
-
-                                    <button (click)="openSignIn()" class="sign-in-button">
-                                        Sign In
-                                    </button>
-
-                                </div>
-                            </li>
-                            <li aria-label="AMC Stubs" class="flex items-center"><button
-                                    id="radix-:r0:-trigger-radix-:r9:" data-state="closed" aria-expanded="false"
-                                    aria-controls="radix-:r0:-content-radix-:r9:"
-                                    class="cursor-default border-b-2 border-transparent transition-all ease-in-out data-[state=open]:border-blue-500 mt-0.5 flex h-10 cursor-pointer items-center border-b-0 transition-all ease-in-out hocus:border-b-2 hocus:text-blue-500 hocus:decoration-2"
-                                    data-radix-collection-item="">
-                                    <div
-                                        class="mr-2 flex items-center text-sm font-semibold leading-tight tracking-normal">
-                                        <a [routerLink]="'dangki'">Join Now!</a>
-                                    </div> <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                        viewBox="0 0 45 45" width="1em" height="100%" class="text-current ml-1 w-3">
-                                        <path
-                                            d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
-                                        </path>
-                                    </svg>
-                                </button></li>
-                        </div>
+                            <div class="flex h-full w-full items-center gap-x-4 bg-gradient-to-r from-black via-[#1c082b] to-[#340c43] pr-8">
+                                @if(checkLogin() == false) {
+                                    <ul class="flex items-center gap-x-4">
+                                        <li aria-label="Sign In">
+                                            <div tabindex="0" role="button" class="flex justify-center transition-all ease-in-out hover:text-blue-500 hover:decoration-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%" class="mr-2 w-5">
+                                                    <path d="M22.525 7.031a9.17 9.169 0 0 0-8.608 9.59 9.17 9.169 0 0 0 8.608 9.592 9.17 9.169 0 0 0 8.608-9.591 9.17 9.169 0 0 0-8.608-9.59zm0 17.269a7.257 7.256 0 0 1-6.695-7.678 7.257 7.256 0 0 1 6.695-7.706 7.257 7.256 0 0 1 6.695 7.678 7.257 7.256 0 0 1-6.695 7.706z"></path>
+                                                    <path d="M22.525 0A22.504 22.5 0 0 0 5.647 37.406l.169.197A22.504 22.5 0 1 0 22.525 0zm0 43.088a20.535 20.531 0 0 1-14.937-6.525c1.8-4.95 6.245-6.975 15.134-6.975 11.927 0 14.318 4.753 14.796 6.946a20.535 20.531 0 0 1-14.993 6.554zm.197-15.329c-9.17 0-14.234 2.194-16.54 7.257a20.59 20.588 0 1 1 32.77 0c-1.18-3.038-4.838-7.257-16.23-7.257z"></path>
+                                                </svg>
+                                                <button (click)="openSignIn()" class="sign-in-button">
+                                                    Sign In
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li aria-label="AMC Stubs" class="flex items-center">
+                                            <button id="radix-:r0:-trigger-radix-:r9:" data-state="closed" aria-expanded="false" aria-controls="radix-:r0:-content-radix-:r9:" class="cursor-default border-b-2 border-transparent transition-all ease-in-out data-[state=open]:border-blue-500 mt-0.5 flex h-10 cursor-pointer items-center border-b-0 transition-all ease-in-out hocus:border-b-2 hocus:text-blue-500 hocus:decoration-2" data-radix-collection-item="">
+                                                <div class="mr-2 flex items-center text-sm font-semibold leading-tight tracking-normal">
+                                                    <a [routerLink]="'dangki'">Join Now!</a>
+                                                </div>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%" class="text-current ml-1 w-3">
+                                                    <path d="M22.464 29.594L3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z"></path>
+                                                </svg>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                }
+                            </div>
+                            
                     </div>
                 </ul>
             </div>

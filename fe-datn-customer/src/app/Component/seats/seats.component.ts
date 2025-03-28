@@ -11,6 +11,10 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogData, NotificationDialogComponent } from '../notification-dialog/notification-dialog.component';
 import { SeatDataService } from '../../Service/SeatData.service';
+import { ModalService } from '../../Service/modal.service';
+import { ShowtimeService } from '../../Service/showtime.service';
+import { MovieByShowtimeData } from '../../Models/MovieModel';
+import { AuthServiceService } from '../../Service/auth-service.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 enum SeatStatus {
@@ -69,6 +73,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
 
 
+  movieDetail: MovieByShowtimeData | null = null;
   constructor(
     private seatService: SeatService,
     private seatDataService: SeatDataService,
@@ -77,14 +82,19 @@ export class SeatsComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private toastr: ToastrService,
     private dialog: MatDialog,
-    private location: Location
+    private location: Location,
+    private modalService: ModalService,
+    private showtimeService : ShowtimeService,
+    private authServiceService: AuthServiceService
   ) { }
 
+ 
   ngOnInit(): void {
     this.route.params
       .pipe(takeUntil(this.destroy$))
       .subscribe(params => {
         const showtimeId = params['id'];
+        this.loadSeatsByShowtimeId(showtimeId)
         localStorage.setItem('currentShowtimeId', showtimeId);
         const userId = this.ensureUserId();
         console.log(userId);
@@ -149,7 +159,9 @@ export class SeatsComponent implements OnInit, OnDestroy {
       this.router.navigate([currentUrl]);
     });
   }
-
+  openSignIn() {
+    this.modalService.openSignInModal();
+  }
   private loadSeats(showtimeId: string, userId: string): void {
     this.seats = [];
     this.selectedSeats = [];
@@ -199,7 +211,9 @@ export class SeatsComponent implements OnInit, OnDestroy {
         error: (error) => this.handleCountdownError(error)
       });
   }
-
+   checkLogin(): boolean {
+   return this.authServiceService.isLoggedIn();
+   }
   private processSeatData(data: SeatInfo[]): void {
 
     this.seatsCore = [...data].flat();
@@ -215,7 +229,20 @@ export class SeatsComponent implements OnInit, OnDestroy {
     this.seatDataService.setSelectedSeats(this.selectedSeats);
     this.seatDataService.setTotalAmount(this.totalAmount);
   }
-
+  loadSeatsByShowtimeId(showtimeId: string): void {
+    this.showtimeService.getMovieByShowtime(showtimeId).subscribe({
+      next: (response) => {
+        if (response && response.data) {
+          this.movieDetail = response.data; 
+          console.log('✅ Movie Detail:', this.movieDetail);
+          this.cdr.markForCheck(); 
+        }
+      },
+      error: (err) => {
+        console.error('❌ Error loading movie detail:', err);
+      }
+    });
+  }
   private groupSeatsByRow(): void {
     this.seatsPerRow = this.seats.reduce((acc, seat) => {
       const rowKey = seat.RowNumber.toString();

@@ -65,24 +65,23 @@
 
 
         <div class="flex flex-col md:gap-2">
-          <h3 class="text-800 headline">{{ movieInfo?.name || 'không có thông tin phim, lỗi gì đó rồi'}}</h3>
+          <h3 class="text-800 headline">Captain America: Brave New World</h3>
           <ul
             class="flex flex-wrap gap-y-2 leading-none relative z-50 mt-2 text-50 font-semibold uppercase md:text-100">
             <li
               class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              {{ movieInfo?.theater }}</li>
+              AMC Village 7</li>
             <li
               class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              {{ movieInfo?.date ? (movieInfo.date | date:'EEEE, MMMM d, y') : 'Tuesday, February 18, 2025' }}</li>
+              Tuesday, February 18, 2025</li>
             <li
               class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              {{ movieInfo?.showtime }}</li>
+              12:30 pm</li>
             <li
               class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              <span class="flex items-center gap-[0.5ch]" aria-label="Runtime: 1 HR 58 MIN" role="group">
-
-                {{ movieInfo?.duration }}
-              <button class="h-[1em] w-[1em] text-blue-500 transition-colors hover:text-white"
+              <span class="flex items-center gap-[0.5ch]" aria-label="Runtime: 1 HR 58 MIN" role="group">1
+                HR 58 MIN
+                <!-- --> <button class="h-[1em] w-[1em] text-blue-500 transition-colors hover:text-white"
                   aria-label="More Info" type="button" aria-haspopup="dialog" aria-expanded="false"
                   aria-controls="radix-:Rqbj5ufknpuiv4ja:" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%" class="h-[1em] w-[1em]">
@@ -94,12 +93,7 @@
                     </path>
                   </svg></button></span>
             </li>
-
-
-
-
-
-            <!-- <li
+            <li
               class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
               <span class="inline-flex items-center gap-1 uppercase" aria-label="MPAA Rating: PG13"
                 role="group">PG13</span>
@@ -118,12 +112,7 @@
               Laser at AMC</li>
             <li
               class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              Closed Caption</li> -->
-
-
-
-
-
+              Closed Caption</li>
           </ul>
         </div>
 
@@ -137,10 +126,10 @@
       </div>
     </header>
     <main id="main" class="relative flex-1 overflow-auto flex h-full flex-col">
-      <!-- <div role="banner" class="relative caption text-200 bg-[#3B0249]">
+      <div role="banner" class="relative caption text-200 bg-[#3B0249]">
         <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative flex items-center justify-center gap-4 py-2">
           <p>If you're a member, sign in now to take advantage of AMC Stubs benefits.</p>
-
+          
           <button
             class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm h-11"
             type="button">Sign In</button>
