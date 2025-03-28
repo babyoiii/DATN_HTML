@@ -73,6 +73,14 @@ export class ShowtimesComponent implements OnInit {
         this.movieService.getMovieDetail(id).subscribe(movieDetail => {
           if (movieDetail && movieDetail.data && movieDetail.data.trailer) {
             this.Trailer = movieDetail.data.trailer;
+            this.selectedMovie = {
+              id: id,
+              name: movieDetail.data.movieName,
+              thumbnail: movieDetail.data.thumbnail || '',
+              trailer: movieDetail.data.trailer || '',
+              duration: movieDetail.data.duration || 0
+            };
+
           }
         });
       }
