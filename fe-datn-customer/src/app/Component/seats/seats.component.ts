@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, Renderer2, ElementRef, ViewChild } from '@angular/core';
+import { CommonModule, Location } from '@angular/common';
 import { DurationFormatPipe } from '../../duration-format.pipe';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SeatService } from '../../Service/seat.service';
@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogData, NotificationDialogComponent } from '../notification-dialog/notification-dialog.component';
 import { SeatDataService } from '../../Service/SeatData.service';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 enum SeatStatus {
   Available = 0,
@@ -45,6 +46,28 @@ export class SeatsComponent implements OnInit, OnDestroy {
   Rows: string[] = [];
   seatsPerRow: Record<string, SeatInfo[]> = {};
   countdown: string | null = null;
+  isPanelCollapsed = false;
+
+  movieInfo: any = null;
+
+  @ViewChild('seatMapContainer') seatMapContainer!: ElementRef;
+
+  currentZoom: number = 1;
+  minZoom: number = 0.6;
+  maxZoom: number = 2.0;
+  zoomStep: number = 0.1;
+  isDragging: boolean = false;
+  startX: number = 0;
+  startY: number = 0;
+  translateX: number = 0;
+  translateY: number = 0;
+  private eventListeners: (() => void)[] = [];
+
+
+
+
+
+
 
   constructor(
     private seatService: SeatService,
@@ -53,7 +76,8 @@ export class SeatsComponent implements OnInit, OnDestroy {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private toastr: ToastrService,
-    private dialog: MatDialog 
+    private dialog: MatDialog,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -64,7 +88,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
         localStorage.setItem('currentShowtimeId', showtimeId);
         const userId = this.ensureUserId();
         console.log(userId);
-        
+
         if (showtimeId) {
           const navigation = this.router.getCurrentNavigation();
           if (navigation?.extras.state) {
@@ -82,7 +106,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
     const shouldReload = sessionStorage.getItem('reloadOnce');
     if (shouldReload) {
-      sessionStorage.removeItem('reloadOnce'); 
+      sessionStorage.removeItem('reloadOnce');
       this.reloadCurrentRoute();
     }
 
@@ -104,6 +128,19 @@ export class SeatsComponent implements OnInit, OnDestroy {
       this.totalAmount = totalAmount;
       this.cdr.markForCheck();
     });
+
+
+
+
+
+
+    const movieInfoStr = localStorage.getItem('currentMovieInfo');
+    if (movieInfoStr) {
+      this.movieInfo = JSON.parse(movieInfoStr);
+    }
+
+    console.log("Dữ liệu nghĩa", movieInfoStr)
+
   }
 
   private reloadCurrentRoute(): void {
@@ -172,7 +209,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
     this.groupSeatsByRow();
     this.calculateTotal();
     this.cdr.markForCheck();
-  
+
     // Save seat data to the service
     this.seatDataService.setSeats(this.seats);
     this.seatDataService.setSelectedSeats(this.selectedSeats);
@@ -235,6 +272,10 @@ export class SeatsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+
+    // Dọn dẹp tất cả event listeners
+    this.eventListeners.forEach(cleanupFn => cleanupFn());
+    this.eventListeners = [];
   }
 
   toggleSeatStatus(seat: SeatInfo): void {
@@ -327,8 +368,8 @@ export class SeatsComponent implements OnInit, OnDestroy {
   private notifyAndRedirect(): void {
     this.toastr.warning('Thời gian giữ ghế đã hết, bạn sẽ được chuyển hướng.', 'Cảnh báo');
     setTimeout(() => {
-      this.router.navigate(['/']); 
-    }, 3000); 
+      this.router.navigate(['/']);
+    }, 3000);
   }
   getSeatNameByPairId(pairId: string): string | undefined {
     var result = this.seatsCore.find(seat => seat.SeatId === pairId)?.SeatName;
@@ -341,24 +382,24 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
   private filterAndSortSeats(seats: SeatInfo[]): SeatInfo[] {
     const displayedSeats = new Set<string>();
-  
+
     const sortedSeats = seats.sort((a, b) => {
       if (a.RowNumber === b.RowNumber) {
         return a.ColNumber - b.ColNumber;
       }
       return a.RowNumber - b.RowNumber;
     });
-  
+
     return sortedSeats.filter(seat => {
       if (!seat.PairId) {
         return true;
       }
-  
+
       const seatPairKey = [seat.SeatId, seat.PairId].sort().join('-');
       if (displayedSeats.has(seatPairKey)) {
         return false;
       }
-  
+
       displayedSeats.add(seatPairKey);
       return true;
     });
@@ -419,7 +460,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
         const pairedSeat = this.findPairedSeat(seat);
 
         if (!seat.SeatStatusByShowTimeId) {
-          return [];  
+          return [];
         }
 
         if (pairedSeat && seat.PairId) {
@@ -457,4 +498,190 @@ export class SeatsComponent implements OnInit, OnDestroy {
       this.router.navigate(['/orders'], { state: { seats: this.seats, selectedSeats: this.selectedSeats, totalAmount: this.totalAmount } });
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  toggleInfoPanel() {
+    this.isPanelCollapsed = !this.isPanelCollapsed;
+  }
+
+
+
+
+
+
+  // Thay thế các phương thức từ dòng 546 đến dòng 615 với mã tối ưu hơn
+  // Zoom in
+  zoomIn(): void {
+    if (this.currentZoom < this.maxZoom) {
+      this.currentZoom += this.zoomStep;
+      this.applyTransform();
+    }
+  }
+
+  // Zoom out
+  zoomOut(): void {
+    if (this.currentZoom > this.minZoom) {
+      this.currentZoom -= this.zoomStep;
+      this.applyTransform();
+
+      // Reset vị trí nếu zoom quá nhỏ
+      if (this.currentZoom <= 1) {
+        this.resetPosition();
+      }
+    }
+  }
+
+  // Reset vị trí về trung tâm
+  resetPosition(): void {
+    this.translateX = 0;
+    this.translateY = 0;
+    this.applyTransform();
+  }
+
+  // Áp dụng phép biến đổi cho sơ đồ ghế
+  applyTransform(): void {
+    const seatMap = document.querySelector('.seat-map-content') as HTMLElement;
+    if (seatMap) {
+      seatMap.style.transform = `scale(${this.currentZoom}) translate(${this.translateX}px, ${this.translateY}px)`;
+    }
+  }
+
+  // Bắt đầu kéo sơ đồ
+  startDrag(event: Event): void {
+    const mouseEvent = event as MouseEvent;
+    if (this.currentZoom > 1) {
+      this.isDragging = true;
+      this.startX = mouseEvent.clientX;
+      this.startY = mouseEvent.clientY;
+    }
+  }
+
+  // Kéo sơ đồ
+  drag(event: Event): void {
+    const mouseEvent = event as MouseEvent;
+    if (!this.isDragging || this.currentZoom <= 1) return;
+
+    const deltaX = (mouseEvent.clientX - this.startX) / this.currentZoom;
+    const deltaY = (mouseEvent.clientY - this.startY) / this.currentZoom;
+    this.translateX += deltaX;
+    this.translateY += deltaY;
+    this.startX = mouseEvent.clientX;
+    this.startY = mouseEvent.clientY;
+    this.applyTransform();
+  }
+
+  // Kết thúc kéo
+  endDrag(): void {
+    this.isDragging = false;
+  }
+
+  // Xử lý sự kiện cuộn chuột
+  handleWheel(event: Event): void {
+    const wheelEvent = event as WheelEvent;
+    wheelEvent.preventDefault();
+    if (wheelEvent.deltaY < 0) {
+      this.zoomIn();
+    } else {
+      this.zoomOut();
+    }
+  }
+
+  goBack(): void {
+    // Nếu người dùng đã chọn ghế, hiển thị dialog xác nhận
+    if (this.selectedSeats.length > 0) {
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        data: {
+          title: 'Xác nhận quay lại',
+          message: 'Nếu quay lại, thông tin ghế đã chọn sẽ bị mất. Bạn có chắc chắn muốn tiếp tục? (NGHĨA CHƯA ĐỔI CÁI NÀY THÀNH SWEETALERT VÀ THÔNG BÁO NÀY LÀ FAKE)'
+        },
+        width: '400px',
+        panelClass: 'custom-dialog'
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.location.back();
+        }
+      });
+    } else {
+      this.location.back();
+    }
+  }
+
+  // Thay thế phương thức ngAfterViewInit
+  ngAfterViewInit(): void {
+    if (this.seatMapContainer?.nativeElement) {
+      const element = this.seatMapContainer.nativeElement;
+
+      // Thêm các sự kiện cho tính năng zoom và drag
+      this.addEventListenerWithCleanup(element, 'wheel', this.handleWheel.bind(this), { passive: false });
+      this.addEventListenerWithCleanup(element, 'mousedown', this.startDrag.bind(this));
+      this.addEventListenerWithCleanup(element, 'mousemove', this.drag.bind(this));
+      this.addEventListenerWithCleanup(element, 'mouseup', this.endDrag.bind(this));
+      this.addEventListenerWithCleanup(element, 'mouseleave', this.endDrag.bind(this));
+
+      // Thêm hỗ trợ cho thiết bị di động
+      // this.addEventListenerWithCleanup(element, 'touchstart', this.handleTouchStart.bind(this));
+      // this.addEventListenerWithCleanup(element, 'touchmove', this.handleTouchMove.bind(this));
+      this.addEventListenerWithCleanup(element, 'touchend', this.endDrag.bind(this));
+    }
+  }
+
+  // Giữ nguyên phương thức này
+  private addEventListenerWithCleanup(
+    element: HTMLElement,
+    eventName: string,
+    handler: EventListener,
+    options?: AddEventListenerOptions
+  ): void {
+    element.addEventListener(eventName, handler, options);
+    this.eventListeners.push(() => {
+      element.removeEventListener(eventName, handler, options);
+    });
+  }
+
 }
