@@ -12,6 +12,8 @@ import { DurationFormatPipe } from '../../duration-format.pipe';
 import { log } from 'node:console';
 import { SafePipe } from "../../safe.pipe";
 import { CinemaService, CinemaRes } from '../../Service/cinema.service';
+import { stringify } from 'node:querystring';
+import { EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-showtimes',
@@ -22,7 +24,20 @@ import { CinemaService, CinemaRes } from '../../Service/cinema.service';
 })
 export class ShowtimesComponent implements OnInit {
   listData: GetShowTimeLandingRes[] = [];
-  groupedData: { [key: string]: { thumbnail: string; trailer: string; duration: number; theaters: { [key: string]: { address: string; showtimes: any[] } } } } = {};
+  groupedData: {
+    [key: string]: {
+      id: string; // Thêm thuộc tính id (phục vụ việc đổi link)
+      thumbnail: string;
+      trailer: string;
+      duration: number;
+      theaters: {
+        [key: string]: {
+          address: string;
+          showtimes: any[]
+        }
+      }
+    }
+  } = {};
   listMoive: GetAllNameMovie[] = [];
   movieId: string = '';
   location: string = 'Hà Nội';
@@ -30,6 +45,7 @@ export class ShowtimesComponent implements OnInit {
   currentPage = 1;
   recordPerPage = 100;
   selectedMovie: {
+    id?: string;
     name: string;
     thumbnail: string;
     trailer: string;
@@ -76,9 +92,9 @@ export class ShowtimesComponent implements OnInit {
       next: (response) => {
         if (response.responseCode === 200 && response.data) {
           this.cinemas = response.data;
-          if (this.cinemas.length > 0) {
-            this.selectedCinemaId = this.cinemas[0].cinemasId;
-          }
+          // Don't set selectedCinemaId to first cinema anymore
+          // Keep it empty to show "Tất cả các rạp"
+          this.selectedCinemaId = '';
         }
       },
       error: (error) => {
@@ -86,17 +102,30 @@ export class ShowtimesComponent implements OnInit {
       }
     });
   }
+
+
+
+
+
+
+
+
+
   onCinemaChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.selectedCinemaId = selectElement.value;
 
     // Update location based on selected cinema
-    const selectedCinema = this.cinemas.find(c => c.cinemasId === this.selectedCinemaId);
-    if (selectedCinema && selectedCinema.address) {
-      this.location = selectedCinema.address;
+    if (this.selectedCinemaId) {
+      const selectedCinema = this.cinemas.find(c => c.cinemasId === this.selectedCinemaId);
+      if (selectedCinema && selectedCinema.address) {
+        this.location = selectedCinema.address;
+      }
+    } else {
+      this.location = '';
     }
 
-    this.getShowTimes(); // Call API to get movies for the selected cinema
+    this.getShowTimes();
   }
 
 
@@ -137,34 +166,33 @@ export class ShowtimesComponent implements OnInit {
         this.location = selectedCinema.address;
       }
     }
-  
-    // Đảm bảo ngày là một đối tượng Date hợp lệ
+
     let dateObj: Date;
     try {
-      dateObj = new Date(this.date);
-      
+      const [year, month, day] = this.date.split('-').map(Number);
+      dateObj = new Date(year, month - 1, day);
+
       // Kiểm tra xem dateObj có hợp lệ không
       if (isNaN(dateObj.getTime())) {
-        // Nếu không hợp lệ, sử dụng ngày hiện tại
-        console.error("Invalid date, using current date instead");
+        console.error("Ngày không hợp lệ/ pick ngày hiện tại");
         dateObj = new Date();
       }
     } catch (error) {
-      console.error("Error parsing date, using current date instead", error);
+      console.error("lỗi", error);
       dateObj = new Date();
     }
-  
-    console.log('Filtering with criteria:', {
+
+    console.log('NGHĨA:', {
       movieId: this.movieId || 'All movies',
-      location: this.location,
+      location: this.location || 'All locations',
       date: dateObj.toISOString(),
       dateString: this.date
     });
-  
+
     this.movieService.getShowtimes(
-      this.movieId || '', // If movieId is empty, pass empty string to get all movies
-      this.location,
-      dateObj,
+      this.movieId || '',
+      this.location || '',
+      dateObj || '',
       this.currentPage,
       this.recordPerPage
     ).subscribe({
@@ -180,10 +208,14 @@ export class ShowtimesComponent implements OnInit {
   }
 
 
-  
+
+
+
+
   groupShowtimesByMovieAndTheater() {
     this.groupedData = this.listData.reduce((acc: {
       [key: string]: {
+        id: string;
         thumbnail: string;
         trailer: string;
         duration: number;
@@ -195,6 +227,7 @@ export class ShowtimesComponent implements OnInit {
 
       if (!acc[item.movieName]) {
         acc[item.movieName] = {
+          id: item.id, // Lưu ID của phim
           thumbnail: item.thumbnail,
           trailer: item.trailer ?? '',
           duration: item.duration,
@@ -239,9 +272,18 @@ export class ShowtimesComponent implements OnInit {
   }
 
 
+  // Updated onDateChange method to handle timezone correctly
   onDateChange(event: MatDatepickerInputEvent<Date>) {
     if (event.value) {
-      this.date = event.value.toISOString().split('T')[0];
+      // Create date using local timezone to avoid conversion issues
+      const selectedDate = new Date(event.value);
+
+      // Format to YYYY-MM-DD to avoid timezone issues
+      this.date = selectedDate.getFullYear() + '-' +
+        String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
+        String(selectedDate.getDate()).padStart(2, '0');
+
+      // console.log('Selected date:', this.date);
       this.getShowTimes();
     }
   }
@@ -258,6 +300,7 @@ export class ShowtimesComponent implements OnInit {
     return this.Trailer = trailer;
   }
 
+  // Cập nhật hàm selectMovie
   selectMovie(movieName: string, movieData: any) {
     const duration = movieData.duration;
 
@@ -265,7 +308,8 @@ export class ShowtimesComponent implements OnInit {
       name: movieName,
       thumbnail: movieData.thumbnail || 'assets/images/default-movie-poster.jpg',
       trailer: movieData.trailer || '',
-      duration: duration
+      duration: duration,
+      id: movieData.id // Thêm ID vào đây
     };
     this.Trailer = movieData.trailer || '';
 
@@ -311,32 +355,26 @@ export class ShowtimesComponent implements OnInit {
     if (currentMovie) {
       // Tìm thumbnail từ dữ liệu đã nhóm nếu không có trong currentMovie
       let thumbnailUrl = currentMovie.thumbnail;
-
       // Tìm thông tin phim đầy đủ từ groupedData
       let movieName = 'name' in currentMovie ? currentMovie.name : currentMovie.movieName;
       let movieDuration = currentMovie.duration;
+      let movieId = 'id' in currentMovie ? currentMovie.id :
+        ('movieId' in currentMovie ? currentMovie.movieId : this.movieId);
 
       // Nếu không có duration hoặc duration = 0, tìm trong groupedData
       if ((!movieDuration || movieDuration === 0) && this.groupedData && this.groupedData[movieName]) {
         movieDuration = this.groupedData[movieName].duration;
       }
 
-      // Nếu vẫn không có, đặt giá trị mặc định hợp lý
-      if (!movieDuration || movieDuration === 0) {
-        movieDuration = 120; // Mặc định 2 tiếng nếu không có thông tin
+      // Nếu không có ID hoặc ID rỗng, tìm trong groupedData
+      if ((!movieId || movieId === '') && this.groupedData && this.groupedData[movieName]) {
+        movieId = this.groupedData[movieName].id;
       }
 
-      // Nếu thumbnail vẫn trống, tìm trong groupedData
-      if (!thumbnailUrl && this.groupedData && this.groupedData[movieName]) {
-        thumbnailUrl = this.groupedData[movieName].thumbnail;
-      }
-
-      // Nếu vẫn trống, dùng đường dẫn ảnh mặc định
-      if (!thumbnailUrl) {
-        thumbnailUrl = 'assets/images/default-movie-poster.jpg';
-      }
+      // Các phần còn lại của hàm...
 
       const movieInfo = {
+        id: movieId, // Thêm ID vào movieInfo
         name: movieName,
         duration: movieDuration,
         thumbnail: thumbnailUrl,
@@ -345,7 +383,7 @@ export class ShowtimesComponent implements OnInit {
         date: this.date
       };
 
-      console.log('Movie info being saved:', movieInfo); // Thêm log để debug
+      console.log('Movie info being saved:', movieInfo);
       localStorage.setItem('currentMovieInfo', JSON.stringify(movieInfo));
     }
 

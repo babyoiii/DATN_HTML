@@ -69,6 +69,8 @@
                 </label>
 
 
+
+                <!-- Phần lịch -->
                 <label
                     class="relative flex w-full max-w-[25%] flex-col items-center justify-between gap-2 p-2 text-xs transition-all duration-200 focus-within:text-blue-500 hover:text-blue-500 md:w-auto md:flex-row md:p-4 md:text-base">
                     <!-- Icon lịch -->
@@ -174,14 +176,18 @@
                 </label>
             </form>
         </header>
-        <main id="showtime-results" class="relative flex-1 overflow-auto min-h-[calc(100vh-200px)] bg-black"
-            aria-label="Filtered Showtime Results" aria-describedby="showtime-result-filters">
+
+
+
+        <main id="showtime-results" lass="relative flex-1 overflow-auto bg-black" id="nghia_Panel"
+            aria-label="Filtered Showtime Results" aria-describedby="showtime-result-filters"
+            style="min-height: calc(100vh - 175px); height: calc(100vh - 175px);">
             <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative flex gap-8">
                 <div class="contents">
                     <div class="flex-1 divide-y-8 divide-gray-500">
                         @if ((groupedData | keyvalue)?.length === 0) {
                         <div class="flex items-center justify-center h-[calc(100vh-200px)]">
-                            <p class="text-gray-400 text-lg">Không có phim nào trong thời gian này</p>
+                            <p class="text-gray-400 text-lg mt-5">Không có phim nào trong thời gian này</p>
                         </div>
                         }
                         @for (movieName of groupedData | keyvalue; track $index) {
@@ -203,10 +209,12 @@
 
 
                                 <div class="flex flex-col justify-center gap-2">
+                                    <!-- <a [routerLink]="['/showtimes', movieName.value.id]"> -->
                                     <h1 (click)="selectMovie(movieName.key, movieName.value)"
                                         class="text-balance text-lg font-bold md:text-3xl cursor-pointer hover:text-blue-500">
                                         {{movieName.key}}
                                     </h1>
+                                    <!-- </a> -->
                                     <ul class="flex flex-wrap gap-y-2 leading-none">
                                         <li
                                             class="-translate-x-[0.5ch] pl-[0.5ch] [&:not(:last-child)]:border-r-2 [&:not(:last-child)]:border-r-gray-300 [&:not(:last-child)]:pr-[0.5ch]">
@@ -345,7 +353,8 @@
 
 
                             <div class="p-4 bg-gray-900 rounded-lg">
-                                <a class="inline-flex items-center text-blue-500 hover:text-blue-400">
+                                <a [routerLink]="['/movies', selectedMovie?.id]"
+                                    class="inline-flex items-center text-blue-500 hover:text-blue-400">
                                     Chi tiết phim
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
                                         fill="currentColor">
@@ -362,6 +371,10 @@
                 </div>
             </div>
         </main>
+
+
+
+
     </div>
     <div role="region" aria-label="Notifications (F8)" tabindex="-1" style="pointer-events:none">
         <ol tabindex="-1" class="fixed bottom-0 right-0 grid w-full max-w-full gap-4 p-4 md:w-96"></ol>
