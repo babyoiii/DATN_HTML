@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { SignIn, SignUp } from '../Models/AuthModel';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,16 @@ export class AuthServiceService {
   private refreshToken: string | null = null;
   private baseUrl = environment.baseUrl;
 
-  constructor(private router: Router, private http: HttpClient) {}
+  // BehaviorSubject lưu trạng thái đăng nhập, khởi tạo dựa trên việc có token hay không
+  private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
+  // Expose Observable để các component subscribe
+  public isLoggedIn$ = this.loggedIn.asObservable();
+
+  constructor(
+    private router: Router, 
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   SignUp(signUpData: SignUp): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/Auth/SignUp`, signUpData);
@@ -30,23 +40,33 @@ export class AuthServiceService {
 
   saveToken(token: string) {
     this.token = token;
-    localStorage.setItem('accessToken', token);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('accessToken', token);
+    }
+    // Cập nhật trạng thái đăng nhập sang true
+    this.loggedIn.next(true);
   }
 
   getToken(): string | null {
-    try {
-      return localStorage.getItem('accessToken');
-    } catch (error) {
-      return null;
+    if (isPlatformBrowser(this.platformId)) {
+      try {
+        return localStorage.getItem('accessToken');
+      } catch (error) {
+        return null;
+      }
     }
+    return null;
   }
+
   saveRefreshToken(refreshToken: string) {
     this.refreshToken = refreshToken;
-    localStorage.setItem('refreshToken', refreshToken);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('refreshToken', refreshToken);
+    }
   }
 
   getRefreshToken(): string | null {
-    if (!this.refreshToken) {
+    if (!this.refreshToken && isPlatformBrowser(this.platformId)) {
       this.refreshToken = localStorage.getItem('refreshToken');
     }
     return this.refreshToken;
@@ -55,11 +75,25 @@ export class AuthServiceService {
   signOut() {
     this.token = null;
     this.refreshToken = null;
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+    }
+    this.loggedIn.next(false);
   }
 
   newRefreshToken(token: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/Auth/RefreshToken`, { refreshToken: token });
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
+  private hasToken(): boolean {
+    if (isPlatformBrowser(this.platformId)) {
+      return !!localStorage.getItem('accessToken');
+    }
+    return false;
   }
 }

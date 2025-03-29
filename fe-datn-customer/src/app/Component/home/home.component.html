@@ -1,459 +1,63 @@
-
 <main id="main">
     <h1 class="sr-only">AMC Theatres - movie times, movie trailers, buy tickets and gift cards.</h1>
-    <div class="empty:hidden">
+
+
+
+
+    <div class="Poster_Slider">
         <div class="glide relative glide--ltr glide--carousel glide--swipeable">
             <div class="glide__track mx-auto" data-glide-el="track">
                 <ul class="glide__slides"
                     style="transition: transform 400ms cubic-bezier(0.165, 0.84, 0.44, 1); width: 19130px; transform: translate3d(-5739px, 0px, 0px);">
-                    <li class="glide__slide glide__slide--clone" aria-hidden="true"
+
+                    <li *ngFor="let item of dataMovies" class="glide__slide glide__slide--clone" aria-hidden="true"
                         style="width: 1903px; margin-right: 5px;">
                         <div class="relative h-[var(--mobile-height)] overflow-clip md:h-[var(--desktop-height)]"
                             style="--desktop-height: 450px; --mobile-height: 450px;">
                             <div
                                 class="relative flex h-[var(--mobile-height,410px)] items-end md:h-[var(--desktop-height,450px)]">
+
                                 <img alt="" config="[object Object]" loading="lazy" decoding="async" data-nimg="fill"
-                                    class="block md:hidden pointer-events-none absolute inset-0 z-0 w-full object-cover"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"><img
-                                    alt="" config="[object Object]" loading="lazy" decoding="async" data-nimg="fill"
                                     class="hidden md:block absolute inset-0 z-0 w-full object-cover pointer-events-none object-right"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg"
+                                    sizes="100vw" src="{{ item.banner }}"
                                     style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
+
+
                                 <div class="absolute inset-0 bg-hero-gradient"></div>
                                 <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative">
                                     <div class="grid gap-2 md:w-[var(--desktop-content-width)] md:pb-10 md:mr-auto"
                                         style="--desktop-content-width: 75%;">
                                         <header>
-                                            <p class="text-300 uppercase caption">AMC STUBS MEMBER EXCLUSIVE</p>
-                                            <div class="text-balance text-950 headline" style="">Get a Bonus with The
-                                                Monkey</div>
+                                            <p class="text-300 uppercase caption">Phim {{ item.movieName }}</p>
+                                            <div class="text-balance text-950 headline">{{ item.movieName }}</div>
                                         </header>
                                         <div class="rich-text text-500 copy">
                                             <p
                                                 class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                                <span class="">Register now and get tickets to see the new horror from
-                                                    Osgood Perkins 2/20-2/23 to receive 3,000 AMC Stubs</span><span
-                                                    class=""><sup class="">®</sup></span><span class=""> bonus
-                                                    points.</span></p>
+                                                <span class="">{{ item.description }}</span>
                                         </div>
-                                        <div class="mb-10 flex gap-4 md:mb-0 md:justify-start"><a
-                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12"
-                                                id="679a686041c352000ed12160" target="_self"
-                                                href="/bonus-points/the-monkey?rel=the-monkey-77403_loy_hp_hero"
-                                                tabindex="-1">Register Now</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="glide__slide glide__slide--clone" aria-hidden="true"
-                        style="width: 1903px; margin-left: 5px; margin-right: 5px;">
-                        <div class="relative h-[var(--mobile-height)] overflow-clip md:h-[var(--desktop-height)]"
-                            style="--desktop-height: 450px; --mobile-height: 450px;">
-                            <div
-                                class="relative flex h-[var(--mobile-height,410px)] items-end md:h-[var(--desktop-height,450px)]">
-                                <img alt="" config="[object Object]" loading="lazy" decoding="async" data-nimg="fill"
-                                    class="block md:hidden pointer-events-none absolute inset-0 z-0 w-full object-cover"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"><img
-                                    alt="" config="[object Object]" loading="lazy" decoding="async" data-nimg="fill"
-                                    class="hidden md:block absolute inset-0 z-0 w-full object-cover pointer-events-none object-right"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
-                                <div class="absolute inset-0 bg-hero-gradient"></div>
-                                <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative">
-                                    <div class="grid gap-2 md:w-[var(--desktop-content-width)] md:pb-10 md:mr-auto"
-                                        style="--desktop-content-width: 75%;">
-                                        <header>
-                                            <div class="text-balance text-950 headline" style="">The Boy Who Lived Is
-                                                Back</div>
-                                        </header>
-                                        <div class="rich-text text-500 copy">
-                                            <p
-                                                class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                                <span class="">Don’t miss the first four HARRY POTTER films back on the
-                                                    big screen now through 2/23. Grab your best friends and get your
-                                                    tickets today.</span></p>
-                                        </div>
-                                        <div class="mb-10 flex gap-4 md:mb-0 md:justify-start"><a
-                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12"
-                                                id="67a50d4e5c3e87000ee1bf7f" target="_self"
-                                                href="/events/harry-potter-series?rel=harry-potter-series_event_hp_hero"
-                                                tabindex="-1">Get Tickets</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="glide__slide" style="width: 1903px; margin-left: 5px; margin-right: 5px;">
-                        <div class="relative h-[var(--mobile-height)] overflow-clip md:h-[var(--desktop-height)]"
-                            style="--desktop-height: 450px; --mobile-height: 450px;">
-                            <div
-                                class="relative flex h-[var(--mobile-height,410px)] items-end md:h-[var(--desktop-height,450px)]">
-                                <img alt="Captain America: Brave New World" config="[object Object]"
-                                    fetchpriority="high" decoding="async" data-nimg="fill"
-                                    class="block md:hidden pointer-events-none absolute inset-0 z-0 w-full object-cover"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"><img
-                                    alt="Captain America: Brave New World" config="[object Object]" fetchpriority="high"
-                                    decoding="async" data-nimg="fill"
-                                    class="hidden md:block absolute inset-0 z-0 w-full object-cover pointer-events-none object-right"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
-                                <div class="absolute inset-0 bg-hero-gradient"></div>
-                                <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative">
-                                    <div class="grid gap-2 md:w-[var(--desktop-content-width)] md:pb-10 md:mr-auto"
-                                        style="--desktop-content-width: 75%;">
-                                        <header>
-                                            <h2 class="text-balance text-950 headline">Enter a New Era of Captain
-                                                America</h2>
-                                        </header>
-                                        <div class="rich-text text-500 copy">
-                                            <p
-                                                class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                                <span class="">Sam Wilson picks up the shield in Marvel Studios’ CAPTAIN
-                                                    AMERICA: BRAVE NEW WORLD, now showing. Prepare to see it with
-                                                    awesome AMC Theatres exclusives!</span></p>
-                                        </div>
+
                                         <div class="mb-10 flex gap-4 md:mb-0 md:justify-start"><a
                                                 class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12"
                                                 id="67645995ecb138c949c5f4c1" target="_self"
                                                 href="/movies/captain-america-brave-new-world-67472/showtimes?rel=captain-america-brave-new-world-67472_offers_hp_hero"
-                                                data-gtm-link-position="1">Get Tickets</a><a
+                                                tabindex="-1">Đặt vé ngay</a><a
                                                 class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm md:text-base h-12"
                                                 id="676459a3ecb138c949c5f4c3" target="_self"
-                                                href="/movies/captain-america-brave-new-world-67472?rel=captain-america-brave-new-world-67472_offers_hp_hero"
-                                                data-gtm-link-position="1">See All Offers</a></div>
+                                                href="/movies/{{ item.id }}" tabindex="-1">Xem chi tiết</a></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </li>
-                    <li class="glide__slide glide__slide--active"
-                        style="width: 1903px; margin-left: 5px; margin-right: 5px;">
-                        <div class="relative h-[var(--mobile-height)] overflow-clip md:h-[var(--desktop-height)]"
-                            style="--desktop-height: 450px; --mobile-height: 450px;">
-                            <div
-                                class="relative flex h-[var(--mobile-height,410px)] items-end md:h-[var(--desktop-height,450px)]">
-                                <img alt="" config="[object Object]" loading="lazy" decoding="async" data-nimg="fill"
-                                    class="block md:hidden pointer-events-none absolute inset-0 z-0 w-full object-cover"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"><img
-                                    alt="" config="[object Object]" loading="lazy" decoding="async" data-nimg="fill"
-                                    class="hidden md:block absolute inset-0 z-0 w-full object-cover pointer-events-none object-right"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
-                                <div class="absolute inset-0 bg-hero-gradient"></div>
-                                <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative">
-                                    <div class="grid gap-2 md:w-[var(--desktop-content-width)] md:pb-10 md:mr-auto"
-                                        style="--desktop-content-width: 75%;">
-                                        <header>
-                                            <h2 class="text-balance text-950 headline">Get Collectible Mini-Posters</h2>
-                                        </header>
-                                        <div class="rich-text text-500 copy">
-                                            <p
-                                                class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                                <span class="">Experience CAPTAIN AMERICA: BRAVE NEW WORLD in IMAX® at
-                                                    AMC on 2/19 and 2/26 and take home a free mini-poster with a new
-                                                    design each week.</span></p>
-                                        </div>
-                                        <div class="mb-10 flex gap-4 md:mb-0 md:justify-start"><a
-                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12"
-                                                id="679a8b70df8537000e3b2c32" target="_self"
-                                                [routerLink]="'showtimes'"
-                                                data-gtm-link-position="2">Get Tickets</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="glide__slide" style="width: 1903px; margin-left: 5px; margin-right: 5px;">
-                        <div class="relative h-[var(--mobile-height)] overflow-clip md:h-[var(--desktop-height)]"
-                            style="--desktop-height: 450px; --mobile-height: 450px;">
-                            <div
-                                class="relative flex h-[var(--mobile-height,410px)] items-end md:h-[var(--desktop-height,450px)]">
-                                <img alt="" config="[object Object]" loading="lazy" decoding="async" data-nimg="fill"
-                                    class="block md:hidden pointer-events-none absolute inset-0 z-0 w-full object-cover"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1736287848/amc-cdn/content/general/ougyfaydtqkdvpzi2lnh.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1736287848/amc-cdn/content/general/ougyfaydtqkdvpzi2lnh.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1736287848/amc-cdn/content/general/ougyfaydtqkdvpzi2lnh.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1736287848/amc-cdn/content/general/ougyfaydtqkdvpzi2lnh.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1736287848/amc-cdn/content/general/ougyfaydtqkdvpzi2lnh.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1736287848/amc-cdn/content/general/ougyfaydtqkdvpzi2lnh.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1736287848/amc-cdn/content/general/ougyfaydtqkdvpzi2lnh.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1736287848/amc-cdn/content/general/ougyfaydtqkdvpzi2lnh.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1736287848/amc-cdn/content/general/ougyfaydtqkdvpzi2lnh.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"><img
-                                    alt="" config="[object Object]" loading="lazy" decoding="async" data-nimg="fill"
-                                    class="hidden md:block absolute inset-0 z-0 w-full object-cover pointer-events-none object-right"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1736291637/amc-cdn/content/general/ahzv73p24pmq93exwu1c.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1736291637/amc-cdn/content/general/ahzv73p24pmq93exwu1c.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1736291637/amc-cdn/content/general/ahzv73p24pmq93exwu1c.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1736291637/amc-cdn/content/general/ahzv73p24pmq93exwu1c.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1736291637/amc-cdn/content/general/ahzv73p24pmq93exwu1c.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1736291637/amc-cdn/content/general/ahzv73p24pmq93exwu1c.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1736291637/amc-cdn/content/general/ahzv73p24pmq93exwu1c.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1736291637/amc-cdn/content/general/ahzv73p24pmq93exwu1c.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1736291637/amc-cdn/content/general/ahzv73p24pmq93exwu1c.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
-                                <div class="absolute inset-0 bg-hero-gradient"></div>
-                                <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative">
-                                    <div class="grid gap-2 md:w-[var(--desktop-content-width)] md:pb-10 md:mr-auto"
-                                        style="--desktop-content-width: 75%;">
-                                        <header>
-                                            <h2 class="text-balance text-950 headline">Salute the Shield with a Snack
-                                                Pack</h2>
-                                        </header>
-                                        <div class="rich-text text-500 copy">
-                                            <p
-                                                class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                                <span class="">Join forces to take down a large popcorn, 2 large drinks,
-                                                    and 2 candies when you see Marvel Studios’ CAPTAIN AMERICA: BRAVE
-                                                    NEW WORLD, now showing.</span></p>
-                                        </div>
-                                        <div class="mb-10 flex gap-4 md:mb-0 md:justify-start"><button
-                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12"
-                                                id="677da7384beca4000ee37bd5" type="button">Order Now</button></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="glide__slide" style="width: 1903px; margin-left: 5px; margin-right: 5px;">
-                        <div class="relative h-[var(--mobile-height)] overflow-clip md:h-[var(--desktop-height)]"
-                            style="--desktop-height: 450px; --mobile-height: 450px;">
-                            <section class="QQRhU-flex QQRhU-items-end" style="height: 450px;"><img alt=""
-                                    config="[object Object]" loading="lazy" width="2048" height="0" decoding="async"
-                                    data-nimg="1"
-                                    class="QQRhU-block QQRhU-md:hidden QQRhU-pointer-events-none QQRhU-absolute QQRhU-inset-0 QQRhU-z-0 QQRhU-w-full QQRhU-object-cover"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_640/f_auto/q_auto/v1732657443/amc-cdn/content/general/t79m96vjuwci96yrxb9r.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_750/f_auto/q_auto/v1732657443/amc-cdn/content/general/t79m96vjuwci96yrxb9r.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_828/f_auto/q_auto/v1732657443/amc-cdn/content/general/t79m96vjuwci96yrxb9r.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_1080/f_auto/q_auto/v1732657443/amc-cdn/content/general/t79m96vjuwci96yrxb9r.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_1200/f_auto/q_auto/v1732657443/amc-cdn/content/general/t79m96vjuwci96yrxb9r.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_1920/f_auto/q_auto/v1732657443/amc-cdn/content/general/t79m96vjuwci96yrxb9r.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1732657443/amc-cdn/content/general/t79m96vjuwci96yrxb9r.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1732657443/amc-cdn/content/general/t79m96vjuwci96yrxb9r.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1732657443/amc-cdn/content/general/t79m96vjuwci96yrxb9r.jpg"
-                                    style="color: transparent; position: absolute; height: 100%; width: 100%; inset: 0px;">
-                                <img alt="" config="[object Object]" loading="lazy" width="2048" height="0"
-                                    decoding="async" data-nimg="1"
-                                    class="QQRhU-hidden QQRhU-md:block QQRhU-absolute QQRhU-inset-0 QQRhU-z-0 QQRhU-w-full QQRhU-object-cover QQRhU-pointer-events-none QQRhU-object-right"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_640/f_auto/q_auto/v1732657436/amc-cdn/content/general/nyfhqudkbdcoswvckcgx.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_750/f_auto/q_auto/v1732657436/amc-cdn/content/general/nyfhqudkbdcoswvckcgx.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_828/f_auto/q_auto/v1732657436/amc-cdn/content/general/nyfhqudkbdcoswvckcgx.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_1080/f_auto/q_auto/v1732657436/amc-cdn/content/general/nyfhqudkbdcoswvckcgx.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_1200/f_auto/q_auto/v1732657436/amc-cdn/content/general/nyfhqudkbdcoswvckcgx.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_1920/f_auto/q_auto/v1732657436/amc-cdn/content/general/nyfhqudkbdcoswvckcgx.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1732657436/amc-cdn/content/general/nyfhqudkbdcoswvckcgx.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1732657436/amc-cdn/content/general/nyfhqudkbdcoswvckcgx.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1732657436/amc-cdn/content/general/nyfhqudkbdcoswvckcgx.jpg"
-                                    style="color: transparent; position: absolute; height: 100%; width: 100%; inset: 0px;">
-                                <div class="QQRhU-absolute QQRhU-inset-0 QQRhU-bg-hero-gradient"></div>
-                                <div
-                                    class="QQRhU-mx-auto QQRhU-w-full QQRhU-max-w-[1248px] QQRhU-px-4 QQRhU-xl:px-0 QQRhU-relative">
-                                    <div class="QQRhU-grid QQRhU-gap-2 md:w-[var(--desktop-content-width)] QQRhU-md:pb-10 QQRhU-md:mr-auto"
-                                        style="--desktop-content-width: 75%;">
-                                        <header><img alt="" config="[object Object]" loading="lazy" width="2048"
-                                                height="0" decoding="async" data-nimg="1"
-                                                class="QQRhU-hidden QQRhU-md:block" sizes="100vw"
-                                                srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_640/f_auto/q_auto/v1732725538/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV3.png 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_750/f_auto/q_auto/v1732725538/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV3.png 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_828/f_auto/q_auto/v1732725538/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV3.png 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_1080/f_auto/q_auto/v1732725538/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV3.png 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_1200/f_auto/q_auto/v1732725538/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV3.png 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_1920/f_auto/q_auto/v1732725538/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV3.png 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1732725538/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV3.png 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1732725538/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV3.png 3840w"
-                                                src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1732725538/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV3.png"
-                                                style="color: transparent; max-width: 75%; margin-left: 100px;"> <img
-                                                alt="" config="[object Object]" loading="lazy" width="2048" height="0"
-                                                decoding="async" data-nimg="1" class="QQRhU-md:hidden" sizes="100vw"
-                                                srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_640/f_auto/q_auto/v1732726135/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV4.png 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_750/f_auto/q_auto/v1732726135/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV4.png 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_828/f_auto/q_auto/v1732726135/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV4.png 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_1080/f_auto/q_auto/v1732726135/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV4.png 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_1200/f_auto/q_auto/v1732726135/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV4.png 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/c_limit,w_1920/f_auto/q_auto/v1732726135/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV4.png 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1732726135/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV4.png 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1732726135/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV4.png 3840w"
-                                                src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1732726135/amc-cdn/general/premiere-go/Logo_AMCStubs_INTRO_PREMGO_Horizontal_WhiteText_CMYKV4.png"
-                                                style="color: transparent; max-width: 80%; margin-left: 30px;"></header>
-                                        <div class="rich-text QQRhU-text-500 QQRhU-copy">
-                                            <p class="QQRhU-mb-4">Insider members who visit our theatres 8X or earn
-                                                5,000 points in 2025 can now unlock AMC Stubs Premiere <em>GO!</em>™ for
-                                                upgraded perks like scoring points 2X faster, and more!</p>
-                                        </div>
-                                        <div
-                                            class="QQRhU-mb-10 QQRhU-flex QQRhU-gap-4 QQRhU-md:mb-0 QQRhU-md:justify-start">
-                                            <a class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12"
-                                                href="/showtimes?rel=premierego_loy_hero" data-gtm-link-position="3">Get
-                                                Tickets</a><a
-                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm md:text-base h-12"
-                                                href="/amcstubs/premiere-go?rel=premierego_loy_hero"
-                                                data-gtm-link-position="3">Learn More</a></div>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                    </li>
-                    <li class="glide__slide" style="width: 1903px; margin-left: 5px; margin-right: 5px;">
-                        <div class="relative h-[var(--mobile-height)] overflow-clip md:h-[var(--desktop-height)]"
-                            style="--desktop-height: 450px; --mobile-height: 450px;">
-                            <div
-                                class="relative flex h-[var(--mobile-height,410px)] items-end md:h-[var(--desktop-height,450px)]">
-                                <img alt="" config="[object Object]" loading="lazy" decoding="async" data-nimg="fill"
-                                    class="block md:hidden pointer-events-none absolute inset-0 z-0 w-full object-cover"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1738172446/amc-cdn/content/general/cevonaxqyfbzptis0d7r.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"><img
-                                    alt="" config="[object Object]" loading="lazy" decoding="async" data-nimg="fill"
-                                    class="hidden md:block absolute inset-0 z-0 w-full object-cover pointer-events-none object-right"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1738172439/amc-cdn/content/general/xp0qh5c90coryabjw5zy.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
-                                <div class="absolute inset-0 bg-hero-gradient"></div>
-                                <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative">
-                                    <div class="grid gap-2 md:w-[var(--desktop-content-width)] md:pb-10 md:mr-auto"
-                                        style="--desktop-content-width: 75%;">
-                                        <header>
-                                            <p class="text-300 uppercase caption">AMC STUBS MEMBER EXCLUSIVE</p>
-                                            <h2 class="text-balance text-950 headline">Get a Bonus with The Monkey</h2>
-                                        </header>
-                                        <div class="rich-text text-500 copy">
-                                            <p
-                                                class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                                <span class="">Register now and get tickets to see the new horror from
-                                                    Osgood Perkins 2/20-2/23 to receive 3,000 AMC Stubs</span><span
-                                                    class=""><sup class="">®</sup></span><span class=""> bonus
-                                                    points.</span></p>
-                                        </div>
-                                        <div class="mb-10 flex gap-4 md:mb-0 md:justify-start"><a
-                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12"
-                                                id="679a686041c352000ed12160" target="_self"
-                                                href="/bonus-points/the-monkey?rel=the-monkey-77403_loy_hp_hero"
-                                                data-gtm-link-position="4">Register Now</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="glide__slide" style="width: 1903px; margin-left: 5px; margin-right: 5px;">
-                        <div class="relative h-[var(--mobile-height)] overflow-clip md:h-[var(--desktop-height)]"
-                            style="--desktop-height: 450px; --mobile-height: 450px;">
-                            <div
-                                class="relative flex h-[var(--mobile-height,410px)] items-end md:h-[var(--desktop-height,450px)]">
-                                <img alt="" config="[object Object]" loading="lazy" decoding="async" data-nimg="fill"
-                                    class="block md:hidden pointer-events-none absolute inset-0 z-0 w-full object-cover"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1739206082/amc-cdn/content/general/ac8rjvoqwfgue1dwxyaf.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"><img
-                                    alt="" config="[object Object]" loading="lazy" decoding="async" data-nimg="fill"
-                                    class="hidden md:block absolute inset-0 z-0 w-full object-cover pointer-events-none object-right"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1739206072/amc-cdn/content/general/lphski5wvobkkajv4yyh.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
-                                <div class="absolute inset-0 bg-hero-gradient"></div>
-                                <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative">
-                                    <div class="grid gap-2 md:w-[var(--desktop-content-width)] md:pb-10 md:mr-auto"
-                                        style="--desktop-content-width: 75%;">
-                                        <header>
-                                            <h2 class="text-balance text-950 headline">The Boy Who Lived Is Back</h2>
-                                        </header>
-                                        <div class="rich-text text-500 copy">
-                                            <p
-                                                class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                                <span class="">Don’t miss the first four HARRY POTTER films back on the
-                                                    big screen now through 2/23. Grab your best friends and get your
-                                                    tickets today.</span></p>
-                                        </div>
-                                        <div class="mb-10 flex gap-4 md:mb-0 md:justify-start"><a
-                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12"
-                                                id="67a50d4e5c3e87000ee1bf7f" target="_self"
-                                                href="/events/harry-potter-series?rel=harry-potter-series_event_hp_hero"
-                                                data-gtm-link-position="5">Get Tickets</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="glide__slide glide__slide--clone" aria-hidden="true"
-                        style="width: 1903px; margin-left: 5px; margin-right: 5px;">
-                        <div class="relative h-[var(--mobile-height)] overflow-clip md:h-[var(--desktop-height)]"
-                            style="--desktop-height: 450px; --mobile-height: 450px;">
-                            <div
-                                class="relative flex h-[var(--mobile-height,410px)] items-end md:h-[var(--desktop-height,450px)]">
-                                <img alt="Captain America: Brave New World" config="[object Object]"
-                                    fetchpriority="high" decoding="async" data-nimg="fill"
-                                    class="block md:hidden pointer-events-none absolute inset-0 z-0 w-full object-cover"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1735588834/amc-cdn/content/general/ysyivwmgtq7mzdkoay71.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"><img
-                                    alt="Captain America: Brave New World" config="[object Object]" fetchpriority="high"
-                                    decoding="async" data-nimg="fill"
-                                    class="hidden md:block absolute inset-0 z-0 w-full object-cover pointer-events-none object-right"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1735588828/amc-cdn/content/general/ijmacwg5tbjsh5ftpyr5.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
-                                <div class="absolute inset-0 bg-hero-gradient"></div>
-                                <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative">
-                                    <div class="grid gap-2 md:w-[var(--desktop-content-width)] md:pb-10 md:mr-auto"
-                                        style="--desktop-content-width: 75%;">
-                                        <header>
-                                            <div class="text-balance text-950 headline" style="">Enter a New Era of
-                                                Captain America</div>
-                                        </header>
-                                        <div class="rich-text text-500 copy">
-                                            <p
-                                                class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                                <span class="">Sam Wilson picks up the shield in Marvel Studios’ CAPTAIN
-                                                    AMERICA: BRAVE NEW WORLD, now showing. Prepare to see it with
-                                                    awesome AMC Theatres exclusives!</span></p>
-                                        </div>
-                                        <div class="mb-10 flex gap-4 md:mb-0 md:justify-start"><a
-                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12"
-                                                id="67645995ecb138c949c5f4c1" target="_self"
-                                                href="/movies/captain-america-brave-new-world-67472/showtimes?rel=captain-america-brave-new-world-67472_offers_hp_hero"
-                                                tabindex="-1">Get Tickets</a><a
-                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm md:text-base h-12"
-                                                id="676459a3ecb138c949c5f4c3" target="_self"
-                                                href="/movies/captain-america-brave-new-world-67472?rel=captain-america-brave-new-world-67472_offers_hp_hero"
-                                                tabindex="-1">See All Offers</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="glide__slide glide__slide--clone" aria-hidden="true"
-                        style="width: 1903px; margin-left: 5px;">
-                        <div class="relative h-[var(--mobile-height)] overflow-clip md:h-[var(--desktop-height)]"
-                            style="--desktop-height: 450px; --mobile-height: 450px;">
-                            <div
-                                class="relative flex h-[var(--mobile-height,410px)] items-end md:h-[var(--desktop-height,450px)]">
-                                <img alt="" config="[object Object]" loading="lazy" decoding="async" data-nimg="fill"
-                                    class="block md:hidden pointer-events-none absolute inset-0 z-0 w-full object-cover"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1738181355/amc-cdn/content/general/m1epsxs4utnr0ixwyov3.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"><img
-                                    alt="" config="[object Object]" loading="lazy" decoding="async" data-nimg="fill"
-                                    class="hidden md:block absolute inset-0 z-0 w-full object-cover pointer-events-none object-right"
-                                    sizes="100vw"
-                                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_640/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg 640w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_750/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg 750w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_828/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg 828w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1080/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg 1080w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1200/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg 1200w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_1920/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg 1920w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_2048/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg 2048w, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg 3840w"
-                                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_3840/f_auto/q_auto/v1738181326/amc-cdn/content/general/cty5oqjzbcegg68tm6xf.jpg"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
-                                <div class="absolute inset-0 bg-hero-gradient"></div>
-                                <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative">
-                                    <div class="grid gap-2 md:w-[var(--desktop-content-width)] md:pb-10 md:mr-auto"
-                                        style="--desktop-content-width: 75%;">
-                                        <header>
-                                            <div class="text-balance text-950 headline" style="">Get Collectible
-                                                Mini-Posters</div>
-                                        </header>
-                                        <div class="rich-text text-500 copy">
-                                            <p
-                                                class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                                <span class="">Experience CAPTAIN AMERICA: BRAVE NEW WORLD in IMAX® at
-                                                    AMC on 2/19 and 2/26 and take home a free mini-poster with a new
-                                                    design each week.</span></p>
-                                        </div>
-                                        <div class="mb-10 flex gap-4 md:mb-0 md:justify-start"><a
-                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12"
-                                                id="679a8b70df8537000e3b2c32" target="_self"
-                                                href="/movies/captain-america-brave-new-world-67472/showtimes?date=2025-02-19&amp;premium-offering=imax&amp;rel=captain-america-brave-new-world-67472_week-1-chase_hp_hero"
-                                                tabindex="-1">Get Tickets</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+
+
+
+
                 </ul>
             </div>
+
+
             <div class="absolute bottom-0 flex w-full items-center justify-center pb-2 md:pb-4">
                 <div data-glide-el="controls" class="h-5"><button data-glide-dir="<" aria-label="previous slide"><svg
                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em"
@@ -463,14 +67,19 @@
                                 d="M14.974 22.5 34.321 3.153A2.09 2.09 0 0 0 31.46.291l-20.892 20.75a2.09 2.09 0 0 0 0 2.861L31.373 44.71a2.09 2.09 0 0 0 2.862-2.862z">
                             </path>
                         </svg></button></div>
-                <div data-glide-el="controls[nav]" class="flex h-full items-center"><button class="glide__bullet"
-                        data-glide-dir="=0" aria-label="goto slide 1"></button><button
-                        class="glide__bullet glide__bullet--active" data-glide-dir="=1"
-                        aria-label="goto slide 2"></button><button class="glide__bullet" data-glide-dir="=2"
-                        aria-label="goto slide 3"></button><button class="glide__bullet" data-glide-dir="=3"
-                        aria-label="goto slide 4"></button><button class="glide__bullet" data-glide-dir="=4"
-                        aria-label="goto slide 5"></button><button class="glide__bullet" data-glide-dir="=5"
-                        aria-label="goto slide 6"></button></div>
+                <div data-glide-el="controls[nav]" class="flex h-full items-center">
+
+
+                    <button class="glide__bullet" *ngFor="let item of dataMovies; let i = index" data-glide-dir="=(i)"
+                        aria-label="goto slide (i)">
+
+                    </button>
+
+
+
+                </div>
+
+
                 <div data-glide-el="controls" class="h-5"><button data-glide-dir=">" aria-label="next slide"><svg
                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em"
                             height="100%">
@@ -481,7 +90,13 @@
                         </svg></button></div>
             </div>
         </div>
-    </div> 
+    </div>
+
+
+
+
+
+
     <section class="empty:hidden">
         <div class="flex min-h-[865px] flex-col items-center">
             <div class="relative w-full"><img alt="Background" config="[object Object]" loading="lazy" decoding="async"
@@ -519,56 +134,100 @@
                                 aria-labelledby="radix-:rhm:-trigger-Now-Playing" id="radix-:rhm:-content-Now-Playing"
                                 tabindex="0" style="animation-duration: 0s;">
                                 <div class="relative">
+
+
+
+
+
+
+
+
+                                    <!-- NGHĨA FIX SLIDE -->
+
+
                                     <div
                                         class="glide movie-list-slider static glide--ltr glide--carousel glide--swipeable">
                                         <div class="glide__track mx-auto" data-glide-el="track">
                                             <ul class="glide__slides"
                                                 style="transition: transform cubic-bezier(0.165, 0.84, 0.44, 1); width: 8096px; transform: translate3d(-3677px, 0px, 0px);">
-                                                <li *ngFor="let item of dataMovies" class="glide__slide p-10" style="width: 358px; margin-right: 5px;">
-                                                    <div class="flex flex-col gap-2 items-center justify-center text-center" role="group">
-                                                      <div class="sr-only">{{ item.movieName }}</div>
-                                                      <a class="w-full" tabindex="-1" [href]="'/movies/' + item.id">
-                                                        <img alt="{{ item.movieName }}" [src]="item.thumbnail" loading="lazy" width="272" height="408" decoding="async" class="aspect-[2/3] w-full object-cover">
-                                                      </a>
-                                                    <a class="group transition-colors hocus:text-blue-500 text-balance headline text-600" [href]="'/movies/' + item.id">
-                                                        {{ item.movieName }}
-                                                      </a>
-                                                      <div class="grid gap-2 text-100 text-gray-200 caption text-200">
-                                                        <ul class="flex flex-wrap gap-y-2 leading-none justify-center text-center">
-                                                          <li class="-translate-x-[0.5ch] pl-[0.5ch] [&:not(:last-child)]:border-r-2 [&:not(:last-child)]:border-r-gray-300 [&:not(:last-child)]:pr-[0.5ch]">
-                                                            <span class="flex items-center gap-[0.5ch]" aria-label="Runtime: 1 HR 58 MIN"
-                                                            role="group">{{ item.duration ? (item.duration | durationFormat) : 'N/A' }}
-                                                              <button class="h-[1em] w-[1em] text-blue-500 transition-colors hover:text-white" aria-label="More Info" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:rie:" data-state="closed">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%" class="h-[1em] w-[1em]">
-                                                                  <path d="M22.5 45C10.125 45 0 34.875 0 22.5S10.125 0 22.5 0 45 10.125 45 22.5 34.875 45 22.5 45zm0-41.625c-10.35 0-18.9 8.55-18.9 18.9 0 10.35 8.55 18.9 18.9 18.9 10.35 0 18.9-8.55 18.9-18.9 0-10.35-8.55-18.9-18.9-18.9z"></path>
-                                                                  <path d="M15.75 17.55c0-3.6 3.15-6.075 6.75-6.075 3.15 0 6.75 2.25 6.75 5.625 0 2.25-1.125 3.825-2.925 4.95-.675.45-1.35.9-1.8 1.575-.675.675-.9 1.575-.9 2.7H20.7c-.225-.45-.225-.9-.225-1.35 0-4.5 5.4-4.725 5.4-7.875 0-1.575-1.575-2.7-3.15-2.7-2.025 0-3.375 1.575-3.375 3.375v.675l-3.375-.225c-.225.225-.225-.225-.225-.675zm6.3 15.75c1.125 0 2.025-.9 2.025-2.025s-.9-2.025-2.025-2.025-2.025.9-2.025 2.025c-.225.9.9 2.025 2.025 2.025z"></path>
-                                                                </svg>
-                                                              </button>
-                                                            </span>
-                                                          </li>
-                                                          <li class="-translate-x-[0.5ch] pl-[0.5ch] [&:not(:last-child)]:border-r-2 [&:not(:last-child)]:border-r-gray-300 [&:not(:last-child)]:pr-[0.5ch]">
-                                                            <span class="inline-flex items-center gap-1 uppercase" aria-label="MPAA Rating: 5 Star" role="group">
-                                                             5 Sao
-                                                            </span>
-                                                          </li>
-                                                        </ul>
-                                                        <p class="pb-2 text-xs">{{ item.releaseDate }}</p>
-                                                      </div>
-                                                      <a class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12" 
-                                                            [href]="'/movies/' + item.id + '/showtimes'" 
+                                                <li *ngFor="let item of dataMovies" class="glide__slide p-10"
+                                                    style="width: 358px; margin-right: 5px;">
+                                                    <div class="flex flex-col gap-2 items-center justify-center text-center"
+                                                        role="group">
+                                                        <div class="sr-only">{{ item.movieName }}</div>
+                                                        <a class="w-full" tabindex="-1" [href]="'/movies/' + item.id">
+                                                            <img alt="{{ item.movieName }}" [src]="item.thumbnail"
+                                                                loading="lazy" width="272" height="408" decoding="async"
+                                                                class="aspect-[2/3] w-full object-cover">
+                                                        </a>
+                                                        <a class="group transition-colors hocus:text-blue-500 text-balance headline text-600"
+                                                            [href]="'/movies/' + item.id">
+                                                            {{ item.movieName }}
+                                                        </a>
+                                                        <div class="grid gap-2 text-100 text-gray-200 caption text-200">
+                                                            <ul
+                                                                class="flex flex-wrap gap-y-2 leading-none justify-center text-center">
+                                                                <li
+                                                                    class="-translate-x-[0.5ch] pl-[0.5ch] [&:not(:last-child)]:border-r-2 [&:not(:last-child)]:border-r-gray-300 [&:not(:last-child)]:pr-[0.5ch]">
+                                                                    <span class="flex items-center gap-[0.5ch]"
+                                                                        aria-label="Runtime: 1 HR 58 MIN"
+                                                                        role="group">{{ item.duration ? (item.duration |
+                                                                        durationFormat) : 'N/A' }}
+                                                                        <button
+                                                                            class="h-[1em] w-[1em] text-blue-500 transition-colors hover:text-white"
+                                                                            aria-label="More Info" type="button"
+                                                                            aria-haspopup="dialog" aria-expanded="false"
+                                                                            aria-controls="radix-:rie:"
+                                                                            data-state="closed">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                fill="currentColor" viewBox="0 0 45 45"
+                                                                                width="1em" height="100%"
+                                                                                class="h-[1em] w-[1em]">
+                                                                                <path
+                                                                                    d="M22.5 45C10.125 45 0 34.875 0 22.5S10.125 0 22.5 0 45 10.125 45 22.5 34.875 45 22.5 45zm0-41.625c-10.35 0-18.9 8.55-18.9 18.9 0 10.35 8.55 18.9 18.9 18.9 10.35 0 18.9-8.55 18.9-18.9 0-10.35-8.55-18.9-18.9-18.9z">
+                                                                                </path>
+                                                                                <path
+                                                                                    d="M15.75 17.55c0-3.6 3.15-6.075 6.75-6.075 3.15 0 6.75 2.25 6.75 5.625 0 2.25-1.125 3.825-2.925 4.95-.675.45-1.35.9-1.8 1.575-.675.675-.9 1.575-.9 2.7H20.7c-.225-.45-.225-.9-.225-1.35 0-4.5 5.4-4.725 5.4-7.875 0-1.575-1.575-2.7-3.15-2.7-2.025 0-3.375 1.575-3.375 3.375v.675l-3.375-.225c-.225.225-.225-.225-.225-.675zm6.3 15.75c1.125 0 2.025-.9 2.025-2.025s-.9-2.025-2.025-2.025-2.025.9-2.025 2.025c-.225.9.9 2.025 2.025 2.025z">
+                                                                                </path>
+                                                                            </svg>
+                                                                        </button>
+                                                                    </span>
+                                                                </li>
+                                                                <li
+                                                                    class="-translate-x-[0.5ch] pl-[0.5ch] [&:not(:last-child)]:border-r-2 [&:not(:last-child)]:border-r-gray-300 [&:not(:last-child)]:pr-[0.5ch]">
+                                                                    <span
+                                                                        class="inline-flex items-center gap-1 uppercase"
+                                                                        aria-label="MPAA Rating: 5 Star" role="group">
+                                                                        5 Sao
+                                                                    </span>
+                                                                </li>
+                                                            </ul>
+                                                            <p class="pb-2 text-xs">{{ item.releaseDate }}</p>
+                                                        </div>
+                                                        <a class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12"
+                                                            [href]="'/movies/' + item.id + '/showtimes'"
                                                             [attr.aria-label]="'Get Tickets for ' + item.movieName">
                                                             Get Tickets
-                                                            </a>
+                                                        </a>
                                                     </div>
-                                                  </li>
-                                               
+                                                </li>
+
                                             </ul>
                                         </div>
+
+
+
+
+
+
+
+
+
+
+
                                         <div data-glide-el="controls">
-                                            
-                                            
-                                            <button tabindex="-1" data-glide-dir="<"
-                                                aria-hidden="true"
+
+                                            <button tabindex="-1" data-glide-dir="<" aria-hidden="true"
                                                 class="left-0 absolute top-1/2 -translate-y-1/2 rounded bg-gray-700 p-4 text-2xl transition-all hover:scale-110 hover:bg-gray-800"><svg
                                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                     viewBox="0 0 45 45" width="1em" height="100%">
@@ -577,10 +236,9 @@
                                                         d="M14.974 22.5 34.321 3.153A2.09 2.09 0 0 0 31.46.291l-20.892 20.75a2.09 2.09 0 0 0 0 2.861L31.373 44.71a2.09 2.09 0 0 0 2.862-2.862z">
                                                     </path>
                                                 </svg></button>
-                                                
-                                                
-                                                <button tabindex="-1" data-glide-dir=">"
-                                                aria-hidden="true"
+
+
+                                            <button tabindex="-1" data-glide-dir=">" aria-hidden="true"
                                                 class="right-0 absolute top-1/2 -translate-y-1/2 rounded bg-gray-700 p-4 text-2xl transition-all hover:scale-110 hover:bg-gray-800"><svg
                                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                     viewBox="0 0 45 45" width="1em" height="100%">
@@ -589,10 +247,30 @@
                                                         d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z">
                                                     </path>
                                                 </svg></button>
-                                            
-                                            
-                                            </div>
+
+
+                                        </div>
                                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                 </div>
                             </div>
                             <div data-state="inactive" data-orientation="horizontal" role="tabpanel"
@@ -604,6 +282,20 @@
             </div>
         </div>
     </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2257,7 +1949,8 @@
                                 <a class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12"
                                     id="67aa2c556b485b000ef51366" target="_self"
                                     href="/movies/becoming-led-zeppelin-78951/showtimes?rel=becoming-led-zeppelin-78951_flm_amc_promo"
-                                    data-gtm-link-position="1">Get Tickets</a></div>
+                                    data-gtm-link-position="1">Get Tickets</a>
+                            </div>
                         </div>
                     </div>
                 </div>

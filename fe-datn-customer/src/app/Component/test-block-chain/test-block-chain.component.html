@@ -1,0 +1,27 @@
+<div class="wallet-container">
+  <h2>Kết nối với Ví Blockchain</h2>
+  <!-- Connect Wallet Button -->
+  <button (click)="connectWallet()" class="btn btn-success" *ngIf="!walletAddress">
+    Kết nối Ví
+  </button>
+  <!-- Wallet Information -->
+  <div *ngIf="walletAddress" class="wallet-info">
+    <p><strong>Địa chỉ ví:</strong> {{ walletAddress }}</p>
+    <button (click)="disconnectWallet()" class="btn btn-danger">
+      Ngắt kết nối
+    </button>
+  </div>
+  <!-- Payment Section -->
+  <div *ngIf="walletAddress" class="payment-section">
+    <h3>Thanh toán</h3>
+    <input
+      type="number"
+      [(ngModel)]="paymentAmount"
+      placeholder="Nhập số USDC muốn thanh toán"
+      class="form-control"
+    />
+    <button (click)="approveAndPay()" class="btn btn-primary">
+      Thanh toán
+    </button>
+  </div>
+</div>

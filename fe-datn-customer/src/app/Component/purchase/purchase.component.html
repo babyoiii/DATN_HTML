@@ -94,15 +94,14 @@
                     </div>
                 </div>
                 <div role="banner" class="relative caption text-200" style="background-color: rgb(59, 2, 73);">
-                    <div
+                    <div *ngIf="checkLogin() == false">
                         class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative flex items-center justify-center gap-4 py-2 [&amp;_p]:mb-0">
                         <div class="rich-text text-200 caption">
                             <p
                                 class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
                                 <span class="text-200 caption">Sign in to take advantage of AMC Stubs benefits,
-                                    including waived fees as applicable.</span>
-                            </p>
-                        </div><button
+                                    including waived fees as applicable.</span></p>
+                        </div><button (click)="openSignIn()"
                             class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm h-11"
                             id="65bd48c8aea5fcb5003cf325" type="button">Sign In</button>
                     </div>
