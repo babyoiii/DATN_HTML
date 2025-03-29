@@ -28,23 +28,23 @@
                             class="cursor-default border-b-2 border-transparent transition-all ease-in-out data-[state=open]:border-blue-500"
                             data-radix-collection-item=""><a
                                 class="transition-all ease-in-out hover:text-blue-500 flex cursor-pointer items-center gap-2 py-3 text-center text-sm font-semibold leading-tight tracking-normal"
-                                data-radix-collection-item="" target="_self" [routerLink]="'movies'">See a
-                                Movie</a></button>
+                                data-radix-collection-item="" target="_self" [routerLink]="'movies'">Xem
+                                phim</a></button>
                     </li>
                     <li><button id="radix-:r0:-trigger-Find a Theatre" data-state="closed" aria-expanded="false"
                             aria-controls="radix-:r0:-content-Find a Theatre"
                             class="cursor-default border-b-2 border-transparent transition-all ease-in-out data-[state=open]:border-blue-500"
                             data-radix-collection-item=""><a
                                 class="transition-all ease-in-out hover:text-blue-500 flex cursor-pointer items-center gap-2 py-3 text-center text-sm font-semibold leading-tight tracking-normal"
-                                data-radix-collection-item="" target="_self" [routerLink]="'movie-theatres'">Find a
-                                Theatre</a></button></li>
+                                data-radix-collection-item="" target="_self" [routerLink]="'movie-theatres'">Tìm
+                                rạp</a></button></li>
                     <li><button id="radix-:r0:-trigger-Food &amp; Drinks" data-state="closed" aria-expanded="false"
                             aria-controls="radix-:r0:-content-Food &amp; Drinks"
                             class="cursor-default border-b-2 border-transparent transition-all ease-in-out data-[state=open]:border-blue-500"
                             data-radix-collection-item=""><a
                                 class="transition-all ease-in-out hover:text-blue-500 flex cursor-pointer items-center gap-2 py-3 text-center text-sm font-semibold leading-tight tracking-normal"
-                                data-radix-collection-item="" target="_self" [routerLink]="'food-and-drink'">Food &amp;
-                                Drinks</a></button></li>
+                                data-radix-collection-item="" target="_self" [routerLink]="'food-and-drink'">Đồ ăn &amp;
+                                Đồ uống</a></button></li>
                     <li><button id="radix-:r0:-trigger-More" data-state="closed" aria-expanded="false"
                             aria-controls="radix-:r0:-content-More"
                             class="cursor-default border-b-2 border-transparent transition-all ease-in-out data-[state=open]:border-blue-500"
@@ -61,7 +61,7 @@
                         <li>
                             <form role="search" class="relative flex items-center"><input aria-label="Search"
                                     class="h-8 w-[118px] rounded-md border-b-0 bg-gray-700 py-2 pl-3 text-100 text-gray-400 outline-none placeholder:text-gray-400 nav-search-response:w-[240px]"
-                                    placeholder="Search" type="text" name="query"><button
+                                    placeholder="Tìm kiếm" type="text" name="query"><button
                                     class="absolute right-3 cursor-pointer" type="submit" disabled=""><svg
                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
                                         width="1em" height="100%" class="text-gray-400">
@@ -84,37 +84,256 @@
                                         Showtimes</div>
                                 </div>
                             </a></li>
-                            <div class="flex h-full w-full items-center gap-x-4 bg-gradient-to-r from-black via-[#1c082b] to-[#340c43] pr-8">
-                                @if(checkLogin() == false) {
-                                    <ul class="flex items-center gap-x-4">
-                                        <li aria-label="Sign In">
-                                            <div tabindex="0" role="button" class="flex justify-center transition-all ease-in-out hover:text-blue-500 hover:decoration-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%" class="mr-2 w-5">
-                                                    <path d="M22.525 7.031a9.17 9.169 0 0 0-8.608 9.59 9.17 9.169 0 0 0 8.608 9.592 9.17 9.169 0 0 0 8.608-9.591 9.17 9.169 0 0 0-8.608-9.59zm0 17.269a7.257 7.256 0 0 1-6.695-7.678 7.257 7.256 0 0 1 6.695-7.706 7.257 7.256 0 0 1 6.695 7.678 7.257 7.256 0 0 1-6.695 7.706z"></path>
-                                                    <path d="M22.525 0A22.504 22.5 0 0 0 5.647 37.406l.169.197A22.504 22.5 0 1 0 22.525 0zm0 43.088a20.535 20.531 0 0 1-14.937-6.525c1.8-4.95 6.245-6.975 15.134-6.975 11.927 0 14.318 4.753 14.796 6.946a20.535 20.531 0 0 1-14.993 6.554zm.197-15.329c-9.17 0-14.234 2.194-16.54 7.257a20.59 20.588 0 1 1 32.77 0c-1.18-3.038-4.838-7.257-16.23-7.257z"></path>
-                                                </svg>
-                                                <button (click)="openSignIn()" class="sign-in-button">
-                                                    Sign In
-                                                </button>
-                                            </div>
-                                        </li>
-                                        <li aria-label="AMC Stubs" class="flex items-center">
-                                            <button id="radix-:r0:-trigger-radix-:r9:" data-state="closed" aria-expanded="false" aria-controls="radix-:r0:-content-radix-:r9:" class="cursor-default border-b-2 border-transparent transition-all ease-in-out data-[state=open]:border-blue-500 mt-0.5 flex h-10 cursor-pointer items-center border-b-0 transition-all ease-in-out hocus:border-b-2 hocus:text-blue-500 hocus:decoration-2" data-radix-collection-item="">
-                                                <div class="mr-2 flex items-center text-sm font-semibold leading-tight tracking-normal">
-                                                    <a [routerLink]="'dangki'">Join Now!</a>
-                                                </div>
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%" class="text-current ml-1 w-3">
-                                                    <path d="M22.464 29.594L3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z"></path>
-                                                </svg>
-                                            </button>
-                                        </li>
-                                    </ul>
-                                }
-                            </div>
-                            
+
+
+
+                        <div
+                            class="flex h-full w-full items-center gap-x-4 bg-gradient-to-r from-black via-[#1c082b] to-[#340c43] pr-8">
+
+
+
+
+                            <ng-template #loggedInTemplate>
+
+                                <button id="radix-:r1j:-trigger-radix-:r1r:" data-state="closed" aria-expanded="false"
+                                    aria-controls="radix-:r1j:-content-radix-:r1r:"
+                                    class="cursor-default border-b-2 border-transparent transition-all ease-in-out data-[state=open]:border-blue-500 mt-0.5 flex h-10 cursor-pointer items-center border-b-0 transition-all ease-in-out hocus:border-b-2 hocus:text-blue-500 hocus:decoration-2"
+                                    data-radix-collection-item=""
+                                    (click)="toggleDropdown($event)"
+                                    (mouseenter)="showDropdown()">
+                                    <div
+                                        class="mr-2 flex items-center text-sm font-semibold leading-tight tracking-normal">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="100%"
+                                            fill="currentColor" viewBox="0 0 25 24" class="mr-2 w-6">
+                                            <path fill-rule="evenodd"
+                                                d="M12.94 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0-1.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
+                                                clip-rule="evenodd"></path>
+                                            <path fill-rule="evenodd"
+                                                d="M12.94 23c6.075 0 11-4.925 11-11s-4.925-11-11-11-11 4.925-11 11 4.925 11 11 11Zm7.204-4.807A9.463 9.463 0 0 0 22.44 12a9.5 9.5 0 0 0-19 0c0 2.366.865 4.53 2.296 6.193a7.994 7.994 0 0 1 1.524-.879c1.222-.543 3.076-1.064 5.68-1.064 2.603 0 4.457.521 5.68 1.065.61.27 1.058.545 1.362.76.06.042.113.082.162.118Zm-1.08 1.07a6.629 6.629 0 0 0-1.054-.578c-1.027-.456-2.674-.935-5.07-.935-2.397 0-4.043.479-5.07.935-.477.212-.824.42-1.054.578A9.462 9.462 0 0 0 12.94 21.5c2.333 0 4.47-.841 6.123-2.237Z"
+                                                clip-rule="evenodd"></path>
+                                            <!-- Tên hiểm thị "Danh" ở đây lúc call data sẽ để là {{user.name}} và lấy dữ liệu tên này ở Fisrtname ở đăng kí component -->
+                                        </svg> Tên người dùng ở đây
+                                    </div> <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        viewBox="0 0 45 45" width="1em" height="100%" class="text-current ml-1 w-3">
+                                        <path
+                                            d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
+                                        </path>
+                                    </svg>
+                                </button>
+                                <!-- MY AMC span -->
+                                <span aria-hidden="true" tabindex="0"
+                                    style="position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"></span>
+                                <span aria-owns="radix-:r3o:-content-radix-:r40:"></span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            </ng-template>
+
+
+
+                            <li aria-label="My AMC" class="flex items-center"
+                                *ngIf="isLoggedIn == false; else loggedInTemplate">
+                                <div tabindex="0" role="button"
+                                    class="flex justify-center transition-all ease-in-out hover:text-blue-500 hover:decoration-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
+                                        width="1em" height="100%" class="mr-2 w-5">
+                                        <path
+                                            d="M22.525 7.031a9.17 9.169 0 0 0-8.608 9.59 9.17 9.169 0 0 0 8.608 9.592 9.17 9.169 0 0 0 8.608-9.591 9.17 9.169 0 0 0-8.608-9.59zm0 17.269a7.257 7.256 0 0 1-6.695-7.678 7.257 7.256 0 0 1 6.695-7.706 7.257 7.256 0 0 1 6.695 7.678 7.257 7.256 0 0 1-6.695 7.706z">
+                                        </path>
+                                        <path
+                                            d="M22.525 0A22.504 22.5 0 0 0 5.647 37.406l.169.197A22.504 22.5 0 1 0 22.525 0zm0 43.088a20.535 20.531 0 0 1-14.937-6.525c1.8-4.95 6.245-6.975 15.134-6.975 11.927 0 14.318 4.753 14.796 6.946a20.535 20.531 0 0 1-14.993 6.554zm.197-15.329c-9.17 0-14.234 2.194-16.54 7.257a20.59 20.588 0 1 1 32.77 0c-1.18-3.038-4.838-7.257-16.23-7.257z">
+                                        </path>
+                                    </svg>
+
+                                    <button (click)="openSignIn()" class="sign-in-button">
+                                        Sign In
+                                    </button>
+
+                                </div>
+                            </li>
+                        </div>
+
+
                     </div>
                 </ul>
             </div>
+
+
+
+
+            <div *ngIf="isLoggedIn && isDropdownOpen" data-state="open" data-orientation="horizontal" class="absolute z-20 w-full"
+                style="--radix-navigation-menu-viewport-width: 288px; --radix-navigation-menu-viewport-height: 487px;"
+                (mouseenter)="onMouseEnterDropdown()"
+                (mouseleave)="onMouseLeaveDropdown()">
+                <div id="radix-:r3o:-content-radix-:r40:" aria-labelledby="radix-:r3o:-trigger-radix-:r40:"
+                    data-orientation="horizontal" class="absolute right-0 w-[18rem] px-4 pt-5" dir="ltr"
+                    style="background: url(&quot;https://amc-theatres-res.cloudinary.com/image/upload/f_auto/q_auto:low/amc-cdn/static/images/2024/bg-portrait-amc-stubs.png&quot;) 0% 0% / cover no-repeat;">
+                    <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 grid auto-cols-fr grid-flow-col gap-8 pb-5">
+                        <div>
+                            <div class="flex flex-row rounded-lg border p-2 border-[#b9ecf7]"
+                                style="background: url(&quot;https://amc-theatres-res.cloudinary.com/image/upload/f_auto/q_auto:low/amc-cdn/static/images/2024/bg-banner-insider.png&quot;) 0% 0% / cover no-repeat;">
+                                <div class="my-auto flex grow pl-1"><img alt="Stubs Member Banner"
+                                        config="[object Object]" loading="lazy" width="750" height="360"
+                                        decoding="async" data-nimg="1" class="max-h-[2em] w-auto"
+                                        srcset="https://cdn.haitrieu.com/wp-content/uploads/2022/01/Logo-Unilever.png 1x, https://cdn.haitrieu.com/wp-content/uploads/2022/01/Logo-Unilever.png 2x"
+                                        src="https://cdn.haitrieu.com/wp-content/uploads/2022/01/Logo-Unilever.png"
+                                        style="color: transparent;"></div>
+                                <div class="my-auto">
+                                    <div
+                                        class="text-xs font-semibold leading-tight tracking-normal text-black grid grid-cols-2 items-center pb-1">
+                                        <span class="pr-2 text-right font-bold">0</span> Points
+                                    </div>
+                                    <div
+                                        class="text-xs font-semibold leading-tight tracking-normal text-black grid grid-cols-2">
+                                        <span class="pr-2 text-right font-bold">$0.00 </span>Rewards
+                                    </div>
+                                </div>
+                            </div>
+                            <ul>
+                                <div class="px-4">
+                                    <li class="mb-4 mt-4">
+                                        <ul>
+                                            <li class="mb-4 mt-4"><a icon="tickets-loyalty"
+                                                    class="transition-all ease-in-out hover:text-blue-500 text-sm font-semibold"
+                                                    data-radix-collection-item="" target="_self"
+                                                    href="/my-cinex/tickets"><svg xmlns="http://www.w3.org/2000/svg"
+                                                        width="1em" height="100%" fill="currentColor"
+                                                        viewBox="0 0 25 24" class="mb-1 mr-1 inline-block w-6 xl:mr-2">
+                                                        <path
+                                                            d="M23.473 16.761c-.124-.506-.447-.857-.76-1.096a3.73 3.73 0 0 0-.962-.492 1.049 1.049 0 0 1-.66-.729c-.085-.343.01-.691.232-.938.208-.232.456-.532.624-.89.167-.356.282-.815.158-1.32l-.23-.902c-.246-.964-1.203-1.553-2.157-1.319l-2.105.516 1.106-1.85a1.815 1.815 0 0 0-.617-2.482l-.78-.479a1.888 1.888 0 0 0-1.303-.226 3.58 3.58 0 0 0-1.023.337.972.972 0 0 1-.967-.05 1.038 1.038 0 0 1-.489-.838 3.758 3.758 0 0 0-.187-1.074c-.131-.38-.373-.79-.816-1.054l-.788-.477a1.765 1.765 0 0 0-2.441.608L1.852 14.469a1.823 1.823 0 0 0 .608 2.483l.78.48c.445.273.921.29 1.314.233a3.323 3.323 0 0 0 1.03-.349.972.972 0 0 1 .967.05c.3.185.471.498.486.83-.005.25-.105.494-.27.668-.217.235-.465.536-.632.893-.177.359-.298.829-.165 1.332l.214.876a1.794 1.794 0 0 0 2.16 1.328l14.05-3.453a1.79 1.79 0 0 0 1.298-2.185l-.22-.894ZM10.608 2.798a.247.247 0 0 1 .348-.086l.787.477c.034.02.096.082.154.24.06.168.093.38.097.628a2.57 2.57 0 0 0 1.233 2.1c.768.472 1.68.488 2.43.122.22-.11.42-.179.594-.202.165-.022.245-.003.28.026l.78.48c.122.075.16.228.086.352l-1.863 3.118-6.776-4.16 1.85-3.095ZM4.32 16.133c-.165.021-.247-.007-.28-.027l-.78-.48a.255.255 0 0 1-.086-.352l5.072-8.5 5.952 3.654-8.486 2.09a1.794 1.794 0 0 0-1.3 2.175l.219.895c.035.144.086.275.153.393a2.44 2.44 0 0 1-.464.152Zm3.654 5.652a.258.258 0 0 1-.312-.192l-.214-.875c-.011-.046-.014-.131.062-.284.052-.099.128-.213.215-.32.051-.061.1-.13.16-.193a2.562 2.562 0 0 0 .674-1.879c-.013-.169-.015-.331-.057-.503a2.568 2.568 0 0 0-1.646-1.817c-.229-.088-.43-.173-.57-.282-.137-.1-.175-.177-.186-.222l-.22-.894a.258.258 0 0 1 .188-.314l8.326-2.05 1.222-.3 1.903 7.767-9.545 2.358Zm14.059-3.455-3.513.86-1.906-7.775 3.478-.852a.258.258 0 0 1 .311.192l.23.9c.012.046.014.132-.053.282a2.487 2.487 0 0 1-.367.51 2.595 2.595 0 0 0 1.043 4.177c.227.08.42.175.559.275.138.1.175.177.187.223l.228.892c.017.148-.063.283-.197.316Z">
+                                                        </path>
+                                                    </svg>Vé</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="mb-4 mt-4">
+                                        <ul>
+                                            <li class="mb-4 mt-4"><a icon="points-and-rewards"
+                                                    class="transition-all ease-in-out hover:text-blue-500 text-sm font-semibold"
+                                                    data-radix-collection-item="" target="_self"
+                                                    href="/my-cinex/rewards"><svg xmlns="http://www.w3.org/2000/svg"
+                                                        width="1em" height="100%" fill="currentColor"
+                                                        viewBox="0 0 25 24" class="mb-1 mr-1 inline-block w-6 xl:mr-2">
+                                                        <g clip-path="url(#points-and-rewards_svg__a)">
+                                                            <path fill-rule="evenodd"
+                                                                d="M2.996 12a8.345 8.345 0 0 1 5.699-7.913A9.827 9.827 0 0 0 4.705 12a9.826 9.826 0 0 0 3.99 7.913 8.344 8.344 0 0 1-5.699-7.913Zm11.013 9.84a.75.75 0 0 0 .115-.01c.139.007.278.01.418.01 5.437 0 9.842-4.407 9.842-9.84 0-5.434-4.405-9.84-9.842-9.84-.14 0-.279.003-.417.01a.755.755 0 0 0-.116-.01c-.156 0-.98.004-1.8.012-.792.007-1.662.018-1.853.036h-.003c-4.975.494-8.857 4.69-8.857 9.793 0 5.102 3.882 9.298 8.857 9.791h.003c.191.019 1.061.03 1.853.036.82.008 1.644.012 1.8.012Zm.533-18.18a8.342 8.342 0 0 0 0 16.68 8.34 8.34 0 1 0 0-16.68Zm.743 4.058a.803.803 0 0 0-1.483 0l-.966 2.27-2.348.26c-.725.08-.945.966-.463 1.421l1.77 1.671-.496 2.448c-.13.639.549 1.27 1.204.873l2.04-1.233 2.041 1.233c.656.397 1.334-.234 1.204-.873l-.495-2.448 1.77-1.67c.481-.456.261-1.342-.463-1.422l-2.349-.26-.966-2.27Zm-1.57 2.761.829-1.95.83 1.95a.81.81 0 0 0 .653.49l2.077.23-1.568 1.48a.832.832 0 0 0-.242.77l.432 2.13-1.77-1.07a.796.796 0 0 0-.825 0l-1.769 1.07.431-2.13a.832.832 0 0 0-.242-.77l-1.567-1.48 2.076-.23a.81.81 0 0 0 .654-.49Z"
+                                                                clip-rule="evenodd"></path>
+                                                        </g>
+                                                        <defs>
+                                                            <clipPath id="points-and-rewards_svg__a">
+                                                                <path d="M.94 0h24v24h-24z"></path>
+                                                            </clipPath>
+                                                        </defs>
+                                                    </svg>Điểm thưởng</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="mb-4 mt-4">
+                                        <ul>
+                                            <li class="mb-4 mt-4"><a icon="benefits"
+                                                    class="transition-all ease-in-out hover:text-blue-500 text-sm font-semibold"
+                                                    data-radix-collection-item="" target="_self" href="/my-cinex"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="1em" height="100%"
+                                                        fill="currentColor" viewBox="0 0 25 24"
+                                                        class="mb-1 mr-1 inline-block w-6 xl:mr-2">
+                                                        <g clip-path="url(#benefits_svg__a)">
+                                                            <path fill-rule="evenodd"
+                                                                d="M17.265 2.972c.11.411.15 1.156.044 1.827-.044.279-.105.498-.17.65a2.842 2.842 0 0 1-.473-.478c-.426-.528-.766-1.193-.876-1.604-.214-.8.203-1.243.44-1.307.239-.064.821.112 1.035.912Zm.044 2.58s-.002-.002-.007-.003a.07.07 0 0 0 .006.002h.001Zm-2.231-1.254-3.41-1.968a.747.747 0 0 0-1.023.276L9.153 5.208a.753.753 0 0 0 .276 1.026l9.129 5.268H8.425a.75.75 0 0 0-.75.75v9c0 .414.335.75.75.75h12a.75.75 0 0 0 .75-.75v-8.24l.38.22a.747.747 0 0 0 1.023-.276l1.492-2.602a.753.753 0 0 0-.277-1.026l-3.698-2.134.088-.022c.91-.244 1.486-1.047 1.286-1.795-.2-.747-1.101-1.156-2.012-.912-.338.091-.771.297-1.171.558.135-.794.104-1.72-.055-2.31-.307-1.146-1.318-1.87-2.26-1.619-.94.252-1.454 1.386-1.147 2.532.055.203.142.433.254.672Zm-3.507-.292-.746 1.301 4.762 2.749.75-1.3-4.766-2.75Zm10.08 7.55-4.765-2.75.75-1.3 4.762 2.748-.747 1.302ZM9.175 13.002v7.5h4.5v-7.5h-4.5Zm6 0v7.5h4.5v-7.5h-4.5Zm3.342-6.913c.402-.325.905-.579 1.2-.658a.908.908 0 0 1 .6.03c.138.062.175.137.186.175.01.038.015.121-.074.245a.908.908 0 0 1-.505.325c-.294.08-.856.11-1.367.03a2.938 2.938 0 0 1-.174-.032c.04-.037.085-.075.134-.115ZM5.232 1.329c-.055-.195-.331-.195-.386 0l-.598 2.147a.2.2 0 0 1-.13.136l-2.02.671a.2.2 0 0 0 0 .38l2.02.672a.2.2 0 0 1 .13.136l.598 2.146c.055.196.331.196.386 0l.598-2.146a.2.2 0 0 1 .13-.136l2.02-.672a.2.2 0 0 0 0-.38l-2.02-.671a.2.2 0 0 1-.13-.136l-.598-2.147ZM9.61 7.69c.054-.195.33-.195.385 0l.163.584a.2.2 0 0 0 .13.136l.588.195a.2.2 0 0 1 0 .38l-.589.196a.2.2 0 0 0-.13.136l-.162.583c-.054.195-.33.195-.385 0l-.163-.583a.2.2 0 0 0-.13-.136l-.589-.196a.2.2 0 0 1 0-.38l.59-.195a.2.2 0 0 0 .13-.136l.162-.584Zm-3.172.781c-.054-.195-.33-.195-.385 0L5.736 9.61a.2.2 0 0 1-.13.136l-1.095.364a.2.2 0 0 0 0 .38l1.096.364a.2.2 0 0 1 .13.136l.316 1.137c.054.195.33.195.385 0l.317-1.137a.2.2 0 0 1 .13-.136l1.095-.364a.2.2 0 0 0 0-.38l-1.095-.364a.2.2 0 0 1-.13-.136l-.317-1.137Z"
+                                                                clip-rule="evenodd"></path>
+                                                        </g>
+                                                        <defs>
+                                                            <clipPath id="benefits_svg__a">
+                                                                <path d="M.94 0h24v24h-24z"></path>
+                                                            </clipPath>
+                                                        </defs>
+                                                    </svg>AMC Stubs Benefits</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="mb-4 mt-4">
+                                        <ul>
+                                            <li class="mb-4 mt-4"><a icon="profile"
+                                                    class="transition-all ease-in-out hover:text-blue-500 text-sm font-semibold"
+                                                    data-radix-collection-item="" target="_self"
+                                                    href="/my-cinex/profile"><svg xmlns="http://www.w3.org/2000/svg"
+                                                        width="1em" height="100%" fill="currentColor"
+                                                        viewBox="0 0 25 24" class="mb-1 mr-1 inline-block w-6 xl:mr-2">
+                                                        <path fill-rule="evenodd"
+                                                            d="M12.94 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0-1.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
+                                                            clip-rule="evenodd"></path>
+                                                        <path fill-rule="evenodd"
+                                                            d="M12.94 23c6.075 0 11-4.925 11-11s-4.925-11-11-11-11 4.925-11 11 4.925 11 11 11Zm7.204-4.807A9.463 9.463 0 0 0 22.44 12a9.5 9.5 0 0 0-19 0c0 2.366.865 4.53 2.296 6.193a7.994 7.994 0 0 1 1.524-.879c1.222-.543 3.076-1.064 5.68-1.064 2.603 0 4.457.521 5.68 1.065.61.27 1.058.545 1.362.76.06.042.113.082.162.118Zm-1.08 1.07a6.629 6.629 0 0 0-1.054-.578c-1.027-.456-2.674-.935-5.07-.935-2.397 0-4.043.479-5.07.935-.477.212-.824.42-1.054.578A9.462 9.462 0 0 0 12.94 21.5c2.333 0 4.47-.841 6.123-2.237Z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>Thông tin</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="mb-4 mt-4">
+                                        <ul>
+                                            <li class="mb-4 mt-4"><a icon="wallet"
+                                                    class="transition-all ease-in-out hover:text-blue-500 text-sm font-semibold"
+                                                    data-radix-collection-item="" target="_self"
+                                                    href="/my-cinex/wallet"><svg xmlns="http://www.w3.org/2000/svg"
+                                                        width="1em" height="100%" fill="currentColor"
+                                                        viewBox="0 0 25 24" class="mb-1 mr-1 inline-block w-6 xl:mr-2">
+                                                        <path fill-rule="evenodd"
+                                                            d="M19.81 4.971A1.25 1.25 0 0 0 18.3 3.75L6.442 6.279H19.81V4.971ZM3.69 13.645V9.029c0-.69.56-1.25 1.25-1.25h16c.69 0 1.25.56 1.25 1.25v10c0 .69-.56 1.25-1.25 1.25h-16c-.69 0-1.25-.56-1.25-1.25v-5.384Zm-1.5-5.766v11.15a2.75 2.75 0 0 0 2.75 2.75h16a2.75 2.75 0 0 0 2.75-2.75v-10a2.75 2.75 0 0 0-2.38-2.725V4.971a2.75 2.75 0 0 0-3.324-2.689L4.366 5.19A2.75 2.75 0 0 0 2.19 7.88Zm16.25 7.65a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>Ví (?)</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="mb-4 mt-4">
+                                        <ul>
+                                            <li class="mb-4 mt-4"><a icon="calendar-date"
+                                                    class="transition-all ease-in-out hover:text-blue-500 text-sm font-semibold"
+                                                    data-radix-collection-item="" target="_self"
+                                                    href="/my-cinex/history"><svg xmlns="http://www.w3.org/2000/svg"
+                                                        width="1em" height="100%" fill="currentColor"
+                                                        viewBox="0 0 25 24" class="mb-1 mr-1 inline-block w-6 xl:mr-2">
+                                                        <path d="M7.44 11a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 0 0-3h-1Z">
+                                                        </path>
+                                                        <path fill-rule="evenodd"
+                                                            d="M7.94 0a1 1 0 0 1 1 1v1h8V1a1 1 0 1 1 2 0v1h2a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3h-16a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h2V1a1 1 0 0 1 1-1Zm9 3.5V4a1 1 0 1 0 2 0v-.5h2a1.5 1.5 0 0 1 1.5 1.5v2.25h-19V5a1.5 1.5 0 0 1 1.5-1.5h2V4a1 1 0 1 0 2 0v-.5h8ZM3.44 8.75h19V19a1.5 1.5 0 0 1-1.5 1.5h-16a1.5 1.5 0 0 1-1.5-1.5V8.75Z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>Lịch sử đặt hàng</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="mt-4 mb-0 list-none">
+
+                                        <button aria-label="Sign Out" type="button" (click)="signOut()"
+                                            class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 text-sm md:text-base">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="100%"
+                                                fill="currentColor" viewBox="0 0 25 24"
+                                                class="mr-1 inline-block w-6 xl:mr-2">
+                                                <path
+                                                    d="M13.36 21c0-.483.392-.875.875-.875h5.777c.346 0 .625-.28.625-.625v-15a.625.625 0 0 0-.625-.625h-5.777a.875.875 0 1 1 0-1.75h5.777A2.375 2.375 0 0 1 22.387 4.5v15a2.375 2.375 0 0 1-2.375 2.375h-5.777A.875.875 0 0 1 13.36 21Z">
+                                                </path>
+                                                <path
+                                                    d="m5.046 11.25 3.67-3.67a.75.75 0 0 0-1.061-1.06l-4.243 4.243a1.75 1.75 0 0 0 0 2.474l4.242 4.243a.75.75 0 1 0 1.061-1.06l-3.67-3.67h10.19a.75.75 0 0 0 0-1.5H5.045Z">
+                                                </path>
+                                            </svg>
+                                            <span class="text-sm font-semibold leading-tight tracking-normal">Đăng
+                                                xuất</span>
+                                        </button>
+
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <div style="position: relative;">
                 <ul data-orientation="horizontal"
                     class="mx-auto flex h-8 w-full list-none items-center justify-end px-8 py-1 pb-1"
@@ -130,8 +349,8 @@
                                         d="M22.002 7.338c-3.654 0-6.746 3.091-6.746 6.745s3.092 6.746 6.746 6.746c3.654 0 6.745-3.092 6.745-6.746 0-3.654-3.091-6.745-6.745-6.745zm0 11.804a5.038 5.038 0 0 1-5.06-5.059 5.039 5.039 0 0 1 5.06-5.059 5.039 5.039 0 0 1 5.059 5.06 5.038 5.038 0 0 1-5.06 5.058z">
                                     </path>
                                 </svg> <button type="button"
-                                    class="inline-flex text-center items-center justify-center w-max transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-xs font-normal">Find
-                                    a Theatre Near You</button></div>
+                                    class="inline-flex text-center items-center justify-center w-max transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-xs font-normal">Tìm
+                                    rạp gần đây</button></div>
                         </div>
                     </li>
                     <li class="mx-2 text-xs" aria-label="Merchandise"><a id="64af006389a8bf4e71c8fe9d"
@@ -147,11 +366,10 @@
                     <li class="mx-2 text-xs" aria-label="Discounts"><a id="64af004889a8bf4e71c8fe9b"
                             class="transition-all ease-in-out hover:text-blue-500" data-radix-collection-item=""
                             target="_self" [routerLink]="'discounts'">Discounts</a></li>
-                    <li class="mx-2 text-xs" aria-label="On Demand"><a id="64af008489a8bf4e71c8fe9f"
-                            class="transition-all ease-in-out hover:text-blue-500" data-radix-collection-item=""
-                            target="_self" [routerLink]="'on-demand'">On Demand</a></li>
                 </ul>
             </div>
+
+            
         </nav>
     </div>
 </header><!--/$--><!--$--><!--/$-->
