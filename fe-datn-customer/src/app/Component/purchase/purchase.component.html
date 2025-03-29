@@ -75,11 +75,13 @@
                                                     <path
                                                         d="M15.75 17.55c0-3.6 3.15-6.075 6.75-6.075 3.15 0 6.75 2.25 6.75 5.625 0 2.25-1.125 3.825-2.925 4.95-.675.45-1.35.9-1.8 1.575-.675.675-.9 1.575-.9 2.7H20.7c-.225-.45-.225-.9-.225-1.35 0-4.5 5.4-4.725 5.4-7.875 0-1.575-1.575-2.7-3.15-2.7-2.025 0-3.375 1.575-3.375 3.375v.675l-3.375-.225c-.225.225-.225-.225-.225-.675zm6.3 15.75c1.125 0 2.025-.9 2.025-2.025s-.9-2.025-2.025-2.025-2.025.9-2.025 2.025c-.225.9.9 2.025 2.025 2.025z">
                                                     </path>
-                                                </svg></button></span></li>
+                                                </svg></button></span>
+                                    </li>
                                     <li
                                         class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
                                         <span class="inline-flex items-center gap-1 uppercase"
-                                            aria-label="MPAA Rating: PG13" role="group">PG13</span></li>
+                                            aria-label="MPAA Rating: PG13" role="group">PG13</span>
+                                    </li>
                                     <li
                                         class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
                                         AMC Signature Recliners</li>
@@ -107,7 +109,7 @@
                 <div class="mx-auto w-full px-4 xl:px-0 grid max-w-[1000px] grid-cols-2 gap-20">
                     <div class="col-span-2 pt-4 md:col-span-1">
                         <div class="mb-12 divide-y divide-gray-700">
-                         
+
                             <div class="qcALx-grid qcALx-grid-cols-2 qcALx-w-full qcALx-h-fit qcALx-rounded-xl qcALx-p-4"
                                 style="background-image: url(&quot;https://amc-theatres-res.cloudinary.com/image/upload/amc-cdn/static/images/2024/bg-banner-premiere.png&quot;); background-size: cover;">
                                 <div class="qcALx-col-span-1 qcALx-flex align-center"><img alt="AMC Stubs"
@@ -137,18 +139,12 @@
                                 <div class="flex flex-wrap justify-between gap-2"><label
                                         class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
                                             class="label">Email</span>
-                                            <div class="amc-input amc-input--box">
-                                                <input 
-                                                    class="input" 
-                                                    inputmode="email"
-                                                    autocomplete="email" 
-                                                    placeholder="Email Address" 
-                                                    type="email" 
-                                                    name="email"
-                                                    [(ngModel)]="email"
-                                                >
+                                        <div class="amc-input amc-input--box">
+                                            <input class="input" inputmode="email" autocomplete="email"
+                                                placeholder="Email Address" type="email" name="email"
+                                                [(ngModel)]="email">
 
-                                            </div>
+                                        </div>
                                         <p class="text-gray-subtle text-sm font-semibold leading-tight tracking-normal">
                                             Your receipt and order confirmation will be sent to this email address</p>
                                     </label></div>
@@ -173,20 +169,41 @@
                                                         <path
                                                             d="M22.5 0A22.5 22.5 0 1 0 45 22.5 22.5 22.5 0 0 0 22.5 0zm0 43.172A20.672 20.672 0 1 1 43.172 22.5 20.672 20.672 0 0 1 22.5 43.172z">
                                                         </path>
-                                                    </svg> Add Card</button><label
+                                                    </svg> Add Card</button>
+                                                    <label
                                                     class="flex w-max items-center gap-4"><input
                                                         class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
                                                         type="radio" value="venmo" name="paymentMethod"><img alt=""
                                                         config="[object Object]" loading="lazy" width="47" height="30"
                                                         decoding="async" data-nimg="1" class="pointer-events-none"
-                                                        srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_47/f_auto/q_auto/amc-cdn/general/acceptance-marks/venmo.png 1x, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_47/f_auto/q_auto/amc-cdn/general/acceptance-marks/venmo.png 2x"
-                                                        src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_47/f_auto/q_auto/amc-cdn/general/acceptance-marks/venmo.png"
-                                                        style="color: transparent;"><span>Venmo</span></label></div>
+                                                        srcset="https://static.ybox.vn/2022/4/4/1649334330094-anhybox%20(32).png 1x, https://static.ybox.vn/2022/4/4/1649334330094-anhybox%20(32).png 2x"
+                                                        src="https://static.ybox.vn/2022/4/4/1649334330094-anhybox%20(32).png"
+                                                        style="color: transparent;"><span>Momo</span></label>
+                                                    <label
+                                                        class="flex w-max items-center gap-4"><input
+                                                            class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
+                                                            type="radio" value="venmo" name="paymentMethod"><img alt=""
+                                                            config="[object Object]" loading="lazy" width="47" height="30"
+                                                            decoding="async" data-nimg="1" class="pointer-events-none"
+                                                            srcset="https://vnpay.vn/s1/statics.vnpay.vn/2021/6/maxresdefault.jpg 1x, https://vnpay.vn/s1/statics.vnpay.vn/2021/6/maxresdefault.jpg 2x"
+                                                            src="https://vnpay.vn/s1/statics.vnpay.vn/2021/6/maxresdefault.jpg"
+                                                            style="color: transparent;"><span>VNPay</span></label>
+                                                        <label
+                                                            class="flex w-max items-center gap-4"><input
+                                                                class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
+                                                                type="radio" value="venmo" name="paymentMethod"><img alt=""
+                                                                config="[object Object]" loading="lazy" width="47" height="30"
+                                                                decoding="async" data-nimg="1" class="pointer-events-none"
+                                                                srcset="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6c/0e/a4/6c0ea428-a417-973a-bbc8-fff75462262e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1200x600wa.png 1x, https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6c/0e/a4/6c0ea428-a417-973a-bbc8-fff75462262e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1200x600wa.png 2x"
+                                                                src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6c/0e/a4/6c0ea428-a417-973a-bbc8-fff75462262e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1200x600wa.png"
+                                                                style="color: transparent;"><span>MetaMask</span></label>
+                                                    </div>
                                         </div>
                                     </div>
                                     <style></style>
                                     <div id="rokt-below-payments" class="emtpy:hidden"></div>
                                 </section>
+                                
                                 <section>
                                     <div class="my-2 max-w-[600px]" data-orientation="vertical">
                                         <div data-state="open" data-orientation="vertical"><button type="button"
@@ -379,7 +396,8 @@
                             <p
                                 class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
                                 <span class="italic text-100" style="color: rgb(128, 128, 128);">Sorry, no refunds
-                                    provided after the displayed showtime.</span></p>
+                                    provided after the displayed showtime.</span>
+                            </p>
                         </div>
                         <div class="rich-text">
                             <p
@@ -393,7 +411,8 @@
                                     the AMC Mobile App. Not valid with any other offer. Offer not combinable with AMC
                                     Stubs Discount Tuesday discount. Lower price will be honored. Surcharges will apply
                                     for premium formats, alternative content and special events. Exclusions
-                                    apply.</span></p>
+                                    apply.</span>
+                            </p>
                         </div>
                     </div>
                     <aside class="hidden w-[400px] pt-4 lg:block">
@@ -414,11 +433,13 @@
                                         <li *ngFor="let seat of seats" class="pt-2 font-semibold">
                                             <div class="flex justify-between gap-3">
                                                 <div class="flex-1">
-                                                    <h4 class="my-auto text-base font-semibold leading-tight tracking-normal">
+                                                    <h4
+                                                        class="my-auto text-base font-semibold leading-tight tracking-normal">
                                                         {{ seat.type }} Ticket
                                                     </h4>
                                                 </div>
-                                                <p class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
+                                                <p
+                                                    class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
                                                     ${{ seat.total }}
                                                 </p>
                                             </div>
@@ -431,17 +452,19 @@
                                         Total: ${{ totalTicketPrice | number:'1.2-2' }}
                                     </div>
                                     <h2
-                                    class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
-                                    Service</h2>
+                                        class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
+                                        Service</h2>
                                     <ul class="mb-4 grid gap-2">
                                         <li *ngFor="let sv of services" class="pt-2 font-semibold">
                                             <div class="flex justify-between gap-3">
                                                 <div class="flex-1">
-                                                    <h4 class="my-auto text-base font-semibold leading-tight tracking-normal">
+                                                    <h4
+                                                        class="my-auto text-base font-semibold leading-tight tracking-normal">
                                                         {{ sv.name }} Ticket
                                                     </h4>
                                                 </div>
-                                                <p class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
+                                                <p
+                                                    class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
                                                     ${{ sv.price }}
                                                 </p>
                                             </div>
@@ -470,7 +493,7 @@
                                             </div>
                                         </li>
                                     </ul>
-                               
+
                                     <div
                                         class="PPsXr-flex PPsXr-flex-wrap PPsXr-gap-4 PPsXr-items-center PPsXr-py-8 PPsXr-justify-center PPsXr-md:justify-start">
                                         <div class="PPsXr-grid PPsXr-flex-1 PPsXr-gap-1">
@@ -495,11 +518,11 @@
                                 <p class="py-10 text-xs italic leading-5 text-gray-200">Discount Matinee ticket prices
                                     are UP TO 20% OFF the evening base ticket price every day. You are receiving the
                                     displayed Discount Matinee ticket prices.</p>
-                                    <p
-                                        class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
-                                        <span
-                                            class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>{{totalAmount}}
-                                    </p>
+                                <p
+                                    class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
+                                    <span
+                                        class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>{{totalAmount}}
+                                </p>
                             </div>
                         </div>
                     </aside>
@@ -540,7 +563,8 @@
                                                     <div
                                                         class="absolute inset-0 grid -translate-y-[2px] translate-x-1 place-items-center leading-none">
                                                         <span aria-label="Number of Items in Order"
-                                                            class="text-xs">2</span></div>
+                                                            class="text-xs">2</span>
+                                                    </div>
                                                 </div> ${{totalAmount}}
                                             </button>
                                             <div
@@ -577,16 +601,16 @@
                                                                                 </div>
                                                                                 <p
                                                                                     class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                                                        $20.99</p>
+                                                                                    $20.99</p>
                                                                             </div>
                                                                         </li>
                                                                         <li
                                                                             class="text-white text-xs font-semibold leading-tight tracking-normal">
-                                                                                Seats B3, B4</li>
+                                                                            Seats B3, B4</li>
                                                                     </ul>
                                                                     <h2
                                                                         class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
-                                                                            Fees</h2>
+                                                                        Fees</h2>
                                                                     <ul class="mb-4 grid gap-2">
                                                                         <li class="pt-2 font-semibold">
                                                                             <div class="flex justify-between gap-3">
@@ -597,11 +621,11 @@
                                                                                 </div>
                                                                                 <p
                                                                                     class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                                                        $4.38</p>
+                                                                                    $4.38</p>
                                                                             </div>
                                                                         </li>
                                                                     </ul>
-                                                                
+
                                                                     <div
                                                                         class="PPsXr-flex PPsXr-flex-wrap PPsXr-gap-4 PPsXr-items-center PPsXr-py-8 PPsXr-justify-center PPsXr-md:justify-start">
                                                                         <div
@@ -651,10 +675,9 @@
                             <div class="flex items-center gap-2 ">
                                 <p class="hidden text-xs font-semibold italic text-gray-100 lg:block">You must complete
                                     all required fields.</p>
-                                    <button (click)="onPurchase()" 
-                                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12"
-                                   >Purchase</button>
-                                    <!-- <button hidden="" type="submit"
+                                <button (click)="onPurchase()"
+                                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12">Purchase</button>
+                                <!-- <button hidden="" type="submit"
                                     aria-label="Purchase"></button> -->
                             </div>
                         </div>
