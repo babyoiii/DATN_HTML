@@ -20,7 +20,6 @@ import { TimkiemrapComponent } from './Component/timkiemrap/timkiemrap.component
 import { PaymentCallBackComponent } from './Component/payment-call-back/payment-call-back.component';
 import { MovieDetailNghiaComponent } from './Component/movie-detail-nghia/movie-detail-nghia.component';
 import { Test1Component } from './Component/test1/test1.component';
-import { TestBlockChainComponent } from './Component/test-block-chain/test-block-chain.component';
 import { MyCinexComponent } from './Component/my-cinex/my-cinex.component';
 import { ProfileComponent } from './Component/my-cinex/profile/profile.component';
 import { BenefitsComponent } from './Component/my-cinex/benefits/benefits.component';
