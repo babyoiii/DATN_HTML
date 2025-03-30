@@ -10,13 +10,25 @@ import { ModalService } from '../../Service/modal.service';
 import { AuthServiceService } from '../../Service/auth-service.service';
 import { WalletOnboardService } from '../../Service/wallet.servive';
 import { Subscription } from 'rxjs';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-purchase',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './purchase.component.html',
-  styleUrls: ['./purchase.component.css']
+  styleUrls: ['./purchase.component.css'],
+  animations: [
+    trigger('slideToggle', [
+      transition(':enter', [
+        style({ height: '0px', opacity: 0 }), 
+        animate('500ms cubic-bezier(0.25, 0.8, 0.25, 1)', style({ height: '*', opacity: 1 })) 
+      ]),
+      transition(':leave', [
+        animate('400ms ease-in-out', style({ height: '0px', opacity: 0 }))
+      ])
+    ])
+  ]
 })
 export class PurchaseComponent implements OnInit {
   countdown: string | null = null;
