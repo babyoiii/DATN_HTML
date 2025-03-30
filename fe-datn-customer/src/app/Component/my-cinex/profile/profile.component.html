@@ -9,46 +9,70 @@
                     <label
                         class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
                             class="label">Date of Birth</span>
-                        <div class="flex gap-2">February 30 , 2030</div>
-                    </label><label class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
+                        <div class="flex gap-2">{{userInfo?.dob}}</div>
+                    </label>
+                    <label class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
                             class="label">Email</span>
                         <div class="amc-input amc-input--box"><input class="input" inputmode="email" type="text"
-                                value="abc123@gmail.com" name="emailAddress"></div>
+                                value="{{userInfo?.email}}" name="emailAddress"></div>
                     </label>
-                    <div class="grid items-start gap-4 md:grid-cols-2"><label
-                            class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
-                                class="label">First Name</span>
-                            <div class="amc-input amc-input--box"><input class="input" id="first-name"
-                                    autocomplete="given-name" autocapitalize="true" type="text" value="Jonny"
-                                    name="firstName"></div>
-                        </label><label class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
-                                class="label">Last Name</span>
-                            <div class="amc-input amc-input--box"><input class="input" autocomplete="family-name"
-                                    autocapitalize="true" type="text" value="Dang" name="lastName"></div>
-                        </label>
-                        
-                    </div><label class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
+
+                    <label class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
+                        class="label">User Name</span>
+                    <div class="amc-input amc-input--box"><input class="input" autocomplete="tel" type="text"
+                            value="{{userInfo?.userName}}" name="userName"></div>
+                 </label>
+                        <label class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
+                            class="label">Display Name</span>
+                        <div class="amc-input amc-input--box"><input class="input" autocomplete="tel" type="text"
+                                value="{{userInfo?.name}}" name="userName"></div>
+                    </label>
+
+                    <label class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
                             class="label">Phone Number</span>
                         <div class="amc-input amc-input--box"><input class="input" autocomplete="tel" type="text"
-                                value="" name="mobilePhoneNumber"></div>
+                                value="{{userInfo?.phoneNumber}}" name="mobilePhoneNumber"></div>
                     </label>
-                    <div class="grid items-start gap-4 md:grid-cols-3"><span class="label md:col-span-3">Mailing
-                            Address</span><label
+
+                    <div class="grid items-start gap-4 md:grid-cols-3">
+                        <span class="label md:col-span-3">
+                            Address</span>
+                            <label
                             class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed md:col-span-3">
                             <div class="amc-input amc-input--box"><input class="input" autocomplete="address-line1"
-                                    placeholder="Address" type="text" value="" name="address1"></div>
-                        </label><label
-                            class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed md:col-span-3">
-                            <div class="amc-input amc-input--box"><input class="input" autocomplete="address-line2"
-                                    placeholder="Address 2" type="text" value="" name="address2"></div>
-                        </label><label class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed">
-                            <div class="amc-input amc-input--box"><input class="input" autocomplete="address-level2"
-                                    placeholder="City" type="text" value="" name="city"></div>
+                                    placeholder="Address" type="text" value="{{userInfo?.address}}" name="address1"></div>
                         </label>
-                        <label class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed">
-                            <div class="amc-input amc-input--box"><input class="input" autocomplete="postal-code"
-                                    placeholder="Zip" type="text" value="" name="postalCode"></div>
-                        </label></div>
+                    </div>
+                    <div class="grid gap-2 text-gray-700">
+                            <div class="grid gap-2 text-white"> 
+                                <span class="label md:col-span-3">
+                                    Gender
+                                </span>
+                                <div class="flex items-center gap-4">
+                                    <label class="flex items-center gap-2">
+                                        <input
+                                            type="radio"
+                                            name="gender"
+                                            [value]="1"
+                                            [checked]="userInfo?.sex === 1"
+                                            class="h-4 w-4 text-blue-500 focus:ring-blue-500"
+                                        />
+                                        <span class="text-white">Male</span> 
+                                    </label>
+                                    <label class="flex items-center gap-2">
+                                        <input
+                                            type="radio"
+                                            name="gender"
+                                            [value]="2"
+                                            [checked]="userInfo?.sex === 2"
+                                            class="h-4 w-4 text-blue-500 focus:ring-blue-500"
+                                        />
+                                        <span class="text-white">Female</span> 
+                                    </label>
+                                </div>
+                            </div>
+                            
+                      </div>
                     <div class="flex flex-wrap items-center gap-4 py-4 justify-end"><button type="submit"
                             class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12"
                             disabled="">Save Changes</button><a

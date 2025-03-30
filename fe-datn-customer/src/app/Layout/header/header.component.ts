@@ -4,8 +4,6 @@ import { RouterLink } from '@angular/router';
 import { ModalService } from '../../Service/modal.service';
 import { AuthServiceService } from '../../Service/auth-service.service';
 import { Subscription } from 'rxjs';
-import { log } from 'node:console';
-
 
 @Component({
   selector: 'app-header',
@@ -18,16 +16,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false;
   isDropdownOpen: boolean = false;
   private subscription!: Subscription;
-
+  displayName : string = ''
   constructor(
     public modalService: ModalService,
     private authService: AuthServiceService
-  ) { }
-
+  ) {}
   ngOnInit() {
+    this.displayName = localStorage.getItem('displayName') || '';
     this.subscription = this.authService.isLoggedIn$.subscribe(status => {
       this.isLoggedIn = status;
-      console.log('NGHĨA NGHĨA NGHĨA NGHÍA Login:', status);
+      console.log('Login status from BehaviorSubject:', status);
     });
   }
 
@@ -37,16 +35,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-
   openSignIn() {
     this.modalService.openSignInModal();
   }
 
+  // Sử dụng hàm checkLogin() để kiểm tra trạng thái đăng nhập
   checkLogin(): boolean {
-    return this.authService.isLoggedIn();
+    const logged = this.authService.isLoggedIn();
+    console.log('checkLogin() returns:', logged);
+    return logged;
   }
-
-
 
   signOut() {
     this.authService.SignOut();
@@ -55,20 +53,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     console.log('Đăng xuất thành công');
   }
 
-
-
-
-
-
-
-
   toggleDropdown(event: Event) {
     event.preventDefault();
     event.stopPropagation();
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  // Xử lý khi hover
   showDropdown() {
     if (this.isLoggedIn) {
       this.isDropdownOpen = true;
@@ -83,13 +73,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }, 200);
   }
 
-  // Biến tạm để kiểm tra hover
   private isHovering = false;
-  
+
   onMouseEnterDropdown() {
     this.isHovering = true;
   }
-  
+
   onMouseLeaveDropdown() {
     this.isHovering = false;
     this.hideDropdown();
@@ -99,12 +88,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onClickOutside(event: MouseEvent) {
     const userMenuButton = document.getElementById('user-menu-button');
     const dropdownMenu = document.querySelector('.dropdown-menu');
-
     if (!userMenuButton?.contains(event.target as Node) &&
         !dropdownMenu?.contains(event.target as Node) &&
         this.isDropdownOpen) {
       this.isDropdownOpen = false;
     }
   }
-
 }

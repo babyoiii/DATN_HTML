@@ -36,3 +36,10 @@ export interface Service {
     payStatus: string;
     orderInfo: string; 
   }
+  export interface PaymentMethod {
+    id: string;
+    paymentMethodName: string;
+    status: number;
+    logoUrl: string;
+  }
+  

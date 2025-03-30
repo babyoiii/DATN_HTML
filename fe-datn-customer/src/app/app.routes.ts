@@ -64,6 +64,4 @@ export const routes: Routes = [
     { path: 'thanh-toan', component: PurchaseComponent },
     { path: 'payment-callback', component: PaymentCallBackComponent },
     // { path: 'Test123', component: TestBlockChainComponent },
-    { path: 'TestConnect', component: WalletComponent }
-    
 ];
