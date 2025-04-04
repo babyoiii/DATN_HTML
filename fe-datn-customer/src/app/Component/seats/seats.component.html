@@ -51,15 +51,12 @@
       </div>
       <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 flex items-center gap-4 py-2 md:py-4">
         <h2 class="sr-only">Showtime Information</h2>
-        
-        
-        
-        <img alt="Movie Poster" 
-        width="90"
-        height="90" 
-        class="aspect-square w-[90px] hidden md:inline-block rounded object-cover"
-        style="color:transparent"
-        [src]="movieInfo?.thumbnail">
+
+
+
+        <img alt="Movie Poster" width="90" height="90"
+          class="aspect-square w-[90px] hidden md:inline-block rounded object-cover" style="color:transparent"
+          [src]="movieInfo?.thumbnail">
 
 
 
@@ -129,24 +126,25 @@
       <div role="banner" class="relative caption text-200 bg-[#3B0249]">
         <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative flex items-center justify-center gap-4 py-2">
           <p>If you're a member, sign in now to take advantage of AMC Stubs benefits.</p>
-          
+
           <button
             class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm h-11"
             type="button">Sign In</button>
         </div>
-      </div> -->
+      </div>
 
 
 
 
 
 
-
-
+      <!-- Phần danh sách ghế, nghĩa sửa lại -->
       <div class="relative flex-1 overflow-hidden">
+
+
         <div #seatMapContainer
           class="seat-selection-container flex items-center justify-center h-full w-full overflow-auto">
-          <div class="seat-map-content max-w-4xl w-full mx-auto transform scale-100 md:scale-100 transition-all">
+          <div class="seat-map-content mx-auto transform scale-100 md:scale-100 transition-all" style="min-width: 1000px;">
             <div class="overflow-hidden transition-opacity">
               <h2 class="sr-only">Seat Map</h2>
 
@@ -181,7 +179,7 @@
 
 
                 <div *ngFor="let row of seats | groupBy: 'RowNumber'; let i = index" class="relative z-10 grid gap-4"
-                  style="grid-template-columns: repeat(13, 60px);">
+                  [style]="'grid-template-columns: 60px repeat(' + getMaxSeatsPerRow() + ', 60px)'">
                   <span class="font-bold">{{ getRowLabel(i + 1) }}</span>
                   <ng-container *ngFor="let seat of row">
 
@@ -256,13 +254,19 @@
                   </ng-container>
 
                 </div>
+
+
+
               </div>
 
 
 
             </div>
           </div>
-        </div><button type="button"
+        </div>
+
+
+        <button type="button"
           class="text-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute right-4 top-4 flex items-center justify-center">
           <div class="rounded-full bg-gray-400 p-4"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
               viewBox="0 0 45 45" width="1em" height="100%" class="h-6 w-6 text-white">
@@ -270,8 +274,12 @@
               <path
                 d="m5.063 42.019 13.584-13.585a1.492 1.492 0 0 0-2.11-2.109L2.982 39.937V26.325a1.49 1.49 0 1 0-2.981 0v17.184a1.266 1.266 0 0 0 .422.422 1.266 1.266 0 0 0 0 .619A1.462 1.462 0 0 0 1.49 45h17.184a1.49 1.49 0 1 0 0-2.981zM45 1.49a1.266 1.266 0 0 0-.422-.45 1.294 1.294 0 0 0 0-.62 1.294 1.294 0 0 0-.619 0A1.294 1.294 0 0 0 43.51 0H26.325a1.49 1.49 0 1 0 0 2.981h13.613L26.325 16.566a1.492 1.492 0 0 0 2.11 2.109L42.018 5.062v13.613a1.49 1.49 0 1 0 2.981 0z">
               </path>
-            </svg></div>
+            </svg>
+          </div>
         </button>
+
+
+
       </div>
 
 
