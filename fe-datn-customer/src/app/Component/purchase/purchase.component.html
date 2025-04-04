@@ -170,33 +170,22 @@
                                                             d="M22.5 0A22.5 22.5 0 1 0 45 22.5 22.5 22.5 0 0 0 22.5 0zm0 43.172A20.672 20.672 0 1 1 43.172 22.5 20.672 20.672 0 0 1 22.5 43.172z">
                                                         </path>
                                                     </svg> Add Card</button>
-                                                    <label
-                                                    class="flex w-max items-center gap-4"><input
-                                                        class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
-                                                        type="radio" value="venmo" name="paymentMethod"><img alt=""
-                                                        config="[object Object]" loading="lazy" width="47" height="30"
-                                                        decoding="async" data-nimg="1" class="pointer-events-none"
-                                                        srcset="https://static.ybox.vn/2022/4/4/1649334330094-anhybox%20(32).png 1x, https://static.ybox.vn/2022/4/4/1649334330094-anhybox%20(32).png 2x"
-                                                        src="https://static.ybox.vn/2022/4/4/1649334330094-anhybox%20(32).png"
-                                                        style="color: transparent;"><span>Momo</span></label>
-                                                    <label
-                                                        class="flex w-max items-center gap-4"><input
+                                                    @for (item of listPaymentMethod; track $index) {
+                                                        <label
+                                                        class="flex w-max items-center gap-4">
+                                                        <input
                                                             class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
-                                                            type="radio" value="venmo" name="paymentMethod"><img alt=""
+                                                            type="radio" [value]="item.paymentMethodName"
+                                                            (change)="onPaymentMethodChange(item.id)" name="paymentMethod">
+                                                            
+                                                            <img alt=""
                                                             config="[object Object]" loading="lazy" width="47" height="30"
                                                             decoding="async" data-nimg="1" class="pointer-events-none"
-                                                            srcset="https://vnpay.vn/s1/statics.vnpay.vn/2021/6/maxresdefault.jpg 1x, https://vnpay.vn/s1/statics.vnpay.vn/2021/6/maxresdefault.jpg 2x"
-                                                            src="https://vnpay.vn/s1/statics.vnpay.vn/2021/6/maxresdefault.jpg"
-                                                            style="color: transparent;"><span>VNPay</span></label>
-                                                        <label
-                                                            class="flex w-max items-center gap-4"><input
-                                                                class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
-                                                                type="radio" value="venmo" name="paymentMethod"><img alt=""
-                                                                config="[object Object]" loading="lazy" width="47" height="30"
-                                                                decoding="async" data-nimg="1" class="pointer-events-none"
-                                                                srcset="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6c/0e/a4/6c0ea428-a417-973a-bbc8-fff75462262e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1200x600wa.png 1x, https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6c/0e/a4/6c0ea428-a417-973a-bbc8-fff75462262e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1200x600wa.png 2x"
-                                                                src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6c/0e/a4/6c0ea428-a417-973a-bbc8-fff75462262e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1200x600wa.png"
-                                                                style="color: transparent;"><span>MetaMask</span></label>
+                                                            srcset="{{item.logoUrl}}"
+                                                            src="{{item.logoUrl}}"
+                                                            style="color: transparent;">
+                                                            <span>{{item.paymentMethodName}}</span></label>
+                                                        }
                                                     </div>
                                         </div>
                                     </div>
@@ -206,24 +195,27 @@
                                 
                                 <section>
                                     <div class="my-2 max-w-[600px]" data-orientation="vertical">
-                                        <div data-state="open" data-orientation="vertical"><button type="button"
+                                        <div data-state="open" data-orientation="vertical">
+                                            
+                                            <button type="button" (click)="toggleAccordion()"
                                                 aria-controls="radix-:r29:" aria-expanded="true" data-state="open"
                                                 data-orientation="vertical" id="radix-:r28:"
                                                 class="accordion__trigger justify-start text-left"
                                                 data-radix-collection-item="" aria-disabled="true">
                                                 <h2
                                                     class="flex items-center justify-start gap-4 text-xs font-semibold md:text-base">
-                                                    Use Gift Cards, Promo Code, or Voucher<svg
-                                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                        viewBox="0 0 45 45" width="1em" height="100%"
-                                                        class="accordion__chevron text-white w-5 rotate-180 transform">
-                                                        <title>Toggle Content</title>
-                                                        <path
-                                                            d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
-                                                        </path>
-                                                    </svg></h2>
+                                                    Use Gift Cards, Promo Code, or Voucher
+                                                    <svg *ngIf="!isOpen" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
+                                                    width="1em" height="1em" class="w-5 transition-transform duration-300">
+                                                    <path d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z"></path>
+                                                  </svg>
+                                                  <svg *ngIf="isOpen" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
+                                                    width="1em" height="1em" class="w-5 transition-transform duration-300">
+                                                    <path d="M22.464 10.48 3.067 29.594c-.856.57-2.283.285-2.853-.856-.285-.57-.285-1.141 0-1.997l20.824-20.824c.856-.856 1.997-.856 2.853 0L44.715 26.48c.57.856.285 2.282-.856 2.852-.57.286-1.426.286-1.997 0z"></path>
+                                                  </svg>
+                                                </h2>
                                             </button>
-                                            <div data-state="open" id="radix-:r29:" role="region"
+                                            <div *ngIf="isOpen" @slideToggle data-state="open" id="radix-:r29:" role="region"
                                                 aria-labelledby="radix-:r28:" data-orientation="vertical"
                                                 class="accordion__content overflow-clip"
                                                 style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width); --radix-collapsible-content-height: 204px; --radix-collapsible-content-width: 460px;">

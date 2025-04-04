@@ -3,7 +3,7 @@ import { CommonModule, Location } from '@angular/common';
 import { DurationFormatPipe } from '../../duration-format.pipe';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SeatService } from '../../Service/seat.service';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { takeUntil, catchError, finalize } from 'rxjs/operators';
 import { SeatInfo } from '../../Models/SeatModel';
 import { GroupByPipe } from '../../GroupByPipe.pipe';
@@ -51,9 +51,9 @@ export class SeatsComponent implements OnInit, OnDestroy {
   seatsPerRow: Record<string, SeatInfo[]> = {};
   countdown: string | null = null;
   isPanelCollapsed = false;
-
+  isLoggedIn: boolean = false;
   movieInfo: any = null;
-
+  private subscription!: Subscription;
   @ViewChild('seatMapContainer') seatMapContainer!: ElementRef;
 
   currentZoom: number = 1;
@@ -90,6 +90,10 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
  
   ngOnInit(): void {
+    this.subscription = this.authServiceService.isLoggedIn$.subscribe(status => {
+      this.isLoggedIn = status;
+      console.log('Login status from BehaviorSubject:', status);
+    });
     this.route.params
       .pipe(takeUntil(this.destroy$))
       .subscribe(params => {
@@ -287,7 +291,9 @@ export class SeatsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
     // Dọn dẹp tất cả event listeners
     this.eventListeners.forEach(cleanupFn => cleanupFn());
     this.eventListeners = [];

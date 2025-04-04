@@ -20,7 +20,6 @@ import { TimkiemrapComponent } from './Component/timkiemrap/timkiemrap.component
 import { PaymentCallBackComponent } from './Component/payment-call-back/payment-call-back.component';
 import { MovieDetailNghiaComponent } from './Component/movie-detail-nghia/movie-detail-nghia.component';
 import { Test1Component } from './Component/test1/test1.component';
-import { TestBlockChainComponent } from './Component/test-block-chain/test-block-chain.component';
 import { MyCinexComponent } from './Component/my-cinex/my-cinex.component';
 import { ProfileComponent } from './Component/my-cinex/profile/profile.component';
 import { BenefitsComponent } from './Component/my-cinex/benefits/benefits.component';
@@ -40,15 +39,15 @@ export const routes: Routes = [
             { path: 'offers', component: OffersComponent },
             { path: 'discounts', component: DiscountsComponent },
             { path: 'on-demand', component: OnDemandComponent },
-            { path: 'movies/:id', component: MovieDetailNghiaComponent },
+            { path: 'movies/:id', component: MovieDetailNghiaComponent},
             {
                 path: 'my-cinex', component: MyCinexComponent, children: [
                     { path: '', component: BenefitsComponent },
-                    { path: 'wallet', component: WalletComponent },
-                    { path: 'tickets', component: TicketsComponent },
-                    { path: 'rewards', component: RewardsComponent },
-                    { path: 'history', component: HistoryComponent },
-                    { path: 'profile', component: ProfileComponent },
+                    { path: 'wallet', component: WalletComponent},
+                    { path: 'tickets', component: TicketsComponent},
+                    { path: 'rewards', component: RewardsComponent},
+                    { path: 'history', component: HistoryComponent},
+                    { path: 'profile', component: ProfileComponent},
                 ]
             },
         ]
@@ -64,5 +63,5 @@ export const routes: Routes = [
     { path: 'orders', component: OrdersComponent },
     { path: 'thanh-toan', component: PurchaseComponent },
     { path: 'payment-callback', component: PaymentCallBackComponent },
-    { path: 'Test123', component: TestBlockChainComponent }
+    // { path: 'Test123', component: TestBlockChainComponent },
 ];

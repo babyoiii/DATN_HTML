@@ -33,12 +33,16 @@
     "@web3-onboard/walletconnect": "^2.6.2",
     "ethers": "^6.13.5",
     "express": "^4.18.2",
+    "jwt-decode": "^4.0.0",
+    "ngx-cookie-service": "^18.0.0",
     "ngx-pagination": "^6.0.3",
     "ngx-toastr": "^19.0.0",
+    "reown": "^1.1.4",
     "rxjs": "~7.8.0",
     "toastr": "^2.1.4",
     "tslib": "^2.3.0",
     "web3": "^4.16.0",
+    "web3modal": "^1.9.12",
     "zone.js": "~0.14.10"
   },
   "devDependencies": {

@@ -8,6 +8,7 @@ import { ServiceService } from '../../Service/Service.service';
 import { GetServiceType } from '../../Models/Service';
 import { ModalService } from '../../Service/modal.service';
 import { AuthServiceService } from '../../Service/auth-service.service';
+import { Subscription } from 'rxjs';
 
 interface Seat {
   seatId: string;
@@ -29,6 +30,8 @@ export class OrdersComponent implements OnInit {
   selectedServices: { service: Service; quantity: number }[] = [];  
   listServiceTypes : GetServiceType[] = [];
   accordionStates: boolean[] = [];
+  isLoggedIn: boolean = false;
+  private subscription!: Subscription;
   constructor(
     private seatService: SeatService,
     private cdr: ChangeDetectorRef,
@@ -41,6 +44,10 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getListServiceType();
+    this.subscription = this.authServiceService.isLoggedIn$.subscribe(status => {
+      this.isLoggedIn = status;
+      console.log('Login status from BehaviorSubject:', status);
+    });
     this.seatService.getJoinRoomMessages().subscribe({
       next: (count) => {
         if (count !== null) {
@@ -81,8 +88,9 @@ export class OrdersComponent implements OnInit {
   }
   }
   checkLogin(): boolean {
-    return this.authServiceService.isLoggedIn();
-    }
+    const logged = this.authServiceService.isLoggedIn();
+    return logged;
+  }
   openSignIn() {
     this.modalService.openSignInModal();
   }

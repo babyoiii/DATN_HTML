@@ -4,17 +4,31 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { OrdersService } from '../../Service/Orders.Service';
-import { OrderModelReq, PaymentModelReq } from '../../Models/Order';
+import { OrderModelReq, PaymentMethod, PaymentModelReq } from '../../Models/Order';
 import { SeatService } from '../../Service/seat.service';
 import { ModalService } from '../../Service/modal.service';
 import { AuthServiceService } from '../../Service/auth-service.service';
+import { WalletOnboardService } from '../../Service/wallet.servive';
+import { Subscription } from 'rxjs';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-purchase',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './purchase.component.html',
-  styleUrls: ['./purchase.component.css']
+  styleUrls: ['./purchase.component.css'],
+  animations: [
+    trigger('slideToggle', [
+      transition(':enter', [
+        style({ height: '0px', opacity: 0 }), 
+        animate('500ms cubic-bezier(0.25, 0.8, 0.25, 1)', style({ height: '*', opacity: 1 })) 
+      ]),
+      transition(':leave', [
+        animate('400ms ease-in-out', style({ height: '0px', opacity: 0 }))
+      ])
+    ])
+  ]
 })
 export class PurchaseComponent implements OnInit {
   countdown: string | null = null;
@@ -25,7 +39,14 @@ export class PurchaseComponent implements OnInit {
   totalServiceAmount: number = 0;
   fee: number = 0;
   email: string = '';
-
+  selectedPaymentMethod: string | null = null; 
+  walletAddress: string | null = null;
+  listPaymentMethod : PaymentMethod[] = []
+  usdcPriceUSD: number | null = null; // Giá USDC theo USD
+  usdcPriceVND: number | null = null; // Giá USDC theo VND
+  isLoggedIn: boolean = false;
+  private subscription!: Subscription;
+  isOpen = false;
   constructor(
     private seatService: SeatService,
     private cdr: ChangeDetectorRef,
@@ -33,10 +54,21 @@ export class PurchaseComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private modalService: ModalService,
-    private authServiceService: AuthServiceService
+    private authServiceService: AuthServiceService,
+    private walletService : WalletOnboardService
   ) {}
 
   ngOnInit(): void {
+    this.getPaymentMethod()
+    this.fetchUSDCPriceUSD();
+    this.fetchUSDCPriceVND();
+    this.subscription = this.authServiceService.isLoggedIn$.subscribe(status => {
+      this.isLoggedIn = status;
+      console.log('Login status from BehaviorSubject:', status);
+    });
+    if (this.isLoggedIn) {
+      this.email = localStorage.getItem('email') || ''; 
+    }
     this.seatService.getJoinRoomMessages().subscribe({
       next: (count) => {
         if (count !== null) {
@@ -69,9 +101,18 @@ export class PurchaseComponent implements OnInit {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
     }
   }
+  onPaymentMethodChange(method: string): void {
+    this.selectedPaymentMethod = this.listPaymentMethod.find(item => item.id === method)?.paymentMethodName || null;
+    console.log('Selected Payment Method:', this.selectedPaymentMethod);
+  }
+
+  toggleAccordion() {
+    this.isOpen = !this.isOpen;
+  }
   checkLogin(): boolean {
-    return this.authServiceService.isLoggedIn();
-    }
+    const logged = this.authServiceService.isLoggedIn();
+    return logged;
+  }
   loadData() {
     const orderDataString = localStorage.getItem('orderData');
     if (orderDataString) {
@@ -98,7 +139,29 @@ export class PurchaseComponent implements OnInit {
       console.warn('⚠️ Không tìm thấy dữ liệu order trong localStorage.');
     }
   }
+  fetchUSDCPriceUSD(): void {
+    this.orderService.getUSDCPriceUSD().subscribe({
+      next: (price) => {
+        this.usdcPriceUSD = price;
+        console.log('USDC Price in USD:', this.usdcPriceUSD);
+      },
+      error: (error) => {
+        console.error('Error fetching USDC price in USD:', error);
+      }
+    });
+  }
 
+  fetchUSDCPriceVND(): void {
+    this.orderService.getUSDCPriceVND().subscribe({
+      next: (price) => {
+        this.usdcPriceVND = price;
+        console.log('USDC Price in VND:', this.usdcPriceVND);
+      },
+      error: (error) => {
+        console.error('Error fetching USDC price in VND:', error);
+      }
+    });
+  }
   onPurchase() {
     if (!this.email) {
       this.toastr.warning('Vui lòng nhập email.');
@@ -134,21 +197,76 @@ export class PurchaseComponent implements OnInit {
     console.log('Order data payment:', paymentData);
     this.createPayment(paymentData);
   }
-
-  createPayment(paymentData: PaymentModelReq) {
-    this.orderService.createPayment(paymentData).subscribe({
-      next: (response: any) => {
-        console.log('Payment response:', response);
-        if (response.responseCode === 1) {
-          window.location.href = response.data;
-        } else {
-          this.toastr.error('❌ Lỗi khi tạo thanh toán:', "Thông Báo");
-        }
+  getPaymentMethod(){
+    this.orderService.getPaymentMethod().subscribe({
+      next:(res:any) =>{
+        this.listPaymentMethod = res.data
+        console.log(this.listPaymentMethod,'Payment Method');
       },
       error: (error) => {
-        console.error('Error creating payment:', error);
-        this.toastr.error('❌ Lỗi khi tạo thanh toán:', "Thông Báo");
+        console.error('Error get payment:', error);
       }
-    });
+    })
+  }
+  convertVNDToUSDC(vndAmount: number): number | null {
+    if (this.usdcPriceUSD && this.usdcPriceVND) {
+      const usdcPriceInVND = this.usdcPriceVND; // Giá 1 USDC theo VND
+      return vndAmount / usdcPriceInVND; // Chuyển đổi từ VND sang USDC
+    }
+    return null; 
+  }
+  createPayment(paymentData: PaymentModelReq) {
+    if (this.selectedPaymentMethod === 'VNPAY') {
+      this.orderService.createPayment(paymentData).subscribe({
+        next: (response: any) => {
+          console.log('Payment response:', response);
+          if (response.responseCode === 1) {
+            window.location.href = response.data;
+          } else {
+            this.toastr.error('❌ Lỗi khi tạo thanh toán:', "Thông Báo");
+          }
+        },
+        error: (error) => {
+          console.error('Error creating payment:', error);
+          this.toastr.error('❌ Lỗi khi tạo thanh toán:', "Thông Báo");
+        }
+      });
+    } else if (this.selectedPaymentMethod === 'MULTI-WALLET') {
+      this.walletService.connectWallet()
+        .then((walletAddress) => {
+          if (!walletAddress) {
+            console.error('Failed to connect wallet.');
+            this.toastr.error('Failed to connect wallet.');
+            return;
+          }
+  
+          this.walletAddress = walletAddress;
+          console.log('Wallet connected:', this.walletAddress);
+  
+          // Chuyển đổi từ VND sang USDC
+          const usdcAmount = this.convertVNDToUSDC(this.totalAmount);
+          if (usdcAmount === null) {
+            this.toastr.error('Không thể chuyển đổi VND sang USDC. Vui lòng thử lại.');
+            return;
+          }
+  
+          const roundedUSDCAmount = parseFloat(usdcAmount.toFixed(6));
+          if (isNaN(roundedUSDCAmount) || roundedUSDCAmount <= 0) {
+            this.toastr.error('Invalid USDC amount. Please try again.');
+            return;
+          }
+          console.log('Converted USDC amount (rounded):', roundedUSDCAmount);
+  
+          // Gọi hàm makePayment sau khi kết nối ví thành công
+          return this.walletService.makePayment(roundedUSDCAmount.toString());
+        })
+        .then(() => {
+          this.toastr.success('Payment successful!');
+        })
+        .catch((error) => {
+          console.error('Error during wallet connection or payment:', error);
+          this.toastr.error('An error occurred during the payment process. Please try again.');
+        });
+    }
   }
 }
