@@ -2,7 +2,7 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { SignIn, SignUp, UserInfo } from '../Models/AuthModel';
+import { ChangePasswordModel, SignIn, SignUp, UserInfo } from '../Models/AuthModel';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
@@ -101,7 +101,6 @@ export class AuthServiceService {
 
   isLoggedIn(): boolean {
     const token = this.getToken();
-    console.log('isLoggedIn() token:', token);
     return !!token;
   }
 
@@ -153,5 +152,8 @@ export class AuthServiceService {
     const userName = localStorage.getItem('userName') ?? '';
     const displayName = localStorage.getItem('displayName') ?? '';
     return userId ? { userId, userName, displayName } : null;
+  }
+  ChangePassword(changePasswordModel : ChangePasswordModel): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/Auth/ChangePassword`, changePasswordModel);
   }
 }

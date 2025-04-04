@@ -17,24 +17,21 @@ import { SeatService, SeatStatusUpdateRequest } from '../../Service/seat.service
 export class PaymentCallBackComponent implements OnInit {
   isSuccess = false;
   responseCode = '';
-  orderId = '';
-
+   transactionCode : string = ''
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private ordersService: OrdersService,
     private http: HttpClient,
     private toastr: ToastrService,
-    private seatService: SeatService // Inject SeatService
+    private seatService: SeatService 
   ) {}
-
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.responseCode = params['vnp_ResponseCode'];
-      this.orderId = params['vnp_TxnRef'];
+      this.transactionCode = params['vnp_TxnRef'];
       const orderDataString = localStorage.getItem('orderDataPayment');
       console.log(orderDataString, 'dataaaaa');
-      
       this.isSuccess = this.responseCode === '00';
       if (this.isSuccess) {
         this.createOrder();
@@ -43,26 +40,27 @@ export class PaymentCallBackComponent implements OnInit {
       }
     });
   }
-
   createOrder() {
     const orderDataString = localStorage.getItem('orderDataPayment');
     if (orderDataString) {
       try {
         const orderData: OrderModelReq = JSON.parse(orderDataString);
+        orderData.transactionCode = this.transactionCode;
         this.ordersService.createOrder(orderData).subscribe({
           next: (response) => {
-
+            if (response.ResponseCode != 200){
+              this.toastr.error('❌ Đơn hàng không thành công:' + response.Message , "Thông Báo");
+              return;
+            }
             const seatsToUpdate: SeatStatusUpdateRequest[] = orderData.tickets.map((ticket: TicketReq) => ({
               SeatId: ticket.seatByShowTimeId,
               Status: 5
             }));
             this.seatService.payment(seatsToUpdate);
-
             this.toastr.success('✅ Đơn hàng đã được tạo thành công:', "Thông Báo!");
             localStorage.removeItem('selectedSeats');
             localStorage.removeItem('orderData');
             localStorage.removeItem('orderDataPayment');
-            localStorage.removeItem('userId');
             this.router.navigate(['/']);
           },
           error: (error) => {

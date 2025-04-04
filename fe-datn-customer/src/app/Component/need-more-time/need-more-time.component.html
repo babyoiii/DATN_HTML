@@ -1,13 +1,15 @@
-<dialog
+<dialog *ngIf="modalService.showNeedMoreTimeModal$ | async"
     class="overflow-x-hidden rounded border border-gray-700 bg-black p-0 text-white backdrop:bg-black backdrop:opacity-50 [&amp;:has(.modal-loader)]:border-0 [&amp;:has(.modal-loader)]:bg-transparent"
-    style="max-width: 97dvw; max-height: 97dvh;" open="">
+    style="max-width: 97dvw; max-height: 97dvh;" open="" id="nghia_Test">
     <div class="max-h-[99dvh] max-w-[600px]">
         <header
             class="sticky top-0 z-10 flex items-center border-b border-gray-700 bg-black px-8 py-4 text-500 headline"
-            data-modal-header="true">Need More Time?<button type="button"
+            data-modal-header="true">Need More Time?
+            <button type="button"
                 class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 text-white hocus:text-blue-500 text-sm md:text-base ml-auto aspect-square rounded-full bg-black p-3"
                 aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
                     viewBox="0 0 45 45" width="1em" height="100%" class="h-full w-full">
+
                     <title>Close</title>
                     <path stroke-width="4.0358"
                         d="M40.341 4.769a1.112 1.112 0 0 1-.022 1.587L24.071 22.604 40.32 38.85a1.112 1.112 0 0 1-1.566 1.566L22.506 24.169 6.236 40.417a1.112 1.112 0 0 1-1.565-1.566l16.27-16.247L4.67 6.356a1.125 1.125 0 0 1-.303-.767A1.13 1.13 0 0 1 5.49 4.465c.285 0 .56.11.768.304l16.248 16.269 16.268-16.27a1.117 1.117 0 0 1 1.566 0Z">
@@ -16,8 +18,10 @@
         <div class="px-8 py-8 p-4" data-modal-body="true">
             <p>We will soon release any reserved tickets or food &amp; beverage items. Do you need more time to complete
                 your purchase?</p>
-            <div class="flex flex-wrap items-center gap-4 py-4 justify-end"><button type="button"
-                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">No</button><button
+            <div class="flex flex-wrap items-center gap-4 py-4 justify-end">
+                <button (click)="closeModal()" type="button"
+                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">No</button>
+                    <button (click)="onNeedMoreTime()"
                     type="button"
                     class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">Yes</button>
             </div>

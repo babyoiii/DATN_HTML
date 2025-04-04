@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 export const authInterceptorFn: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> => {
   const authService = inject(AuthServiceService);
   const router = inject(Router);
-  if (req.url.includes('esgoo.net') || req.url.includes('maps.googleapis.com')) {
+  if (req.url.includes('esgoo.net') || req.url.includes('maps.googleapis.com') ||
+   req.url.includes('https://api.exchangerate-api.com')|| req.url.includes('https://api.coingecko.com')) {
     return next(req);
   }
 

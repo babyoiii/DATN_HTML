@@ -16,6 +16,8 @@ import { ShowtimeService } from '../../Service/showtime.service';
 import { MovieByShowtimeData } from '../../Models/MovieModel';
 import { AuthServiceService } from '../../Service/auth-service.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { NeedMoreTimeComponent } from "../need-more-time/need-more-time.component";
+import { TimeUpComponent } from "../time-up/time-up.component";
 
 enum SeatStatus {
   Available = 0,
@@ -33,7 +35,7 @@ interface SeatStatusUpdateRequest {
 @Component({
   selector: 'app-seats',
   standalone: true,
-  imports: [CommonModule, DurationFormatPipe, GroupByPipe, RouterLink],
+  imports: [CommonModule, DurationFormatPipe, GroupByPipe, RouterLink, NeedMoreTimeComponent, TimeUpComponent],
   templateUrl: './seats.component.html',
   styleUrls: ['./seats.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -66,13 +68,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
   translateX: number = 0;
   translateY: number = 0;
   private eventListeners: (() => void)[] = [];
-
-
-
-
-
-
-
+  private autoCloseTimer: any;
   movieDetail: MovieByShowtimeData | null = null;
   constructor(
     private seatService: SeatService,
@@ -163,6 +159,31 @@ export class SeatsComponent implements OnInit, OnDestroy {
       this.router.navigate([currentUrl]);
     });
   }
+
+  // onExtendCountdown(): void {
+  //   const extensionDuration = 30; 
+  //   this.seatService.extendCountdown(extensionDuration);
+  // }
+  onExtendCountdown(): void {
+    this.modalService.openNeedMoreTimeModal();
+    console.log("đã gọi");
+    
+  }
+
+
+
+  TimeUp(): void {
+    this.modalService.openTimeUpModal();
+    
+  }
+
+  AddMoreTime(): void {
+    if (this.autoCloseTimer) {
+      clearTimeout(this.autoCloseTimer);
+    }
+    this.modalService.openNeedMoreTimeModal();
+}
+
   openSignIn() {
     this.modalService.openSignInModal();
   }
@@ -184,7 +205,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
   private initializeWebSocket(showtimeId: string, userId: string): void {
     this.seatService.connect(showtimeId, userId);
-
+  
     this.seatService.getMessages()
       .pipe(
         takeUntil(this.destroy$),
@@ -203,7 +224,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
           this.calculateTotal();
         }
       });
-
+  
     this.seatService.getJoinRoomMessages()
       .pipe()
       .subscribe({
@@ -273,8 +294,16 @@ export class SeatsComponent implements OnInit, OnDestroy {
     const seconds = count % 60;
     this.countdown = `${minutes}:${seconds.toString().padStart(2, '0')}`;
     this.cdr.markForCheck();
-    if (count === 0) {
-      this.notifyAndRedirect();
+
+    if (count === 60 && !this.seatService.hasShownWarning()) {
+      this.seatService.setWarningShown();
+      this.AddMoreTime();
+      this.autoCloseTimer = setTimeout(() => {
+        this.modalService.closeNeedMoreTimeModal();
+      }, 5000);
+    }
+    if (count === 1) {
+      this.TimeUp();
     }
   }
 
@@ -301,10 +330,14 @@ export class SeatsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    // this.destroy$.next();
+    // this.destroy$.complete();
     if (this.subscription) {
       this.subscription.unsubscribe();
+    }
+    this.seatService.resetWarning();
+    if (this.autoCloseTimer) {
+      clearTimeout(this.autoCloseTimer);
     }
     // Dọn dẹp tất cả event listeners
     this.eventListeners.forEach(cleanupFn => cleanupFn());
@@ -717,4 +750,61 @@ export class SeatsComponent implements OnInit, OnDestroy {
     });
   }
 
+
+
+
+
+
+  openloginform() {
+    this.modalService.openSignInModal();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
