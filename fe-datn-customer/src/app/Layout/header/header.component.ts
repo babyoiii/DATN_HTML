@@ -5,6 +5,7 @@ import { ModalService } from '../../Service/modal.service';
 import { AuthServiceService } from '../../Service/auth-service.service';
 import { Subscription } from 'rxjs';
 
+
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -34,6 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.subscription.unsubscribe();
     }
   }
+
 
   openSignIn() {
     this.modalService.openSignInModal();
@@ -94,4 +96,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.isDropdownOpen = false;
     }
   }
+
+
 }
