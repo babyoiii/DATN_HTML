@@ -268,19 +268,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
       }
     });
   }
-  private groupSeatsByRow(): void {
-    this.seatsPerRow = this.seats.reduce((acc, seat) => {
-      const rowKey = seat.RowNumber.toString();
-      if (!acc[rowKey]) {
-        acc[rowKey] = [];
-        this.Rows.push(rowKey);
-      }
-      acc[rowKey].push(seat);
-      return acc;
-    }, {} as Record<string, SeatInfo[]>);
 
-    this.Rows.sort((a, b) => parseInt(a) - parseInt(b));
-  }
 
   private handleSeatError(error: any): void {
     console.error('Error receiving seats:', error);
@@ -566,8 +554,40 @@ export class SeatsComponent implements OnInit, OnDestroy {
   }
 
 
+  
 
 
+  getMaxSeatsPerRow(): number {
+    if (!this.seats) return 12; // Default fallback
+    
+    let maxCount = 0;
+    const groupedSeats = this.groupSeatsByRow();
+    
+    Object.values(groupedSeats).forEach(row => {
+      if (row.length > maxCount) {
+        maxCount = row.length;
+      }
+    });
+    
+    return maxCount;
+  }
+  
+  // Helper method to group seats by row
+  private groupSeatsByRow(): { [key: string]: any[] } {
+    const result: { [key: string]: any[] } = {};
+    
+    if (this.seats) {
+      this.seats.forEach(seat => {
+        const rowNumber = seat.RowNumber;
+        if (!result[rowNumber]) {
+          result[rowNumber] = [];
+        }
+        result[rowNumber].push(seat);
+      });
+    }
+    
+    return result;
+  }
 
 
 

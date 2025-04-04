@@ -171,22 +171,35 @@
 
 /* Thêm CSS mới cho việc zoom */
 .seat-selection-container {
-    user-select: none; /* Tránh việc chọn văn bản khi kéo */
-    touch-action: none; /* Tắt các hành động touch mặc định của trình duyệt */
+    user-select: none;
+    /* Tránh việc chọn văn bản khi kéo */
+    touch-action: none;
+    /* Tắt các hành động touch mặc định của trình duyệt */
     overflow: hidden !important;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 300px); /* Điều chỉnh nếu cần */
-  }
-  
-  .seat-map-content {
+    height: calc(100vh - 300px);
+    /* Điều chỉnh nếu cần */
+}
+
+.seat-map-content {
     transform-origin: center center;
     transition: transform 0.1s ease;
     will-change: transform;
-  }
-  
-  .seat-selection-container:active {
+}
+
+.seat-selection-container:active {
     cursor: grabbing;
-  }
+}
+
+
+
+
+/* Add this to your CSS */
+.seat-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
