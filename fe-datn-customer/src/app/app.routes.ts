@@ -40,15 +40,15 @@ export const routes: Routes = [
             { path: 'offers', component: OffersComponent },
             { path: 'discounts', component: DiscountsComponent },
             { path: 'on-demand', component: OnDemandComponent },
-            { path: 'movies/:id', component: MovieDetailNghiaComponent},
+            { path: 'movies/:id', component: MovieDetailNghiaComponent },
             {
                 path: 'my-cinex', component: MyCinexComponent, children: [
                     { path: '', component: BenefitsComponent },
-                    { path: 'wallet', component: WalletComponent},
-                    { path: 'tickets', component: TicketsComponent},
-                    { path: 'rewards', component: RewardsComponent},
-                    { path: 'history', component: HistoryComponent},
-                    { path: 'profile', component: ProfileComponent},
+                    { path: 'wallet', component: WalletComponent },
+                    { path: 'tickets', component: TicketsComponent },
+                    { path: 'rewards', component: RewardsComponent },
+                    { path: 'history', component: HistoryComponent },
+                    { path: 'profile', component: ProfileComponent },
                 ]
             },
         ]
