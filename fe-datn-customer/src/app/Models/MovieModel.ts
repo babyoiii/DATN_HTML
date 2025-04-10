@@ -33,3 +33,11 @@ export interface GetAllNameMovie {
   trailer?: string;
   duration?: number;
 }
+export interface MovieByShowtimeData {
+  thumbnail: string;
+  movieName: string;
+  cinemaName: string;
+  startTime: string; 
+  startTimeFormatted: string; 
+  durationFormatted: string;
+}

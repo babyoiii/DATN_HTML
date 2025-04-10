@@ -1,9 +1,16 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { SeatService } from '../../Service/seat.service';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { OrdersService } from '../../Service/Orders.Service';
 import { Service } from '../../Models/Order';
+import { ServiceService } from '../../Service/Service.service';
+import { GetServiceType } from '../../Models/Service';
+import { ModalService } from '../../Service/modal.service';
+import { AuthServiceService } from '../../Service/auth-service.service';
+import { Subscription } from 'rxjs';
+import { NeedMoreTimeComponent } from "../need-more-time/need-more-time.component";
+import { TimeUpComponent } from "../time-up/time-up.component";
 
 interface Seat {
   seatId: string;
@@ -15,26 +22,41 @@ interface Seat {
 @Component({
   selector: 'app-orders',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, NeedMoreTimeComponent, TimeUpComponent],
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.css'
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnDestroy {
   countdown: string | null = null;
   seatSummary: { [key: string]: { count: number; total: number } } = {};
-  listService: Service[] = [];
   selectedServices: { service: Service; quantity: number }[] = [];  
-
+  listServiceTypes : GetServiceType[] = [];
+  accordionStates: boolean[] = [];
+  isLoggedIn: boolean = false;
+  private autoCloseTimer: any;
+  private subscription!: Subscription;
   constructor(
     private seatService: SeatService,
     private cdr: ChangeDetectorRef,
     private router: Router,
-    private orderService: OrdersService
+    private orderService: OrdersService,
+    private serviceService: ServiceService,
+    private modalService: ModalService,
+    private authServiceService: AuthServiceService
   ) {}
+  ngOnDestroy(): void {
+    this.seatService.resetWarning();
+    if (this.autoCloseTimer) {
+      clearTimeout(this.autoCloseTimer);
+    }
+  }
 
   ngOnInit(): void {
-    this.getService();
-
+    this.getListServiceType();
+    this.subscription = this.authServiceService.isLoggedIn$.subscribe(status => {
+      this.isLoggedIn = status;
+      console.log('Login status from BehaviorSubject:', status);
+    });
     this.seatService.getJoinRoomMessages().subscribe({
       next: (count) => {
         if (count !== null) {
@@ -42,8 +64,14 @@ export class OrdersComponent implements OnInit {
           const seconds = count % 60;
           this.countdown = `${minutes}:${seconds.toString().padStart(2, '0')}`;
           this.cdr.markForCheck();
+          if (count === 60  && !this.seatService.hasShownWarning()) {
+            this.AddMoreTime();
+            this.autoCloseTimer = setTimeout(() => {
+              this.modalService.closeNeedMoreTimeModal();
+            }, 5000);
+          }
           if (count === 0) {
-            this.notifyAndRedirect();
+           this.TimeUp();
           }
         }
       },
@@ -74,10 +102,45 @@ export class OrdersComponent implements OnInit {
       }
   }
   }
-  private notifyAndRedirect(): void {
-    alert('Thời gian giữ ghế đã hết, bạn sẽ được chuyển hướng.');
-    this.router.navigate(['/']); 
+  checkLogin(): boolean {
+    const logged = this.authServiceService.isLoggedIn();
+    return logged;
   }
+  TimeUp(): void {
+    this.modalService.openTimeUpModal();
+    
+  }
+
+  AddMoreTime(): void {
+    if (this.autoCloseTimer) {
+      clearTimeout(this.autoCloseTimer);
+    }
+    this.modalService.openNeedMoreTimeModal();
+}
+  openSignIn() {
+    this.modalService.openSignInModal();
+  }
+  selectService(service: Service): void {
+    console.log('Selected service:', service);
+  }
+  getListServiceType(): void {
+    this.serviceService.getAllServiceTypes(1, 11).subscribe({
+      next: (res: any) => {
+        console.log('✅ Danh sách loại dịch vụ:', res.data);
+        this.listServiceTypes = res.data;
+        this.accordionStates = new Array(res.data.length).fill(false); 
+      },
+      error: (err) => {
+        console.error('❌ Lỗi khi lấy danh sách loại dịch vụ:', err);
+      },
+    });
+  }
+
+  toggleAccordion(index: number): void {
+    this.accordionStates[index] = !this.accordionStates[index]; 
+  }
+
+  
   getTotalAmount(): number {
     const totalSeatsAmount = Object.values(this.seatSummary).reduce(
       (sum, seat) => sum + seat.total,
@@ -134,21 +197,7 @@ export class OrdersComponent implements OnInit {
       this.router.navigate(['/showtimes'], { queryParams: { reload: 'true' } });
     }
   }
-  getService() {
-    const currentPage = 1;
-    const recordPerPage = 10;
-    this.orderService.getMovies(currentPage, recordPerPage).subscribe({
-      next: (result: any) => {
-        console.log('🎬 Danh sách dịch vụ:', result);
-        this.listService = result.data;
-      },
-      error: (error) => {
-        console.error('❌ Lỗi khi lấy dữ liệu dịch vụ:', error);
-      }
-    });
-  }
-
-  addService(service: Service): void {
+  addService(service: any): void {
     const existingService = this.selectedServices.find(s => s.service.id === service.id);
 
     if (existingService) {

@@ -26,21 +26,27 @@
             </div>
             <form id="showtime-result-filters" aria-label="Showtime Result Filters" aria-controls="showtime-results"
                 class="flex justify-center divide-x divide-gray-700"><label aria-label="Theatre Filter"
-                    class="relative flex w-full max-w-[25%] flex-col items-center justify-between gap-2 p-2 text-xs transition-all duration-200 focus-within:text-blue-500 hover:text-blue-500 md:w-auto md:flex-row md:p-4 md:text-base"><select
+                    class="relative flex w-full max-w-[25%] flex-col items-center justify-between gap-2 p-2 text-xs transition-all duration-200 focus-within:text-blue-500 hover:text-blue-500 md:w-auto md:flex-row md:p-4 md:text-base">
+
+
+
+                    <select (change)="onCinemaChange($event)"
                         class="absolute inset-0 w-full cursor-pointer appearance-none bg-transparent text-transparent [&amp;>option]:text-black"
-                        name="theatre">
-                        <option value="amc-village-7">AMC Village 7</option>
-                        <option value="amc-19th-st-east-6">AMC 19th St. East 6</option>
-                        <option value="amc-kips-bay-15">AMC Kips Bay 15</option>
-                        <option value="amc-34th-street-14">AMC 34th Street 14</option>
-                        <option value="amc-empire-25">AMC Empire 25</option>
-                        <option value="amc-newport-centre-11">AMC Newport Centre 11</option>
-                        <option value="amc-lincoln-square-13">AMC Lincoln Square 13</option>
-                        <option value="amc-orpheum-7">AMC Orpheum 7</option>
-                        <option value="amc-84th-street-6">AMC 84th Street 6</option>
-                        <option value="amc-magic-johnson-harlem-9">AMC Magic Johnson Harlem 9</option>
-                        <option value="change-location">Change Location…</option>
+                        name="theatre" [(ngModel)]="selectedCinemaId">
+                        <option value="">Tất cả các rạp</option>
+                        @for (cinema of cinemas; track cinema.cinemasId) {
+                        <option value="{{cinema.cinemasId}}">{{cinema.name}}</option>
+                        }
+                        @if (cinemas.length === 0) {
+                        <option value="">Loading cinemas...</option>
+                        }
                     </select>
+
+
+
+
+
+
                     <div class="text-2xl" role="presentation" aria-hidden="true" tabindex="-1"><svg
                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em"
                             height="100%">
@@ -52,7 +58,7 @@
                                 d="M22.002 7.338c-3.654 0-6.746 3.091-6.746 6.745s3.092 6.746 6.746 6.746c3.654 0 6.745-3.092 6.745-6.746 0-3.654-3.091-6.745-6.745-6.745zm0 11.804a5.038 5.038 0 0 1-5.06-5.059 5.039 5.039 0 0 1 5.06-5.059 5.039 5.039 0 0 1 5.059 5.06 5.038 5.038 0 0 1-5.06 5.058z">
                             </path>
                         </svg></div>
-                    <div><span class="line-clamp-2 text-ellipsis text-center">AMC Village 7</span></div>
+                    <div><span class="line-clamp-2 text-ellipsis text-center">{{ getSelectedCinemaName() }}</span></div>
                     <div><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em"
                             height="100%" class="text-sm">
                             <title>Expand Options</title>
@@ -61,38 +67,51 @@
                             </path>
                         </svg></div>
                 </label>
-                <label class="relative flex w-full max-w-[25%] flex-col items-center justify-between gap-2 p-2 text-xs transition-all duration-200 focus-within:text-blue-500 hover:text-blue-500 md:w-auto md:flex-row md:p-4 md:text-base">
+
+
+
+                <!-- Phần lịch -->
+                <label
+                    class="relative flex w-full max-w-[25%] flex-col items-center justify-between gap-2 p-2 text-xs transition-all duration-200 focus-within:text-blue-500 hover:text-blue-500 md:w-auto md:flex-row md:p-4 md:text-base">
                     <!-- Icon lịch -->
-                    <div class="text-2xl cursor-pointer" role="presentation" (click)="picker.open()">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%">
-                        <title>Date</title>
-                        <path d="M40.07 3.464h-7.237V.873a.873.873 0 1 0-1.746 0v2.59H13.74V.874a.873.873 0 1 0-1.746 0v2.59H4.983A3.182 3.182 0 0 0 1.8 6.675v35.088A3.182 3.182 0 0 0 4.983 45H40.07a3.182 3.182 0 0 0 3.182-3.182V6.674a3.182 3.182 0 0 0-3.182-3.21zm1.436 38.298a1.436 1.436 0 0 1-1.436 1.436H4.983a1.436 1.436 0 0 1-1.437-1.436V17.854h38.017V41.79zm0-25.654H3.518V6.674a1.436 1.436 0 0 1 1.436-1.436h7.04v3.52a.873.873 0 1 0 1.746 0V5.21h17.234v3.548a.873.873 0 1 0 1.746 0V5.21h7.238a1.436 1.436 0 0 1 1.436 1.436v9.462z"></path>
-                        <path d="M18.894 34.496a2.056 2.056 0 0 1-2-1.971l-2.478.394a4.365 4.365 0 0 0 4.506 3.858 4.28 4.28 0 0 0 4.506-3.999 3.464 3.464 0 0 0-3.295-3.491l2.816-2.422v-2.169H14.5v2.225h5.407l-3.183 2.816L17.88 31.4a2.619 2.619 0 0 1 1.098-.254 1.83 1.83 0 0 1 1.943 1.633 1.859 1.859 0 0 1-2.027 1.718zm8.955-6.87v8.954h2.45V24.696H28.27l-4.027 2.366 1.098 2z"></path>
-                      </svg>
+                    <div class="text-2xl cursor-pointer relative" role="presentation" (click)="picker.open()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em"
+                            height="100%">
+                            <title>Date</title>
+                            <path
+                                d="M40.07 3.464h-7.237V.873a.873.873 0 1 0-1.746 0v2.59H13.74V.874a.873.873 0 1 0-1.746 0v2.59H4.983A3.182 3.182 0 0 0 1.8 6.675v35.088A3.182 3.182 0 0 0 4.983 45H40.07a3.182 3.182 0 0 0 3.182-3.182V6.674a3.182 3.182 0 0 0-3.182-3.21zm1.436 38.298a1.436 1.436 0 0 1-1.436 1.436H4.983a1.436 1.436 0 0 1-1.437-1.436V17.854h38.017V41.79zm0-25.654H3.518V6.674a1.436 1.436 0 0 1 1.436-1.436h7.04v3.52a.873.873 0 1 0 1.746 0V5.21h17.234v3.548a.873.873 0 1 0 1.746 0V5.21h7.238a1.436 1.436 0 0 1 1.436 1.436v9.462z">
+                            </path>
+                            <path
+                                d="M18.894 34.496a2.056 2.056 0 0 1-2-1.971l-2.478.394a4.365 4.365 0 0 0 4.506 3.858 4.28 4.28 0 0 0 4.506-3.999 3.464 3.464 0 0 0-3.295-3.491l2.816-2.422v-2.169H14.5v2.225h5.407l-3.183 2.816L17.88 31.4a2.619 2.619 0 0 1 1.098-.254 1.83 1.83 0 0 1 1.943 1.633 1.859 1.859 0 0 1-2.027 1.718zm8.955-6.87v8.954h2.45V24.696H28.27l-4.027 2.366 1.098 2z">
+                            </path>
+                        </svg>
+
+                        <!-- Ẩn input để không hiển thị cái ô input cũ nhưng vẫn giữ chức năng datepicker -->
+                        <div style="opacity: 0; height: 0; overflow: hidden; position: absolute;">
+                            <input name="selectedDate" matInput [matDatepicker]="picker" [(ngModel)]="date"
+                                (dateChange)="onDateChange($event)" [matDatepickerFilter]="dateFilter">
+                            <mat-datepicker #picker (opened)="showDatepicker()"
+                                (closed)="hideDatepicker()"></mat-datepicker>
+                        </div>
                     </div>
-                    
-                    <!-- Ẩn input date picker nhưng vẫn có thể mở khi click icon -->
-                    <div class="date-picker-container hidden">
-                      <mat-form-field appearance="outline">
-                        <mat-label>Chọn ngày</mat-label>
-                        <input name="selectedDate" matInput [matDatepicker]="picker" [(ngModel)]="date" (dateChange)="onDateChange($event)" [matDatepickerFilter]="dateFilter">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                      </mat-form-field>
-                    </div>
-                    
+
                     <!-- Hiển thị Ngày đã chọn -->
-                    <div><span class="line-clamp-2 text-ellipsis text-center">{{ date | date:'dd/MM/yyyy' }}</span></div>
-                  </label>
-                  
+                    <div><span class="line-clamp-2 text-ellipsis text-center">{{ date | date:'dd/MM/yyyy' }}</span>
+                    </div>
+                </label>
+
+
+
+
+
                 <label aria-label="Movie Filter"
                     class="relative flex w-full max-w-[25%] flex-col items-center justify-between gap-2 p-2 text-xs transition-all duration-200 focus-within:text-blue-500 hover:text-blue-500 md:w-auto md:flex-row md:p-4 md:text-base"><select
                         (change)="onMovieChange($event)"
                         class="absolute inset-0 w-full cursor-pointer appearance-none bg-transparent text-transparent [&amp;>option]:text-black"
                         name="movie" [(ngModel)]="movieId">
-                        <option value="">All Movies</option>
+                        <option value="">Tất cả các phim</option>
                         @for (item of listMoive; track $index) {
-                            <option value="{{item.id}}" [selected]="item.id === movieId">{{item.movieName}}</option> 
+                        <option value="{{item.id}}" [selected]="item.id === movieId">{{item.movieName}}</option>
                         }
                     </select>
                     <div class="text-2xl" role="presentation" aria-hidden="true" tabindex="-1"><svg
@@ -157,15 +176,19 @@
                 </label>
             </form>
         </header>
-        <main id="showtime-results" class="relative flex-1 overflow-auto min-h-[calc(100vh-200px)] bg-black" aria-label="Filtered Showtime Results"
-            aria-describedby="showtime-result-filters">
+
+
+
+        <main id="showtime-results" lass="relative flex-1 overflow-auto bg-black" id="nghia_Panel"
+            aria-label="Filtered Showtime Results" aria-describedby="showtime-result-filters"
+            style="min-height: calc(100vh - 175px); height: calc(100vh - 175px);">
             <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative flex gap-8">
                 <div class="contents">
                     <div class="flex-1 divide-y-8 divide-gray-500">
                         @if ((groupedData | keyvalue)?.length === 0) {
-                            <div class="flex items-center justify-center h-[calc(100vh-200px)]">
-                                <p class="text-gray-400 text-lg">Không có phim nào trong thời gian này</p>
-                            </div>
+                        <div class="flex items-center justify-center h-[calc(100vh-200px)]">
+                            <p class="text-gray-400 text-lg mt-5">Không có phim nào trong thời gian này</p>
+                        </div>
                         }
                         @for (movieName of groupedData | keyvalue; track $index) {
                         <section id="captain-america-brave-new-world-67472"
@@ -174,18 +197,27 @@
                             data-active-section-id="captain-america-brave-new-world-67472" data-active="true">
                             <header role="group" aria-label="Captain America: Brave New World Details"
                                 class="sticky top-0 z-20 -mx-4 flex items-center gap-4 bg-gradient-to-t from-transparent from-5% to-black to-20% px-4 pb-4 pt-4"
-                                data-sticky-id="captain-america-brave-new-world-67472"><img alt=""
-                                    config="[object Object]" loading="lazy" width="90" height="90" decoding="async"
-                                    data-nimg="1" class="inline-block aspect-square w-[90px] min-w-[90px]"
-                                    srcset="{{movieName.value.thumbnail}}"
-                                    src="{{movieName.value.thumbnail}}"
-                                    style="color: transparent;">
+                                data-sticky-id="captain-america-brave-new-world-67472">
+
+
+
+                                <img alt="" config="[object Object]" loading="lazy" decoding="async" data-nimg="1"
+                                    class="inline-block aspect-square w-[90px] min-w-[90px]"
+                                    srcset="{{movieName.value.thumbnail}}" src="{{movieName.value.thumbnail}}"
+                                    style="color: transparent; min-width: 90px; height: auto">
+
+
+
                                 <div class="flex flex-col justify-center gap-2">
-                                    <h1 (click)="selectMovie(movieName.key, movieName.value)" class="text-balance text-lg font-bold md:text-3xl cursor-pointer hover:text-blue-500">
+                                    <!-- <a [routerLink]="['/showtimes', movieName.value.id]"> -->
+                                    <h1 (click)="selectMovie(movieName.key, movieName.value)"
+                                        class="text-balance text-lg font-bold md:text-3xl cursor-pointer hover:text-blue-500">
                                         {{movieName.key}}
                                     </h1>
+                                    <!-- </a> -->
                                     <ul class="flex flex-wrap gap-y-2 leading-none">
-                                        <li class="-translate-x-[0.5ch] pl-[0.5ch] [&:not(:last-child)]:border-r-2 [&:not(:last-child)]:border-r-gray-300 [&:not(:last-child)]:pr-[0.5ch]">
+                                        <li
+                                            class="-translate-x-[0.5ch] pl-[0.5ch] [&:not(:last-child)]:border-r-2 [&:not(:last-child)]:border-r-gray-300 [&:not(:last-child)]:pr-[0.5ch]">
                                             <span class="flex items-center gap-[0.5ch]" role="group">
                                                 {{ movieName.value.duration | durationFormat }}
                                             </span>
@@ -207,14 +239,15 @@
                                                 d="M22.002 7.338c-3.654 0-6.746 3.091-6.746 6.745s3.092 6.746 6.746 6.746c3.654 0 6.745-3.092 6.745-6.746 0-3.654-3.091-6.745-6.745-6.745zm0 11.804a5.038 5.038 0 0 1-5.06-5.059 5.039 5.039 0 0 1 5.06-5.059 5.039 5.039 0 0 1 5.059 5.06 5.038 5.038 0 0 1-5.06 5.058z">
                                             </path>
                                         </svg>AMC Village 7</a></h2>
-                                        @for (theaters of movieName.value.theaters | keyvalue; track $index) {
+                                @for (theaters of movieName.value.theaters | keyvalue; track $index) {
                                 <ul class="flex flex-col gap-14 py-4 pl-1"
                                     aria-label="AMC Village 7, Captain America: Brave New World Showtimes by Features and Accesibility">
                                     <li role="listitem" aria-label="RealD 3D Showtimes">
                                         <div class="flex items-start justify-between font-bold uppercase md:text-xl">
                                             <h3 id="captain-america-brave-new-world-67472-amc-village-7-reald3d-0">
-                                                <div class="mb-2 flex flex-wrap gap-2"><span>{{theaters.value.address}}</span><span
-                                                        class="sr-only">: </span><span
+                                                <div class="mb-2 flex flex-wrap gap-2">
+                                                    <span>{{theaters.value.address}}</span><span class="sr-only">:
+                                                    </span><span
                                                         class="mr-4 inline-block w-max font-thin">{{theaters.key}}
                                                         <button
                                                             class="h-[1em] w-[1em] text-blue-500 transition-colors hover:text-white"
@@ -231,7 +264,8 @@
                                                                 </path>
                                                             </svg>
                                                         </button>
-                                                        </span></div>
+                                                    </span>
+                                                </div>
                                             </h3><img alt="RealD 3D" config="[object Object]" loading="lazy" width="100"
                                                 height="35" decoding="async" data-nimg="1"
                                                 class="hidden md:inline-block"
@@ -248,78 +282,99 @@
                                             <li aria-label="Audio Description">Audio Description</li>
                                         </ul>
                                         <ul class="flex flex-wrap items-start gap-x-2 gap-y-4 md:gap-4"
-                                        aria-label="Showtime Group Results">
-                                        @for (showtime of theaters.value.showtimes | keyvalue; track $index) {
+                                            aria-label="Showtime Group Results">
+                                            @for (showtime of theaters.value.showtimes | keyvalue; track $index) {
                                             <li class="grid justify-items-center gap-2">
                                                 <div role="group">
+
+
+
                                                     <button (click)="getShowtime(showtime.value.id)" type="button"
-                                                        class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm md:text-base h-12 line-through"
-                                                       >{{showtime.value.startTime}}</button>
-                                                    <div id="129217990-details"
+                                                        class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm md:text-base h-12">
+                                                        {{showtime.value.startTime}}
+                                                    </button>
+
+
+
+
+                                                    <!-- <div id="129217990-details"
                                                         class="grid justify-items-center gap-2 pt-2">
                                                         <div class="text-xs font-bold uppercase"><span
                                                                 class="opacity-40">UP TO 20% OFF</span></div>
-                                                    </div>
+                                                    </div> -->
+
+
                                                 </div>
                                             </li>
-                                        }
+                                            }
                                         </ul>
                                     </li>
                                 </ul>
-                            }
+                                }
                             </div>
                         </section>
-                    }
+                        }
                     </div>
                     <div class="relative w-[500px] pl-6 lg:block">
                         <aside class="sticky top-0 grid gap-2 py-4" aria-label="Movie Trailer and Info">
                             <h1 class="sr-only">Movie Trailers and Info</h1>
                             <div class="relative mb-4">
                                 @if (Trailer) {
-                                    <iframe [src]="Trailer | safe" 
-                                            width="500" 
-                                            height="280" 
-                                            frameborder="0" 
-                                            allowfullscreen>
-                                    </iframe>
+                                <iframe [src]="Trailer | safe" width="500" height="280" frameborder="0" allowfullscreen>
+                                </iframe>
                                 }
                                 @if (!Trailer) {
-                                    <div class="w-full h-[280px] bg-gray-800 flex items-center justify-center">
-                                        <p class="text-gray-400">Chưa có trailer</p>
-                                    </div>
+                                <div class="w-full h-[280px] bg-gray-800 flex items-center justify-center">
+                                    <p class="text-gray-400">Chưa có trailer</p>
+                                </div>
                                 }
                             </div>
                             <div class="border-b border-gray-500 py-4">
                                 @if (selectedMovie) {
-                                    <div class="space-y-4">
-                                       
-                                        <p class="mb-2 line-clamp-2 text-balance text-2xl font-semibold">Movie Name: {{selectedMovie.name}}</p>
-                                        
-                                        <div class="flex items-center gap-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                            <span class="text-sm">{{selectedMovie.duration | durationFormat}}</span>
-                                        </div>
+                                <div class="space-y-4">
+
+                                    <p class="mb-2 line-clamp-2 text-balance text-2xl font-semibold">Movie Name:
+                                        {{selectedMovie.name}}</p>
+
+                                    <div class="flex items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span class="text-sm">{{selectedMovie.duration | durationFormat}}</span>
                                     </div>
+                                </div>
                                 } @else {
-                                    <p class="mb-2 text-gray-400">Chọn một bộ phim để xem thông tin chi tiết</p>
+                                <p class="mb-2 text-gray-400">Chọn một bộ phim để xem thông tin chi tiết</p>
                                 }
                             </div>
+
+
+
                             <div class="p-4 bg-gray-900 rounded-lg">
-                                <a
-                                   class="inline-flex items-center text-blue-500 hover:text-blue-400">
+                                <a [routerLink]="['/movies', selectedMovie?.id]"
+                                    class="inline-flex items-center text-blue-500 hover:text-blue-400">
                                     Chi tiết phim
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                                            clip-rule="evenodd" />
                                     </svg>
                                 </a>
                             </div>
+
+
                         </aside>
                     </div>
                 </div>
             </div>
         </main>
+
+
+
+
     </div>
     <div role="region" aria-label="Notifications (F8)" tabindex="-1" style="pointer-events:none">
         <ol tabindex="-1" class="fixed bottom-0 right-0 grid w-full max-w-full gap-4 p-4 md:w-96"></ol>

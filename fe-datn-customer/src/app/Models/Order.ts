@@ -19,14 +19,15 @@ export interface Service {
   
   export interface OrderModelReq {
     email: string;
+    userId : string;
     isAnonymous: number;
     paymentId: string;
+    transactionCode : string;
     services: ServiceReq[];
     tickets: TicketReq[];
   }
   
   export interface PaymentModelReq {
-    orderId: string;
     amount: number;
     orderDesc: string;
     createdDate: string;
@@ -36,3 +37,10 @@ export interface Service {
     payStatus: string;
     orderInfo: string; 
   }
+  export interface PaymentMethod {
+    id: string;
+    paymentMethodName: string;
+    status: number;
+    logoUrl: string;
+  }
+  

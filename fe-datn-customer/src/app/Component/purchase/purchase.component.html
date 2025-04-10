@@ -1,3 +1,6 @@
+
+<app-need-more-time></app-need-more-time>
+<app-time-up></app-time-up>
 <body class="relative bg-black text-white [&amp;:has(dialog[open],[data-body-scroll=disabled])]:overflow-hidden"
     monica-id="ofpnmcalabcbjgholdjcjblkibolbppb" monica-version="7.8.0">
     <div class="flex h-[100dvh] flex-col"><!--$--><!--$--><!--$--><!--/$--><!--/$--><!--/$-->
@@ -19,7 +22,7 @@
                         <div class="absolute right-0 mr-8 text-300 font-semibold md:mr-12">
                             <div class="countdown-container">
                                 <div class="countdown-timer">
-                                    <span class="countdown-label">Time Remaining: </span>
+                                    <span class="countdown-label">Thời Gian Còn Lại: </span>
                                     <span class="countdown-value">{{ countdown }}</span>
                                 </div>
                             </div>
@@ -94,15 +97,14 @@
                     </div>
                 </div>
                 <div role="banner" class="relative caption text-200" style="background-color: rgb(59, 2, 73);">
-                    <div
+                    <div *ngIf="checkLogin() == false"
                         class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative flex items-center justify-center gap-4 py-2 [&amp;_p]:mb-0">
                         <div class="rich-text text-200 caption">
                             <p
                                 class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
                                 <span class="text-200 caption">Sign in to take advantage of AMC Stubs benefits,
-                                    including waived fees as applicable.</span>
-                            </p>
-                        </div><button
+                                    including waived fees as applicable.</span></p>
+                        </div><button (click)="openSignIn()"
                             class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm h-11"
                             id="65bd48c8aea5fcb5003cf325" type="button">Sign In</button>
                     </div>
@@ -171,33 +173,22 @@
                                                             d="M22.5 0A22.5 22.5 0 1 0 45 22.5 22.5 22.5 0 0 0 22.5 0zm0 43.172A20.672 20.672 0 1 1 43.172 22.5 20.672 20.672 0 0 1 22.5 43.172z">
                                                         </path>
                                                     </svg> Add Card</button>
-                                                    <label
-                                                    class="flex w-max items-center gap-4"><input
-                                                        class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
-                                                        type="radio" value="venmo" name="paymentMethod"><img alt=""
-                                                        config="[object Object]" loading="lazy" width="47" height="30"
-                                                        decoding="async" data-nimg="1" class="pointer-events-none"
-                                                        srcset="https://static.ybox.vn/2022/4/4/1649334330094-anhybox%20(32).png 1x, https://static.ybox.vn/2022/4/4/1649334330094-anhybox%20(32).png 2x"
-                                                        src="https://static.ybox.vn/2022/4/4/1649334330094-anhybox%20(32).png"
-                                                        style="color: transparent;"><span>Momo</span></label>
-                                                    <label
-                                                        class="flex w-max items-center gap-4"><input
+                                                    @for (item of listPaymentMethod; track $index) {
+                                                        <label
+                                                        class="flex w-max items-center gap-4">
+                                                        <input
                                                             class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
-                                                            type="radio" value="venmo" name="paymentMethod"><img alt=""
+                                                            type="radio" [value]="item.paymentMethodName"
+                                                            (change)="onPaymentMethodChange(item.id)" name="paymentMethod">
+                                                            
+                                                            <img alt=""
                                                             config="[object Object]" loading="lazy" width="47" height="30"
                                                             decoding="async" data-nimg="1" class="pointer-events-none"
-                                                            srcset="https://vnpay.vn/s1/statics.vnpay.vn/2021/6/maxresdefault.jpg 1x, https://vnpay.vn/s1/statics.vnpay.vn/2021/6/maxresdefault.jpg 2x"
-                                                            src="https://vnpay.vn/s1/statics.vnpay.vn/2021/6/maxresdefault.jpg"
-                                                            style="color: transparent;"><span>VNPay</span></label>
-                                                        <label
-                                                            class="flex w-max items-center gap-4"><input
-                                                                class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
-                                                                type="radio" value="venmo" name="paymentMethod"><img alt=""
-                                                                config="[object Object]" loading="lazy" width="47" height="30"
-                                                                decoding="async" data-nimg="1" class="pointer-events-none"
-                                                                srcset="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6c/0e/a4/6c0ea428-a417-973a-bbc8-fff75462262e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1200x600wa.png 1x, https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6c/0e/a4/6c0ea428-a417-973a-bbc8-fff75462262e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1200x600wa.png 2x"
-                                                                src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6c/0e/a4/6c0ea428-a417-973a-bbc8-fff75462262e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/1200x600wa.png"
-                                                                style="color: transparent;"><span>MetaMask</span></label>
+                                                            srcset="{{item.logoUrl}}"
+                                                            src="{{item.logoUrl}}"
+                                                            style="color: transparent;">
+                                                            <span>{{item.paymentMethodName}}</span></label>
+                                                        }
                                                     </div>
                                         </div>
                                     </div>
@@ -207,24 +198,27 @@
                                 
                                 <section>
                                     <div class="my-2 max-w-[600px]" data-orientation="vertical">
-                                        <div data-state="open" data-orientation="vertical"><button type="button"
+                                        <div data-state="open" data-orientation="vertical">
+                                            
+                                            <button type="button" (click)="toggleAccordion()"
                                                 aria-controls="radix-:r29:" aria-expanded="true" data-state="open"
                                                 data-orientation="vertical" id="radix-:r28:"
                                                 class="accordion__trigger justify-start text-left"
                                                 data-radix-collection-item="" aria-disabled="true">
                                                 <h2
                                                     class="flex items-center justify-start gap-4 text-xs font-semibold md:text-base">
-                                                    Use Gift Cards, Promo Code, or Voucher<svg
-                                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                        viewBox="0 0 45 45" width="1em" height="100%"
-                                                        class="accordion__chevron text-white w-5 rotate-180 transform">
-                                                        <title>Toggle Content</title>
-                                                        <path
-                                                            d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
-                                                        </path>
-                                                    </svg></h2>
+                                                    Use Gift Cards, Promo Code, or Voucher
+                                                    <svg *ngIf="!isOpen" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
+                                                    width="1em" height="1em" class="w-5 transition-transform duration-300">
+                                                    <path d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z"></path>
+                                                  </svg>
+                                                  <svg *ngIf="isOpen" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
+                                                    width="1em" height="1em" class="w-5 transition-transform duration-300">
+                                                    <path d="M22.464 10.48 3.067 29.594c-.856.57-2.283.285-2.853-.856-.285-.57-.285-1.141 0-1.997l20.824-20.824c.856-.856 1.997-.856 2.853 0L44.715 26.48c.57.856.285 2.282-.856 2.852-.57.286-1.426.286-1.997 0z"></path>
+                                                  </svg>
+                                                </h2>
                                             </button>
-                                            <div data-state="open" id="radix-:r29:" role="region"
+                                            <div *ngIf="isOpen" @slideToggle data-state="open" id="radix-:r29:" role="region"
                                                 aria-labelledby="radix-:r28:" data-orientation="vertical"
                                                 class="accordion__content overflow-clip"
                                                 style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width); --radix-collapsible-content-height: 204px; --radix-collapsible-content-width: 460px;">
@@ -436,12 +430,12 @@
                                                 <div class="flex-1">
                                                     <h4
                                                         class="my-auto text-base font-semibold leading-tight tracking-normal">
-                                                        {{ seat.type }} Ticket
+                                                        {{ seat.type }} vé
                                                     </h4>
                                                 </div>
                                                 <p
                                                     class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                    ${{ seat.total }}
+                                                    {{ seat.total }} VND
                                                 </p>
                                             </div>
                                             <p class="text-white text-xs font-semibold leading-tight tracking-normal">
@@ -450,7 +444,7 @@
                                         </li>
                                     </ul>
                                     <div class="mt-4 text-right text-white text-lg font-bold">
-                                        Total: ${{ totalTicketPrice | number:'1.2-2' }}
+                                        Tổng Cộng: {{ totalTicketPrice | number:'1.2-2' }} VND
                                     </div>
                                     <h2
                                         class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
@@ -461,40 +455,22 @@
                                                 <div class="flex-1">
                                                     <h4
                                                         class="my-auto text-base font-semibold leading-tight tracking-normal">
-                                                        {{ sv.name }} Ticket
+                                                        {{ sv.name }} Vé
                                                     </h4>
                                                 </div>
                                                 <p
                                                     class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                    ${{ sv.price }}
+                                                    {{ sv.price }} VND
                                                 </p>
                                             </div>
                                             <p class="text-white text-xs font-semibold leading-tight tracking-normal">
-                                                Quantity: {{ sv.quantity }}
+                                                Số Lượng: {{ sv.quantity }}
                                             </p>
                                         </li>
                                     </ul>
                                     <div class="mt-4 text-right text-white text-lg font-bold">
-                                        Total: ${{ totalServiceAmount | number:'1.2-2' }}
+                                        Tổng Cộng: {{ totalServiceAmount | number:'1.2-2' }} VND
                                     </div>
-                                    <h2
-                                        class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
-                                        Fees</h2>
-                                    <ul class="mb-4 grid gap-2">
-                                        <li class="pt-2 font-semibold">
-                                            <div class="flex justify-between gap-3">
-                                                <div class="flex-1">
-                                                    <h4
-                                                        class="my-auto text-base font-semibold leading-tight tracking-normal">
-                                                        Convenience Fee</h4>
-                                                </div>
-                                                <p
-                                                    class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                    ${{fee}}</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-
                                     <div
                                         class="PPsXr-flex PPsXr-flex-wrap PPsXr-gap-4 PPsXr-items-center PPsXr-py-8 PPsXr-justify-center PPsXr-md:justify-start">
                                         <div class="PPsXr-grid PPsXr-flex-1 PPsXr-gap-1">
@@ -511,7 +487,7 @@
                                     <header class="flex items-center justify-between py-6">
                                         <h2
                                             class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
-                                            Food &amp; Drinks</h2><a
+                                            Đồ ăn &amp; Nước Uống</h2><a
                                             class="group transition-colors text-blue-500 hocus:text-white text-sm font-semibold leading-tight tracking-normal"
                                             href="/orders/d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2/food-and-drink">Add</a>
                                     </header>
@@ -522,7 +498,8 @@
                                 <p
                                     class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                     <span
-                                        class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>{{totalAmount}}
+                                        class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span> {{ selectedPaymentMethod === 'MULTI-WALLET' ? '$' + displayAmount : totalAmount | number:'1.0-0' }}
+                                        {{ selectedPaymentMethod === 'MULTI-WALLET' ? 'USDC' : 'VND' }}
                                 </p>
                             </div>
                         </div>
@@ -549,7 +526,8 @@
                                     class="hidden text-sm font-semibold uppercase text-gray-200 lg:block">Total</span>
                                 <section>
                                     <div aria-label="Order Total" class="hidden gap-2 lg:flex"><span
-                                            class="font-bold">${{totalAmount}}</span></div>
+                                            class="font-bold"> {{ selectedPaymentMethod === 'MULTI-WALLET' ? '$' + displayAmount : totalAmount | number:'1.0-0' }}
+                                            {{ selectedPaymentMethod === 'MULTI-WALLET' ? 'USDC' : 'VND' }}</span></div>
                                     <div class="lg:hidden">
                                         <div><button type="button"
                                                 class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 text-sm md:text-base flex items-center gap-3">
