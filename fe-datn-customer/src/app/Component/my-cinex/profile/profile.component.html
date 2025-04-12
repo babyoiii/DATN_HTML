@@ -100,8 +100,10 @@
                 <form class="grid grid-cols-1 items-start gap-4 pt-4 md:grid-cols-2"><label
                         class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
                             class="label">Current Password</span>
-                        <div class="amc-input amc-input--box"><input class="input" id="old-password" type="password"
-                                name="oldPassword"><button type="button" class="cursor-pointer"
+                        <div class="amc-input amc-input--box">
+                            
+                            <input [(ngModel)]="changePassword.currentPassword" class="input" id="old-password" type="password"
+                                name="currentPassword"><button type="button" class="cursor-pointer"
                                 aria-label="Show Password" tabindex="-1"><svg xmlns="http://www.w3.org/2000/svg"
                                     fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%"
                                     class="transition-all duration-200 hover:fill-blue-500">
@@ -115,7 +117,9 @@
                                 </svg></button></div>
                     </label><label class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
                             class="label">New Password</span>
-                        <div class="amc-input amc-input--box"><input class="input" id="new-password"
+                        <div class="amc-input amc-input--box">
+                            
+                            <input [(ngModel)]="changePassword.newPassword" class="input" id="new-password"
                                 autocomplete="new-password" type="password" name="newPassword"><button type="button"
                                 class="cursor-pointer" aria-label="Show Password" tabindex="-1"><svg
                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
@@ -129,7 +133,7 @@
                                     </path>
                                 </svg></button></div>
                     </label>
-                    <div class="flex flex-wrap items-center gap-4 py-4 justify-end md:col-span-2"><button type="submit"
+                    <div class="flex flex-wrap items-center gap-4 py-4 justify-end md:col-span-2"><button (click)="onChangePassword()" type="submit"
                             class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">Save
                             Changes</button></div>
                 </form>

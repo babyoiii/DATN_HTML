@@ -19,10 +19,12 @@ export interface Service {
   
   export interface OrderModelReq {
     email: string;
-    userId : string;
+    userId : string | null;
     isAnonymous: number;
     paymentId: string;
     transactionCode : string;
+    voucherCode : string;
+    totalPriceMethod : string;
     services: ServiceReq[];
     tickets: TicketReq[];
   }
@@ -43,4 +45,28 @@ export interface Service {
     status: number;
     logoUrl: string;
   }
+  export interface GetListHistoryOrderByUser {
+    id: string;
+    userName: string;
+    movieName: string;
+    orderCode: string;
+    cinemaName: string;
+    address: string;
+    thumbnail: string;
+    sessionTime: string;
+    sessionDate: string;
+    roomName: string;
+    seatList: string[];
+    serviceList: ServiceInfoModel[];
+    concessionAmount: number;
+    totalPrice: number;
+    email: string;
+    createdDate: string;
+}
+
+export interface ServiceInfoModel {
+    name: string;
+    quantity: number;
+    totalPrice: number;
+}
   

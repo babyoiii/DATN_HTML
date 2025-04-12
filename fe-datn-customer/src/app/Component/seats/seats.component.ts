@@ -460,28 +460,54 @@ export class SeatsComponent implements OnInit, OnDestroy {
   }
 
   validateRowSeats(seats: SeatInfo[]): boolean {
-    const hasSelected = seats.some(seat => seat.Status === SeatStatus.Selected);
+    // Nếu không có ghế nào đang chọn thì ok luôn
+    const hasSelected = seats.some(s => s.Status === SeatStatus.Selected);
     if (!hasSelected) return true;
-
-    const occupancy = seats.map(seat =>
-      (seat.Status === SeatStatus.Selected || seat.Status === SeatStatus.Booked) ? 1 : 0
+  
+    // occupancy: 1 = Selected/Booked, 0 = Available
+    const occupancy = seats.map(s =>
+      (s.Status === SeatStatus.Selected || s.Status === SeatStatus.Booked) ? 1 : 0
     );
-
-    for (let i = 0; i < seats.length; i++) {
+  
+    const total = seats.length;
+  
+    for (let i = 0; i < total; i++) {
+      // chỉ quan tâm ghế trống
       if (occupancy[i] === 0) {
-        const leftOccupied = (i === 0) ? true : (occupancy[i - 1] === 1);
-        const rightOccupied = (i === seats.length - 1) ? true : (occupancy[i + 1] === 1);
-
-        const seat = seats[i];
-        const pairedSeat = this.findPairedSeat(seat);
-        const isPairedSeatSelected = pairedSeat && pairedSeat.Status === SeatStatus.Selected;
-
-        if (leftOccupied && rightOccupied && !isPairedSeatSelected) {
-          this.toastr.error(`Không thể bỏ trống ghế lẻ ở hàng ${this.getRowLabel(seats[i].RowNumber)} số ${seats[i].ColNumber}`, 'Lỗi');
-          return false;
+        // kiểm tra bên trái
+        const leftIsEdge = i === 0;
+        const leftOccupied = leftIsEdge
+          // nếu là lối đi, bạn có thể cho phép (thì đổi true thành false)
+          ? true 
+          : occupancy[i - 1] === 1;
+  
+        // kiểm tra bên phải
+        const rightIsEdge = i === total - 1;
+        const rightOccupied = rightIsEdge
+          // nếu là lối đi, bạn có thể cho phép (thì đổi true thành false)
+          ? true
+          : occupancy[i + 1] === 1;
+  
+        // nếu hai bên đều occupied → có nguy cơ ghế lẻ
+        if (leftOccupied && rightOccupied) {
+          // ngoại lệ: ghế này có ghế “đối ứng” (paired seat) cũng đang Selected → cho phép
+          const seat = seats[i];
+          const paired = this.findPairedSeat(seat);
+          const pairedIsSelected = paired?.Status === SeatStatus.Selected;
+  
+          if (!pairedIsSelected) {
+            const rowLabel = this.getRowLabel(seat.RowNumber);
+            const col = seat.ColNumber;
+            this.toastr.error(
+              `Không thể để lẻ ghế ở hàng ${rowLabel} số ${col}`,
+              'Lỗi chọn ghế'
+            );
+            return false;
+          }
         }
       }
     }
+  
     return true;
   }
 
@@ -494,7 +520,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
   validateSeats(): boolean {
     if (this.selectedSeats.length === 0) {
-      this.showNotification('warning', 'Vui lòng chọn ít nhất một ghế!');
+      this.toastr.warning('Vui lòng chọn ít nhất một ghế!','Cảnh báo');
       return false;
     }
 

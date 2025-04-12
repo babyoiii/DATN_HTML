@@ -15,7 +15,10 @@ import { log } from 'node:console';
 })
 export class ProfileComponent {
   userInfo: UserInfo | null = null;
-  changePassword: ChangePasswordModel | null = null;
+  changePassword: ChangePasswordModel = {
+    currentPassword: '',
+    newPassword: ''
+  };
   constructor(private authService: AuthServiceService,private toast : ToastrService) {}
 
   ngOnInit(): void {
@@ -35,6 +38,23 @@ export class ProfileComponent {
     });
   }
   onChangePassword(): void {
-    console.log(this.changePassword);
+    if (!this.changePassword) {
+      this.toast.error('Please fill in all password fields');
+      return;
+    }
+  
+    this.authService.ChangePassword(this.changePassword).subscribe({
+      next: (response) => {
+        if (response.responseCode === 200) {
+          this.toast.success('Password changed successfully');
+        } else {
+          this.toast.error(response.message || 'Failed to change password');
+        }
+      },
+      error: (error) => {
+        console.error('Error changing password:', error);
+        this.toast.error(error.error?.message || 'An error occurred while changing password');
+      }
+    });
   }
 }

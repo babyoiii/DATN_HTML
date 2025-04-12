@@ -186,7 +186,7 @@ export class SeatService {
   }
   private isSeatUpdate(message: WebSocketMessage): boolean {
     const action = message.Action?.toLowerCase();
-    return action === 'updatestatus' && 
+    return action === 'UpdateStatus' && 
            Array.isArray(message.SeatStatusUpdateRequests);
   }
 

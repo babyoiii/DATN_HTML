@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { OrderModelReq, PaymentMethod, PaymentModelReq, Service } from '../Models/Order';
+import { GetListHistoryOrderByUser, OrderModelReq, PaymentMethod, PaymentModelReq, Service } from '../Models/Order';
 import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { get } from 'node:http';
 
 export interface PriceResponse {
   'usd-coin': {
@@ -72,4 +73,10 @@ export class OrdersService {
       map(([usdcPriceUSD, usdToVndRate]) => usdcPriceUSD * usdToVndRate)
     );
   }
-}
+ getListHistoryOrderByUser(): Observable<any> {
+    return this.http.get<GetListHistoryOrderByUser>(`${this.baseUrl}/Movie/GetListHistoryOrderByUser`);
+  }
+  getPastShowTimesByTimeFilter(filter:string): Observable<any> {
+    return this.http.get<GetListHistoryOrderByUser>(`${this.baseUrl}/Movie/GetPastShowTimesByTimeFilter?filter=${filter}`);
+  }
+ }

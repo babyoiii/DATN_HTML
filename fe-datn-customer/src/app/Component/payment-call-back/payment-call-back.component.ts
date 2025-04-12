@@ -46,9 +46,12 @@ export class PaymentCallBackComponent implements OnInit {
       try {
         const orderData: OrderModelReq = JSON.parse(orderDataString);
         orderData.transactionCode = this.transactionCode;
+        console.log(orderData, 'orderDataaaaaaa');
+        
         this.ordersService.createOrder(orderData).subscribe({
           next: (response) => {
-            if (response.ResponseCode != 200){
+            console.log(response, 'responseeeeeee');
+            if (response.responseCode != 200){
               this.toastr.error('❌ Đơn hàng không thành công:' + response.Message , "Thông Báo");
               return;
             }

@@ -92,9 +92,22 @@ export class AuthServiceService {
   signOut(): void {
     this.token = '';
     if (isPlatformBrowser(this.platformId)) {
+
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('displayName');
+      localStorage.removeItem('email');
+  
       this.cookieService.delete('accessToken', '/');
+      this.cookieService.delete('userId', '/');
+      this.cookieService.delete('userName', '/');
+      this.cookieService.delete('displayName', '/');
+      this.cookieService.delete('email', '/');
+  
+      localStorage.clear(); 
+      sessionStorage.clear(); 
     }
     this.loggedIn.next(false);
   }
@@ -108,9 +121,7 @@ export class AuthServiceService {
     if (isPlatformBrowser(this.platformId)) {
       const tokenLocal = localStorage.getItem('accessToken');
       const tokenCookie = this.cookieService.get('accessToken');
-      console.log('Token from localStorage:', tokenLocal);
-      console.log('Token from cookie:', tokenCookie);
-      return !!tokenLocal || !!tokenCookie;
+    return !!tokenLocal || !!tokenCookie;
     }
     return false;
   }

@@ -112,8 +112,7 @@
                 <div class="mx-auto w-full px-4 xl:px-0 grid max-w-[1000px] grid-cols-2 gap-20">
                     <div class="col-span-2 pt-4 md:col-span-1">
                         <div class="mb-12 divide-y divide-gray-700">
-
-                            <div class="qcALx-grid qcALx-grid-cols-2 qcALx-w-full qcALx-h-fit qcALx-rounded-xl qcALx-p-4"
+                            <div *ngIf="checkMembership == true" class="qcALx-grid qcALx-grid-cols-2 qcALx-w-full qcALx-h-fit qcALx-rounded-xl qcALx-p-4"
                                 style="background-image: url(&quot;https://amc-theatres-res.cloudinary.com/image/upload/amc-cdn/static/images/2024/bg-banner-premiere.png&quot;); background-size: cover;">
                                 <div class="qcALx-col-span-1 qcALx-flex align-center"><img alt="AMC Stubs"
                                         config="[object Object]" loading="lazy" width="250" height="44" decoding="async"
@@ -279,7 +278,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="text-sm md:text-base" data-orientation="vertical">
-                                                        <div data-state="open" data-orientation="vertical"><button
+                                                        <div data-state="open" data-orientation="vertical">
+                                                            
+                                                            <button
                                                                 type="button" aria-controls="radix-:r2d:"
                                                                 aria-expanded="true" data-state="open"
                                                                 data-orientation="vertical" id="radix-:r2c:"
@@ -307,11 +308,14 @@
                                                                 <div class="flex gap-4">
                                                                     <div class="m-1 h-[21px] w-[21px]"></div><label
                                                                         class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed max-w-[90%]">
-                                                                        <div class="amc-input amc-input--box"><input
+                                                                        <div class="amc-input amc-input--box">
+                                                                            
+                                                                            <input [(ngModel)]="voucherCode"
                                                                                 class="input outline-none"
                                                                                 maxlength="20" minlength="5"
                                                                                 placeholder="Enter Promo Code"
-                                                                                spellcheck="false" type="text"></div>
+                                                                                spellcheck="false" type="text"
+                                                                                name="voucherCode"></div>
                                                                         <div
                                                                             class="flex flex-wrap items-center gap-4 py-4 justify-start">
                                                                             <button type="button"
@@ -471,17 +475,6 @@
                                     <div class="mt-4 text-right text-white text-lg font-bold">
                                         Tổng Cộng: {{ totalServiceAmount | number:'1.2-2' }} VND
                                     </div>
-                                    <div
-                                        class="PPsXr-flex PPsXr-flex-wrap PPsXr-gap-4 PPsXr-items-center PPsXr-py-8 PPsXr-justify-center PPsXr-md:justify-start">
-                                        <div class="PPsXr-grid PPsXr-flex-1 PPsXr-gap-1">
-                                            <h1 class="PPsXr-font-bold PPsXr-text-xs" style="color: rgb(251, 173, 24);">
-                                                Save $4.38 on this order by upgrading to AMC Stubs Premiere!</h1>
-                                            <p class="PPsXr-text-xs PPsXr-text-gray-300">$17.99+tax/year</p>
-                                        </div>
-                                        <div class="PPsXr-flex"><a
-                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-sm md:text-base PPsXr-mr-1 PPsXr-text-sm PPsXr-font-semibold"
-                                                href="/sign-up/premiere">Join</a></div>
-                                    </div>
                                 </section>
                                 <section class="">
                                     <header class="flex items-center justify-between py-6">
@@ -492,9 +485,18 @@
                                             href="/orders/d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2/food-and-drink">Add</a>
                                     </header>
                                 </section>
-                                <p class="py-10 text-xs italic leading-5 text-gray-200">Discount Matinee ticket prices
-                                    are UP TO 20% OFF the evening base ticket price every day. You are receiving the
-                                    displayed Discount Matinee ticket prices.</p>
+                                <div class="w-full max-w-md p-4">
+                                    <label class="flex items-center space-x-4 bg-gray-800 shadow-md rounded-lg p-4 border border-gray-600 hover:border-gray-400 transition-all duration-300 cursor-pointer group">
+                                        <input 
+                                            type="checkbox" 
+                                            class="form-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-500 focus:ring-2 transition-all duration-200 ease-in-out"
+                                        />
+                                        <span class="text-sm text-gray-200 group-hover:text-gray-100 transition-colors duration-300 font-medium leading-tight tracking-normal">
+                                            Tôi hiểu và chấp nhận rằng nếu không đăng ký tài khoản, hệ thống sẽ không chịu trách nhiệm khi có sự cố xảy ra.
+                                        </span>
+                                    </label>
+                                    
+                                </div>
                                 <p
                                     class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                     <span
