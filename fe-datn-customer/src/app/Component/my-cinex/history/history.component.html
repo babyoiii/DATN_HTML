@@ -2,35 +2,220 @@
     <main id="main" class="flex-1 md:min-h-[60vh]">
         <div class="empty:hidden">
             <section class="mx-auto max-w-[1248px] px-2 py-8 empty:hidden sm:px-4 xl:px-0">
-                <header>
-                    <div class="flex flex-wrap items-baseline justify-between border-b border-gray-500">
-                        <h1 class="mb-2 text-500 headline">Purchases</h1>
-                        <div>
-                            <div class="amc-input amc-input--none relative"><select class="">
-                                    <option value="30d" selected="">Past 30 days</option>
-                                    <option value="60d">Past 60 days</option>
-                                    <option value="90d">Past 90 days</option>
-                                    <option value="1y">Past year</option>
-                                    <option value="2024">2024</option>
-                                    <option value="2023">2023</option>
-                                </select><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
-                                    width="1em" height="100%"
-                                    class="pointer-events-none absolute right-4 h-[1em] w-[1em]"
-                                    aria-label="Expand Options">
-                                    <path
-                                        d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
-                                    </path>
-                                </svg></div>
+                
+                <div class="empty:hidden">
+                    <section class="mx-auto max-w-[1248px] px-2 py-8 empty:hidden sm:px-4 xl:px-0">
+                        <header>
+                            <div class="flex flex-wrap items-baseline justify-between border-b border-gray-500">
+                                <h1 class="mb-2 text-500 headline">Purchases</h1>
+                                <div>
+                                    <div class="amc-input amc-input--none relative"><select class="">
+                                            <option value="30d" selected="">Past 30 days</option>
+                                            <option value="60d">Past 60 days</option>
+                                            <option value="90d">Past 90 days</option>
+                                            <option value="1y">Past year</option>
+                                            <option value="2024">2024</option>
+                                            <option value="2023">2023</option>
+                                        </select><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
+                                            width="1em" height="100%"
+                                            class="pointer-events-none absolute right-4 h-[1em] w-[1em]"
+                                            aria-label="Expand Options">
+                                            <path
+                                                d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
+                                            </path>
+                                        </svg></div>
+                                </div>
+                            </div>
+                            <div class="rich-text">
+                                <p
+                                    class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
+                                    <span class="">Refunds may be requested before the posted showtime.&nbsp;</span><a
+                                        class="group transition-colors text-blue-500 hocus:text-white" target="_self"
+                                        href="/chinhsach"><span class="">Our Refund Policy</span></a></p>
+                            </div>
+                        </header>
+                        <div class="mt-4">
+                            <div class="rich-text">
+                                <div class="grid grid-cols-1 gap-4 py-6 md:grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">
+                                    <!-- Past Event 1 -->
+                                    <div
+                                        class="relative bg-[#111] rounded-lg overflow-hidden shadow-lg transition-transform hover:translate-y-[-5px] border border-[#333]">
+                                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#333] to-[#333]">
+                                        </div>
+                                        <div class="flex p-4 bg-opacity-30 bg-black">
+                                            <img src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_272/f_auto/q_auto/v1739554424/amc-cdn/production/2/movies/79000/78995/PosterDynamic/169766.jpg"
+                                                alt="Movie Poster" class="w-[100px] h-[150px] object-cover rounded mr-4">
+                                            <div class="flex-1">
+                                                <h3 class="text-lg font-bold mb-2">Godzilla x Kong: The New Empire</h3>
+                                                <div class="text-sm text-[#bbbbbb] mb-1">
+                                                    <div><i class="far fa-calendar"></i> 10/03/2025</div>
+                                                    <div><i class="far fa-clock"></i> 18:45</div>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <div>CineX Aeon Mall Tân Phú</div>
+                                                    <div class="text-sm text-[#bbbbbb]">Screen 5</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-4 border-t border-dashed border-[#444]">
+                                            <div class="flex justify-between mb-2">
+                                                <span class="text-[#bbbbbb] text-sm">Booking Code:</span>
+                                                <span class="font-medium">CNXBK-44215</span>
+                                            </div>
+                                            <div class="flex justify-between mb-2">
+                                                <span class="text-[#bbbbbb] text-sm">Ticket Type:</span>
+                                                <span class="font-medium">Standard 2D</span>
+                                            </div>
+                                            <div class="flex justify-between mb-2">
+                                                <span class="text-[#bbbbbb] text-sm">Seats:</span>
+                                                <div class="flex flex-wrap gap-2">
+                                                    <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">E15</span>
+                                                    <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">E16</span>
+                                                    <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">E17</span>
+                                                    <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">E18</span>
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-between mb-2">
+                                                <span class="text-[#bbbbbb] text-sm">Đồ ăn:</span>
+                                                <span class="font-medium">Yes</span>
+                                            </div>
+                                            <div class="flex justify-between text-sm text-[#ddd] mt-1">
+                                                <span>Combo Gia Đình x1</span>
+                                                <span>250,000₫</span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex justify-between items-center p-4 bg-opacity-20 bg-black border-t border-[#333]">
+                                            <div class="text-lg font-bold text-[#00a8e1]">650,000₫</div>
+                                            <div class="flex gap-3">
+                                                <button
+                                                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white border border-white px-6 min-w-[10ch] hover:bg-white hover:text-black text-sm md:text-base h-12">View
+                                                    Receipt</button>
+        
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <!-- Past Event 2 -->
+                                    <div
+                                        class="relative bg-[#111] rounded-lg overflow-hidden shadow-lg transition-transform hover:translate-y-[-5px] border border-[#333]">
+                                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#333] to-[#333]">
+                                        </div>
+                                        <div class="flex p-4 bg-opacity-30 bg-black">
+                                            <img src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_272/f_auto/q_auto/v1741718218/amc-cdn/production/2/movies/79000/78967/PosterDynamic/170073.jpg"
+                                                alt="Movie Poster" class="w-[100px] h-[150px] object-cover rounded mr-4">
+                                            <div class="flex-1">
+                                                <h3 class="text-lg font-bold mb-2">Kung Fu Panda 4</h3>
+                                                <div class="text-sm text-[#bbbbbb] mb-1">
+                                                    <div><i class="far fa-calendar"></i> 25/03/2025</div>
+                                                    <div><i class="far fa-clock"></i> 14:30</div>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <div>CineX Vincom Thảo Điền</div>
+                                                    <div class="text-sm text-[#bbbbbb]">Screen 2</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-4 border-t border-dashed border-[#444]">
+                                            <div class="flex justify-between mb-2">
+                                                <span class="text-[#bbbbbb] text-sm">Booking Code:</span>
+                                                <span class="font-medium">CNXBK-44872</span>
+                                            </div>
+                                            <div class="flex justify-between mb-2">
+                                                <span class="text-[#bbbbbb] text-sm">Ticket Type:</span>
+                                                <span class="font-medium">Standard 3D</span>
+                                            </div>
+                                            <div class="flex justify-between mb-2">
+                                                <span class="text-[#bbbbbb] text-sm">Seats:</span>
+                                                <div class="flex flex-wrap gap-2">
+                                                    <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">D10</span>
+                                                    <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">D11</span>
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-between mb-2">
+                                                <span class="text-[#bbbbbb] text-sm">Đồ ăn:</span>
+                                                <span class="font-medium">No</span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex justify-between items-center p-4 bg-opacity-20 bg-black border-t border-[#333]">
+                                            <div class="text-lg font-bold text-[#00a8e1]">240,000₫</div>
+                                            <div class="flex gap-3">
+                                                <button
+                                                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white border border-white px-6 min-w-[10ch] hover:bg-white hover:text-black text-sm md:text-base h-12">View
+                                                    Receipt</button>
+        
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <!-- Past Event 3 -->
+                                    <div
+                                        class="relative bg-[#111] rounded-lg overflow-hidden shadow-lg transition-transform hover:translate-y-[-5px] border border-[#333]">
+                                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#333] to-[#333]">
+                                        </div>
+                                        <div class="flex p-4 bg-opacity-30 bg-black">
+                                            <img src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_272/f_auto/q_auto/v1734114336/amc-cdn/production/2/movies/67500/67472/PosterDynamic/168453.jpg"
+                                                alt="Movie Poster" class="w-[100px] h-[150px] object-cover rounded mr-4">
+                                            <div class="flex-1">
+                                                <h3 class="text-lg font-bold mb-2">Deadpool & Wolverine</h3>
+                                                <div class="text-sm text-[#bbbbbb] mb-1">
+                                                    <div><i class="far fa-calendar"></i> 05/03/2025</div>
+                                                    <div><i class="far fa-clock"></i> 21:15</div>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <div>CineX Crescent Mall</div>
+                                                    <div class="text-sm text-[#bbbbbb]">PRIME Screen 1</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-4 border-t border-dashed border-[#444]">
+                                            <div class="flex justify-between mb-2">
+                                                <span class="text-[#bbbbbb] text-sm">Booking Code:</span>
+                                                <span class="font-medium">CNXBK-44023</span>
+                                            </div>
+                                            <div class="flex justify-between mb-2">
+                                                <span class="text-[#bbbbbb] text-sm">Ticket Type:</span>
+                                                <span class="font-medium">PRIME</span>
+                                            </div>
+                                            <div class="flex justify-between mb-2">
+                                                <span class="text-[#bbbbbb] text-sm">Seats:</span>
+                                                <div class="flex flex-wrap gap-2">
+                                                    <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">H5</span>
+                                                    <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">H6</span>
+                                                    <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">H7</span>
+        
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-between mb-2">
+                                                <span class="text-[#bbbbbb] text-sm">Đồ ăn:</span>
+                                                <span class="font-medium">Yes</span>
+                                            </div>
+                                            <div class="flex justify-between text-sm text-[#ddd] mt-1">
+                                                <span>Combo Bạn Bè x1</span>
+                                                <span>150,000₫</span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex justify-between items-center p-4 bg-opacity-20 bg-black border-t border-[#333]">
+                                            <div class="text-lg font-bold text-[#00a8e1]">540,000₫</div>
+                                            <div class="flex gap-3">
+                                                <button
+                                                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white border border-white px-6 min-w-[10ch] hover:bg-white hover:text-black text-sm md:text-base h-12">View
+                                                    Receipt</button>
+        
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                </div>
+                            </div>
+                            <div
+                                class="grid grid-cols-1 gap-4 py-6 empty:hidden md:grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">
+                            </div>
                         </div>
-                    </div>
-                    <div class="rich-text">
-                        <p
-                            class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                            <span class="">Refunds may be requested before the posted showtime.&nbsp;</span><a
-                                class="group transition-colors text-blue-500 hocus:text-white" target="_self"
-                                href="/chinhsach"><span class="">Our Refund Policy</span></a></p>
-                    </div>
-                </header>
+                    </section>
+                </div>
                 <div class="mt-4">
                     <div class="mb-8 flex max-w-[760px] flex-col gap-4" data-orientation="vertical"></div>
                 </div>

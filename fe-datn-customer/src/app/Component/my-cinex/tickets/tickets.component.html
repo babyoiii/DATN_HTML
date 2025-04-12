@@ -9,68 +9,144 @@
                 </header>
                 <div class="mt-4">
                     <div class="rich-text">
-                        <p
-                            class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                            <span class="">No upcoming events found.</span></p>
-                    </div>
-                    <div
-                        class="grid grid-cols-1 gap-4 py-6 empty:hidden md:grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">
-                    </div>
-                </div>
-            </section>
-        </div>
-        <div class="empty:hidden">
-            <section class="mx-auto max-w-[1248px] px-2 py-8 empty:hidden sm:px-4 xl:px-0">
-                <header>
-                    <div class="flex flex-wrap items-baseline justify-between border-b border-gray-500">
-                        <h1 class="mb-2 text-500 headline">Past Events</h1>
-                        <div>
-                            <div class="amc-input amc-input--none relative"><select class="">
-                                    <option value="" selected="">Past 30 days</option>
-                                    <option value="60d">Past 60 days</option>
-                                    <option value="90d">Past 90 days</option>
-                                    <option value="1y">Past year</option>
-                                    <option value="2024">2024</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2021">2021</option>
-                                    <option value="2020">2020</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2016">2016</option>
-                                    <option value="2015">2015</option>
-                                    <option value="2014">2014</option>
-                                    <option value="2013">2013</option>
-                                </select><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
-                                    width="1em" height="100%"
-                                    class="pointer-events-none absolute right-4 h-[1em] w-[1em]"
-                                    aria-label="Expand Options">
-                                    <path
-                                        d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
-                                    </path>
-                                </svg></div>
+                        <div class="grid grid-cols-1 gap-4 py-6 md:grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">
+                            <!-- Upcoming Event 1 -->
+                            <div
+                                class="relative bg-[#111] rounded-lg overflow-hidden shadow-lg transition-transform hover:translate-y-[-5px] border border-[#333]">
+                                <div
+                                    class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#f84f4f] to-[#f84f4f]">
+                                </div>
+                                <div class="flex p-4 bg-opacity-30 bg-black">
+                                    <img src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_272/f_auto/q_auto/v1740687096/amc-cdn/production/2/movies/46000/46029/PosterDynamic/169917.jpg"
+                                        alt="Movie Poster" class="w-[100px] h-[150px] object-cover rounded mr-4">
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-bold mb-2">Avengers: Secret Wars</h3>
+                                        <div class="text-sm text-[#bbbbbb] mb-1">
+                                            <div><i class="far fa-calendar"></i> 15/04/2025</div>
+                                            <div><i class="far fa-clock"></i> 19:30</div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <div>CineX Saigon Centre</div>
+                                            <div class="text-sm text-[#bbbbbb]">IMAX Screen 3</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-4 border-t border-dashed border-[#444]">
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-[#bbbbbb] text-sm">Booking Code:</span>
+                                        <span class="font-medium">CNXBK-45872</span>
+                                    </div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-[#bbbbbb] text-sm">Ticket Type:</span>
+                                        <span class="font-medium">IMAX 3D</span>
+                                    </div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-[#bbbbbb] text-sm">Seats:</span>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">G12</span>
+                                            <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">G13</span>
+                                            <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">G14</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-[#bbbbbb] text-sm">Đồ ăn:</span>
+                                        <span class="font-medium">Yes</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm text-[#ddd] mt-1">
+                                        <span>Combo Đôi x1</span>
+                                        <span>120,000₫</span>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex justify-between items-center p-4 bg-opacity-20 bg-black border-t border-[#333]">
+                                    <div class="text-lg font-bold text-[#00a8e1]">570,000₫</div>
+                                    <div class="flex gap-3">
+                                        <button
+                                            class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white border border-white px-6 min-w-[10ch] hover:bg-white hover:text-black text-sm md:text-base h-12">View
+                                            Details</button>
+
+                                        <button
+                                            class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hover:bg-red-400 focus:bg-red-400 text-sm md:text-base h-12">Check
+                                            In</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Upcoming Event 2 -->
+                            <div
+                                class="relative bg-[#111] rounded-lg overflow-hidden shadow-lg transition-transform hover:translate-y-[-5px] border border-[#333]">
+                                <div
+                                    class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#f84f4f] to-[#f84f4f]">
+                                </div>
+                                <div class="flex p-4 bg-opacity-30 bg-black">
+                                    <img src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_272/f_auto/q_auto/v1742307469/amc-cdn/production/2/movies/79000/78978/PosterDynamic/170164.jpg"
+                                        alt="Movie Poster" class="w-[100px] h-[150px] object-cover rounded mr-4">
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-bold mb-2">Dune: Part Three</h3>
+                                        <div class="text-sm text-[#bbbbbb] mb-1">
+                                            <div><i class="far fa-calendar"></i> 20/04/2025</div>
+                                            <div><i class="far fa-clock"></i> 20:15</div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <div>CineX Landmark 81</div>
+                                            <div class="text-sm text-[#bbbbbb]">Dolby Cinema</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-4 border-t border-dashed border-[#444]">
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-[#bbbbbb] text-sm">Booking Code:</span>
+                                        <span class="font-medium">CNXBK-45981</span>
+                                    </div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-[#bbbbbb] text-sm">Ticket Type:</span>
+                                        <span class="font-medium">Dolby Atmos</span>
+                                    </div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-[#bbbbbb] text-sm">Seats:</span>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">J8</span>
+                                            <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">J9</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between mb-2">
+                                        <span class="text-[#bbbbbb] text-sm">Đồ ăn:</span>
+                                        <span class="font-medium">Yes</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm text-[#ddd] mt-1">
+                                        <span>Bắp Caramel Lớn x1</span>
+                                        <span>90,000₫</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm text-[#ddd] mt-1">
+                                        <span>Nước Ngọt Size L x2</span>
+                                        <span>90,000₫</span>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex justify-between items-center p-4 bg-opacity-20 bg-black border-t border-[#333]">
+                                    <div class="text-lg font-bold text-[#00a8e1]">540,000₫</div>
+                                    <div class="flex gap-3">
+                                        <button
+                                            class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white border border-white px-6 min-w-[10ch] hover:bg-white hover:text-black text-sm md:text-base h-12">View
+                                            Details</button>
+
+                                        <button
+                                            class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hover:bg-red-400 focus:bg-red-400 text-sm md:text-base h-12">Check
+                                            In</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="rich-text">
-                        <p
-                            class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                            <span class="text-300 footnote" style="color: rgb(148, 166, 171);">Transaction details are
-                                only available for tickets purchased on AMCTheatres.com or the AMC mobile app within the
-                                past two calendar years.</span></p>
-                    </div>
-                </header>
-                <div class="mt-4">
-                    <div class="rich-text">
-                        <p
-                            class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                            <span class="">No past events found.</span></p>
-                    </div>
                     <div
                         class="grid grid-cols-1 gap-4 py-6 empty:hidden md:grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">
                     </div>
                 </div>
             </section>
         </div>
+
     </main>
 </div>
+
+<!-- Icoin -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">

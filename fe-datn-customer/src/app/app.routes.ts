@@ -30,6 +30,8 @@ import { HistoryComponent } from './Component/my-cinex/history/history.component
 import { NeedMoreTimeComponent } from './Component/need-more-time/need-more-time.component';
 import { TimeUpComponent } from './Component/time-up/time-up.component';
 import { TestDialogComponent } from './Component/test-dialog/test-dialog.component';
+import { DetailsTicketComponent } from './Component/my-cinex/details-ticket/details-ticket.component';
+import { VipMemberComponent } from './Component/my-cinex/vip-member/vip-member.component';
 
 export const routes: Routes = [
     {
@@ -51,6 +53,7 @@ export const routes: Routes = [
                     { path: 'rewards', component: RewardsComponent},
                     { path: 'history', component: HistoryComponent},
                     { path: 'profile', component: ProfileComponent},
+                    { path: 'xyz', component: DetailsTicketComponent},
                 ]
             },
         ]
@@ -69,6 +72,7 @@ export const routes: Routes = [
     { path: 'NeedMoreTime', component: NeedMoreTimeComponent },
     { path: 'TimeUpComponent', component: TimeUpComponent },
     { path: 'test', component: TestDialogComponent },
-
+    
+    { path: 'ghj', component: VipMemberComponent},
     // { path: 'Test123', component: TestBlockChainComponent },
 ];
