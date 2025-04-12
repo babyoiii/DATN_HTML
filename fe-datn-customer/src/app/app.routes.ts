@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import path from 'path';
 import { HomeComponent } from './Component/home/home.component';
 import { MainComponent } from './Layout/main/main.component';
 import { DangkiComponent } from './Component/dangki/dangki.component';
@@ -27,7 +26,6 @@ import { RewardsComponent } from './Component/my-cinex/rewards/rewards.component
 import { HistoryComponent } from './Component/my-cinex/history/history.component';
 import { NeedMoreTimeComponent } from './Component/need-more-time/need-more-time.component';
 import { TimeUpComponent } from './Component/time-up/time-up.component';
-import { TestDialogComponent } from './Component/test-dialog/test-dialog.component';
 
 export const routes: Routes = [
     {
@@ -52,7 +50,6 @@ export const routes: Routes = [
             },
         ]
     },
-    { path: 'a', component: ShowtimesComponent },
     { path: 'showtimes', component: ShowtimesComponent },
     { path: 'showtimes/:id', component: ShowtimesComponent },
     { path: 'dangki', component: DangkiComponent },
@@ -65,7 +62,6 @@ export const routes: Routes = [
     { path: 'payment-callback', component: PaymentCallBackComponent },
     { path: 'NeedMoreTime', component: NeedMoreTimeComponent },
     { path: 'TimeUpComponent', component: TimeUpComponent },
-    { path: 'test', component: TestDialogComponent },
+    { path: 'TicketSeatsComponent', component: TicketSeatsComponent },
 
-    // { path: 'Test123', component: TestBlockChainComponent },
 ];
