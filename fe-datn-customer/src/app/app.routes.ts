@@ -26,6 +26,9 @@ import { RewardsComponent } from './Component/my-cinex/rewards/rewards.component
 import { HistoryComponent } from './Component/my-cinex/history/history.component';
 import { NeedMoreTimeComponent } from './Component/need-more-time/need-more-time.component';
 import { TimeUpComponent } from './Component/time-up/time-up.component';
+import { TestDialogComponent } from './Component/test-dialog/test-dialog.component';
+import { DetailsTicketComponent } from './Component/my-cinex/details-ticket/details-ticket.component';
+import { VipMemberComponent } from './Component/my-cinex/vip-member/vip-member.component';
 
 export const routes: Routes = [
     {
@@ -46,6 +49,7 @@ export const routes: Routes = [
                     { path: 'rewards', component: RewardsComponent},
                     { path: 'history', component: HistoryComponent},
                     { path: 'profile', component: ProfileComponent},
+                    { path: 'detailOrder/:id', component: DetailsTicketComponent},
                 ]
             },
         ]
@@ -62,6 +66,7 @@ export const routes: Routes = [
     { path: 'payment-callback', component: PaymentCallBackComponent },
     { path: 'NeedMoreTime', component: NeedMoreTimeComponent },
     { path: 'TimeUpComponent', component: TimeUpComponent },
-    { path: 'TicketSeatsComponent', component: TicketSeatsComponent },
-
+    { path: 'test', component: TestDialogComponent },
+    
+    { path: 'thanhtoanMembership', component: VipMemberComponent},
 ];

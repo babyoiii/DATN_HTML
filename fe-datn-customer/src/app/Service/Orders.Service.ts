@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { GetListHistoryOrderByUser, OrderModelReq, PaymentMethod, PaymentModelReq, Service } from '../Models/Order';
+import { GetListHistoryOrderByUser, OrderDetailLanding, OrderModelReq, PaymentMethod, PaymentModelReq, Service } from '../Models/Order';
 import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { get } from 'node:http';
@@ -78,5 +78,11 @@ export class OrdersService {
   }
   getPastShowTimesByTimeFilter(filter:string): Observable<any> {
     return this.http.get<GetListHistoryOrderByUser>(`${this.baseUrl}/Movie/GetPastShowTimesByTimeFilter?filter=${filter}`);
+  }
+  getOrderDetailLangding(orderId: string): Observable<any> {
+    return this.http.get<OrderDetailLanding>(`${this.baseUrl}/Movie/GetOrderDetailLangding?orderId=${orderId}`);
+  }
+  checkRefund(orderId: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/Movie/CheckRefund?orderId=${orderId}`);
   }
  }

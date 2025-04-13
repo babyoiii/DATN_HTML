@@ -14,6 +14,8 @@ import { SafePipe } from "../../safe.pipe";
 import { CinemaService, CinemaRes } from '../../Service/cinema.service';
 import { stringify } from 'node:querystring';
 import { EMPTY } from 'rxjs';
+import { LocationService } from '../../Service/location.service';
+import { Log } from 'ethers';
 
 @Component({
   selector: 'app-showtimes',
@@ -24,6 +26,7 @@ import { EMPTY } from 'rxjs';
 })
 export class ShowtimesComponent implements OnInit {
   listData: GetShowTimeLandingRes[] = [];
+  listLocation : string[] = []
   groupedData: {
     [key: string]: {
       id: string; // Thêm thuộc tính id (phục vụ việc đổi link)
@@ -40,7 +43,7 @@ export class ShowtimesComponent implements OnInit {
   } = {};
   listMoive: GetAllNameMovie[] = [];
   movieId: string = '';
-  location: string = 'Hà Nội';
+  location: string = '';
   date: string = new Date().toISOString().split('T')[0];
   currentPage = 1;
   recordPerPage = 100;
@@ -62,6 +65,7 @@ export class ShowtimesComponent implements OnInit {
     private movieService: MovieService,
     private route: ActivatedRoute,
     private cinemaService: CinemaService,
+    private locationService : LocationService
   ) { }
 
   ngOnInit(): void {
@@ -91,6 +95,7 @@ export class ShowtimesComponent implements OnInit {
       this.getmovieName();
       this.getShowTimes();
       this.loadCinemas();
+      this.loadLocations();
     });
   }
 
@@ -113,11 +118,23 @@ export class ShowtimesComponent implements OnInit {
 
 
 
-
-
-
-
-
+loadLocations(): void {
+    this.locationService.getProvinces().subscribe({
+      next: (response : any) => {
+        this.listLocation = response.data.map((location: any) => location.name)
+        console.log('List locations:', this.listLocation);
+      },
+      error: (error) => {
+        console.error('Error loading locations:', error);
+      }
+    })
+  }
+  onChangeLocation(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.location = selectElement.value;
+    console.log('Selected location:', this.location);
+    this.getShowTimes();
+  }
 
   onCinemaChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
@@ -136,12 +153,13 @@ export class ShowtimesComponent implements OnInit {
     this.getShowTimes();
   }
 
-
   getSelectedCinemaName(): string {
-    if (!this.selectedCinemaId) return 'Tất cả các rạp';
-    const cinema = this.cinemas.find(c => c.cinemasId === this.selectedCinemaId);
-    return cinema ? cinema.name : 'Tất cả các rạp';
-  }
+    if (!this.location) {
+        return 'Tất cả các rạp';
+    }
+
+    return this.location; 
+}
 
   getmovieName() {
     this.movieService.getAllNameMovies().subscribe({

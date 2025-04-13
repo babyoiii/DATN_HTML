@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MyCinexComponent } from './my-cinex.component';
+import { TimeUpComponent } from './time-up.component';
 
-describe('MyCinexComponent', () => {
-  let component: MyCinexComponent;
-  let fixture: ComponentFixture<MyCinexComponent>;
+describe('TimeUpComponent', () => {
+  let component: TimeUpComponent;
+  let fixture: ComponentFixture<TimeUpComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MyCinexComponent]
+      imports: [TimeUpComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MyCinexComponent);
+    fixture = TestBed.createComponent(TimeUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

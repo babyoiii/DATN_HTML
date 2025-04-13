@@ -58,7 +58,7 @@ export class PurchaseComponent implements OnInit,OnDestroy {
   voucherCode: string | null = null;
   discountAmount: number = 0;
   pointWillEarn: number = 0;
-  freeService: string | null = null;
+  freeService: string[] | null = null;
   userId: string | null = null;
   constructor(
     private seatService: SeatService,
@@ -137,6 +137,9 @@ export class PurchaseComponent implements OnInit,OnDestroy {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
     }
   }
+  onDisconnect(){
+    this.seatService.disconnect()
+  }
   applyMembershipDiscount(): void {
     if (!this.totalAmount || !this.totalTicketPrice) {
       return;
@@ -148,6 +151,7 @@ export class PurchaseComponent implements OnInit,OnDestroy {
          this.discountAmount = discountData.discountAmount;
           this.pointWillEarn = discountData.pointWillEarn;
           this.freeService = discountData.freeService;
+          console.log('List', this.freeService);
           this.updateTotals(); 
         } else {
         }

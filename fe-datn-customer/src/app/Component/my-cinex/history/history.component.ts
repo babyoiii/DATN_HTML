@@ -3,11 +3,12 @@ import { GetListHistoryOrderByUser } from '../../../Models/Order';
 import { OrdersService } from '../../../Service/Orders.Service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-history',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,RouterLink],
   templateUrl: './history.component.html',
   styleUrl: './history.component.css'
 })
@@ -16,6 +17,7 @@ export class HistoryComponent implements OnInit {
   listDataFilter: GetListHistoryOrderByUser[] = [];
   selectedDateFilter: string = '30';
   yearOptions: number[] = [];
+  IsRefund : boolean = false;
   constructor(private ordersService : OrdersService) { }
 
   ngOnInit(): void {
@@ -48,6 +50,20 @@ export class HistoryComponent implements OnInit {
     console.log('Selected filter:', this.selectedDateFilter);
     this.getListTicketByDate(this.selectedDateFilter);
   }
+  checkRefund(orderId: string): boolean {
+    let isRefundable = false;
+    this.ordersService.checkRefund(orderId).subscribe({
+      next: (response) => {
+        if (response.responseCode == 200) {
+          isRefundable = response.data;
+        }
+      },
+      error: (error) => {
+        console.error('Error checking refund:', error);
+      },
+    });
+    return isRefundable;
+  } 
   getListTicketByDate(date: string) {
     this.ordersService.getPastShowTimesByTimeFilter(date).subscribe({
       next: (response) => {
@@ -63,5 +79,6 @@ export class HistoryComponent implements OnInit {
         this.listDataFilter = [];
       },
     });
+   
 }
 }

@@ -69,4 +69,37 @@ export interface ServiceInfoModel {
     quantity: number;
     totalPrice: number;
 }
+export interface OrderDetailLanding {
+  id: string;
+  movieName: string;
+  duration: string;
+  orderCode: string;
+  orderCodeB64: string;
+  description: string;
+  cinemaName: string;
+  thumbnail: string;
+  address: string;
+  sessionTime: string;
+  sessionDate: string;
+  roomName: string;
+  seatList: string[];
+  serviceList: ServiceInfoRes[];
+  concessionAmount: number;
+  totalPrice: number;
+  discountPrice: number;
+  PointChange: number;
+  totalPriceTicket: number;
+  email: string;
+  createdDate: string;
+}
+export interface ServiceInfoRes {
+  serviceTypeName : string;
+  name: string;
+  quantity: number;
+  totalPrice: number;
+}
+export interface GroupedServiceInfo {
+  serviceTypeName: string;
+  services: ServiceInfoModel[];
+}
   

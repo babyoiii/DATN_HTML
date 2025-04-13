@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { CheckMembership, MembershipPreview } from '../Models/Membership';
+import { CheckMembership, MembershipData, MembershipPreview } from '../Models/Membership';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -16,5 +16,8 @@ export class MembershipService {
     }
     getPriceMembershipPreview(orderPrice: number, ticketPrice: number): Observable<MembershipPreview> {
       return this.http.get<MembershipPreview>(`${this.baseUrl}/Membership/MembershipPreview?orderPrice=${orderPrice}&ticketPrice=${ticketPrice}`);
+    }
+    getMembershipByUserRes(): Observable<any> {
+      return this.http.get<MembershipData>(`${this.baseUrl}/Membership/GetmembershipByUserRes`);
     }
 }

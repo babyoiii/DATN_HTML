@@ -1,0 +1,489 @@
+<div class="relative bg-black text-white [&amp;:has(dialog[open],[data-body-scroll=disabled])]:overflow-hidden"
+    monica-id="ofpnmcalabcbjgholdjcjblkibolbppb" monica-version="7.9.1" style="">
+<div class="flex h-[100dvh] flex-col">
+    <header class="flex flex-col border-b border-gray-700 bg-checkout-black">
+        <div class="border-b border-gray-700 bg-checkout-black">
+            <div 
+                class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative flex items-center justify-center py-4 text-400 label">
+                <button  [routerLink]="'/my-cinex/'" type="button"
+                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute left-0 z-10"
+                    aria-label="Browser Back"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                        viewBox="0 0 45 45" width="1em" height="100%" class="m-2 h-5 w-5">
+                        <title>Back</title>
+                        <path
+                            d="M14.974 22.5 34.321 3.153A2.09 2.09 0 0 0 31.46.291l-20.892 20.75a2.09 2.09 0 0 0 0 2.861L31.373 44.71a2.09 2.09 0 0 0 2.862-2.862z">
+                        </path>
+                    </svg></button>
+                <div class="relative flex w-full items-center justify-center text-sm md:text-base">
+                    <h1>Confirm Purchase</h1>
+                </div><a
+                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute right-0"
+                    href="/"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
+                        viewBox="0 0 45 45" width="1em" height="100%" class="m-2 h-5 w-5">
+                        <title>Close</title>
+                        <path stroke-width="4.0358"
+                            d="M40.341 4.769a1.112 1.112 0 0 1-.022 1.587L24.071 22.604 40.32 38.85a1.112 1.112 0 0 1-1.566 1.566L22.506 24.169 6.236 40.417a1.112 1.112 0 0 1-1.565-1.566l16.27-16.247L4.67 6.356a1.125 1.125 0 0 1-.303-.767A1.13 1.13 0 0 1 5.49 4.465c.285 0 .56.11.768.304l16.248 16.269 16.268-16.27a1.117 1.117 0 0 1 1.566 0Z">
+                        </path>
+                    </svg></a>
+            </div>
+        </div>
+    </header>
+    <form class="contents">
+        <main id="main" class="relative flex-1 overflow-auto">
+            <div class="w-full border-b border-gray-700">
+                <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 flex items-center gap-4 py-2 md:py-4"><img
+                        alt="CineX Premiere Logo" config="[object Object]" loading="lazy" width="150" height="75"
+                        decoding="async" data-nimg="1" class="pointer-events-none hidden md:block"
+                        srcset="../../../../assets/cinexLogo.png 1x, ../../../../assets/cinexLogo.png 2x" src="../../../../assets/cinexLogo.png" style="color: transparent;">
+                    <div>
+                        <h2 class="text-lg font-bold md:text-4xl">CineX Stubs Premiere</h2>
+                        <p>Tự động gia hạn tư cách thành viên</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mx-auto w-full px-4 xl:px-0 grid max-w-[1000px] grid-cols-2 gap-20">
+                <div class="col-span-2 pt-4 md:col-span-1">
+                    <div class="mb-12 divide-y divide-gray-700">
+                        <section class="divide-y-0 py-6">
+                            <h3 class="mb-4 text-xl font-semibold">Email Liên Lạc</h3>
+                            <div class="flex flex-wrap justify-between gap-2">
+                                <p class="flex gap-2">{{email}}<button aria-label="Sign Out" type="button"
+                                        class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-sm md:text-base"><span
+                                            class="text-sm font-semibold"></span></button></p>
+                                <p class="text-sm text-gray-300">Biên lai và xác nhận đơn hàng của bạn sẽ được gửi
+                                    đến
+                                    địa chỉ email này.</p>
+                            </div>
+                            <p class="mt-4 text-sm italic text-gray-300">Tất cả thông tin liên lạc về thành viên sẽ
+                                được gửi
+                                đến địa chỉ email này.</p>
+                        </section>
+
+                        <div class="grid gap-4">
+                            <section class="grid gap-6 py-6">
+                                <h3 class="sr-only">Phương Thức Thanh Toán</h3>
+                                <div class="grid gap-4">
+                                    <h4 class="flex items-baseline justify-between text-xl font-semibold">Phương
+                                        Thức Thanh Toán</h4>
+                                    <div class="grid gap-2">
+                                        <div class="grid gap-2"><button type="button" id="addCardButton"
+                                                class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white md:text-base flex items-center gap-4 text-base"><svg
+                                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                    viewBox="0 0 45 45" width="1em" height="100%"
+                                                    class="m-1 h-[21px] w-[21px]">
+                                                    <path
+                                                        d="M23.428 21.572v-8.438a.928.928 0 0 0-1.828 0v8.438h-8.438a.928.928 0 1 0 0 1.828H21.6v8.438a.928.928 0 0 0 1.828 0V23.4h8.438a.928.928 0 0 0 0-1.828z">
+                                                    </path>
+                                                    <path
+                                                        d="M22.5 0A22.5 22.5 0 1 0 45 22.5 22.5 22.5 0 0 0 22.5 0zm0 43.172A20.672 20.672 0 1 1 43.172 22.5 20.672 20.672 0 0 1 22.5 43.172z">
+                                                    </path>
+                                                </svg> Thêm thẻ</button>   @for (item of listPaymentMethod; track $index) {
+                                                    <label
+                                                    class="flex w-max items-center gap-4">
+                                                    <input
+                                                        class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
+                                                        type="radio" [value]="item.paymentMethodName"
+                                                        (change)="onPaymentMethodChange(item.id)" name="paymentMethod">
+                                                        
+                                                        <img alt=""
+                                                        config="[object Object]" loading="lazy" width="47" height="30"
+                                                        decoding="async" data-nimg="1" class="pointer-events-none"
+                                                        srcset="{{item.logoUrl}}"
+                                                        src="{{item.logoUrl}}"
+                                                        style="color: transparent;">
+                                                        <span>{{item.paymentMethodName}}</span></label>
+                                                    }
+                                                </div>
+                                    </div>
+                                    <p class="text-sm italic text-gray-200">Đăng kí thành viên AMC Stubs yêu cầu thẻ
+                                        tín dụng hoặc thẻ ghi nợ.</p>
+                                </div>
+                                <style></style>
+                                <div id="rokt-below-payments" class="emtpy:hidden"></div>
+                            </section>
+                        </div><label
+                            class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed py-6">
+                            <div class="flex items-start gap-4">
+                                <div class="m-1 inline-block h-5 w-5"><input
+                                        class="h-5 w-5 appearance-none rounded border bg-[length:75%] bg-[50%] bg-no-repeat border-2 border-white/60 checked:border-0 checked:bg-blue-500 checked:bg-[url(https://amc-theatres-res.cloudinary.com/amc-cdn/static/images/forms/checkbox_checkmark.png)] checked:hover:bg-blue-700 disabled:cursor-not-allowed disabled:brightness-50 disabled:grayscale"
+                                        type="checkbox" name="termsAndConditions"></div>
+                                <div class="rich-text">
+                                    <p
+                                        class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
+                                        <span class="font-bold">Bằng cách đánh dấu vào ô và chọn "Thanh Toán" bên
+                                            dưới,
+                                            thành viên và chủ thẻ:</span>
+                                    </p>
+                                    <ul class="ml-4 list-disc">
+                                        <li class="mb-[.5em]"><span class="">Xác nhận rằng tôi đồng ý
+                                                tự động gia hạn hàng năm tư cách thành viên CineX Stubs Premiere của
+                                                mình và
+                                                hiểu rằng tôi có thể hủy khoản phí định kỳ này bất kỳ lúc nào bằng
+                                                cách
+                                                truy cập phần CineX Stubs của My CineX.</span></li>
+                                        <li class="mb-[.5em]"><span class="">Cho phép Rạp chiếu phim CineX lưu trữ
+                                                thông tin thanh toán
+                                                và đồng ý với khoản phí CineX Stubs Premiere định kỳ
+                                                theo</span><span class="font-bold"> </span><a
+                                                class="group transition-colors text-blue-500 hocus:text-white"
+                                                rel="noopener noreferrer" target="_blank" href="#"><span
+                                                    class="font-bold">CineX Điều khoản và Dịch vụ</span></a><span
+                                                class="font-bold">.</span></li>
+                                        <li class="mb-[.5em]"><span class="">Đồng ý với&nbsp;</span><a
+                                                class="group transition-colors text-blue-500 hocus:text-white"
+                                                rel="noopener noreferrer" target="_blank" href="#"><span
+                                                    class="font-bold">Điều khoản dịch vụ của CineX</span></a><span
+                                                class="">.</span></li>
+                                        <li class="mb-[.5em]"><span class="">Xác nhận tôi đã đọc&nbsp;</span><a
+                                                class="group transition-colors text-blue-500 hocus:text-white"
+                                                rel="noopener noreferrer" target="_blank" href="#"><span
+                                                    class="font-bold">Tiết lộ thông tin liên lạc được bảo
+                                                    vệ</span></a><span class="font-bold"> </span><span
+                                                class="">&nbsp;và đồng ý nhận thông tin liên lạc được bảo vệ
+                                                qua phương tiện điện tử.</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <aside class="hidden w-[400px] pt-4 lg:block">
+                    <h1 class="mt-4 hidden lg:block text-xl lg:text-2xl font-black leading-tight tracking-tighter">
+                        Chi Tiết Thanh Toán</h1>
+                    <div class="max-w-full">
+                        <div class="divide-gray-700 md:divide-y">
+                            <section class="">
+                                <header class="flex items-baseline justify-between">
+                                    <h2
+                                        class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
+                                        Thành Viên</h2>
+                                </header>
+                                <ul class="mb-4 grid gap-2">
+                                    <li class="pt-2 font-semibold">
+                                        <div class="flex justify-between gap-3">
+                                            <div class="flex-1">
+                                                <h4
+                                                    class="my-auto text-base font-semibold leading-tight tracking-normal">
+                                                    <div class="flex flex-col">CineX Premiere </div>
+                                                </h4>
+                                            </div>
+                                            <p class="my-auto label text-white">150.000Vnđ</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </section>
+                            <section class="my-auto py-4">
+                                <h2
+                                    class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal sr-only">
+                                    Phí thanh toán</h2>
+                                <ul class="grid gap-2 mb-2">
+                                    <li class="pt-2 font-semibold">
+                                        <div class="flex justify-between gap-3">
+                                            <div class="flex-1">
+                                                <h4
+                                                    class="my-auto text-base font-semibold leading-tight tracking-normal">
+                                                    VAT</h4>
+                                            </div>
+                                            <p class="my-auto label text-white">15.000Vnđ</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </section>
+                            <p
+                                class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
+                                <span
+                                    class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Tổngx
+                                </span>165.000Vnđ
+                            </p>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </main>
+        <footer class="border-t border-gray-700 bg-checkout-black">
+            <div class="mx-auto w-full max-w-[1248px] xl:px-0 px-0">
+                <div class="items-center justify-between pt-2 md:pt-0 lg:flex">
+                    <div class="px-4">
+                        <div class="rich-text">
+                            <p
+                                class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
+                                <span class="text-200">Tôi đồng ý với </span><a
+                                    class="group transition-colors text-blue-500 hocus:text-white"
+                                    rel="noopener noreferrer" target="_blank" href="#"><span class="text-200">CineX
+                                        Điều khoản và Dịch vụ</span></a><span class="">.</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div
+                        class="flex flex-wrap items-center gap-4 py-4 w-full justify-between border-t border-gray-700 px-4 pt-4 md:w-auto md:border-t-0 lg:justify-end">
+                        <div class="flex items-center gap-2"><span
+                                class="hidden text-sm font-semibold uppercase text-gray-200 lg:block">Tổng</span>
+                            <section>
+                                <div aria-label="Order Total" class="hidden gap-2 lg:flex"><span
+                                        class="font-bold">165.000Vnđ</span></div>
+                                <div class="lg:hidden">
+                                    <div><button type="button"
+                                            class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 text-sm md:text-base flex items-center gap-3">
+                                            <div class="relative"><svg xmlns="http://www.w3.org/2000/svg"
+                                                    fill="currentColor" viewBox="0 0 14.16 14.31" width="1em"
+                                                    height="100%" class="h-9 w-9">
+                                                    <title>Show Order Details</title>
+                                                    <path
+                                                        d="M4.45 10.21h8a.27.27 0 0 0 .27-.21l1.44-7.37a.26.26 0 0 0-.2-.25H3.19L2.67.21A.28.28 0 0 0 2.4 0H.23a.28.28 0 0 0-.22.33.28.28 0 0 0 .22.22h2l1.93 9.14a1.3 1.3 0 0 0-1 1.31 1.17 1.17 0 0 0 .37.93l.15.08a1.3 1.3 0 0 0-.56 1.05 1.34 1.34 0 0 0 2.67 0 1.4 1.4 0 0 0-.29-.81h5.76a1.27 1.27 0 0 0-.3.81 1.34 1.34 0 0 0 2.67 0 1.32 1.32 0 0 0-1.15-1.3.06.06 0 0 0-.06-.06H4.59a1 1 0 0 1-.7-.18.64.64 0 0 1-.19-.52.82.82 0 0 1 .75-.79Zm9.09-7.33L12.2 9.66H4.66L3.32 2.84Zm-9.09 11a.79.79 0 1 1 .78-.8.78.78 0 0 1-.78.77Zm8.61-.79a.79.79 0 1 1-.79-.79.78.78 0 0 1 .78.78Z"
+                                                        class="cart_svg__cls-1"></path>
+                                                </svg>
+                                                <div
+                                                    class="absolute inset-0 grid -translate-y-[2px] translate-x-1 place-items-center leading-none">
+                                                    <span aria-label="Number of Items in Order"
+                                                        class="text-xs">1</span>
+                                                </div>
+                                            </div>165.000Vnđ
+                                        </button>
+                                        <div
+                                            class="fixed inset-0 z-40 bg-black transition-opacity duration-300 pointer-events-none opacity-0">
+                                        </div>
+                                        <div
+                                            class="fixed bottom-0 left-0 z-50 max-h-[70vh] w-full rounded-t-lg bg-[#111417] shadow-lg transition-transform duration-500 ease-in-out translate-y-full">
+                                            <div class="max-h-[70vh] overflow-y-auto p-4">
+                                                <div class="flex w-full justify-center"><button
+                                                        class="h-1 w-24 rounded-3xl bg-white"></button></div>
+                                                <div>
+                                                    <h1
+                                                        class="mt-4 hidden lg:block text-xl lg:text-2xl font-black leading-tight tracking-tighter">
+                                                        Chi Tiết Thanh Toán</h1>
+                                                    <div class="max-w-full">
+                                                        <div class="divide-gray-700 md:divide-y">
+                                                            <section class="">
+                                                                <header class="flex items-baseline justify-between">
+                                                                    <h2
+                                                                        class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
+                                                                        Thành Viên</h2>
+                                                                </header>
+                                                                <ul class="mb-4 grid gap-2">
+                                                                    <li class="pt-2 font-semibold">
+                                                                        <div class="flex justify-between gap-3">
+                                                                            <div class="flex-1">
+                                                                                <h4
+                                                                                    class="my-auto text-base font-semibold leading-tight tracking-normal">
+                                                                                    <div class="flex flex-col">CineX
+                                                                                        Premiere </div>
+                                                                                </h4>
+                                                                            </div>
+                                                                            <p class="my-auto label text-white">
+                                                                                150.000Vnđ</p>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </section>
+                                                            <section class="my-auto py-4">
+                                                                <h2
+                                                                    class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal sr-only">
+                                                                    Phí thanh toán</h2>
+                                                                <ul class="grid gap-2 mb-2">
+                                                                    <li class="pt-2 font-semibold">
+                                                                        <div class="flex justify-between gap-3">
+                                                                            <div class="flex-1">
+                                                                                <h4
+                                                                                    class="my-auto text-base font-semibold leading-tight tracking-normal">
+                                                                                    VAT</h4>
+                                                                            </div>
+                                                                            <p class="my-auto label text-white">
+                                                                                15.000Vnđ</p>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </section>
+                                                            <p
+                                                                class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
+                                                                <span
+                                                                    class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Tổngx
+                                                                </span>165.000Vnđ
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                        </section>
+                    </div>
+                    <div class="flex items-center gap-2 ">
+                        <p class="hidden text-xs font-semibold italic text-gray-100 lg:block">Bạn phải hoàn thành
+                            tất cả các trường bắt buộc.</p><button type="submit"
+                            class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12"
+                            disabled="">Thanh Toán</button><button hidden="" type="submit"
+                            aria-label="Purchase"></button>
+                    </div>
+                </div>
+            </div>
+</div>
+</footer>
+</form>
+</div>
+<div role="region" aria-label="Notifications (F8)" tabindex="-1" style="pointer-events:none">
+    <ol tabindex="-1" class="fixed bottom-0 right-0 grid w-full max-w-full gap-4 p-4 md:w-96"></ol>
+</div>
+<dialog
+    class="flex items-center justify-center empty:hidden w-[100vw] h-[100dvh] bg-transparent max-w-[100vw] max-h-[100dvh]">
+</dialog>
+<!-- <dialog id="cardDialog"
+    class="overflow-x-hidden rounded border border-gray-700 bg-black p-0 text-white backdrop:bg-black backdrop:opacity-50 [&amp;:has(.modal-loader)]:border-0 [&amp;:has(.modal-loader)]:bg-transparent"
+    style="max-width: 97dvw; max-height: 97dvh;" >
+    <div class="max-h-[99dvh] w-[600px] max-w-[97dvw]">
+        <header
+            class="sticky top-0 z-10 flex items-center border-b border-gray-700 px-8 py-4 text-500 headline bg-black"
+            data-modal-header="true">
+            <h1 class="flex items-center gap-x-4">Thêm Thẻ<img
+                    alt="Visa, MasterCard, Discover and American Express are accepted" config="[object Object]"
+                    loading="lazy" width="184" height="30" decoding="async" data-nimg="1" class="h-auto flex-1"
+                    srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_184/f_auto/q_auto/amc-cdn/static/images/forms/accepted_cards.png 1x, https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_184/f_auto/q_auto/amc-cdn/static/images/forms/accepted_cards.png 2x"
+                    src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_184/f_auto/q_auto/amc-cdn/static/images/forms/accepted_cards.png"
+                    style="color: transparent;"></h1><button type="button"
+                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 text-white hocus:text-blue-500 text-sm md:text-base ml-auto aspect-square rounded-full bg-black p-3"
+                aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
+                    viewBox="0 0 45 45" width="1em" height="100%" class="h-full w-full">
+                    <title>Close</title>
+                    <path stroke-width="4.0358"
+                        d="M40.341 4.769a1.112 1.112 0 0 1-.022 1.587L24.071 22.604 40.32 38.85a1.112 1.112 0 0 1-1.566 1.566L22.506 24.169 6.236 40.417a1.112 1.112 0 0 1-1.565-1.566l16.27-16.247L4.67 6.356a1.125 1.125 0 0 1-.303-.767A1.13 1.13 0 0 1 5.49 4.465c.285 0 .56.11.768.304l16.248 16.269 16.268-16.27a1.117 1.117 0 0 1 1.566 0Z">
+                    </path>
+                </svg></button>
+        </header>
+        <div class="px-8 py-8" data-modal-body="true">
+            <form>
+                <div class="grid gap-4"><label
+                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
+                            class="label">Số Thẻ</span>
+                        <div class="amc-input amc-input--box relative flex h-10 w-full gap-1">
+                            <div id="hosted-field-number" class="h-10 w-full bg-transparent py-2"><iframe
+                                    src="https://assets.braintreegateway.com/web/3.99.2/html/hosted-fields-frame.min.html#dd1f729d-a674-4b68-840d-0b1a937a1d1a"
+                                    frameborder="0" allowtransparency="true" scrolling="no" type="number"
+                                    name="braintree-hosted-field-number"
+                                    title="Secure Credit Card Frame - Credit Card Number"
+                                    id="braintree-hosted-field-number"
+                                    style="border: none; width: 100%; height: 100%; float: left;"></iframe>
+                                <div style="clear: both;"></div>
+                            </div>
+                        </div>
+                    </label>
+                    <div class="grid grid-cols-2 gap-4"><span class="label col-span-2">Expiration Date</span><label
+                            class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed">
+                            <div class="amc-input amc-input--box relative flex h-10 w-full gap-1">
+                                <div id="hosted-field-expirationMonth" class="h-10 w-full bg-transparent py-2">
+                                    <iframe
+                                        src="https://assets.braintreegateway.com/web/3.99.2/html/hosted-fields-frame.min.html#dd1f729d-a674-4b68-840d-0b1a937a1d1a"
+                                        frameborder="0" allowtransparency="true" scrolling="no"
+                                        type="expirationMonth" name="braintree-hosted-field-expirationMonth"
+                                        title="Secure Credit Card Frame - Expiration Month"
+                                        id="braintree-hosted-field-expirationMonth"
+                                        style="border: none; width: 100%; height: 100%; float: left;"></iframe>
+                                    <div style="clear: both;"></div>
+                                </div><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                    viewBox="0 0 45 45" width="1em" height="100%"
+                                    class="pointer-events-none absolute right-0 mr-4">
+                                    <path
+                                        d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </label><label class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed">
+                            <div class="amc-input amc-input--box relative flex h-10 w-full gap-1">
+                                <div id="hosted-field-expirationYear" class="h-10 w-full bg-transparent py-2">
+                                    <iframe
+                                        src="https://assets.braintreegateway.com/web/3.99.2/html/hosted-fields-frame.min.html#dd1f729d-a674-4b68-840d-0b1a937a1d1a"
+                                        frameborder="0" allowtransparency="true" scrolling="no"
+                                        type="expirationYear" name="braintree-hosted-field-expirationYear"
+                                        title="Secure Credit Card Frame - Expiration Year"
+                                        id="braintree-hosted-field-expirationYear"
+                                        style="border: none; width: 100%; height: 100%; float: left;"></iframe>
+                                    <div style="clear: both;"></div>
+                                </div><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                    viewBox="0 0 45 45" width="1em" height="100%"
+                                    class="pointer-events-none absolute right-0 mr-4">
+                                    <path
+                                        d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </label></div>
+                    <div class="relative grid grid-cols-2 gap-2">
+                        <div class="relative"><label
+                                class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
+                                    class="label">CVV</span>
+                                <div class="amc-input amc-input--box relative flex h-10 w-full gap-1">
+                                    <div id="hosted-field-cvv" class="h-10 w-full bg-transparent py-2"><iframe
+                                            src="https://assets.braintreegateway.com/web/3.99.2/html/hosted-fields-frame.min.html#dd1f729d-a674-4b68-840d-0b1a937a1d1a"
+                                            frameborder="0" allowtransparency="true" scrolling="no" type="cvv"
+                                            name="braintree-hosted-field-cvv" title="Secure Credit Card Frame - CVV"
+                                            id="braintree-hosted-field-cvv"
+                                            style="border: none; width: 100%; height: 100%; float: left;"></iframe>
+                                        <div style="clear: both;"></div>
+                                    </div>
+                                </div>
+                            </label>
+                            <div class="absolute right-0 top-[26px] mr-4 mt-4 h-[1em] w-[1em]"><button
+                                    class="h-[1em] w-[1em] transition-colors text-white hover:text-blue-500"
+                                    aria-label="More Info" type="button" aria-haspopup="dialog"
+                                    aria-expanded="false" aria-controls="radix-:r2cl:" data-state="closed"><svg
+                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
+                                        width="1em" height="100%" class="h-[1em] w-[1em]">
+                                        <path
+                                            d="M22.5 45C10.125 45 0 34.875 0 22.5S10.125 0 22.5 0 45 10.125 45 22.5 34.875 45 22.5 45zm0-41.625c-10.35 0-18.9 8.55-18.9 18.9 0 10.35 8.55 18.9 18.9 18.9 10.35 0 18.9-8.55 18.9-18.9 0-10.35-8.55-18.9-18.9-18.9z">
+                                        </path>
+                                        <path
+                                            d="M15.75 17.55c0-3.6 3.15-6.075 6.75-6.075 3.15 0 6.75 2.25 6.75 5.625 0 2.25-1.125 3.825-2.925 4.95-.675.45-1.35.9-1.8 1.575-.675.675-.9 1.575-.9 2.7H20.7c-.225-.45-.225-.9-.225-1.35 0-4.5 5.4-4.725 5.4-7.875 0-1.575-1.575-2.7-3.15-2.7-2.025 0-3.375 1.575-3.375 3.375v.675l-3.375-.225c-.225.225-.225-.225-.225-.675zm6.3 15.75c1.125 0 2.025-.9 2.025-2.025s-.9-2.025-2.025-2.025-2.025.9-2.025 2.025c-.225.9.9 2.025 2.025 2.025z">
+                                        </path>
+                                    </svg></button></div>
+                        </div>
+                    </div>
+                    <div class="mt-2"><label for="first-name"><span class="label mb-2 inline-block">Cardholder Name
+                                and Email Address</span></label>
+                        <div class="grid gap-4 md:grid-cols-2"><label
+                                class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed">
+                                <div class="amc-input amc-input--box"><input class="input" placeholder="First Name"
+                                        id="first-name" autocomplete="cc-given-name" type="text"
+                                        name="cardHolderFirstName"></div>
+                            </label><label
+                                class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed">
+                                <div class="amc-input amc-input--box"><input class="input" placeholder="Last Name"
+                                        autocomplete="cc-family-name" type="text" name="cardHolderLastName"></div>
+                            </label><label
+                                class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed md:col-span-2">
+                                <div class="amc-input amc-input--box"><input class="input"
+                                        placeholder="Email Address" inputmode="email" type="email"
+                                        name="cardHolderEmail"></div>
+                                <p class="text-gray-subtle text-sm font-semibold leading-tight tracking-normal">Biên
+                                    lai và thông báo thanh toán trong tương lai của bạn cũng sẽ được gửi đến địa chỉ
+                                    email này.</p>
+                            </label></div>
+                        <div class="mt-4"><label for="address-1"><span class="label mb-2 inline-block">Địa Chỉ Thanh
+                                    Toán</span></label><label
+                                class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"></label>
+                            <div class="grid grid-cols-2 items-start gap-4 md:grid-cols-4"><label
+                                    class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed col-span-2 md:col-span-4">
+                                    <div class="amc-input amc-input--box"><input class="input" id="address-1"
+                                            autocomplete="billing address-line1" placeholder="Address" type="text"
+                                            name="address1"></div>
+                                </label><label
+                                    class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed col-span-2">
+                                    <div class="amc-input amc-input--box"><input class="input"
+                                            autocomplete="billing address-level2" placeholder="City" type="text"
+                                            name="city"></div>
+                                </label><label
+                                    class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed">
+                                    <div class="amc-input amc-input--box"><input class="input"
+                                            autocomplete="billing postal-code" placeholder="Zip" type="text"
+                                            name="postalCode"></div>
+                                </label></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-4 py-4 justify-end"><button type="submit"
+                        class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">
+                        Thêm Thẻ</button></div>
+            </form>
+        </div>
+    </div>
+</dialog> -->
+</div>
