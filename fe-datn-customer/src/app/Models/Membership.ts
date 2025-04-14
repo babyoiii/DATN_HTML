@@ -12,6 +12,7 @@ export interface UserMembershipDetails {
     memberCodeBase64: string;
     membershipName: string;
     membershipPrice: number;
+    membershipPriceNext: number;
     purchasedAt: string; 
     expiryDate: string;
     membershipLevel: number;

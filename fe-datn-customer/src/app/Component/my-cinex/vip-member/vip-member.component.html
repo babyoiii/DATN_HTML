@@ -167,24 +167,7 @@
                                                     <div class="flex flex-col">CineX Premiere </div>
                                                 </h4>
                                             </div>
-                                            <p class="my-auto label text-white">150.000Vnđ</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </section>
-                            <section class="my-auto py-4">
-                                <h2
-                                    class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal sr-only">
-                                    Phí thanh toán</h2>
-                                <ul class="grid gap-2 mb-2">
-                                    <li class="pt-2 font-semibold">
-                                        <div class="flex justify-between gap-3">
-                                            <div class="flex-1">
-                                                <h4
-                                                    class="my-auto text-base font-semibold leading-tight tracking-normal">
-                                                    VAT</h4>
-                                            </div>
-                                            <p class="my-auto label text-white">15.000Vnđ</p>
+                                            <p class="my-auto label text-white">{{totalAmount |number:'1.0-0' }}đ</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -193,7 +176,7 @@
                                 class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                 <span
                                     class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Tổngx
-                                </span>165.000Vnđ
+                                </span>{{totalAmount |number:'1.0-0' }}đ
                             </p>
                         </div>
                     </div>
@@ -220,7 +203,7 @@
                                 class="hidden text-sm font-semibold uppercase text-gray-200 lg:block">Tổng</span>
                             <section>
                                 <div aria-label="Order Total" class="hidden gap-2 lg:flex"><span
-                                        class="font-bold">165.000Vnđ</span></div>
+                                        class="font-bold">{{totalAmount |number:'1.0-0' }}đ</span></div>
                                 <div class="lg:hidden">
                                     <div><button type="button"
                                             class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 text-sm md:text-base flex items-center gap-3">
@@ -237,7 +220,7 @@
                                                     <span aria-label="Number of Items in Order"
                                                         class="text-xs">1</span>
                                                 </div>
-                                            </div>165.000Vnđ
+                                            </div>{{totalAmount |number:'1.0-0' }}đ
                                         </button>
                                         <div
                                             class="fixed inset-0 z-40 bg-black transition-opacity duration-300 pointer-events-none opacity-0">
@@ -275,29 +258,12 @@
                                                                     </li>
                                                                 </ul>
                                                             </section>
-                                                            <section class="my-auto py-4">
-                                                                <h2
-                                                                    class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal sr-only">
-                                                                    Phí thanh toán</h2>
-                                                                <ul class="grid gap-2 mb-2">
-                                                                    <li class="pt-2 font-semibold">
-                                                                        <div class="flex justify-between gap-3">
-                                                                            <div class="flex-1">
-                                                                                <h4
-                                                                                    class="my-auto text-base font-semibold leading-tight tracking-normal">
-                                                                                    VAT</h4>
-                                                                            </div>
-                                                                            <p class="my-auto label text-white">
-                                                                                15.000Vnđ</p>
-                                                                        </div>
-                                                                    </li>
-                                                                </ul>
-                                                            </section>
+                                                            
                                                             <p
                                                                 class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                                                 <span
                                                                     class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Tổngx
-                                                                </span>165.000Vnđ
+                                                                </span>{{totalAmount |number:'1.0-0' }}đ
                                                             </p>
                                                         </div>
                                                     </div>
@@ -311,10 +277,12 @@
                     </div>
                     <div class="flex items-center gap-2 ">
                         <p class="hidden text-xs font-semibold italic text-gray-100 lg:block">Bạn phải hoàn thành
-                            tất cả các trường bắt buộc.</p><button type="submit"
-                            class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12"
-                            disabled="">Thanh Toán</button><button hidden="" type="submit"
-                            aria-label="Purchase"></button>
+                            tất cả các trường bắt buộc.</p>
+                            
+                            <button type="button" (click)="addMembership()"
+                            class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12">
+                      Thanh Toán
+                    </button>
                     </div>
                 </div>
             </div>

@@ -19,6 +19,7 @@ export class BenefitsComponent implements OnInit {
       memberCodeBase64: '',
       membershipName: '',
       membershipPrice: 0,
+      membershipPriceNext: 0,
       purchasedAt: '',
       expiryDate: '',
       membershipLevel: 0,
@@ -29,12 +30,16 @@ export class BenefitsComponent implements OnInit {
  constructor( private membershipService : MembershipService) { }
   ngOnInit(): void {
     this.getMembershipData();
+   
   }
   getMembershipData(): void {
     this.membershipService.getMembershipByUserRes().subscribe({
       next: (response) => {
-        console.log('Membership Data:', response);
         this.membershipData = response.data;
+        localStorage.setItem('membershipPriceNext', JSON.stringify(this.membershipData.userMembershipDetails.membershipPriceNext));
+       
+        console.log(this.membershipData.nextLevelBenefits[0]?.membershipId, 'membershipPriceNextId');
+        localStorage.setItem('nextLevelBenefitsId', JSON.stringify(this.membershipData.nextLevelBenefits[0]?.membershipId));
       },
       error: (error) => {
         console.error('Error fetching membership data:', error);

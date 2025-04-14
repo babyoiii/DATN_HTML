@@ -20,4 +20,8 @@ export class MembershipService {
     getMembershipByUserRes(): Observable<any> {
       return this.http.get<MembershipData>(`${this.baseUrl}/Membership/GetmembershipByUserRes`);
     }
+    addUserMembership(payload: { membershipId: number; paymentMethodId: string }): Observable<any> {
+      const url = `${this.baseUrl}/Membership/AddUserMembership`;
+      return this.http.post<any>(url, payload);
+    }
 }

@@ -582,19 +582,11 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
   
 
-
   getMaxSeatsPerRow(): number {
-    if (!this.seats) return 12; // Default fallback
-    
-    let maxCount = 0;
+    if (!this.seats || this.seats.length === 0) return 0; 
+  
     const groupedSeats = this.groupSeatsByRow();
-    
-    Object.values(groupedSeats).forEach(row => {
-      if (row.length > maxCount) {
-        maxCount = row.length;
-      }
-    });
-    
+    const maxCount = Math.max(...Object.values(groupedSeats).map(row => row.length));
     return maxCount;
   }
   
