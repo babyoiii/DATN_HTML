@@ -39,7 +39,7 @@
 
 #Nghia_test_main{
     position:  relative;
-    z-index: 1; 
+    z-index: 1;
 }
 
 
@@ -79,12 +79,20 @@
     position: relative;
     min-height: calc(100vh - 300px);
     padding: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .seat-map-content {
     background-color: rgba(17, 24, 39, 0);
     border-radius: 0.5rem;
     padding: 1rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .screen-container {
@@ -126,6 +134,46 @@
     .seat-row {
         margin-bottom: 0.25rem;
     }
+}
+
+/* Responsive styles for different seat configurations */
+@media (max-width: 1024px) {
+    .seat-selection-container {
+        padding: 0.5rem;
+    }
+}
+
+/* Styles for small theaters (5 rows or less) */
+.small-theater .seat-map-content {
+    max-width: 700px;
+}
+
+/* Styles for medium theaters (6-8 rows) */
+.medium-theater .seat-map-content {
+    max-width: 850px;
+}
+
+/* Styles for large theaters (9+ rows) */
+.large-theater .seat-map-content {
+    max-width: 1000px;
+}
+
+/* Seat row container styles */
+.seat-row-container {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ensure seats are centered regardless of count */
+.seat-row-container .flex.justify-center {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 0 auto;
 }
 
 
@@ -197,9 +245,43 @@
 
 
 
-/* Add this to your CSS */
+/* Styles for seat buttons */
 .seat-button {
     display: inline-flex;
     justify-content: center;
     align-items: center;
+}
+
+/* Styles for paired seats */
+.seat-row-container svg {
+    transition: transform 0.2s ease;
+}
+
+.seat-row-container svg:hover {
+    transform: scale(1.1);
+    z-index: 10;
+}
+
+/* Ensure proper alignment for paired seats */
+.seat-row-container .translate-x-1 {
+    margin-right: -5px;
+}
+
+.seat-row-container .-translate-x-4 {
+    margin-left: -5px;
+}
+
+/* Responsive adjustments for different screen sizes */
+@media (max-width: 640px) {
+    .seat-row-container .font-bold {
+        width: 8px;
+        margin-right: 4px;
+        font-size: 0.75rem;
+    }
+
+    .seat-button svg,
+    .seat-row-container svg {
+        width: 10px;
+        height: 10px;
+    }
 }
