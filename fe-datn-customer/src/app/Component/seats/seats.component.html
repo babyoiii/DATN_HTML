@@ -128,16 +128,16 @@
       </div>
     </header>
     <main id="main" class="relative flex-1 overflow-auto flex h-full flex-col">
-      
+
       <div *ngIf="!checkLogin()" role="banner" class="relative caption text-200 bg-[#3B0249]">
         <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative flex items-center justify-center gap-4 py-2">
-          <p>If you're a member, sign in now to take advantage of AMC Stubs benefits.</p>
+          <p>If you're a member, NGHĨA TEST 123123123123123 benefits.</p>
           <button
             class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm h-11"
             type="button"
             (click)="openloginform()">Sign In</button>
         </div>
-      </div> 
+      </div>
 
 
 
@@ -151,14 +151,15 @@
 
 
         <div #seatMapContainer
-          class="seat-selection-container flex items-center justify-center h-full w-full overflow-auto">
-          <div class="seat-map-content mx-auto transform scale-100 md:scale-100 transition-all" style="min-width: 1000px;">
+          class="seat-selection-container flex items-center justify-center h-full w-full overflow-auto"
+          [ngClass]="getTheaterSizeClass()">
+          <div class="seat-map-content mx-auto transform scale-100 md:scale-100 transition-all" [ngStyle]="getSeatMapStyle()">
             <div class="overflow-hidden transition-opacity">
               <h2 class="sr-only">Seat Map</h2>
 
 
               <div class="p-4">
-                <div class="screen-container relative mb-12">
+                <div class="screen-container relative mb-12" style="margin-left: 30px !important">
                   <p class="p-12 text-center text-5xl uppercase font-thin text-gray-300 tracking-wider">Screen</p>
                   <div class="screen">
                     <div class="w-full"><svg focusable="false" xmlns="http://www.w3.org/2000/svg"
@@ -181,12 +182,13 @@
                       </svg></div>
                   </div>
                 </div>
-   
 
-                <div *ngFor="let row of seats | groupBy: 'RowNumber'; let i = index" class="relative z-10 grid gap-4"
-                  [style]="'grid-template-columns: 60px repeat(' + getMaxSeatsPerRow() + ', 60px)'">
-                  <span class="font-bold">{{ getRowLabel(i + 1) }}</span>
-                  <ng-container *ngFor="let seat of row">
+
+                <div *ngFor="let row of seats | groupBy: 'RowNumber'; let i = index" class="relative z-10 flex justify-center mb-4">
+                  <div class="seat-row-container flex items-center">
+                    <span class="font-bold w-12 flex-shrink-0 text-center mr-2">{{ getRowLabel(i + 1) }}</span>
+                    <div class="flex justify-center gap-2" [ngStyle]="getRowStyle(row.length)">
+                      <ng-container *ngFor="let seat of row">
 
 
 
@@ -256,8 +258,9 @@
                       </div>
                     </ng-template>
 
-                  </ng-container>
-
+                      </ng-container>
+                    </div>
+                  </div>
                 </div>
 
 
