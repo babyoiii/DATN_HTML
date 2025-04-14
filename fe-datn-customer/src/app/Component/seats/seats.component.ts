@@ -84,7 +84,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
     private authServiceService: AuthServiceService
   ) { }
 
- 
+
   ngOnInit(): void {
     this.subscription = this.authServiceService.isLoggedIn$.subscribe(status => {
       this.isLoggedIn = status;
@@ -161,20 +161,20 @@ export class SeatsComponent implements OnInit, OnDestroy {
   }
 
   // onExtendCountdown(): void {
-  //   const extensionDuration = 30; 
+  //   const extensionDuration = 30;
   //   this.seatService.extendCountdown(extensionDuration);
   // }
   onExtendCountdown(): void {
     this.modalService.openNeedMoreTimeModal();
     console.log("đã gọi");
-    
+
   }
 
 
 
   TimeUp(): void {
     this.modalService.openTimeUpModal();
-    
+
   }
 
   AddMoreTime(): void {
@@ -205,7 +205,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
   private initializeWebSocket(showtimeId: string, userId: string): void {
     this.seatService.connect(showtimeId, userId);
-  
+
     this.seatService.getMessages()
       .pipe(
         takeUntil(this.destroy$),
@@ -224,7 +224,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
           this.calculateTotal();
         }
       });
-  
+
     this.seatService.getJoinRoomMessages()
       .pipe()
       .subscribe({
@@ -258,9 +258,9 @@ export class SeatsComponent implements OnInit, OnDestroy {
     this.showtimeService.getMovieByShowtime(showtimeId).subscribe({
       next: (response) => {
         if (response && response.data) {
-          this.movieDetail = response.data; 
+          this.movieDetail = response.data;
           console.log('✅ Movie Detail:', this.movieDetail);
-          this.cdr.markForCheck(); 
+          this.cdr.markForCheck();
         }
       },
       error: (err) => {
@@ -463,14 +463,14 @@ export class SeatsComponent implements OnInit, OnDestroy {
     // Nếu không có ghế nào đang chọn thì ok luôn
     const hasSelected = seats.some(s => s.Status === SeatStatus.Selected);
     if (!hasSelected) return true;
-  
+
     // occupancy: 1 = Selected/Booked, 0 = Available
     const occupancy = seats.map(s =>
       (s.Status === SeatStatus.Selected || s.Status === SeatStatus.Booked) ? 1 : 0
     );
-  
+
     const total = seats.length;
-  
+
     for (let i = 0; i < total; i++) {
       // chỉ quan tâm ghế trống
       if (occupancy[i] === 0) {
@@ -478,23 +478,23 @@ export class SeatsComponent implements OnInit, OnDestroy {
         const leftIsEdge = i === 0;
         const leftOccupied = leftIsEdge
           // nếu là lối đi, bạn có thể cho phép (thì đổi true thành false)
-          ? true 
+          ? true
           : occupancy[i - 1] === 1;
-  
+
         // kiểm tra bên phải
         const rightIsEdge = i === total - 1;
         const rightOccupied = rightIsEdge
           // nếu là lối đi, bạn có thể cho phép (thì đổi true thành false)
           ? true
           : occupancy[i + 1] === 1;
-  
+
         // nếu hai bên đều occupied → có nguy cơ ghế lẻ
         if (leftOccupied && rightOccupied) {
           // ngoại lệ: ghế này có ghế “đối ứng” (paired seat) cũng đang Selected → cho phép
           const seat = seats[i];
           const paired = this.findPairedSeat(seat);
           const pairedIsSelected = paired?.Status === SeatStatus.Selected;
-  
+
           if (!pairedIsSelected) {
             const rowLabel = this.getRowLabel(seat.RowNumber);
             const col = seat.ColNumber;
@@ -507,7 +507,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
         }
       }
     }
-  
+
     return true;
   }
 
@@ -580,28 +580,28 @@ export class SeatsComponent implements OnInit, OnDestroy {
   }
 
 
-  
+
 
 
   getMaxSeatsPerRow(): number {
     if (!this.seats) return 12; // Default fallback
-    
+
     let maxCount = 0;
     const groupedSeats = this.groupSeatsByRow();
-    
+
     Object.values(groupedSeats).forEach(row => {
       if (row.length > maxCount) {
         maxCount = row.length;
       }
     });
-    
+
     return maxCount;
   }
-  
+
   // Helper method to group seats by row
   private groupSeatsByRow(): { [key: string]: any[] } {
     const result: { [key: string]: any[] } = {};
-    
+
     if (this.seats) {
       this.seats.forEach(seat => {
         const rowNumber = seat.RowNumber;
@@ -611,7 +611,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
         result[rowNumber].push(seat);
       });
     }
-    
+
     return result;
   }
 
@@ -805,42 +805,115 @@ export class SeatsComponent implements OnInit, OnDestroy {
     this.modalService.openSignInModal();
   }
 
+  /**
+   * Tính toán style cho seat map dựa trên số lượng hàng và cột
+   * Giúp responsive với các cấu hình rạp khác nhau
+   */
+  getSeatMapStyle(): { [key: string]: string } {
+    // Lấy số lượng hàng và cột tối đa
+    const rowCount = this.getRowCount();
+    const maxColCount = this.getMaxColCount();
 
+    // Tính toán kích thước phù hợp dựa trên số lượng cột
+    let minWidth = '600px';
 
+    // Điều chỉnh kích thước dựa trên số lượng cột
+    if (maxColCount > 8) {
+      minWidth = '800px';
+    }
+    if (maxColCount > 12) {
+      minWidth = '1000px';
+    }
 
+    // Điều chỉnh thêm dựa trên số lượng hàng
+    if (rowCount <= 5) {
+      // Giảm kích thước nếu ít hàng
+      minWidth = parseInt(minWidth) * 0.8 + 'px';
+    }
 
+    return {
+      'min-width': minWidth,
+      'margin': '0 auto',
+      'display': 'flex',
+      'flex-direction': 'column',
+      'align-items': 'center',
+      'justify-content': 'center'
+    };
+  }
 
+  /**
+   * Xác định class CSS dựa trên kích thước rạp
+   * Giúp áp dụng các style khác nhau cho từng loại rạp
+   */
+  getTheaterSizeClass(): string {
+    const rowCount = this.getRowCount();
 
+    if (rowCount <= 5) {
+      return 'small-theater';
+    } else if (rowCount <= 8) {
+      return 'medium-theater';
+    } else {
+      return 'large-theater';
+    }
+  }
 
+  /**
+   * Tạo style cho mỗi hàng ghế dựa trên số lượng ghế trong hàng
+   * Giúp căn giữa các hàng ghế có số lượng ghế khác nhau
+   */
+  getRowStyle(seatCount: number): { [key: string]: string } {
+    const maxColCount = this.getMaxColCount();
 
+    // Tính toán độ rộng phù hợp cho hàng ghế
+    // Nếu số ghế trong hàng ít hơn số cột tối đa, căn giữa hàng
+    if (seatCount < maxColCount) {
+      // Tính toán độ rộng tương đối dựa trên số ghế
+      const widthPercentage = (seatCount / maxColCount) * 100;
 
+      return {
+        'width': `${widthPercentage}%`,
+        'margin': '0 auto',
+        'justify-content': 'center'
+      };
+    }
 
+    // Nếu số ghế bằng số cột tối đa, sử dụng toàn bộ độ rộng
+    return {
+      'width': '100%',
+      'justify-content': 'center'
+    };
+  }
 
+  /**
+   * Lấy số lượng hàng ghế
+   */
+  getRowCount(): number {
+    if (!this.seats || this.seats.length === 0) return 0;
 
+    // Lấy số hàng duy nhất
+    const uniqueRows = new Set(this.seats.map(seat => seat.RowNumber));
+    return uniqueRows.size;
+  }
 
+  /**
+   * Lấy số lượng cột ghế tối đa
+   */
+  getMaxColCount(): number {
+    if (!this.seats || this.seats.length === 0) return 0;
 
+    // Nhóm ghế theo hàng
+    const rowGroups = this.groupSeatsByRow();
 
+    // Tìm hàng có nhiều cột nhất
+    let maxCols = 0;
+    Object.values(rowGroups).forEach(row => {
+      if (row.length > maxCols) {
+        maxCols = row.length;
+      }
+    });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return maxCols;
+  }
 }
 
 
