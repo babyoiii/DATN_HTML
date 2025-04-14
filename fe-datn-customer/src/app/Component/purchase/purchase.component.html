@@ -327,76 +327,106 @@
                                                                                 name="voucherCode">
                                                                         </div>
                                                                         <!-- Danh sách voucher -->
-<div class="space-y-2">
-    <!-- Voucher items -->
-    <div *ngFor="let voucher of voucherList"
-        class="relative bg-gray-700/85 rounded-lg p-4 border border-white/10 hover:border-blue-500 transition-colors duration-200">
-        <div class="flex justify-between items-start gap-4">
-            <div class="flex-1 min-w-0">
-                <h3 class="font-semibold text-white mb-2">
-                    {{voucher.code}} - {{voucher.name}}
-                </h3>
-                <div class="text-red-500 text-sm mb-1">
-                    {{voucher.status}}
-                </div>
-                <div class="text-gray-400 text-sm">
-                    HSD: {{voucher.expiry}}
-                </div>
-            </div>
-            <button (click)="toggleVoucherDetail(voucher.code)"
-                (mouseenter)="showVoucherDetail(voucher.code)"
-                (mouseleave)="hideVoucherDetail()"
-                class="text-blue hover:text-blue-500 transition-colors">
-                Chi tiết
-            </button>
-        </div>
+                                                                        <div class="space-y-2">
 
-        <div class="mt-4 flex items-center gap-3">
-            <span class="bg-gray-800 px-3 py-1.5 rounded font-mono text-gray-200">{{voucher.code}}</span>
-            <div class="flex gap-2">
-                <button (click)="copyVoucherCode(voucher.code)"
-                    class="p-2 hover:bg-gray-600 rounded-full transition-colors"
-                    title="Sao chép mã">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-300" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
-                </button>
-                <button (click)="applyVoucher(voucher.code)"
-                    [disabled]="voucher.status !== null"
-                    [ngClass]="{
+                                                                            <div *ngFor="let voucher of voucherList"
+                                                                                class="relative bg-gray-700/85 rounded-lg p-4 border border-white/10 hover:border-blue-500 transition-colors duration-200">
+                                                                                <div
+                                                                                    class="flex justify-between items-start gap-4">
+                                                                                    <div class="flex-1 min-w-0">
+                                                                                        <h3
+                                                                                            class="font-semibold text-white mb-2">
+                                                                                            {{voucher.code}} -
+                                                                                            {{voucher.name}}
+                                                                                        </h3>
+                                                                                        <div
+                                                                                            class="text-red-500 text-sm mb-1">
+                                                                                            {{voucher.status}}
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="text-gray-400 text-sm">
+                                                                                            HSD: {{voucher.expiry}}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <button
+                                                                                        (click)="toggleVoucherDetail(voucher.code)"
+                                                                                        (mouseenter)="showVoucherDetail(voucher.code)"
+                                                                                        (mouseleave)="hideVoucherDetail()"
+                                                                                        class="text-blue hover:text-blue-500 transition-colors">
+                                                                                        Chi tiết
+                                                                                    </button>
+                                                                                </div>
+
+                                                                                <div
+                                                                                    class="mt-4 flex items-center gap-3">
+                                                                                    <span
+                                                                                        class="bg-gray-800 px-3 py-1.5 rounded font-mono text-gray-200">{{voucher.code}}</span>
+                                                                                    <div class="flex gap-2">
+                                                                                        <button
+                                                                                            (click)="copyVoucherCode(voucher.code)"
+                                                                                            class="p-2 hover:bg-gray-600 rounded-full transition-colors"
+                                                                                            title="Sao chép mã">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                class="h-5 w-5 text-gray-300"
+                                                                                                fill="none"
+                                                                                                viewBox="0 0 24 24"
+                                                                                                stroke="currentColor">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                        <button
+                                                                                            (click)="applyVoucher(voucher.code)"
+                                                                                            [disabled]="voucher.status !== null"
+                                                                                            [ngClass]="{
                         'bg-white hover:bg-blue-500 text-black cursor-pointer': voucher.status === null,
                         'bg-gray-400 text-gray-600 cursor-not-allowed': voucher.status !== null
-                    }"
-                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 rounded-full px-4 min-w-[8ch] text-sm h-9">
-                    Áp dụng
-                </button>
-            </div>
-        </div>
+                    }" class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 rounded-full px-4 min-w-[8ch] text-sm h-9">
+                                                                                            Áp dụng
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
 
-        <!-- Chi tiết voucher popup -->
-        <div *ngIf="selectedVoucher === voucher.code"
-            class="absolute left-full top-0 ml-4 w-72 bg-gray-800 rounded-lg p-4 border border-gray-600 shadow-lg"
-            style="z-index: 100;">
-            <div class="space-y-3">
-                <h4 class="font-semibold text-white">
-                    Chi tiết mã giảm giá
-                </h4>
-                <div class="space-y-2 text-sm text-gray-300">
-                    <p><span class="text-gray-400">Mã:</span> {{voucher.code}}</p>
-                    <p><span class="text-gray-400">Tên:</span> {{voucher.name}}</p>
-                    <p><span class="text-gray-400">Hạn sử dụng:</span> {{voucher.expiry}}</p>
-                    <p><span class="text-gray-400">Điều kiện áp dụng:</span></p>
-                    <ul class="list-disc pl-5 space-y-1">
-                        <li>Khách hàng của thân quen CineX</li>
-                        <li>Đạt ngưỡng điểm tiêu chuẩn</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                                                                                <!-- Chi tiết voucher -->
+                                                                                <div *ngIf="selectedVoucher === voucher.code"
+                                                                                    class="absolute left-full top-0 ml-4 w-72 bg-gray-800 rounded-lg p-4 border border-gray-600 shadow-lg"
+                                                                                    style="z-index: 100;">
+                                                                                    <div class="space-y-3">
+                                                                                        <h4
+                                                                                            class="font-semibold text-white">
+                                                                                            Chi tiết mã giảm giá
+                                                                                        </h4>
+                                                                                        <div
+                                                                                            class="space-y-2 text-sm text-gray-300">
+                                                                                            <p><span
+                                                                                                    class="text-gray-400">Mã:</span>
+                                                                                                {{voucher.code}}</p>
+                                                                                            <p><span
+                                                                                                    class="text-gray-400">Tên:</span>
+                                                                                                {{voucher.name}}</p>
+                                                                                            <p><span
+                                                                                                    class="text-gray-400">Hạn
+                                                                                                    sử dụng:</span>
+                                                                                                {{voucher.expiry}}</p>
+                                                                                            <p><span
+                                                                                                    class="text-gray-400">Điều
+                                                                                                    kiện áp dụng:</span>
+                                                                                            </p>
+                                                                                            <ul
+                                                                                                class="list-disc pl-5 space-y-1">
+                                                                                                <li>Khách hàng của thân
+                                                                                                    quen CineX</li>
+                                                                                                <li>Đạt ngưỡng điểm tiêu
+                                                                                                    chuẩn</li>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
 
 
                                                                         <div

@@ -98,7 +98,7 @@ export class PurchaseComponent implements OnInit,OnDestroy {
 
   applyVoucher(code: string) {
     this.voucherCode = code;
-    // Thêm logic xử lý áp dụng voucher ở đây
+    
   }
   constructor(
     private seatService: SeatService,
