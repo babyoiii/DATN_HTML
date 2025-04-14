@@ -1,4 +1,9 @@
-<main class="relative bg-black text-white [&amp;:has(dialog[open],[data-body-scroll=disabled])]:overflow-hidden"
+<app-need-more-time></app-need-more-time>
+<app-time-up></app-time-up>
+
+
+
+<main id="Nghia_test_main" class="relative bg-black text-white [&amp;:has(dialog[open],[data-body-scroll=disabled])]:overflow-hidden"
   monica-id="ofpnmcalabcbjgholdjcjblkibolbppb" monica-version="7.8.0">
   <div class="flex h-[100dvh] flex-col">
     <!--$-->
@@ -129,7 +134,8 @@
           <p>If you're a member, sign in now to take advantage of AMC Stubs benefits.</p>
           <button
             class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm h-11"
-            type="button">Sign In</button>
+            type="button"
+            (click)="openloginform()">Sign In</button>
         </div>
       </div> 
 
@@ -175,10 +181,7 @@
                       </svg></div>
                   </div>
                 </div>
-
-
-
-
+   
 
                 <div *ngFor="let row of seats | groupBy: 'RowNumber'; let i = index" class="relative z-10 grid gap-4"
                   [style]="'grid-template-columns: 60px repeat(' + getMaxSeatsPerRow() + ', 60px)'">
@@ -342,7 +345,6 @@
 
 
 
-
     </main>
 
 
@@ -357,6 +359,7 @@
             <a class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12"
               (click)="onContinue()">Tiếp Tục</a>
           </div>
+
         </div>
       </div>
     </footer>
@@ -378,3 +381,36 @@
   </dialog>
 
 </main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

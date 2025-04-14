@@ -11,6 +11,7 @@ export interface WebSocketMessage {
   Action?: string;
   i?: number;
   SeatStatusUpdateRequests?: SeatStatusUpdateRequest[];
+  ExtensionDuration?: number; 
 }
 
 @Injectable({
@@ -29,6 +30,7 @@ export class SeatService {
   private reconnectTimeout = 3000; // 3 giây
   private connectionTimeout = 10000; // 10 giây
   private connectionTimer: any;
+  private warningShown = false;
 
   constructor() {
     this.restoreCountdownFromStorage();
@@ -87,30 +89,27 @@ export class SeatService {
   }
 
   connect(roomId: string, userId: string): void {
-    // Nếu đã kết nối với cùng roomId và userId, không cần kết nối lại
     if (this.isConnected && this.currentRoomId === roomId && this.currentUserId === userId) {
       console.log('✅ WebSocket đã được kết nối với cùng roomId và userId');
       return;
     }
-
-    // Nếu đang có kết nối với roomId hoặc userId khác, đóng kết nối cũ
+  
     if (this.isConnected) {
       console.log('🔄 Đóng kết nối cũ trước khi tạo kết nối mới');
       this.close();
     }
-
+  
     this.currentRoomId = roomId;
     this.currentUserId = userId;
     this.saveConnection(roomId, userId);
     this.reconnectAttempts = 0;
-
-    // Đợi một chút để đảm bảo kết nối cũ đã đóng hoàn toàn
+  
     setTimeout(() => {
       const wsUrl = `wss://localhost:7105/ws/KeepSeat?roomId=${roomId}&userId=${userId}`;
       this.socket = new WebSocket(wsUrl);
-
+  
       this.setupConnectionTimeout();
-
+  
       this.socket.onopen = () => {
         console.log('✅ WebSocket connected');
         this.isConnected = true;
@@ -118,22 +117,18 @@ export class SeatService {
         if (this.connectionTimer) {
           clearTimeout(this.connectionTimer);
         }
-        
-        // Thêm delay nhỏ trước khi gửi tin nhắn
-        setTimeout(() => {
-          this.getList();
-          this.joinRoom();
-        }, 100);
+        this.joinRoom();
+        this.getList();
       };
-
+  
       this.socket.onmessage = (event) => this.handleMessage(event.data);
-      
+  
       this.socket.onerror = (error) => {
         console.error('❌ WebSocket error:', error);
         this.isConnected = false;
         this.handleConnectionError();
       };
-
+  
       this.socket.onclose = (event) => {
         console.log('🔴 WebSocket disconnected', event);
         this.isConnected = false;
@@ -141,13 +136,17 @@ export class SeatService {
           this.handleConnectionError();
         }
       };
-    }, 100); // Đợi 100ms trước khi tạo kết nối mới
+    }, 100);
   }
-
   private handleMessage(data: string): void {
     try {
       const message: WebSocketMessage = JSON.parse(data);
-
+  // Xử lý phản hồi từ ExtendCountdown
+  if (message.Action === 'ExtendCountdown' && message.ExtensionDuration) {
+    console.log(`✅ Countdown đã được gia hạn thêm ${message.ExtensionDuration} giây.`);
+    this.updateCountdown(message.ExtensionDuration);
+    return;
+  }
       // Xử lý countdown
       if (message.i !== undefined) {
         this.updateCountdown(message.i);
@@ -187,7 +186,7 @@ export class SeatService {
   }
   private isSeatUpdate(message: WebSocketMessage): boolean {
     const action = message.Action?.toLowerCase();
-    return action === 'updatestatus' && 
+    return action === 'UpdateStatus' && 
            Array.isArray(message.SeatStatusUpdateRequests);
   }
 
@@ -239,7 +238,17 @@ export class SeatService {
   getMessages(): Observable<SeatInfo[]> {
     return this.messageSubject.asObservable();
   }
+  hasShownWarning(): boolean {
+    return this.warningShown;
+  }
 
+  setWarningShown(): void {
+    this.warningShown = true;
+  }
+
+  resetWarning(): void {
+    this.warningShown = false;
+  }
   // Observable để lấy countdown
   getJoinRoomMessages(): Observable<number | null> {
     return this.joinRoomSubject.asObservable();
@@ -257,12 +266,27 @@ export class SeatService {
       this.socket = null;
     }
   }
-
+  extendCountdown(extensionDuration: number): void {
+    if (!extensionDuration || extensionDuration <= 0) {
+      console.warn('⚠️ Thời gian gia hạn không hợp lệ.');
+      return;
+    }
+  
+    const requestData = {
+      Action: 'ExtendCountdown',
+      ExtensionDuration: extensionDuration
+    };
+  
+    this.sendMessage('ExtendCountdown', requestData);
+    console.log(`🔄 Yêu cầu gia hạn countdown thêm ${extensionDuration} giây đã được gửi.`);
+  }
   // Thêm phương thức để xóa kết nối khi cần
   clearConnection() {
+    
     if (this.connectionTimer) {
       clearTimeout(this.connectionTimer);
     }
+    this.resetWarning();
     localStorage.removeItem('websocketConnection');
     this.close();
     this.currentRoomId = null;
@@ -273,6 +297,7 @@ export class SeatService {
   disconnect(): void {
     if (this.socket) {
       this.socket.close();
+       this.resetWarning();
       this.socket = null;
       this.isConnected = false;
       console.log('WebSocket connection disconnected');

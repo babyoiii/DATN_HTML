@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { SeatService } from '../../Service/seat.service';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,8 @@ import { GetServiceType } from '../../Models/Service';
 import { ModalService } from '../../Service/modal.service';
 import { AuthServiceService } from '../../Service/auth-service.service';
 import { Subscription } from 'rxjs';
+import { NeedMoreTimeComponent } from "../need-more-time/need-more-time.component";
+import { TimeUpComponent } from "../time-up/time-up.component";
 
 interface Seat {
   seatId: string;
@@ -20,17 +22,18 @@ interface Seat {
 @Component({
   selector: 'app-orders',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, NeedMoreTimeComponent, TimeUpComponent],
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.css'
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnDestroy {
   countdown: string | null = null;
   seatSummary: { [key: string]: { count: number; total: number } } = {};
   selectedServices: { service: Service; quantity: number }[] = [];  
   listServiceTypes : GetServiceType[] = [];
   accordionStates: boolean[] = [];
   isLoggedIn: boolean = false;
+  private autoCloseTimer: any;
   private subscription!: Subscription;
   constructor(
     private seatService: SeatService,
@@ -41,6 +44,12 @@ export class OrdersComponent implements OnInit {
     private modalService: ModalService,
     private authServiceService: AuthServiceService
   ) {}
+  ngOnDestroy(): void {
+    this.seatService.resetWarning();
+    if (this.autoCloseTimer) {
+      clearTimeout(this.autoCloseTimer);
+    }
+  }
 
   ngOnInit(): void {
     this.getListServiceType();
@@ -55,8 +64,14 @@ export class OrdersComponent implements OnInit {
           const seconds = count % 60;
           this.countdown = `${minutes}:${seconds.toString().padStart(2, '0')}`;
           this.cdr.markForCheck();
+          if (count === 60  && !this.seatService.hasShownWarning()) {
+            this.AddMoreTime();
+            this.autoCloseTimer = setTimeout(() => {
+              this.modalService.closeNeedMoreTimeModal();
+            }, 5000);
+          }
           if (count === 0) {
-            this.notifyAndRedirect();
+           this.TimeUp();
           }
         }
       },
@@ -91,6 +106,17 @@ export class OrdersComponent implements OnInit {
     const logged = this.authServiceService.isLoggedIn();
     return logged;
   }
+  TimeUp(): void {
+    this.modalService.openTimeUpModal();
+    
+  }
+
+  AddMoreTime(): void {
+    if (this.autoCloseTimer) {
+      clearTimeout(this.autoCloseTimer);
+    }
+    this.modalService.openNeedMoreTimeModal();
+}
   openSignIn() {
     this.modalService.openSignInModal();
   }
@@ -114,10 +140,7 @@ export class OrdersComponent implements OnInit {
     this.accordionStates[index] = !this.accordionStates[index]; 
   }
 
-  private notifyAndRedirect(): void {
-    alert('Thời gian giữ ghế đã hết, bạn sẽ được chuyển hướng.');
-    this.router.navigate(['/']); 
-  }
+  
   getTotalAmount(): number {
     const totalSeatsAmount = Object.values(this.seatSummary).reduce(
       (sum, seat) => sum + seat.total,

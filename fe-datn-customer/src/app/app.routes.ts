@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import path from 'path';
 import { HomeComponent } from './Component/home/home.component';
 import { MainComponent } from './Layout/main/main.component';
 import { DangkiComponent } from './Component/dangki/dangki.component';
@@ -19,14 +18,17 @@ import { SignInComponent } from './Component/sign-in/sign-in.component';
 import { TimkiemrapComponent } from './Component/timkiemrap/timkiemrap.component';
 import { PaymentCallBackComponent } from './Component/payment-call-back/payment-call-back.component';
 import { MovieDetailNghiaComponent } from './Component/movie-detail-nghia/movie-detail-nghia.component';
-import { Test1Component } from './Component/test1/test1.component';
 import { MyCinexComponent } from './Component/my-cinex/my-cinex.component';
 import { ProfileComponent } from './Component/my-cinex/profile/profile.component';
 import { BenefitsComponent } from './Component/my-cinex/benefits/benefits.component';
 import { WalletComponent } from './Component/my-cinex/wallet/wallet.component';
-import { TicketsComponent } from './Component/my-cinex/tickets/tickets.component';
 import { RewardsComponent } from './Component/my-cinex/rewards/rewards.component';
 import { HistoryComponent } from './Component/my-cinex/history/history.component';
+import { NeedMoreTimeComponent } from './Component/need-more-time/need-more-time.component';
+import { TimeUpComponent } from './Component/time-up/time-up.component';
+import { TestDialogComponent } from './Component/test-dialog/test-dialog.component';
+import { DetailsTicketComponent } from './Component/my-cinex/details-ticket/details-ticket.component';
+import { VipMemberComponent } from './Component/my-cinex/vip-member/vip-member.component';
 
 export const routes: Routes = [
     {
@@ -44,15 +46,14 @@ export const routes: Routes = [
                 path: 'my-cinex', component: MyCinexComponent, children: [
                     { path: '', component: BenefitsComponent },
                     { path: 'wallet', component: WalletComponent},
-                    { path: 'tickets', component: TicketsComponent},
                     { path: 'rewards', component: RewardsComponent},
                     { path: 'history', component: HistoryComponent},
                     { path: 'profile', component: ProfileComponent},
+                    { path: 'detailOrder/:id', component: DetailsTicketComponent},
                 ]
             },
         ]
     },
-    { path: 'a', component: ShowtimesComponent },
     { path: 'showtimes', component: ShowtimesComponent },
     { path: 'showtimes/:id', component: ShowtimesComponent },
     { path: 'dangki', component: DangkiComponent },
@@ -63,5 +64,9 @@ export const routes: Routes = [
     { path: 'orders', component: OrdersComponent },
     { path: 'thanh-toan', component: PurchaseComponent },
     { path: 'payment-callback', component: PaymentCallBackComponent },
-    // { path: 'Test123', component: TestBlockChainComponent },
+    { path: 'NeedMoreTime', component: NeedMoreTimeComponent },
+    { path: 'TimeUpComponent', component: TimeUpComponent },
+    { path: 'test', component: TestDialogComponent },
+    
+    { path: 'thanhtoanMembership', component: VipMemberComponent},
 ];

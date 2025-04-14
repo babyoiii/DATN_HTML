@@ -1,3 +1,24 @@
+
+<app-need-more-time></app-need-more-time>
+<app-time-up></app-time-up>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <body class="relative bg-black text-white [&amp;:has(dialog[open],[data-body-scroll=disabled])]:overflow-hidden"
     monica-id="ofpnmcalabcbjgholdjcjblkibolbppb" monica-version="7.8.0">
     <div class="flex h-[100dvh] flex-col"><!--$--><!--$--><!--$--><!--/$--><!--/$--><!--/$-->
@@ -15,11 +36,11 @@
                             </path>
                         </svg></button>
                     <div class="relative flex w-full items-center justify-center">
-                        <h1>Food &amp; Drinks</h1>
+                        <h1>Đồ Ăn &amp; Nước Uống</h1>
                         <div class="absolute right-0 mr-8 text-300 font-semibold md:mr-12">
                             <div class="countdown-container">
                                 <div class="countdown-timer">
-                                    <span class="countdown-label">Time Remaining: </span>
+                                    <span class="countdown-label">Thời Gian Còn Lại: </span>
                                     <span class="countdown-value">{{ countdown }}</span>
                                 </div>
                             </div>
@@ -96,8 +117,8 @@
                         <div class="rich-text">
                             <p
                                 class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                <span class="text-200 caption">Getting your favorite movie treats is now easier than
-                                    ever. Just order them online, and we'll have them ready when you get here!</span>
+                                <span class="text-200 caption">Nhận được những món ăn trong phim yêu thích của bạn giờ đây dễ dàng hơn
+                                    bao giờ. Chỉ cần đặt hàng chúng trực tuyến và chúng tôi sẽ chuẩn bị sẵn sàng khi bạn đến đây!</span>
                             </p>
                         </div>
                     </div>
@@ -109,17 +130,17 @@
                     <div class="rich-text text-200 caption">
                         <p
                             class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                            <span class="text-200 caption">If you're a member, sign in now to take advantage of AMC
-                                Stubs benefits and quickly reorder your favorites.</span></p>
+                            <span class="text-200 caption">Nếu bạn là thành viên, hãy đăng nhập ngay để tận dụng 
+                                Lợi ích của thẻ thành viên và nhanh chóng sắp xếp lại mục yêu thích của bạn.</span></p>
                     </div><button (click)="openSignIn()"
                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm h-11"
-                        id="65bd4af1aea5fcb5003cf328" type="button">Sign In</button>
+                        id="65bd4af1aea5fcb5003cf328" type="button">Đăng Nhập</button>
                 </div>
             </div>
             <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 mb-[25vh] mt-4 flex gap-24">
                 <div class="flex-grow">
                     <section>
-                        <h1 class="sr-only">Food &amp; Drink Menu</h1>
+                        <h1 class="sr-only">Đồ ăn &amp;Menu Nước</h1>
 
 
 
@@ -201,7 +222,7 @@
                                   />
                                   <div class="grid gap-1">
                                     <h3 class="text-balance font-bold">{{ sv.serviceName }}</h3>
-                                    <p class="text-sm">{{ sv.price | currency }}</p>
+                                    <p class="text-sm">{{ sv.price | currency }} VND</p>
                                     <button
                                       class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm md:text-base h-12"
                                       type="button"
@@ -218,14 +239,14 @@
                     </section>
                 </div>
                 <aside class="hidden w-[400px] pt-4 lg:block">
-                    <h1 class="hidden text-500 headline lg:block">Order Details</h1>
+                    <h1 class="hidden text-500 headline lg:block">Chi tiết đặt hàng</h1>
                     <div class="max-w-full">
                         <div class="divide-y divide-gray-700">
                             <section class="">
                                 <header class="mt-6 flex items-baseline justify-between">
                                     <h2
                                         class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
-                                        Tickets
+                                        Danh sách vé
                                     </h2>
                                     <a class="group transition-colors text-blue-500 hocus:text-white text-sm font-semibold leading-tight tracking-normal"
                                         aria-label="Edit Tickets"
@@ -246,22 +267,22 @@
                                                 </div>
                                                 <p
                                                     class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                    ${{ (ticketType.value.total / ticketType.value.count).toFixed(2) }}
+                                                    {{ (ticketType.value.total / ticketType.value.count) | number:'1.2-2' }} VND
                                                 </p>
                                             </div>
                                         </li>
                                         <li class="text-white text-xs font-semibold leading-tight tracking-normal">
-                                            Seats {{ getSeatNamesByType(ticketType.key) }}
+                                            Ghế {{ getSeatNamesByType(ticketType.key) }}
                                         </li>
                                     </ng-container>
                                     <!-- Hiển thị tổng tiền vé -->
                                     <div class="mt-4 text-right text-white text-lg font-bold">
-                                        Tổng cộng: ${{ getTotalTicketPrice() | number:'1.2-2' }}
+                                        Tổng cộng: {{ getTotalTicketPrice() | number:'1.2-2' }} VND
                                     </div>
                                 </ul>
 
                                 <h2 class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
-                                    Service
+                                    Danh sách dịch vụ
                                 </h2>
 
                                 <ul class="mb-4 grid gap-2">
@@ -288,7 +309,7 @@
                                             </div>
                                             <p
                                                 class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                ${{ item.service.price * item.quantity | number:'1.2-2' }}
+                                                {{ item.service.price * item.quantity | number:'1.2-2' }} VND
                                             </p>
                                         </div>
                                     </li>
@@ -296,7 +317,7 @@
 
                                 <!-- Hiển thị tổng tiền -->
                                 <div class="mt-4 text-right text-white text-lg font-bold">
-                                    Tổng cộng: ${{ getTotalService() | number:'1.2-2' }}
+                                    Tổng cộng: {{ getTotalService() | number:'1.2-2' }} VND
                                 </div>
                                 <div
                                     class="PPsXr-flex PPsXr-flex-wrap PPsXr-gap-4 PPsXr-items-center PPsXr-py-8 PPsXr-justify-center PPsXr-md:justify-start">
@@ -310,14 +331,14 @@
                                             href="/sign-up/premiere">Join</a></div>
                                 </div>
                             </section>
-                            <p class="py-10 text-xs italic leading-5 text-gray-200">Discount Matinee ticket prices are
-                                UP TO 20% OFF the evening base ticket price every day. You are receiving the displayed
-                                Discount Matinee ticket prices.</p>
+                            <p class="py-10 text-xs italic leading-5 text-gray-200">Giá vé Matinee giảm giá là
+                                GIẢM TỚI 20% giá vé cơ bản buổi tối mỗi ngày. Bạn đang nhận được hiển thị
+                                Giảm giá vé Matinee.</p>
                             <p
                                 class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                 <span
-                                    class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>${{getTotalAmount()
-                                | currency}}
+                                    class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Tổng Cộng</span>{{getTotalAmount()
+                                | number:'1.2-2'}} VND
                             </p>
                         </div>
                     </div>
@@ -333,7 +354,7 @@
                     <div class="flex flex-wrap items-center gap-4 py-4 justify-between lg:justify-end">
                         <section>
                             <div aria-label="Order Total" class="hidden gap-2 lg:flex"><span
-                                    class="font-bold">{{getTotalAmount() | number:'1.2-2'}}</span></div>
+                                    class="font-bold">{{getTotalAmount() | number:'1.2-2'}} VND</span></div>
                             <div class="lg:hidden">
                                 <div><button type="button"
                                         class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 text-sm md:text-base flex items-center gap-3">
@@ -349,7 +370,7 @@
                                                 class="absolute inset-0 grid -translate-y-[2px] translate-x-1 place-items-center leading-none">
                                                 <span aria-label="Number of Items in Order" class="text-xs">2</span>
                                             </div>
-                                        </div>${{getTotalAmount() | number:'1.2-2'}}
+                                        </div>{{getTotalAmount() | number:'1.2-2'}} VND
                                     </button>
                                     <div
                                         class="fixed inset-0 z-40 bg-black transition-opacity duration-300 pointer-events-none opacity-0">
@@ -362,7 +383,7 @@
                                             <div>
                                                 <h1
                                                     class="mt-4 hidden lg:block text-xl lg:text-2xl font-black leading-tight tracking-tighter">
-                                                    Order Details</h1>
+                                                    Chi tiết đặt hàng </h1>
                                                 <div class="max-w-full">
                                                     <div class="divide-y divide-gray-700">
                                                         <section class="">
@@ -387,35 +408,18 @@
                                                                             </div>
                                                                             <p
                                                                                 class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                                                ${{ (ticketType.value.total /
-                                                                                ticketType.value.count).toFixed(2) }}
+                                                                                {{ (ticketType.value.total /
+                                                                                ticketType.value.count).toFixed(2) }} VND
                                                                             </p>
                                                                         </div>
                                                                     </li>
                                                                     <li
                                                                         class="text-white text-xs font-semibold leading-tight tracking-normal">
-                                                                        Seats {{ getSeatNamesByType(ticketType.key) }}
+                                                                        Ghế {{ getSeatNamesByType(ticketType.key) }}
                                                                     </li>
                                                                 </ng-container>
                                                             </ul>
 
-                                                            <h2
-                                                                class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
-                                                                Fees</h2>
-                                                            <ul class="mb-4 grid gap-2">
-                                                                <li class="pt-2 font-semibold">
-                                                                    <div class="flex justify-between gap-3">
-                                                                        <div class="flex-1">
-                                                                            <h4
-                                                                                class="my-auto text-base font-semibold leading-tight tracking-normal">
-                                                                                Convenience Fee</h4>
-                                                                        </div>
-                                                                        <p
-                                                                            class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                                            $4.38</p>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
 
                                                             <div
                                                                 class="PPsXr-flex PPsXr-flex-wrap PPsXr-gap-4 PPsXr-items-center PPsXr-py-8 PPsXr-justify-center PPsXr-md:justify-start">
@@ -436,15 +440,15 @@
                                                             <header class="flex items-center justify-between py-6">
                                                                 <h2
                                                                     class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
-                                                                    Food &amp; Drinks</h2><a
+                                                                    Đồ ăn &amp; Nước uống</h2><a
                                                                     class="group transition-colors text-blue-500 hocus:text-white text-sm font-semibold leading-tight tracking-normal"
                                                                     href="/orders/d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2/food-and-drink">Add</a>
                                                             </header>
                                                         </section>
-                                                        <p class="py-10 text-xs italic leading-5 text-gray-200">Discount
-                                                            Matinee ticket prices are UP TO 20% OFF the evening base
-                                                            ticket price every day. You are receiving the displayed
-                                                            Discount Matinee ticket prices.</p>
+                                                        <p class="py-10 text-xs italic leading-5 text-gray-200">Sự bớt
+                                                            Giá vé Matinee GIẢM TỚI 20% so với buổi tối
+                                                            giá vé mỗi ngày. Bạn đang nhận được hiển thị
+                                                            Giảm giá vé Matinee.</p>
                                                         <p
                                                             class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                                             <span
@@ -459,7 +463,7 @@
                             </div>
                         </section><a
                             class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12"
-                            (click)="continue()">Continue</a>
+                            (click)="continue()">Tiếp Tục</a>
                     </div>
                 </div>
             </div>

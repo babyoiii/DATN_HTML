@@ -2,7 +2,7 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { SignIn, SignUp, UserInfo } from '../Models/AuthModel';
+import { ChangePasswordModel, SignIn, SignUp, UserInfo } from '../Models/AuthModel';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
@@ -54,22 +54,22 @@ export class AuthServiceService {
   saveToken(token: string): void {
     this.token = token;
     console.log('Token received:', token); // Kiểm tra token có giá trị không
-  
+
     const exp = this.getTokenExpiration(token);
     if (!exp) {
       console.warn('Token expiration not found');
       return;
     }
-  
+
     const expireDays = (exp - Date.now()) / (1000 * 86400);
     console.log('Token expires in days:', expireDays);
-  
+
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('accessToken', token);
-      this.cookieService.set('accessToken', token, expireDays, '/', '', true, 'Strict'); 
+      this.cookieService.set('accessToken', token, expireDays, '/', '', true, 'Strict');
       console.log('Token saved in localStorage and cookie');
     }
-  
+
     this.loggedIn.next(true);
   }
 
@@ -92,16 +92,28 @@ export class AuthServiceService {
   signOut(): void {
     this.token = '';
     if (isPlatformBrowser(this.platformId)) {
+
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('displayName');
+      localStorage.removeItem('email');
+  
       this.cookieService.delete('accessToken', '/');
+      this.cookieService.delete('userId', '/');
+      this.cookieService.delete('userName', '/');
+      this.cookieService.delete('displayName', '/');
+      this.cookieService.delete('email', '/');
+  
+      localStorage.clear(); 
+      sessionStorage.clear(); 
     }
     this.loggedIn.next(false);
   }
 
   isLoggedIn(): boolean {
     const token = this.getToken();
-    console.log('isLoggedIn() token:', token);
     return !!token;
   }
 
@@ -109,9 +121,7 @@ export class AuthServiceService {
     if (isPlatformBrowser(this.platformId)) {
       const tokenLocal = localStorage.getItem('accessToken');
       const tokenCookie = this.cookieService.get('accessToken');
-      console.log('Token from localStorage:', tokenLocal);
-      console.log('Token from cookie:', tokenCookie);
-      return !!tokenLocal || !!tokenCookie;
+    return !!tokenLocal || !!tokenCookie;
     }
     return false;
   }
@@ -133,19 +143,19 @@ export class AuthServiceService {
   }
   saveUserData(response: any): void {
     if (response?.data) {
-      const { userId, userName, displayName,email } = response.data;
-  
+      const { userId, userName, displayName, email } = response.data;
+
       localStorage.setItem('userId', userId);
       localStorage.setItem('userName', userName);
       localStorage.setItem('displayName', displayName);
       localStorage.setItem('email', email);
-  
+
       this.cookieService.set('userId', userId);
       this.cookieService.set('userName', userName);
       this.cookieService.set('displayName', displayName);
       this.cookieService.set('email', email);
 
-      console.log('User data saved:', { userId, userName, displayName,email });
+      console.log('User data saved:', { userId, userName, displayName, email });
     }
   }
   getUserData(): { userId: string; userName: string; displayName: string } | null {
@@ -153,5 +163,8 @@ export class AuthServiceService {
     const userName = localStorage.getItem('userName') ?? '';
     const displayName = localStorage.getItem('displayName') ?? '';
     return userId ? { userId, userName, displayName } : null;
+  }
+  ChangePassword(changePasswordModel: ChangePasswordModel): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/Auth/ChangePassword`, changePasswordModel);
   }
 }

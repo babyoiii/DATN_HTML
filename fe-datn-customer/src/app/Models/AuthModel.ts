@@ -22,3 +22,7 @@ export interface UserInfo {
     phoneNumber: string;
     name: string;
  }
+ export interface ChangePasswordModel {
+    currentPassword: string;
+    newPassword: string;
+  }

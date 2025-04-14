@@ -1,0 +1,193 @@
+<div class="min-h-screen bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] text-white">
+
+
+  <!-- Main content -->
+  <div class="max-w-2xl mx-auto p-4">
+    <!-- Movie info with poster -->
+    <div class="flex gap-6 mb-8">
+      <img
+        [src]="orderDetailData.thumbnail || 'assets/default-thumbnail.jpg'"
+        alt="Thumbnail"
+        class="w-full h-full object-cover rounded-lg shadow-lg"
+        style="width: 200px; height: 300px;">
+
+      <div>
+        <h1 class="text-2xl font-bold mb-2">{{orderDetailData.movieName}}</h1>
+        <p class="text-gray-400 mb-4">{{orderDetailData.duration}}</p>
+        <div class="inline-flex items-center px-3 py-1 rounded-full bg-gray-800 text-sm mb-4">
+          <span>Thành viên CineX STUBS</span>
+        </div>
+        <p class="text-gray-300 text-sm leading-relaxed">
+          {{orderDetailData.description}}
+        </p>
+      </div>
+    </div>
+
+    <!-- Important notice -->
+    <div class="bg-[#1a1a1a] p-6 rounded-lg mb-8">
+      <h2 class="text-lg font-bold text-white mb-2">ĐỪNG QUÊN MANG THEO GIẤY TỜ TÙY THÂN CÓ ẢNH!</h2>
+      <p class="text-gray-300 text-sm leading-relaxed">
+        Chúng tôi đã sẵn sàng để gặp bạn! Chúng tôi sẽ yêu cầu xem bằng lái xe hoặc giấy tờ tùy thân có ảnh bất cứ khi
+        nào bạn sử dụng CineX Stubs A-List tại rạp.
+      </p>
+    </div>
+
+    <!-- Ticket details -->
+    <div class="bg-[#1a1a1a] p-6 rounded-lg mb-8">
+      <div class="mb-6">
+        <p class="text-gray-400 text-sm mb-1">MÃ XÁC NHẬN VÉ:</p>
+        <p class="font-bold text-lg">{{orderDetailData.orderCode}}</p>
+      </div>
+
+      <div class="space-y-6 border-t border-gray-800 pt-6">
+        <div class="flex items-start gap-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 mt-1" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+          </svg>
+          <div>
+            <p class="font-bold">{{count}} Người</p>
+            <p class="text-sm text-gray-400">
+              Phòng chiếu {{ orderDetailData.roomName }}, Ghế {{ getFormattedSeats() }}
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 mt-1" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <div>
+            <p class="font-bold">{{orderDetailData.cinemaName}}</p>
+            <p class="text-sm text-gray-400">{{orderDetailData.address}}</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 mt-1" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <div>
+            <p class="font-bold">{{orderDetailData.sessionDate}}</p>
+            <p class="text-sm text-gray-400">{{orderDetailData.sessionDate}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QR Code with circular border -->
+    <div class="flex justify-center mb-8">
+      <div class="p-1 rounded-full bg-gradient-to-r from-red-500 to-purple-500">
+        <div class="bg-white p-4 rounded-full">
+          <div class="w-40 h-40 relative">
+            <img [src]="'data:image/png;base64,' +orderDetailData.orderCodeB64" alt="QR Code"
+             class="w-full h-full rounded-full object-cover">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Order Details -->
+    <div class="max-w-full">
+      <div class="divide-gray-700 md:divide-y">
+        <!-- Tickets Section -->
+        <section>
+          <header class="mt-6 flex items-baseline justify-between">
+            <h2 class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">Vé</h2>
+
+          </header>
+          <ul class="mb-4 grid gap-2">
+            <li class="pt-2 font-semibold">
+              <div class="flex justify-between gap-3">
+                <div class="flex-1">
+                  <h4 class="my-auto text-base font-semibold leading-tight tracking-normal">Số Lượng Vé : {{count}}</h4>
+                </div>
+                <p class="my-auto label text-white">{{orderDetailData.totalPriceTicket | number:'1.0-0'}}đ</p>
+              </div>
+            </li>
+            <li class="text-white text-xs font-semibold leading-tight tracking-normal">
+              {{ getFormattedSeats() }}
+            </li>
+          </ul>
+
+          <!-- AMC Stubs Premiere Promotion -->
+          <div class="flex flex-wrap gap-4 items-center py-8 justify-center md:justify-start">
+            <div class="grid flex-1 gap-1">
+              <h1 class="font-bold text-xs" style="color: rgb(251, 173, 24);">
+                Tiết kiệm 31.500đ cho đơn hàng này bằng cách nâng cấp lên AMC Stubs Premiere!
+              </h1>
+              <p class="text-xs text-gray-300">199.000đ/năm + thuế</p>
+            </div>
+            <div class="flex">
+              <a class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-sm md:text-base mr-1 text-sm font-semibold"
+                href="#">Tham gia</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Food & Drinks Section -->
+        <section>
+          <header class="flex items-center justify-between py-6">
+            <h2 class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">Đồ Ăn & Thức Uống
+            </h2>
+          </header>
+          <ul class="mb-4 grid gap-2">
+            <div *ngFor="let group of groupedServices" class="mb-6">
+              <h3 class="text-lg font-bold text-white">{{ group.serviceTypeName }}</h3>
+              <ul class="grid gap-2">
+                <li *ngFor="let service of group.services" class="pt-2 font-semibold">
+                  <div class="flex justify-between gap-3">
+                    <div class="flex-1">
+                      <h4 class="my-auto text-base font-semibold leading-tight tracking-normal">{{ service.name }}</h4>
+                    </div>
+                    <p class="my-auto label text-white">{{ service.totalPrice | number:'1.0-0'}} đ</p>
+                  </div>
+                  <p class="my-2 text-xs italic text-gray-200">Số lượng: {{ service.quantity }}</p>
+                </li>
+              </ul>
+            </div>
+          </ul>
+        </section>
+
+        <!-- Tax Section -->
+        <section class="my-auto py-4">
+          <h2 class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal sr-only">Giảm Giá</h2>
+          <ul class="grid gap-2 mb-2">
+            <li class="pt-2 font-semibold">
+              <div class="flex justify-between gap-3">
+                <div class="flex-1">
+                  <h4 class="my-auto text-base font-semibold leading-tight tracking-normal">Giảm Giá</h4>
+                </div>
+                <p class="my-auto label text-white">{{orderDetailData.discountPrice | number:'1.0-0'}} đ</p>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <p class="py-10 text-xs italic leading-5 text-gray-200">
+          Giá vé Matinee được giảm TỐI ĐA 20% so với giá vé buổi tối. Bạn đang nhận được mức giá vé Matinee như hiển
+          thị.
+        </p>
+
+        <p class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
+          <span class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Tổng
+            cộng</span>
+          {{orderDetailData.totalPrice}}đ
+        </p>
+        <div class="mt-4 p-4 bg-gray-800 rounded-lg">
+          <p class="text-sm text-gray-300">
+            <span class="text-yellow-500">⭐</span> Bạn tích lũy được {{orderDetailData.PointChange}} điểm từ giao dịch này
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
