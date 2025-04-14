@@ -121,63 +121,67 @@
                 <div class="mt-4">
                     <div class="rich-text">
                         <div class="grid grid-cols-1 gap-4 py-6 md:grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">
-                            <div
-                                class="relative bg-[#111] rounded-lg overflow-hidden shadow-lg transition-transform hover:translate-y-[-5px] border border-[#333]">
-                                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#333] to-[#333]">
+                            <div class="relative bg-[#111] rounded-lg overflow-hidden shadow-lg transition-transform hover:translate-y-[-5px] border border-[#333]">
+                                <!-- Hiệu ứng mờ nhẹ toàn bộ vé -->
+                                <div class="absolute inset-0 bg-black/20 backdrop-blur-[1px] pointer-events-none"></div>
+                                
+                                <!-- Con dấu EXPIRED -->
+                                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-[-20deg] w-48 h-48 pointer-events-none mix-blend-multiply opacity-90">
+                                  <img src="https://png.pngtree.com/png-clipart/20230802/original/pngtree-expired-stamp-label-vector-grunge-picture-image_7834599.png" 
+                                       alt="Expired Stamp" 
+                                       class="w-full h-full object-contain mix-blend-multiply"
+                                       style="filter: brightness(0.9) contrast(1.2);">
                                 </div>
+                              
+                                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#333] to-[#333]"></div>
                                 <div class="flex p-4 bg-opacity-30 bg-black">
-                                    <img src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_272/f_auto/q_auto/v1739554424/amc-cdn/production/2/movies/79000/78995/PosterDynamic/169766.jpg"
-                                        alt="Movie Poster" class="w-[100px] h-[150px] object-cover rounded mr-4">
-                                    <div class="flex-1">
-                                        <h3 class="text-lg font-bold mb-2">Godzilla x Kong: The New Empire</h3>
-                                        <div class="text-sm text-[#bbbbbb] mb-1">
-                                            <div><i class="far fa-calendar"></i> 10/03/2025</div>
-                                            <div><i class="far fa-clock"></i> 18:45</div>
-                                        </div>
-                                        <div class="mt-2">
-                                            <div>CineX Aeon Mall Tân Phú</div>
-                                            <div class="text-sm text-[#bbbbbb]">Screen 5</div>
-                                        </div>
+                                  <img src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_272/f_auto/q_auto/v1739554424/amc-cdn/production/2/movies/79000/78995/PosterDynamic/169766.jpg" alt="Movie Poster" class="w-[100px] h-[150px] object-cover rounded mr-4 opacity-85">
+                                  <div class="flex-1">
+                                    <h3 class="text-lg font-bold mb-2 opacity-90">Godzilla x Kong: The New Empire</h3>
+                                    <div class="text-sm text-[#bbbbbb] mb-1 opacity-85">
+                                      <div><i class="far fa-calendar"></i> 10/03/2025</div>
+                                      <div><i class="far fa-clock"></i> 18:45</div>
                                     </div>
+                                    <div class="mt-2 opacity-85">
+                                      <div>CineX Aeon Mall Tân Phú</div>
+                                      <div class="text-sm text-[#bbbbbb]">Screen 5</div>
+                                    </div>
+                                  </div>
                                 </div>
                                 <div class="p-4 border-t border-dashed border-[#444]">
-                                    <div class="flex justify-between mb-2">
-                                        <span class="text-[#bbbbbb] text-sm">Booking Code:</span>
-                                        <span class="font-medium">CNXBK-44215</span>
+                                  <div class="flex justify-between mb-2 opacity-85">
+                                    <span class="text-[#bbbbbb] text-sm">Booking Code:</span>
+                                    <span class="font-medium">CNXBK-44215</span>
+                                  </div>
+                                  <div class="flex justify-between mb-2 opacity-85">
+                                    <span class="text-[#bbbbbb] text-sm">Ticket Type:</span>
+                                    <span class="font-medium">Standard 2D</span>
+                                  </div>
+                                  <div class="flex justify-between mb-2 opacity-85">
+                                    <span class="text-[#bbbbbb] text-sm">Seats:</span>
+                                    <div class="flex flex-wrap gap-2">
+                                      <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">E15</span>
+                                      <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">E16</span>
+                                      <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">E17</span>
+                                      <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">E18</span>
                                     </div>
-                                    <div class="flex justify-between mb-2">
-                                        <span class="text-[#bbbbbb] text-sm">Ticket Type:</span>
-                                        <span class="font-medium">Standard 2D</span>
-                                    </div>
-                                    <div class="flex justify-between mb-2">
-                                        <span class="text-[#bbbbbb] text-sm">Seats:</span>
-                                        <div class="flex flex-wrap gap-2">
-                                            <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">E15</span>
-                                            <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">E16</span>
-                                            <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">E17</span>
-                                            <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">E18</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-between mb-2">
-                                        <span class="text-[#bbbbbb] text-sm">Đồ ăn:</span>
-                                        <span class="font-medium">Yes</span>
-                                    </div>
-                                    <div class="flex justify-between text-sm text-[#ddd] mt-1">
-                                        <span>Combo Gia Đình x1</span>
-                                        <span>250,000₫</span>
-                                    </div>
+                                  </div>
+                                  <div class="flex justify-between mb-2 opacity-85">
+                                    <span class="text-[#bbbbbb] text-sm">Đồ ăn:</span>
+                                    <span class="font-medium">Yes</span>
+                                  </div>
+                                  <div class="flex justify-between text-sm text-[#ddd] mt-1 opacity-85">
+                                    <span>Combo Gia Đình x1</span>
+                                    <span>250,000₫</span>
+                                  </div>
                                 </div>
-                                <div
-                                    class="flex justify-between items-center p-4 bg-opacity-20 bg-black border-t border-[#333]">
-                                    <div class="text-lg font-bold text-[#00a8e1]">650,000₫</div>
-                                    <div class="flex gap-3">
-                                        <button
-                                            class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white border border-white px-6 min-w-[10ch] hover:bg-white hover:text-black text-sm md:text-base h-12">View
-                                            Receipt</button>
-
-                                    </div>
+                                <div class="flex justify-between items-center p-4 bg-opacity-20 bg-black border-t border-[#333]">
+                                  <div class="text-lg font-bold text-[#00a8e1] opacity-85">650,000₫</div>
+                                  <div class="flex gap-3">
+                                    <button class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 rounded-full text-white/85 border border-white/85 px-6 min-w-[10ch] hover:bg-white/10 text-sm md:text-base h-12">View Receipt</button>
+                                  </div>
                                 </div>
-                            </div>
+                              </div>
                             @for (item of listDataFilter; track $index) {
                                 <div
                                     class="relative bg-[#111] rounded-lg overflow-hidden shadow-lg transition-transform hover:translate-y-[-5px] border border-[#333]">

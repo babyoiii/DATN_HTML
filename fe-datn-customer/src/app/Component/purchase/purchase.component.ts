@@ -60,6 +60,46 @@ export class PurchaseComponent implements OnInit,OnDestroy {
   pointWillEarn: number = 0;
   freeService: string[] | null = null;
   userId: string | null = null;
+  
+  voucherList = [
+    {
+      code: 'CineXBANMOI',
+      name: 'Vé CineX đồng giá 60k cho tất cả KH',
+      status: null,
+      expiry: '31/12/2025'
+    },
+    {
+      code: 'CineXBANTHAN',
+      name: 'Giảm 25% hóa đơn',
+      status: 'Chưa thỏa mãn điều kiện',
+      expiry: '31/12/2025'
+    }
+  ];
+
+  selectedVoucher: string | null = null;
+
+  toggleVoucherDetail(code: string) {
+      this.selectedVoucher = this.selectedVoucher === code ? null : code;
+  }
+
+  showVoucherDetail(code: string) {
+      this.selectedVoucher = code;
+  }
+
+  hideVoucherDetail() {
+      // Nếu muốn giữ popup khi click, hãy comment dòng này
+      this.selectedVoucher = null;
+  }
+
+  copyVoucherCode(code: string) {
+    navigator.clipboard.writeText(code);
+    this.toastr.success('Đã sao chép mã giảm giá!');
+  }
+
+  applyVoucher(code: string) {
+    this.voucherCode = code;
+    // Thêm logic xử lý áp dụng voucher ở đây
+  }
   constructor(
     private seatService: SeatService,
     private cdr: ChangeDetectorRef,
