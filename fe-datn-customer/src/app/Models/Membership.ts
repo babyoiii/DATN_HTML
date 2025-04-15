@@ -39,3 +39,8 @@ export interface UserMembershipDetails {
     pointRate: number;  
     rewardPoint: number;
   }
+  export interface PointHistory {
+    title: string;
+    date: string;
+    points: number;
+  }
