@@ -17,7 +17,7 @@ interface PointHistory {
 export class RewardsComponent {
   activeTab: 'earned' | 'redeemed' = 'earned';
   
-  // Dữ liệu cho điểm đã nhận (đã bỏ icon)
+  // Dữ liệu điểm đã nhận 
   earnedPoints: PointHistory[] = [
     {
       title: 'Mua vé xem phim',
@@ -46,7 +46,7 @@ export class RewardsComponent {
     },
   ];
   
-  // Dữ liệu cho điểm đã đổi (đã bỏ icon)
+  // Dữ liệu điểm đã đổi (
   redeemedPoints: PointHistory[] = [
     {
       title: 'Nâng cấp membership',
@@ -60,7 +60,6 @@ export class RewardsComponent {
     }
   ];
   
-  // Phương thức để chuyển đổi tab
   setActiveTab(tab: 'earned' | 'redeemed'): void {
     this.activeTab = tab;
   }
