@@ -226,4 +226,77 @@
     transform: rotate(180deg);
     transition: transform 0.3s;
   }
+  .discount-container {
+    display: flex;
+    align-items: center;
+    background-color: #d1fae5; /* Light green background */
+    color: #065f46; /* Dark green text */
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
   
+  .discount-container svg {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  
+  .discount-container h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  
+  .discount-container p {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  /* Đảm bảo kích thước đồng nhất cho các checkbox */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    background-color: #1f2937; /* Màu nền xám đậm */
+    color: #d1d5db; /* Màu chữ xám nhạt */
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #4b5563; /* Viền xám */
+    transition: border-color 0.3s ease-in-out;
+    height: 80px; /* Chiều cao cố định */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .checkbox-container:hover {
+    border-color: #9ca3af; /* Viền sáng hơn khi hover */
+  }
+  
+  .checkbox-container input {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    margin-right: 1rem;
+    border-radius: 4px;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .checkbox-container input:hover {
+    transform: scale(1.1);
+  }
+  
+  .checkbox-container span {
+    font-size: 0.875rem; /* Kích thước chữ */
+    font-weight: 500; /* Độ đậm chữ */
+    line-height: 1.5;
+    color: #d1d5db; /* Màu chữ */
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .checkbox-container:hover span {
+    color: #ffffff; /* Màu chữ sáng hơn khi hover */
+  }
+  
+  .space-y-4 > * + * {
+    margin-top: 1rem; /* Khoảng cách giữa các checkbox */
+  }

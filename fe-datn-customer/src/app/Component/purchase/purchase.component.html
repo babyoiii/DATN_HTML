@@ -140,7 +140,7 @@
                                 </div>
                             </div>
                             <section class="divide-y-0 py-6">
-                                <h3 class="mb-4 text-xl font-semibold">Contact Info</h3>
+                                <h3 class="mb-4 text-xl font-semibold">Thông tin liên lạc</h3>
                                 <div class="flex flex-wrap justify-between gap-2"><label
                                         class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
                                             class="label">Email</span>
@@ -151,7 +151,7 @@
 
                                         </div>
                                         <p class="text-gray-subtle text-sm font-semibold leading-tight tracking-normal">
-                                            Your receipt and order confirmation will be sent to this email address</p>
+                                            Biên lai và xác nhận đơn hàng của bạn sẽ được gửi đến địa chỉ email này</p>
                                     </label></div>
                             </section>
                             <style></style>
@@ -160,8 +160,7 @@
                                 <section class="grid gap-6 py-6">
                                     <h3 class="sr-only">Payment Options</h3>
                                     <div class="grid gap-4">
-                                        <h4 class="flex items-baseline justify-between text-xl font-semibold">Payment
-                                            Method</h4>
+                                        <h4 class="flex items-baseline justify-between text-xl font-semibold">Phương thức thanh toán</h4>
                                         <div class="grid gap-2">
                                             <div class="grid gap-2"><button type="button"
                                                     class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white md:text-base flex items-center gap-4 text-base"><svg
@@ -397,23 +396,13 @@
                         <div class="rich-text">
                             <p
                                 class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                <span class="italic text-100" style="color: rgb(128, 128, 128);">Sorry, no refunds
-                                    provided after the displayed showtime.</span>
+                                <span class="italic text-100" style="color: rgb(128, 128, 128);">Xin lỗi, không hoàn lại tiền sau thời gian chiếu được hiển thị.</span>
                             </p>
                         </div>
                         <div class="rich-text">
                             <p
                                 class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                <span class="italic text-100 footnote" style="color: rgb(128, 128, 128);">UP TO 20% OFF
-                                </span><span class="text-100 footnote" style="color: rgb(128, 128, 128);">the evening
-                                    ticket base price for the same title and ticket type (Adult, Child, Senior, etc.)
-                                    for showtimes before 4pm at select AMC, AMC DINE-IN, and AMC CLASSIC locations.
-                                    Prices do not include tax. Offer valid at participating locations only. Discount is
-                                    automatically applied. Available at the box office, online at AMCTheatres.com and
-                                    the AMC Mobile App. Not valid with any other offer. Offer not combinable with AMC
-                                    Stubs Discount Tuesday discount. Lower price will be honored. Surcharges will apply
-                                    for premium formats, alternative content and special events. Exclusions
-                                    apply.</span>
+                             <span class="text-100 footnote" style="color: rgb(128, 128, 128);">GIẢM TỚI 20% giá cơ sở vé buổi tối cho cùng tiêu đề và loại vé (Người lớn, Trẻ em, Người cao tuổi, v.v.) cho giờ chiếu trước 4 giờ chiều tại một số địa điểm AMC, AMC DINE-IN và AMC CLASSIC. Giá chưa bao gồm thuế. Ưu đãi chỉ có giá trị tại các địa điểm tham gia. Giảm giá được áp dụng tự động. Có sẵn tại phòng vé, trực tuyến tại AMCTheatres.com và Ứng dụng di động AMC. Không có giá trị với bất kỳ ưu đãi nào khác. Ưu đãi không thể kết hợp với giảm giá AMC Stubs Giảm giá Thứ Ba. Giá thấp hơn sẽ được tôn trọng. Phụ phí sẽ được áp dụng cho các định dạng cao cấp, nội dung thay thế và các sự kiện đặc biệt. Các loại trừ được áp dụng.</span>
                             </p>
                         </div>
                     </div>
@@ -442,20 +431,20 @@
                                                 </div>
                                                 <p
                                                     class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                    {{ seat.total }} VND
+                                                    {{ seat.total }} đ
                                                 </p>
                                             </div>
                                             <p class="text-white text-xs font-semibold leading-tight tracking-normal">
-                                                Quantity: {{ seat.count }}
+                                                Số lượng: {{ seat.count }}
                                             </p>
                                         </li>
                                     </ul>
                                     <div class="mt-4 text-right text-white text-lg font-bold">
-                                        Tổng Cộng: {{ totalTicketPrice | number:'1' }} VND
+                                        Tổng Cộng: {{ totalTicketPrice | number:'1.0-0' }} đ
                                     </div>
                                     <h2
                                         class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
-                                        Service</h2>
+                                        Đồ uống</h2>
                                     <ul class="mb-4 grid gap-2">
                                         <li *ngFor="let sv of services" class="pt-2 font-semibold">
                                             <div class="flex justify-between gap-3">
@@ -467,7 +456,7 @@
                                                 </div>
                                                 <p
                                                     class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                    {{ sv.price }} VND
+                                                    {{ sv.price }} đ
                                                 </p>
                                             </div>
                                             <p class="text-white text-xs font-semibold leading-tight tracking-normal">
@@ -476,7 +465,7 @@
                                         </li>
                                     </ul>
                                     <div class="mt-4 text-right text-white text-lg font-bold">
-                                        Tổng Cộng: {{ totalServiceAmount | number:'1' }} VND
+                                        Tổng Cộng: {{ totalServiceAmount | number:'1.0-0' }} đ
                                     </div>
                                     <div *ngIf="freeService && freeService.length > 0">
                                         <h2 class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
@@ -495,6 +484,15 @@
                                                     </p>
                                                 </div>
                                             </li>
+                                            <div class="discount-container bg-green-100 text-green-800 p-4 rounded-lg shadow-md flex items-center gap-4">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
+                                                  <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"></path>
+                                                </svg>
+                                                <div>
+                                                  <h4 class="text-lg font-semibold">Bạn đã tiết kiệm được:</h4>
+                                                  <p class="text-xl font-bold">{{ discountAmount |  number:'1.0-0' }} đ</p>
+                                                </div>
+                                              </div>
                                         </ul>
                                     </div>
                                 </section>
@@ -504,26 +502,40 @@
                                             class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
                                             Đồ ăn &amp; Nước Uống</h2><a
                                             class="group transition-colors text-blue-500 hocus:text-white text-sm font-semibold leading-tight tracking-normal"
-                                            href="/orders/d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2/food-and-drink">Add</a>
+                                            href="/orders">Add</a>
                                     </header>
                                 </section>
-                                <div class="w-full max-w-md p-4">
-                                    <label class="flex items-center space-x-4 bg-gray-800 shadow-md rounded-lg p-4 border border-gray-600 hover:border-gray-400 transition-all duration-300 cursor-pointer group">
-                                        <input 
-                                            type="checkbox" 
-                                            class="form-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-500 focus:ring-2 transition-all duration-200 ease-in-out"
-                                        />
-                                        <span class="text-sm text-gray-200 group-hover:text-gray-100 transition-colors duration-300 font-medium leading-tight tracking-normal">
-                                            Tôi hiểu và chấp nhận rằng nếu không đăng ký tài khoản, hệ thống sẽ không chịu trách nhiệm khi có sự cố xảy ra.
-                                        </span>
-                                    </label>
-                                    
-                                </div>
+                                <label class="checkbox-container">
+                                    <input 
+                                      type="checkbox" 
+                                      class="form-checkbox"
+                                      [(ngModel)]="isTermsAccepted"
+                                      [ngModelOptions]="{standalone: true}"
+                                      (change)="onCheckboxChange()"
+                                    />
+                                    <span>
+                                      Tôi hiểu và chấp nhận rằng nếu không đăng ký tài khoản, hệ thống sẽ không chịu trách nhiệm khi có sự cố xảy ra.
+                                    </span>
+                                  </label>
+                                  
+                                  <label class="checkbox-container">
+                                    <input 
+                                      type="checkbox" 
+                                      class="form-checkbox"
+                                      [(ngModel)]="isAgeConfirmed"
+                                      [ngModelOptions]="{standalone: true}"
+                                      (change)="onCheckboxChange()"
+                                    />
+                                    <span>
+                                      Tôi xác nhận rằng tôi đủ 18 tuổi trở lên.
+                                    </span>
+                                  </label>
+                            
                                 <p
                                     class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                     <span
                                         class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span> {{ selectedPaymentMethod === 'MULTI-WALLET' ? '$' + displayAmount : totalAmount | number:'1.0-0' }}
-                                        {{ selectedPaymentMethod === 'MULTI-WALLET' ? 'USDC' : 'VND' }}
+                                        {{ selectedPaymentMethod === 'MULTI-WALLET' ? 'USDC' : 'đ' }}
                                 </p>
                             </div>
                         </div>
@@ -537,10 +549,10 @@
                             <div class="rich-text">
                                 <p
                                     class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                    <span class="text-200">By proceeding to purchase, I agree to the </span><a
+                                    <span class="text-200">Bằng cách tiến hành mua, tôi đồng ý với </span><a
                                         class="group transition-colors text-blue-500 hocus:text-white"
                                         rel="noopener noreferrer" target="_blank" href="/terms-and-conditions"><span
-                                            class="text-200">AMC Terms and Conditions</span></a><span class="">.</span>
+                                            class="text-200">Điều khoản và điều kiện Cinex.</span></a><span class="">.</span>
                                 </p>
                             </div>
                         </div>
@@ -551,7 +563,7 @@
                                 <section>
                                     <div aria-label="Order Total" class="hidden gap-2 lg:flex"><span
                                             class="font-bold"> {{ selectedPaymentMethod === 'MULTI-WALLET' ? '$' + displayAmount : totalAmount | number:'1.0-0' }}
-                                            {{ selectedPaymentMethod === 'MULTI-WALLET' ? 'USDC' : 'VND' }}</span></div>
+                                            {{ selectedPaymentMethod === 'MULTI-WALLET' ? 'USDC' : 'đ' }}</span></div>
                                     <div class="lg:hidden">
                                         <div><button type="button"
                                                 class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 text-sm md:text-base flex items-center gap-3">
@@ -589,7 +601,7 @@
                                                                         class="mt-6 flex items-baseline justify-between">
                                                                         <h2
                                                                             class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
-                                                                            Tickets</h2><a
+                                                                            Vé</h2><a
                                                                             class="group transition-colors text-blue-500 hocus:text-white text-sm font-semibold leading-tight tracking-normal"
                                                                             aria-label="Edit Tickets"
                                                                             href="/showtimes/129218000?order-token=d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2&amp;seats=B3%2CB4">Edit</a>
@@ -664,7 +676,7 @@
                                                                 <p
                                                                     class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                                                     <span
-                                                                        class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>${{totalAmount}}
+                                                                        class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>${{totalAmount | number:'1.0-0' }}
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -676,10 +688,13 @@
                                 </section>
                             </div>
                             <div class="flex items-center gap-2 ">
-                                <p class="hidden text-xs font-semibold italic text-gray-100 lg:block">You must complete
-                                    all required fields.</p>
-                                <button (click)="onPurchase()"
-                                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12">Purchase</button>
+                                <p *ngIf="!isTermsAccepted || !isAgeConfirmed" class="hidden text-xs font-semibold italic text-gray-100 lg:block">Bạn cần phải chập nhận các điều khoản của chúng tôi trước khi thanh toán.</p>
+                                <button 
+                                (click)="onPurchase()"
+                                [disabled]="!isTermsAccepted || !isAgeConfirmed"
+                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12">
+                                Thanh Toán
+                              </button>
                                 <!-- <button hidden="" type="submit"
                                     aria-label="Purchase"></button> -->
                             </div>

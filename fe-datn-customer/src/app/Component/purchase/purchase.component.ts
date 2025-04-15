@@ -60,6 +60,8 @@ export class PurchaseComponent implements OnInit,OnDestroy {
   pointWillEarn: number = 0;
   freeService: string[] | null = null;
   userId: string | null = null;
+    isTermsAccepted: boolean = false; // Trạng thái checkbox 1
+  isAgeConfirmed: boolean = false; // Trạng thái checkbox 2
   constructor(
     private seatService: SeatService,
     private cdr: ChangeDetectorRef,
@@ -128,8 +130,14 @@ export class PurchaseComponent implements OnInit,OnDestroy {
       });
     } 
   }
+ 
   openSignIn() {
     this.modalService.openSignInModal();
+  }
+  onCheckboxChange(): void {
+    if (this.isTermsAccepted && this.isAgeConfirmed) {
+      console.log('Cả hai checkbox đã được tick.');
+    }
   }
   scrollToSection(sectionId: string): void {
     const element = document.getElementById(sectionId);
