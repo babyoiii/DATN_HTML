@@ -61,6 +61,7 @@ export interface Service {
     concessionAmount: number;
     totalPrice: number;
     email: string;
+    status: number;
     createdDate: string;
 }
 

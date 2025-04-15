@@ -34,3 +34,8 @@ export interface UserMembershipDetails {
     currentLevelBenefits: MembershipBenefit[];
     nextLevelBenefits: MembershipBenefit[];
   }
+  export interface RewardPointData {
+    totalPoint: number;
+    pointRate: number;  
+    rewardPoint: number;
+  }

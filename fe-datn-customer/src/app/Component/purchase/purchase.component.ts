@@ -15,6 +15,7 @@ import { NeedMoreTimeComponent } from "../need-more-time/need-more-time.componen
 import { TimeUpComponent } from "../time-up/time-up.component";
 import { MembershipService } from '../../Service/membership.service';
 import { Log } from 'ethers';
+import { RewardPointData } from '../../Models/Membership';
 
 @Component({
   selector: 'app-purchase',
@@ -60,7 +61,7 @@ export class PurchaseComponent implements OnInit,OnDestroy {
   pointWillEarn: number = 0;
   freeService: string[] | null = null;
   userId: string | null = null;
-  
+  rewardPointsInput : number = 0; // Số điểm thưởng nhập vào từ người dùng
   voucherList = [
     {
       code: 'CineXBANMOI',
@@ -75,8 +76,17 @@ export class PurchaseComponent implements OnInit,OnDestroy {
       expiry: '31/12/2025'
     }
   ];
+  currentPoints: number = 500; // Số điểm hiện tại của người dùng
+  discountPointAmount: number = 0; // Số tiền có thể giảm
 
   selectedVoucher: string | null = null;
+  getRewardPoint : RewardPointData = {
+    totalPoint: 0,
+    pointRate: 0,
+    rewardPoint: 0
+  }
+ caculateRewardPoint: number = 0;
+  
 
   toggleVoucherDetail(code: string) {
       this.selectedVoucher = this.selectedVoucher === code ? null : code;
@@ -150,7 +160,16 @@ export class PurchaseComponent implements OnInit,OnDestroy {
         }
       },
     });
-
+    this.membershipService.getPointByUser().subscribe({
+      next: (res: any) => {
+        this.getRewardPoint = res.data;
+        this.caculateRewardPoint = 1000 * this.getRewardPoint.pointRate;
+        console.log('Reward Point Data:', this.getRewardPoint);
+      },
+      error: (err) => {
+        console.error('Error fetching points:', err);
+      }
+    });
     this.loadData();
     this.applyMembershipDiscount();
   }
@@ -170,7 +189,48 @@ export class PurchaseComponent implements OnInit,OnDestroy {
       });
     } 
   }
- 
+  appliedPoints: { points: number; amount: number }[] = []; // Mảng lưu lịch sử các lần áp dụng điểm thưởng
+
+  onApplyPoint(): void {
+    if (this.rewardPointsInput > this.getRewardPoint.totalPoint) {
+      this.toastr.warning('Số điểm nhập vào vượt quá số điểm hiện có!', 'Cảnh báo');
+      return;
+    }
+  
+    const discountPointAmount = this.rewardPointsInput * this.getRewardPoint.pointRate;
+  
+    if (this.totalAmount < discountPointAmount) {
+      this.toastr.warning('Số điểm nhập vào vượt quá số tổng số tiền của đơn hàng!', 'Cảnh báo');
+      return;
+    }
+  
+    this.appliedPoints.push({ points: this.rewardPointsInput, amount: discountPointAmount });
+  
+    this.discountAmount += discountPointAmount;
+  
+    this.updateTotals();
+  
+    this.rewardPointsInput = 0;
+  
+    this.toastr.success('Áp dụng điểm thưởng thành công!', 'Thông báo');
+  }
+  onCancelPoint(): void {
+    if (this.appliedPoints.length > 0) {
+      this.appliedPoints.forEach((entry) => {
+        this.discountAmount -= entry.amount;
+      });
+  
+      this.appliedPoints = [];
+  
+      this.rewardPointsInput = 0;
+  
+      this.updateTotals();
+  
+      this.toastr.success('Đã hủy tất cả các lần áp dụng điểm thưởng!', 'Thông báo');
+    } else {
+      this.toastr.info('Không có điểm thưởng nào được áp dụng để hủy!', 'Thông báo');
+    }
+  }
   openSignIn() {
     this.modalService.openSignInModal();
   }
@@ -430,7 +490,7 @@ export class PurchaseComponent implements OnInit,OnDestroy {
     this.totalServiceAmount = this.services.reduce((total, service) => total + (service.price * service.quantity), 0);
 
     // Tính tổng tiền cuối cùng
-    this.totalAmount = this.totalTicketPrice + this.totalServiceAmount - this.discountAmount;
+    this.totalAmount = this.totalTicketPrice + this.totalServiceAmount - this.discountAmount - this.discountPointAmount;
 
     // Cập nhật số tiền hiển thị dựa trên phương thức thanh toán
     if (this.selectedPaymentMethod === 'MULTI-WALLET') {

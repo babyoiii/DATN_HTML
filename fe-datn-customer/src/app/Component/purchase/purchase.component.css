@@ -300,3 +300,16 @@
   .space-y-4 > * + * {
     margin-top: 1rem; /* Khoảng cách giữa các checkbox */
   }
+  .text-sm {
+    font-size: 0.875rem; /* Giảm kích thước chữ */
+    line-height: 1.25rem; /* Đảm bảo khoảng cách dòng hợp lý */
+  }
+  
+  .font-medium {
+    font-weight: 500; /* Độ đậm trung bình */
+  }
+  
+  .font-bold {
+    font-weight: 700; /* Độ đậm cao */
+  }
+  

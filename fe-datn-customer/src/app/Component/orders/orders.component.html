@@ -222,7 +222,7 @@
                                   />
                                   <div class="grid gap-1">
                                     <h3 class="text-balance font-bold">{{ sv.serviceName }}</h3>
-                                    <p class="text-sm">{{ sv.price | currency }} VND</p>
+                                    <p class="text-sm">{{ sv.price |  number:'1.0-0' }} đ</p>
                                     <button
                                       class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm md:text-base h-12"
                                       type="button"
@@ -267,7 +267,7 @@
                                                 </div>
                                                 <p
                                                     class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                    {{ (ticketType.value.total / ticketType.value.count) | number:'1.2-2' }} VND
+                                                    {{ (ticketType.value.total / ticketType.value.count) | number:'1.0-0' }} đ
                                                 </p>
                                             </div>
                                         </li>
@@ -277,7 +277,7 @@
                                     </ng-container>
                                     <!-- Hiển thị tổng tiền vé -->
                                     <div class="mt-4 text-right text-white text-lg font-bold">
-                                        Tổng cộng: {{ getTotalTicketPrice() | number:'1.2-2' }} VND
+                                        Tổng cộng: {{ getTotalTicketPrice() | number:'1.0-0' }} đ
                                     </div>
                                 </ul>
 
@@ -309,7 +309,7 @@
                                             </div>
                                             <p
                                                 class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                {{ item.service.price * item.quantity | number:'1.2-2' }} VND
+                                                {{ item.service.price * item.quantity | number:'1.0-0' }} đ
                                             </p>
                                         </div>
                                     </li>
@@ -317,7 +317,7 @@
 
                                 <!-- Hiển thị tổng tiền -->
                                 <div class="mt-4 text-right text-white text-lg font-bold">
-                                    Tổng cộng: {{ getTotalService() | number:'1.2-2' }} VND
+                                    Tổng cộng: {{ getTotalService() | number:'1.0-0' }} đ
                                 </div>
                                 <div
                                     class="PPsXr-flex PPsXr-flex-wrap PPsXr-gap-4 PPsXr-items-center PPsXr-py-8 PPsXr-justify-center PPsXr-md:justify-start">
@@ -338,7 +338,7 @@
                                 class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                 <span
                                     class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Tổng Cộng</span>{{getTotalAmount()
-                                | number:'1.2-2'}} VND
+                                | number:'1.0-0'}} đ
                             </p>
                         </div>
                     </div>
@@ -354,7 +354,7 @@
                     <div class="flex flex-wrap items-center gap-4 py-4 justify-between lg:justify-end">
                         <section>
                             <div aria-label="Order Total" class="hidden gap-2 lg:flex"><span
-                                    class="font-bold">{{getTotalAmount() | number:'1.2-2'}} VND</span></div>
+                                    class="font-bold">{{getTotalAmount() | number:'1.0-0'}} đ</span></div>
                             <div class="lg:hidden">
                                 <div><button type="button"
                                         class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 text-sm md:text-base flex items-center gap-3">
@@ -370,7 +370,7 @@
                                                 class="absolute inset-0 grid -translate-y-[2px] translate-x-1 place-items-center leading-none">
                                                 <span aria-label="Number of Items in Order" class="text-xs">2</span>
                                             </div>
-                                        </div>{{getTotalAmount() | number:'1.2-2'}} VND
+                                        </div>{{getTotalAmount() | number:'1.0-0'}} đ
                                     </button>
                                     <div
                                         class="fixed inset-0 z-40 bg-black transition-opacity duration-300 pointer-events-none opacity-0">
@@ -390,7 +390,7 @@
                                                             <header class="mt-6 flex items-baseline justify-between">
                                                                 <h2
                                                                     class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
-                                                                    Tickets</h2><a
+                                                                    Vé</h2><a
                                                                     class="group transition-colors text-blue-500 hocus:text-white text-sm font-semibold leading-tight tracking-normal"
                                                                     aria-label="Edit Tickets"
                                                                     href="/showtimes/129218000?order-token=d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2&amp;seats=B3%2CB4">Edit</a>
@@ -409,7 +409,7 @@
                                                                             <p
                                                                                 class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
                                                                                 {{ (ticketType.value.total /
-                                                                                ticketType.value.count).toFixed(2) }} VND
+                                                                                ticketType.value.count).toFixed(2) }} đ
                                                                             </p>
                                                                         </div>
                                                                     </li>
