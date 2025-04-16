@@ -1,6 +1,6 @@
-
 <app-need-more-time></app-need-more-time>
 <app-time-up></app-time-up>
+
 <body class="relative bg-black text-white [&amp;:has(dialog[open],[data-body-scroll=disabled])]:overflow-hidden"
     monica-id="ofpnmcalabcbjgholdjcjblkibolbppb" monica-version="7.8.0">
     <div class="flex h-[100dvh] flex-col"><!--$--><!--$--><!--$--><!--/$--><!--/$--><!--/$-->
@@ -106,7 +106,8 @@
                             <p
                                 class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
                                 <span class="text-200 caption">Sign in to take advantage of AMC Stubs benefits,
-                                    including waived fees as applicable.</span></p>
+                                    including waived fees as applicable.</span>
+                            </p>
                         </div><button (click)="openSignIn()"
                             class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm h-11"
                             id="65bd48c8aea5fcb5003cf325" type="button">Sign In</button>
@@ -115,7 +116,8 @@
                 <div class="mx-auto w-full px-4 xl:px-0 grid max-w-[1000px] grid-cols-2 gap-20">
                     <div class="col-span-2 pt-4 md:col-span-1">
                         <div class="mb-12 divide-y divide-gray-700">
-                            <div *ngIf="checkMembership == true" class="qcALx-grid qcALx-grid-cols-2 qcALx-w-full qcALx-h-fit qcALx-rounded-xl qcALx-p-4"
+                            <div *ngIf="checkMembership == true"
+                                class="qcALx-grid qcALx-grid-cols-2 qcALx-w-full qcALx-h-fit qcALx-rounded-xl qcALx-p-4"
                                 style="background-image: url(&quot;https://amc-theatres-res.cloudinary.com/image/upload/amc-cdn/static/images/2024/bg-banner-premiere.png&quot;); background-size: cover;">
                                 <div class="qcALx-col-span-1 qcALx-flex align-center"><img alt="AMC Stubs"
                                         config="[object Object]" loading="lazy" width="250" height="44" decoding="async"
@@ -140,7 +142,7 @@
                                 </div>
                             </div>
                             <section class="divide-y-0 py-6">
-                                <h3 class="mb-4 text-xl font-semibold">Contact Info</h3>
+                                <h3 class="mb-4 text-xl font-semibold">Thông tin liên lạc</h3>
                                 <div class="flex flex-wrap justify-between gap-2"><label
                                         class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
                                             class="label">Email</span>
@@ -151,7 +153,7 @@
 
                                         </div>
                                         <p class="text-gray-subtle text-sm font-semibold leading-tight tracking-normal">
-                                            Your receipt and order confirmation will be sent to this email address</p>
+                                            Biên lai và xác nhận đơn hàng của bạn sẽ được gửi đến địa chỉ email này</p>
                                     </label></div>
                             </section>
                             <style></style>
@@ -160,8 +162,7 @@
                                 <section class="grid gap-6 py-6">
                                     <h3 class="sr-only">Payment Options</h3>
                                     <div class="grid gap-4">
-                                        <h4 class="flex items-baseline justify-between text-xl font-semibold">Payment
-                                            Method</h4>
+                                        <h4 class="flex items-baseline justify-between text-xl font-semibold">Phương thức thanh toán</h4>
                                         <div class="grid gap-2">
                                             <div class="grid gap-2"><button type="button"
                                                     class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white md:text-base flex items-center gap-4 text-base"><svg
@@ -175,33 +176,30 @@
                                                             d="M22.5 0A22.5 22.5 0 1 0 45 22.5 22.5 22.5 0 0 0 22.5 0zm0 43.172A20.672 20.672 0 1 1 43.172 22.5 20.672 20.672 0 0 1 22.5 43.172z">
                                                         </path>
                                                     </svg> Add Card</button>
-                                                    @for (item of listPaymentMethod; track $index) {
-                                                        <label
-                                                        class="flex w-max items-center gap-4">
-                                                        <input
-                                                            class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
-                                                            type="radio" [value]="item.paymentMethodName"
-                                                            (change)="onPaymentMethodChange(item.id)" name="paymentMethod">
-                                                            
-                                                            <img alt=""
-                                                            config="[object Object]" loading="lazy" width="47" height="30"
-                                                            decoding="async" data-nimg="1" class="pointer-events-none"
-                                                            srcset="{{item.logoUrl}}"
-                                                            src="{{item.logoUrl}}"
-                                                            style="color: transparent;">
-                                                            <span>{{item.paymentMethodName}}</span></label>
-                                                        }
-                                                    </div>
+                                                @for (item of listPaymentMethod; track $index) {
+                                                <label class="flex w-max items-center gap-4">
+                                                    <input
+                                                        class="m-1 max-h-5 min-h-5 w-5 min-w-5 max-w-5 appearance-none rounded-full border-2 border-white/60 checked:border-blue checked:bg-gradient-radial checked:from-blue-500 checked:from-30% checked:to-transparent checked:to-40% checked:hover:from-blue-700"
+                                                        type="radio" [value]="item.paymentMethodName"
+                                                        (change)="onPaymentMethodChange(item.id)" name="paymentMethod">
+
+                                                    <img alt="" config="[object Object]" loading="lazy" width="47"
+                                                        height="30" decoding="async" data-nimg="1"
+                                                        class="pointer-events-none" srcset="{{item.logoUrl}}"
+                                                        src="{{item.logoUrl}}" style="color: transparent;">
+                                                    <span>{{item.paymentMethodName}}</span></label>
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                     <style></style>
                                     <div id="rokt-below-payments" class="emtpy:hidden"></div>
                                 </section>
-                                
+
                                 <section>
                                     <div class="my-2 max-w-[600px]" data-orientation="vertical">
                                         <div data-state="open" data-orientation="vertical">
-                                            
+
                                             <button type="button" (click)="toggleAccordion()"
                                                 aria-controls="radix-:r29:" aria-expanded="true" data-state="open"
                                                 data-orientation="vertical" id="radix-:r28:"
@@ -209,19 +207,25 @@
                                                 data-radix-collection-item="" aria-disabled="true">
                                                 <h2
                                                     class="flex items-center justify-start gap-4 text-xs font-semibold md:text-base">
-                                                    Use Gift Cards, Promo Code, or Voucher
-                                                    <svg *ngIf="!isOpen" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
-                                                    width="1em" height="1em" class="w-5 transition-transform duration-300">
-                                                    <path d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z"></path>
-                                                  </svg>
-                                                  <svg *ngIf="isOpen" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
-                                                    width="1em" height="1em" class="w-5 transition-transform duration-300">
-                                                    <path d="M22.464 10.48 3.067 29.594c-.856.57-2.283.285-2.853-.856-.285-.57-.285-1.141 0-1.997l20.824-20.824c.856-.856 1.997-.856 2.853 0L44.715 26.48c.57.856.285 2.282-.856 2.852-.57.286-1.426.286-1.997 0z"></path>
-                                                  </svg>
+                                                    Sử dụng thẻ giảm giá, Điểm thưởng hoặc thẻ quà tặng
+                                                    <svg *ngIf="!isOpen" xmlns="http://www.w3.org/2000/svg"
+                                                        fill="currentColor" viewBox="0 0 45 45" width="1em" height="1em"
+                                                        class="w-5 transition-transform duration-300">
+                                                        <path
+                                                            d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
+                                                        </path>
+                                                    </svg>
+                                                    <svg *ngIf="isOpen" xmlns="http://www.w3.org/2000/svg"
+                                                        fill="currentColor" viewBox="0 0 45 45" width="1em" height="1em"
+                                                        class="w-5 transition-transform duration-300">
+                                                        <path
+                                                            d="M22.464 10.48 3.067 29.594c-.856.57-2.283.285-2.853-.856-.285-.57-.285-1.141 0-1.997l20.824-20.824c.856-.856 1.997-.856 2.853 0L44.715 26.48c.57.856.285 2.282-.856 2.852-.57.286-1.426.286-1.997 0z">
+                                                        </path>
+                                                    </svg>
                                                 </h2>
                                             </button>
-                                            <div *ngIf="isOpen" @slideToggle data-state="open" id="radix-:r29:" role="region"
-                                                aria-labelledby="radix-:r28:" data-orientation="vertical"
+                                            <div *ngIf="isOpen" @slideToggle data-state="open" id="radix-:r29:"
+                                                role="region" aria-labelledby="radix-:r28:" data-orientation="vertical"
                                                 class="accordion__content overflow-clip"
                                                 style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width); --radix-collapsible-content-height: 204px; --radix-collapsible-content-width: 460px;">
                                                 <div class="flex flex-col gap-4 py-4">
@@ -244,47 +248,68 @@
                                                                         <path
                                                                             d="M22.5 0A22.5 22.5 0 1 0 45 22.5 22.5 22.5 0 0 0 22.5 0zm0 43.116A20.672 20.672 0 1 1 43.087 22.5 20.672 20.672 0 0 1 22.5 43.116z">
                                                                         </path>
-                                                                    </svg>Add Gift Card</h2>
+                                                                    </svg>Sử dụng điểm thưởng
+                                                                </h2>
                                                             </button>
                                                             <div data-state="open" id="radix-:r2b:" role="region"
-                                                                aria-labelledby="radix-:r2a:"
-                                                                data-orientation="vertical"
-                                                                class="accordion__content overflow-clip"
-                                                                style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width); --radix-collapsible-content-height: 319px; --radix-collapsible-content-width: 460px;">
-                                                                <div class="flex gap-4">
-                                                                    <div class="m-1 h-[21px] w-[21px]"></div><label
-                                                                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed max-w-[90%]">
-                                                                        <div class="grid grid-cols-2 gap-4">
-                                                                            <div class="amc-input amc-input--box"><input
-                                                                                    class="input outline-none"
-                                                                                    minlength="1"
-                                                                                    placeholder="Card Number"
-                                                                                    spellcheck="false" type="text">
-                                                                            </div>
-                                                                            <div class="amc-input amc-input--box"><input
-                                                                                    class="input outline-none"
-                                                                                    minlength="1" placeholder="Pin"
-                                                                                    spellcheck="false" type="number">
-                                                                            </div>
+                                                            aria-labelledby="radix-:r2a:" data-orientation="vertical"
+                                                            class="accordion__content overflow-clip"
+                                                            style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width); --radix-collapsible-content-height: 319px; --radix-collapsible-content-width: 460px;">
+                                                            <div class="flex gap-4">
+                                                                <div class="m-1 h-[21px] w-[21px]"></div>
+                                                                <label class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed max-w-[90%]">
+                                                                    <div class="grid grid-cols-2 gap-8">
+                                                                        <div class="amc-input amc-input--box">
+                                                                            <input 
+                                                                              [(ngModel)]="rewardPointsInput" 
+                                                                              class="input outline-none" 
+                                                                              maxlength="20" 
+                                                                              minlength="1" 
+                                                                              placeholder="Nhập số điểm" 
+                                                                              spellcheck="false" 
+                                                                              type="number" 
+                                                                              name="rewardPointsInput">
+                                                                          </div>
+                                                                    </div>
+                                                        
+                                                                    <div class="flex flex-col gap-2 p-4 bg-gray-800 rounded-lg shadow-md text-white mt-4">
+                                                                        <!-- Hiển thị số điểm hiện tại -->
+                                                                        <div class="flex justify-between items-center text-sm">
+                                                                          <h4 class="font-medium">Số điểm hiện tại:</h4>
+                                                                          <p class="font-bold text-green-400">{{ getRewardPoint.totalPoint }}</p>
                                                                         </div>
-                                                                        
-                                                                        <div
-                                                                            class="flex flex-wrap items-center gap-4 py-4 justify-start">
-                                                                            <button type="button"
-                                                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm md:text-base h-12">Cancel</button><button
-                                                                                type="button"
-                                                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12"
-                                                                                >Apply</button></div>
-                                                                    </label>
-                                                                </div>
+                                                                      
+                                                                        <!-- Hiển thị tỷ lệ quy đổi điểm -->
+                                                                        <div class="flex justify-between items-center text-sm">
+                                                                          <h4 class="font-medium">Tỷ lệ quy đổi:</h4>
+                                                                          <p class="font-bold text-blue-400">1 điểm = {{ getRewardPoint.pointRate }} đ</p>
+                                                                        </div>
+                                                                      
+                                                                        <!-- Hiển thị số tiền có thể giảm -->
+                                                                        <div class="flex justify-between items-center text-sm">
+                                                                          <h4 class="font-medium">Số tiền có thể giảm:</h4>
+                                                                          <p class="font-bold text-red-400">
+                                                                            {{ getRewardPoint.totalPoint }} x {{ getRewardPoint.pointRate }} = {{ getRewardPoint.rewardPoint | number:'1.0-0' }} đ
+                                                                          </p>
+                                                                        </div>
+                                                                      </div>
+                                                                      <div
+                                                                      class="flex flex-wrap items-center gap-4 py-4 justify-start">
+                                                                      <button type="button" (click)=" onCancelPoint()"
+                                                                          class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm md:text-base h-12">Cancel</button><button
+                                                                          type="button" (click)="onApplyPoint()"
+                                                                          class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">Apply</button>
+                                                                  </div>
+                                                                </label>
+                                                                
                                                             </div>
+                                                        </div>
                                                         </div>
                                                     </div>
                                                     <div class="text-sm md:text-base" data-orientation="vertical">
                                                         <div data-state="open" data-orientation="vertical">
-                                                            
-                                                            <button
-                                                                type="button" aria-controls="radix-:r2d:"
+
+                                                            <button type="button" aria-controls="radix-:r2d:"
                                                                 aria-expanded="true" data-state="open"
                                                                 data-orientation="vertical" id="radix-:r2c:"
                                                                 class="accordion__trigger justify-start text-left"
@@ -301,7 +326,8 @@
                                                                         <path
                                                                             d="M22.5 0A22.5 22.5 0 1 0 45 22.5 22.5 22.5 0 0 0 22.5 0zm0 43.116A20.672 20.672 0 1 1 43.087 22.5 20.672 20.672 0 0 1 22.5 43.116z">
                                                                         </path>
-                                                                    </svg>Add Promo Code</h2>
+                                                                    </svg>Sử dụng giảm giá
+                                                                </h2>
                                                             </button>
                                                             <div data-state="open" id="radix-:r2d:" role="region"
                                                                 aria-labelledby="radix-:r2c:"
@@ -312,114 +338,156 @@
                                                                     <div class="m-1 h-[21px] w-[21px]"></div><label
                                                                         class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed max-w-[90%]">
                                                                         <div class="amc-input amc-input--box">
-                                                                            
+
                                                                             <input [(ngModel)]="voucherCode"
                                                                                 class="input outline-none"
                                                                                 maxlength="20" minlength="5"
-                                                                                placeholder="Enter Promo Code"
+                                                                                placeholder="Nhập Phiếu giảm giá"
                                                                                 spellcheck="false" type="text"
-                                                                                name="voucherCode"></div>
+                                                                                name="voucherCode">
+                                                                        </div>
+                                                                        <!-- Danh sách voucher -->
+                                                                        <div class="space-y-2">
+
+                                                                            <div *ngFor="let voucher of voucherList"
+                                                                                class="relative bg-gray-700/85 rounded-lg p-4 border border-white/10 hover:border-blue-500 transition-colors duration-200">
+                                                                                <div
+                                                                                    class="flex justify-between items-start gap-4">
+                                                                                    <div class="flex-1 min-w-0">
+                                                                                        <h3
+                                                                                            class="font-semibold text-white mb-2">
+                                                                                            {{voucher.code}} -
+                                                                                            {{voucher.name}}
+                                                                                        </h3>
+                                                                                        <div
+                                                                                            class="text-red-500 text-sm mb-1">
+                                                                                            {{voucher.status}}
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="text-gray-400 text-sm">
+                                                                                            HSD: {{voucher.expiry}}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <button
+                                                                                        (click)="toggleVoucherDetail(voucher.code)"
+                                                                                        (mouseenter)="showVoucherDetail(voucher.code)"
+                                                                                        (mouseleave)="hideVoucherDetail()"
+                                                                                        class="text-blue hover:text-blue-500 transition-colors">
+                                                                                        Chi tiết
+                                                                                    </button>
+                                                                                </div>
+
+                                                                                <div
+                                                                                    class="mt-4 flex items-center gap-3">
+                                                                                    <span
+                                                                                        class="bg-gray-800 px-3 py-1.5 rounded font-mono text-gray-200">{{voucher.code}}</span>
+                                                                                    <div class="flex gap-2">
+                                                                                        <button
+                                                                                            (click)="copyVoucherCode(voucher.code)"
+                                                                                            class="p-2 hover:bg-gray-600 rounded-full transition-colors"
+                                                                                            title="Sao chép mã">
+                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                class="h-5 w-5 text-gray-300"
+                                                                                                fill="none"
+                                                                                                viewBox="0 0 24 24"
+                                                                                                stroke="currentColor">
+                                                                                                <path
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    stroke-width="2"
+                                                                                                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                                                                            </svg>
+                                                                                        </button>
+                                                                                        <button
+                                                                                            (click)="applyVoucher(voucher.code)"
+                                                                                            [disabled]="voucher.status !== null"
+                                                                                                                                                                                                        [ngClass]="{
+                                                                                                                                    'bg-white hover:bg-blue-500 text-black cursor-pointer': voucher.status === null,
+                                                                                                                                    'bg-gray-400 text-gray-600 cursor-not-allowed': voucher.status !== null
+                                                                                                                                }" class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 rounded-full px-4 min-w-[8ch] text-sm h-9">
+                                                                                                                                                                                                        Áp dụng
+                                                                                                                                                                                                    </button>
+                                                                                                                                                                                                </div>
+                                                                                                                                                                                            </div>
+
+                                                                                <!-- Chi tiết voucher -->
+                                                                                <div *ngIf="selectedVoucher === voucher.code"
+                                                                                    class="absolute left-full top-0 ml-4 w-72 bg-gray-800 rounded-lg p-4 border border-gray-600 shadow-lg"
+                                                                                    style="z-index: 100;">
+                                                                                    <div class="space-y-3">
+                                                                                        <h4
+                                                                                            class="font-semibold text-white">
+                                                                                            Chi tiết mã giảm giá
+                                                                                        </h4>
+                                                                                        <div
+                                                                                            class="space-y-2 text-sm text-gray-300">
+                                                                                            <p><span
+                                                                                                    class="text-gray-400">Mã:</span>
+                                                                                                {{voucher.code}}</p>
+                                                                                            <p><span
+                                                                                                    class="text-gray-400">Tên:</span>
+                                                                                                {{voucher.name}}</p>
+                                                                                            <p><span
+                                                                                                    class="text-gray-400">Hạn
+                                                                                                    sử dụng:</span>
+                                                                                                {{voucher.expiry}}</p>
+                                                                                            <p><span
+                                                                                                    class="text-gray-400">Điều
+                                                                                                    kiện áp dụng:</span>
+                                                                                            </p>
+                                                                                            <ul
+                                                                                                class="list-disc pl-5 space-y-1">
+                                                                                                <li>Khách hàng của thân
+                                                                                                    quen CineX</li>
+                                                                                                <li>Đạt ngưỡng điểm tiêu
+                                                                                                    chuẩn</li>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
                                                                         <div
                                                                             class="flex flex-wrap items-center gap-4 py-4 justify-start">
                                                                             <button type="button"
                                                                                 class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm md:text-base h-12">Cancel</button><button
                                                                                 type="button"
-                                                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12"
-                                                                                >Apply</button></div>
+                                                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">Apply</button>
+                                                                        </div>
                                                                     </label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div class="text-sm md:text-base" data-orientation="vertical">
-                                                        <div data-state="open" data-orientation="vertical"><button
-                                                                type="button" aria-controls="radix-:r2h:"
-                                                                aria-expanded="true" data-state="open"
-                                                                data-orientation="vertical" id="radix-:r2g:"
-                                                                class="accordion__trigger justify-start text-left"
-                                                                data-radix-collection-item="" aria-disabled="true">
-                                                                <h2
-                                                                    class="flex w-max items-center justify-center gap-4 rounded-full text-center font-semibold text-blue-500 transition duration-200 disabled:opacity-40 hocus:text-white">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                        fill="currentColor" viewBox="0 0 45 45"
-                                                                        width="1em" height="100%"
-                                                                        class="m-1 h-[21px] w-[21px]">
-                                                                        <path
-                                                                            d="M13.022 21.516a.928.928 0 1 0 0 1.828h18.815a.928.928 0 0 0 0-1.828z">
-                                                                        </path>
-                                                                        <path
-                                                                            d="M22.5 0A22.5 22.5 0 1 0 45 22.5 22.5 22.5 0 0 0 22.5 0zm0 43.116A20.672 20.672 0 1 1 43.087 22.5 20.672 20.672 0 0 1 22.5 43.116z">
-                                                                        </path>
-                                                                    </svg>Add Ticket Voucher</h2>
-                                                            </button>
-                                                            <div data-state="open" id="radix-:r2h:" role="region"
-                                                                aria-labelledby="radix-:r2g:"
-                                                                data-orientation="vertical"
-                                                                class="accordion__content overflow-clip"
-                                                                style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width); --radix-collapsible-content-height: 345px; --radix-collapsible-content-width: 460px;">
-                                                                <div class="flex gap-4">
-                                                                    <div class="m-1 h-[21px] w-[21px]"></div><label
-                                                                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed max-w-[90%]">
-                                                                        <div class="grid grid-cols-2 gap-4">
-                                                                            <div class="amc-input amc-input--box"><input
-                                                                                    class="input outline-none"
-                                                                                    maxlength="16" minlength="1"
-                                                                                    placeholder="16-Digit Number"
-                                                                                    spellcheck="false" type="text">
-                                                                            </div>
-                                                                            <div class="amc-input amc-input--box"><input
-                                                                                    class="input outline-none"
-                                                                                    maxlength="12" minlength="1"
-                                                                                    placeholder="12-Digit Number"
-                                                                                    spellcheck="false" type="text">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div
-                                                                            class="flex flex-wrap items-center gap-4 py-4 justify-start">
-                                                                            <button type="button"
-                                                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm md:text-base h-12">Cancel</button><button
-                                                                                type="button"
-                                                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12"
-                                                                                >Apply</button></div>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
+                                                          
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
                                 </section>
                             </div>
                         </div>
                         <div class="rich-text">
                             <p
                                 class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                <span class="italic text-100" style="color: rgb(128, 128, 128);">Sorry, no refunds
-                                    provided after the displayed showtime.</span>
+                                <span class="italic text-100" style="color: rgb(128, 128, 128);">Xin lỗi, không hoàn lại tiền sau thời gian chiếu được hiển thị.</span>
                             </p>
                         </div>
                         <div class="rich-text">
                             <p
                                 class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                <span class="italic text-100 footnote" style="color: rgb(128, 128, 128);">UP TO 20% OFF
-                                </span><span class="text-100 footnote" style="color: rgb(128, 128, 128);">the evening
-                                    ticket base price for the same title and ticket type (Adult, Child, Senior, etc.)
-                                    for showtimes before 4pm at select AMC, AMC DINE-IN, and AMC CLASSIC locations.
-                                    Prices do not include tax. Offer valid at participating locations only. Discount is
-                                    automatically applied. Available at the box office, online at AMCTheatres.com and
-                                    the AMC Mobile App. Not valid with any other offer. Offer not combinable with AMC
-                                    Stubs Discount Tuesday discount. Lower price will be honored. Surcharges will apply
-                                    for premium formats, alternative content and special events. Exclusions
-                                    apply.</span>
+                             <span class="text-100 footnote" style="color: rgb(128, 128, 128);">GIẢM TỚI 20% giá cơ sở vé buổi tối cho cùng tiêu đề và loại vé (Người lớn, Trẻ em, Người cao tuổi, v.v.) cho giờ chiếu trước 4 giờ chiều tại một số địa điểm AMC, AMC DINE-IN và AMC CLASSIC. Giá chưa bao gồm thuế. Ưu đãi chỉ có giá trị tại các địa điểm tham gia. Giảm giá được áp dụng tự động. Có sẵn tại phòng vé, trực tuyến tại AMCTheatres.com và Ứng dụng di động AMC. Không có giá trị với bất kỳ ưu đãi nào khác. Ưu đãi không thể kết hợp với giảm giá AMC Stubs Giảm giá Thứ Ba. Giá thấp hơn sẽ được tôn trọng. Phụ phí sẽ được áp dụng cho các định dạng cao cấp, nội dung thay thế và các sự kiện đặc biệt. Các loại trừ được áp dụng.</span>
                             </p>
                         </div>
                     </div>
                     <aside class="hidden w-[400px] pt-4 lg:block">
                         <h1 class="mt-4 hidden lg:block text-xl lg:text-2xl font-black leading-tight tracking-tighter">
-                            Order Details</h1>
+                            Chi tiết đơn hàng.</h1>
                         <div class="max-w-full">
                             <div class="divide-y divide-gray-700">
                                 <section class="">
@@ -442,20 +510,20 @@
                                                 </div>
                                                 <p
                                                     class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                    {{ seat.total }} VND
+                                                    {{ seat.total | number:'1.0-0'  }} đ
                                                 </p>
                                             </div>
                                             <p class="text-white text-xs font-semibold leading-tight tracking-normal">
-                                                Quantity: {{ seat.count }}
+                                                Số lượng: {{ seat.count }}
                                             </p>
                                         </li>
                                     </ul>
                                     <div class="mt-4 text-right text-white text-lg font-bold">
-                                        Tổng Cộng: {{ totalTicketPrice | number:'1' }} VND
+                                        Tổng Cộng: {{ totalTicketPrice | number:'1.0-0' }} đ
                                     </div>
                                     <h2
                                         class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
-                                        Service</h2>
+                                        Đồ uống</h2>
                                     <ul class="mb-4 grid gap-2">
                                         <li *ngFor="let sv of services" class="pt-2 font-semibold">
                                             <div class="flex justify-between gap-3">
@@ -467,7 +535,7 @@
                                                 </div>
                                                 <p
                                                     class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                    {{ sv.price }} VND
+                                                    {{ sv.price | number:'1.0-0'  }} đ
                                                 </p>
                                             </div>
                                             <p class="text-white text-xs font-semibold leading-tight tracking-normal">
@@ -476,25 +544,37 @@
                                         </li>
                                     </ul>
                                     <div class="mt-4 text-right text-white text-lg font-bold">
-                                        Tổng Cộng: {{ totalServiceAmount | number:'1' }} VND
+                                        Tổng Cộng: {{ totalServiceAmount | number:'1.0-0' }} đ
                                     </div>
                                     <div *ngIf="freeService && freeService.length > 0">
-                                        <h2 class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
+                                        <h2
+                                            class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
                                             Đồ được tặng
                                         </h2>
                                         <ul class="mb-4 grid gap-2">
                                             <li *ngFor="let item of freeService" class="pt-2 font-semibold">
                                                 <div class="flex justify-between gap-3">
                                                     <div class="flex-1">
-                                                        <h4 class="my-auto text-base font-semibold leading-tight tracking-normal">
+                                                        <h4
+                                                            class="my-auto text-base font-semibold leading-tight tracking-normal">
                                                             {{ item }}
                                                         </h4>
                                                     </div>
-                                                    <p class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
+                                                    <p
+                                                        class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
                                                         Miễn phí
                                                     </p>
                                                 </div>
                                             </li>
+                                            <div class="discount-container bg-green-100 text-green-800 p-4 rounded-lg shadow-md flex items-center gap-4">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
+                                                  <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"></path>
+                                                </svg>
+                                                <div>
+                                                  <h4 class="text-lg font-semibold">Bạn đã tiết kiệm được:</h4>
+                                                  <p class="text-xl font-bold">{{ discountAmount |  number:'1.0-0' }} đ</p>
+                                                </div>
+                                              </div>
                                         </ul>
                                     </div>
                                 </section>
@@ -504,26 +584,41 @@
                                             class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
                                             Đồ ăn &amp; Nước Uống</h2><a
                                             class="group transition-colors text-blue-500 hocus:text-white text-sm font-semibold leading-tight tracking-normal"
-                                            href="/orders/d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2/food-and-drink">Add</a>
+                                            href="/orders">Add</a>
                                     </header>
+
                                 </section>
-                                <div class="w-full max-w-md p-4">
-                                    <label class="flex items-center space-x-4 bg-gray-800 shadow-md rounded-lg p-4 border border-gray-600 hover:border-gray-400 transition-all duration-300 cursor-pointer group">
-                                        <input 
-                                            type="checkbox" 
-                                            class="form-checkbox h-5 w-5 text-blue-500 rounded focus:ring-blue-500 focus:ring-2 transition-all duration-200 ease-in-out"
-                                        />
-                                        <span class="text-sm text-gray-200 group-hover:text-gray-100 transition-colors duration-300 font-medium leading-tight tracking-normal">
-                                            Tôi hiểu và chấp nhận rằng nếu không đăng ký tài khoản, hệ thống sẽ không chịu trách nhiệm khi có sự cố xảy ra.
-                                        </span>
-                                    </label>
-                                    
-                                </div>
+                                <label class="checkbox-container">
+                                    <input 
+                                      type="checkbox" 
+                                      class="form-checkbox"
+                                      [(ngModel)]="isTermsAccepted"
+                                      [ngModelOptions]="{standalone: true}"
+                                      (change)="onCheckboxChange()"
+                                    />
+                                    <span>
+                                      Tôi hiểu và chấp nhận rằng nếu không đăng ký tài khoản, hệ thống sẽ không chịu trách nhiệm khi có sự cố xảy ra.
+                                    </span>
+                                  </label>
+                                  
+                                  <label class="checkbox-container">
+                                    <input 
+                                      type="checkbox" 
+                                      class="form-checkbox"
+                                      [(ngModel)]="isAgeConfirmed"
+                                      [ngModelOptions]="{standalone: true}"
+                                      (change)="onCheckboxChange()"
+                                    />
+                                    <span>
+                                      Tôi xác nhận rằng tôi đủ 18 tuổi trở lên.
+                                    </span>
+                                  </label>
+                            
                                 <p
                                     class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                     <span
                                         class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span> {{ selectedPaymentMethod === 'MULTI-WALLET' ? '$' + displayAmount : totalAmount | number:'1.0-0' }}
-                                        {{ selectedPaymentMethod === 'MULTI-WALLET' ? 'USDC' : 'VND' }}
+                                        {{ selectedPaymentMethod === 'MULTI-WALLET' ? 'USDC' : 'đ' }}
                                 </p>
                             </div>
                         </div>
@@ -537,10 +632,10 @@
                             <div class="rich-text">
                                 <p
                                     class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                    <span class="text-200">By proceeding to purchase, I agree to the </span><a
+                                    <span class="text-200">Bằng cách tiến hành mua, tôi đồng ý với </span><a
                                         class="group transition-colors text-blue-500 hocus:text-white"
                                         rel="noopener noreferrer" target="_blank" href="/terms-and-conditions"><span
-                                            class="text-200">AMC Terms and Conditions</span></a><span class="">.</span>
+                                            class="text-200">Điều khoản và điều kiện Cinex.</span></a><span class="">.</span>
                                 </p>
                             </div>
                         </div>
@@ -551,7 +646,7 @@
                                 <section>
                                     <div aria-label="Order Total" class="hidden gap-2 lg:flex"><span
                                             class="font-bold"> {{ selectedPaymentMethod === 'MULTI-WALLET' ? '$' + displayAmount : totalAmount | number:'1.0-0' }}
-                                            {{ selectedPaymentMethod === 'MULTI-WALLET' ? 'USDC' : 'VND' }}</span></div>
+                                            {{ selectedPaymentMethod === 'MULTI-WALLET' ? 'USDC' : 'đ' }}</span></div>
                                     <div class="lg:hidden">
                                         <div><button type="button"
                                                 class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 text-sm md:text-base flex items-center gap-3">
@@ -589,7 +684,7 @@
                                                                         class="mt-6 flex items-baseline justify-between">
                                                                         <h2
                                                                             class="uppercase text-gray-300 text-sm font-semibold leading-tight tracking-normal">
-                                                                            Tickets</h2><a
+                                                                            Vé</h2><a
                                                                             class="group transition-colors text-blue-500 hocus:text-white text-sm font-semibold leading-tight tracking-normal"
                                                                             aria-label="Edit Tickets"
                                                                             href="/showtimes/129218000?order-token=d26c2ecf-9ab2-4546-b9c0-bb7e3b48baf2&amp;seats=B3%2CB4">Edit</a>
@@ -664,7 +759,7 @@
                                                                 <p
                                                                     class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                                                     <span
-                                                                        class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>${{totalAmount}}
+                                                                        class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>${{totalAmount | number:'1.0-0' }}
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -676,10 +771,13 @@
                                 </section>
                             </div>
                             <div class="flex items-center gap-2 ">
-                                <p class="hidden text-xs font-semibold italic text-gray-100 lg:block">You must complete
-                                    all required fields.</p>
-                                <button (click)="onPurchase()"
-                                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12">Purchase</button>
+                                <p *ngIf="!isTermsAccepted || !isAgeConfirmed" class="hidden text-xs font-semibold italic text-gray-100 lg:block">Bạn cần phải chập nhận các điều khoản của chúng tôi trước khi thanh toán.</p>
+                                <button 
+                                (click)="onPurchase()"
+                                [disabled]="!isTermsAccepted || !isAgeConfirmed"
+                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12">
+                                Thanh Toán
+                              </button>
                                 <!-- <button hidden="" type="submit"
                                     aria-label="Purchase"></button> -->
                             </div>

@@ -579,10 +579,6 @@ export class SeatsComponent implements OnInit, OnDestroy {
     }
   }
 
-
-
-
-
   getMaxSeatsPerRow(): number {
     if (!this.seats) return 12; // Default fallback
 

@@ -12,6 +12,7 @@ export interface UserMembershipDetails {
     memberCodeBase64: string;
     membershipName: string;
     membershipPrice: number;
+    membershipPriceNext: number;
     purchasedAt: string; 
     expiryDate: string;
     membershipLevel: number;
@@ -32,4 +33,14 @@ export interface UserMembershipDetails {
     userMembershipDetails: UserMembershipDetails;
     currentLevelBenefits: MembershipBenefit[];
     nextLevelBenefits: MembershipBenefit[];
+  }
+  export interface RewardPointData {
+    totalPoint: number;
+    pointRate: number;  
+    rewardPoint: number;
+  }
+  export interface PointHistory {
+    title: string;
+    date: string;
+    points: number;
   }
