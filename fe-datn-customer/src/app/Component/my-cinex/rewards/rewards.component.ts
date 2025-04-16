@@ -33,7 +33,7 @@ export class RewardsComponent implements OnInit {
 }
 activeTab: 'earned' | 'redeemed' = 'earned';
   
-  // Dữ liệu cho điểm đã nhận (đã bỏ icon)
+  // Dữ liệu điểm đã nhận 
   earnedPoints: PointHistory[] = [
     {
       title: 'Mua vé xem phim',
@@ -62,7 +62,7 @@ activeTab: 'earned' | 'redeemed' = 'earned';
     },
   ];
   
-  // Dữ liệu cho điểm đã đổi (đã bỏ icon)
+  // Dữ liệu điểm đã đổi (
   redeemedPoints: PointHistory[] = [
     {
       title: 'Nâng cấp membership',
@@ -76,7 +76,6 @@ activeTab: 'earned' | 'redeemed' = 'earned';
     }
   ];
   
-  // Phương thức để chuyển đổi tab
   setActiveTab(tab: 'earned' | 'redeemed'): void {
     this.activeTab = tab;
   }

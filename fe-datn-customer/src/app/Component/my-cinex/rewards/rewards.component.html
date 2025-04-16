@@ -88,8 +88,6 @@
                             <div class="mx-auto my-4 grid w-full max-w-[450px] col-span-2 md:col-span-1">
                                 <div class="mb-4">
                                     <h2 class="text-500 headline mb-4">Lịch sử điểm</h2>
-                                
-                                    <!-- Tab Navigation -->
                                     <div class="flex justify-between border-b border-gray-600 mb-4">
                                         <button class="py-2 px-4 font-semibold border-b-2 flex-1 text-center"
                                             [class.border-blue-500]="activeTab === 'earned'"
@@ -108,8 +106,6 @@
                                             Điểm đã đổi
                                         </button>
                                     </div>
-                                
-                                    <!-- Tab Content -->
                                     <div class="tab-content">
                                         <!-- Tab 1: Lịch sử nhận điểm -->
                                         <div *ngIf="activeTab === 'earned'" class="max-h-[300px] overflow-y-auto pr-2">
