@@ -301,8 +301,28 @@ export class SeatService {
       this.socket = null;
       this.isConnected = false;
       console.log('WebSocket connection disconnected');
+      this.clearLocalStorageData()
     }
  
+  }
+  clearLocalStorageData(): void {
+    // Xóa dữ liệu liên quan đến ghế
+    localStorage.removeItem('selectedSeats');
+    localStorage.removeItem('seatData');
+    localStorage.removeItem('currentShowtimeId');
+  
+    // Xóa dữ liệu liên quan đến dịch vụ
+    localStorage.removeItem('selectedServices');
+    localStorage.removeItem('serviceData');
+  
+    // Xóa dữ liệu liên quan đến đơn hàng
+    localStorage.removeItem('orderData');
+    localStorage.removeItem('orderDataPayment');
+  
+    // Xóa dữ liệu liên quan đến phim và suất chiếu
+    localStorage.removeItem('currentMovieInfo');
+    localStorage.removeItem('reloadOnce');
+  
   }
 
   // Add the payment method to handle the payment status update

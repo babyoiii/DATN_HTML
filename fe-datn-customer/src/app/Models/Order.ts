@@ -21,9 +21,10 @@ export interface Service {
     email: string;
     userId : string | null;
     isAnonymous: number;
-    paymentId: string;
+    paymentId: string | null;
     transactionCode : string;
     voucherCode : string;
+    pointUse : number;
     totalPriceMethod : string;
     services: ServiceReq[];
     tickets: TicketReq[];

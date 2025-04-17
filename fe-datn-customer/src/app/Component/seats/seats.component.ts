@@ -171,7 +171,25 @@ export class SeatsComponent implements OnInit, OnDestroy {
   }
 
 
-
+  clearLocalStorageData(): void {
+    // Xóa dữ liệu liên quan đến ghế
+    localStorage.removeItem('selectedSeats');
+    localStorage.removeItem('seatData');
+    localStorage.removeItem('currentShowtimeId');
+  
+    // Xóa dữ liệu liên quan đến dịch vụ
+    localStorage.removeItem('selectedServices');
+    localStorage.removeItem('serviceData');
+  
+    // Xóa dữ liệu liên quan đến đơn hàng
+    localStorage.removeItem('orderData');
+    localStorage.removeItem('orderDataPayment');
+  
+    // Xóa dữ liệu liên quan đến phim và suất chiếu
+    localStorage.removeItem('currentMovieInfo');
+    localStorage.removeItem('reloadOnce');
+  
+  }
   TimeUp(): void {
     this.modalService.openTimeUpModal();
 
