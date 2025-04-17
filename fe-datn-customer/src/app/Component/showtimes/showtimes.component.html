@@ -26,18 +26,18 @@
             </div>
             <form id="showtime-result-filters" aria-label="Showtime Result Filters" aria-controls="showtime-results"
                 class="flex justify-center divide-x divide-gray-700">
-                
+
                 <label aria-label="Theatre Filter"
                     class="relative flex w-full max-w-[25%] flex-col items-center justify-between gap-2 p-2 text-xs transition-all duration-200 focus-within:text-blue-500 hover:text-blue-500 md:w-auto md:flex-row md:p-4 md:text-base">
                     <select [(ngModel)]="location" (change)="onChangeLocation($event)"
-                                class="absolute inset-0 w-full cursor-pointer appearance-none bg-transparent text-transparent [&>option]:text-black"
-                                name="theatre">
-                            <option value="">Tất Cả</option>
-                            <option *ngFor="let loc of listLocation" [value]="loc">
-                                {{ loc }}
-                            </option>
-                            <option *ngIf="listLocation.length === 0" value="">Loading location...</option>
-                        </select>
+                        class="absolute inset-0 w-full cursor-pointer appearance-none bg-transparent text-transparent [&>option]:text-black"
+                        name="theatre">
+                        <option value="">Tất Cả</option>
+                        <option *ngFor="let loc of listLocation" [value]="loc">
+                            {{ loc }}
+                        </option>
+                        <option *ngIf="listLocation.length === 0" value="">Loading location...</option>
+                    </select>
 
 
 
@@ -138,30 +138,25 @@
                             </path>
                         </svg></div>
                 </label>
-                <label aria-label="Premium Offering Filter"
+                <label aria-label="Room Type Filter"
                     class="relative flex w-full max-w-[25%] flex-col items-center justify-between gap-2 p-2 text-xs transition-all duration-200 focus-within:text-blue-500 hover:text-blue-500 md:w-auto md:flex-row md:p-4 md:text-base">
                     <select
                         class="absolute inset-0 w-full cursor-pointer appearance-none bg-transparent text-transparent [&amp;>option]:text-black"
-                        name="premiumOffering">
-                        <option value="">Premium Offerings</option>
-                        <option value="reclinerseating">AMC Signature Recliners</option>
-                        <option value="reservedseating">Reserved Seating</option>
-                        <option value="opencaption">Open Caption (On-screen Subtitles)</option>
-                        <option value="reald3d">RealD 3D</option>
-                        <option value="mandarinenglishsubtitle">Mandarin Spoken with English Subtitles</option>
-                        <option value="laseratamc">Laser at AMC</option>
-                        <option value="amcartisanfilms">AMC Artisan Films</option>
-                        <option value="closedcaption">Closed Caption</option>
+                        name="roomType" [(ngModel)]="selectedRoomTypeId" (change)="onRoomTypeChange($event)">
+                        <option value="">Tất cả loại phòng</option>
+                        <option *ngFor="let roomType of roomTypes" [value]="roomType.roomTypeId">
+                            {{ roomType.name }}
+                        </option>
                     </select>
-                    <div class="text-2xl" role="presentation" aria-hidden="true" tabindex="-1"><svg
-                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em"
+                    <div class="text-2xl" role="presentation" aria-hidden="true" tabindex="-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="1em"
                             height="100%">
-                            <title>Premium Offerings</title>
-                            <path
-                                d="M23.495 29.21V1.57a.995.995 0 1 0-1.99 0v27.64a5.528 5.528 0 0 0 0 11.057v3.51a.995.995 0 0 0 1.99 0V40.24a5.528 5.528 0 0 0 0-11.029zm-.995 9.122a3.593 3.593 0 1 1 3.593-3.593 3.593 3.593 0 0 1-3.593 3.593zm16.972-33.28V1.514a.995.995 0 1 0-1.99 0v3.538a5.528 5.528 0 0 0 0 11.057v27.64a.995.995 0 0 0 1.99 0V16.11a5.528 5.528 0 0 0 0-11.057zm-.995 9.094a3.593 3.593 0 1 1 3.593-3.593 3.593 3.593 0 0 1-3.593 3.593zM7.518 17.822V1.514a.995.995 0 1 0-1.99 0v16.308a5.528 5.528 0 0 0 0 11.057v14.926a.995.995 0 0 0 1.99 0V28.879a5.528 5.528 0 0 0 0-11.057zm-.995 9.094a3.593 3.593 0 1 1 3.594-3.593 3.593 3.593 0 0 1-3.594 3.593z">
-                            </path>
-                        </svg></div>
-                    <div><span class="line-clamp-2 text-ellipsis text-center">Premium Offerings</span></div>
+                            <title>Room Type</title>
+                            <path d="M4 21V10.08l8-6.96 8 6.96V21h-6v-6h-4v6H4z"></path>
+                        </svg>
+                    </div>
+                    <div><span class="line-clamp-2 text-ellipsis text-center">{{ getSelectedRoomTypeName() }}</span>
+                    </div>
                     <div><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em"
                             height="100%" class="text-sm">
                             <title>Expand Options</title>
@@ -288,6 +283,11 @@
                                                     <button (click)="getShowtime(showtime.value.id)" type="button"
                                                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm md:text-base h-12">
                                                         {{showtime.value.startTime}}
+                                                        <span *ngIf="showtime.value.roomTypeName"
+                                                            class="ml-2 text-xs font-bold text-white px-2 py-0.5 rounded-md"
+                                                            [ngStyle]="{'background-color': getRoomTypeColor(showtime.value.roomTypeName)}">
+                                                            {{showtime.value.roomTypeName}}
+                                                        </span>
                                                     </button>
 
 

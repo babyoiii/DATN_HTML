@@ -16,6 +16,8 @@ import { TimeUpComponent } from "../time-up/time-up.component";
 import { MembershipService } from '../../Service/membership.service';
 import { Log } from 'ethers';
 import { RewardPointData } from '../../Models/Membership';
+import { UserVoucherService } from '../../Service/user-voucher.service';
+import { UserVoucher } from '../../Models/Voucher';
 
 @Component({
   selector: 'app-purchase',
@@ -26,8 +28,8 @@ import { RewardPointData } from '../../Models/Membership';
   animations: [
     trigger('slideToggle', [
       transition(':enter', [
-        style({ height: '0px', opacity: 0 }), 
-        animate('500ms cubic-bezier(0.25, 0.8, 0.25, 1)', style({ height: '*', opacity: 1 })) 
+        style({ height: '0px', opacity: 0 }),
+        animate('500ms cubic-bezier(0.25, 0.8, 0.25, 1)', style({ height: '*', opacity: 1 }))
       ]),
       transition(':leave', [
         animate('400ms ease-in-out', style({ height: '0px', opacity: 0 }))
@@ -35,7 +37,7 @@ import { RewardPointData } from '../../Models/Membership';
     ])
   ]
 })
-export class PurchaseComponent implements OnInit,OnDestroy {
+export class PurchaseComponent implements OnInit, OnDestroy {
   countdown: string | null = null;
   seats: { type: string; count: number; total: number; seatIds: string[] }[] = [];
   services: { id: string; name: string; price: number; quantity: number }[] = [];
@@ -44,10 +46,10 @@ export class PurchaseComponent implements OnInit,OnDestroy {
   totalServiceAmount: number = 0;
   fee: number = 0;
   email: string = '';
-  selectedPaymentMethod: string | null = null; 
-  selectedPaymentId: string | null = null; 
+  selectedPaymentMethod: string | null = null;
+  selectedPaymentId: string | null = null;
   walletAddress: string | null = null;
-  listPaymentMethod : PaymentMethod[] = []
+  listPaymentMethod: PaymentMethod[] = []
   usdcPriceUSD: number | null = null; // Giá USDC theo USD
   usdcPriceVND: number | null = null; // Giá USDC theo VND
   isLoggedIn: boolean = false;
@@ -61,44 +63,39 @@ export class PurchaseComponent implements OnInit,OnDestroy {
   pointWillEarn: number = 0;
   freeService: string[] | null = null;
   userId: string | null = null;
-  rewardPointsInput : number = 0; // Số điểm thưởng nhập vào từ người dùng
-  voucherList = [
-    {
-      code: 'CineXBANMOI',
-      name: 'Vé CineX đồng giá 60k cho tất cả KH',
-      status: null,
-      expiry: '31/12/2025'
-    },
-    {
-      code: 'CineXBANTHAN',
-      name: 'Giảm 25% hóa đơn',
-      status: 'Chưa thỏa mãn điều kiện',
-      expiry: '31/12/2025'
-    }
-  ];
+  rewardPointsInput: number = 0; // Số điểm thưởng nhập vào từ người dùng
+  voucherList: {
+    code: string;
+    name: string;
+    status: string | null;
+    expiry: string;
+    discountType?: string;
+    discountValue?: number;
+    remainingQuantity?: number;
+  }[] = [];
   currentPoints: number = 500; // Số điểm hiện tại của người dùng
   discountPointAmount: number = 0; // Số tiền có thể giảm
 
   selectedVoucher: string | null = null;
-  getRewardPoint : RewardPointData = {
+  getRewardPoint: RewardPointData = {
     totalPoint: 0,
     pointRate: 0,
     rewardPoint: 0
   }
- caculateRewardPoint: number = 0;
-  
+  caculateRewardPoint: number = 0;
+
 
   toggleVoucherDetail(code: string) {
-      this.selectedVoucher = this.selectedVoucher === code ? null : code;
+    this.selectedVoucher = this.selectedVoucher === code ? null : code;
   }
 
   showVoucherDetail(code: string) {
-      this.selectedVoucher = code;
+    this.selectedVoucher = code;
   }
 
   hideVoucherDetail() {
-      // Nếu muốn giữ popup khi click, hãy comment dòng này
-      this.selectedVoucher = null;
+    // Nếu muốn giữ popup khi click, hãy comment dòng này
+    this.selectedVoucher = null;
   }
 
   copyVoucherCode(code: string) {
@@ -107,10 +104,44 @@ export class PurchaseComponent implements OnInit,OnDestroy {
   }
 
   applyVoucher(code: string) {
-    this.voucherCode = code;
-    
+    if (!this.userId) {
+      this.toastr.warning('Bạn cần đăng nhập để sử dụng voucher!', 'Thông báo');
+      return;
+    }
+
+    // Kiểm tra tính khả dụng của voucher
+    this.userVoucherService.checkVoucherAvailability(this.userId, code).subscribe({
+      next: (response) => {
+        if (response.responseCode === 200) {
+          this.voucherCode = code;
+          this.toastr.success('Áp dụng voucher thành công!', 'Thông báo');
+
+          // Tìm voucher trong danh sách để lấy thông tin giảm giá
+          const selectedVoucher = this.voucherList.find(v => v.code === code);
+          if (selectedVoucher && selectedVoucher.discountType && selectedVoucher.discountValue) {
+            // Tính toán số tiền giảm giá dựa trên loại voucher
+            if (selectedVoucher.discountType === 'PERCENT') {
+              // Giảm giá theo phần trăm
+              this.discountAmount = (this.totalAmount * selectedVoucher.discountValue) / 100;
+            } else if (selectedVoucher.discountType === 'FIXED') {
+              // Giảm giá cố định
+              this.discountAmount = selectedVoucher.discountValue;
+            }
+
+            // Cập nhật tổng tiền
+            this.updateTotals();
+          }
+        } else {
+          this.toastr.error(response.message || 'Voucher không khả dụng!', 'Lỗi');
+        }
+      },
+      error: (error) => {
+        console.error('Error checking voucher:', error);
+        this.toastr.error('Có lỗi xảy ra khi kiểm tra voucher!', 'Lỗi');
+      }
+    });
   }
-    isTermsAccepted: boolean = false; // Trạng thái checkbox 1
+  isTermsAccepted: boolean = false; // Trạng thái checkbox 1
   isAgeConfirmed: boolean = false; // Trạng thái checkbox 2
   constructor(
     private seatService: SeatService,
@@ -120,9 +151,10 @@ export class PurchaseComponent implements OnInit,OnDestroy {
     private router: Router,
     private modalService: ModalService,
     private authServiceService: AuthServiceService,
-    private walletService : WalletOnboardService,
-    private membershipService: MembershipService
-  ) {}
+    private walletService: WalletOnboardService,
+    private membershipService: MembershipService,
+    private userVoucherService: UserVoucherService
+  ) { }
   ngOnDestroy(): void {
     this.seatService.resetWarning();
     if (this.autoCloseTimer) {
@@ -139,7 +171,11 @@ export class PurchaseComponent implements OnInit,OnDestroy {
       this.isLoggedIn = status;
     });
     if (this.isLoggedIn) {
-      this.email = localStorage.getItem('email') || ''; 
+      this.email = localStorage.getItem('email') || '';
+      this.userId = localStorage.getItem('userId') || null;
+      if (this.userId) {
+        this.loadUserVouchers();
+      }
     }
     this.seatService.getJoinRoomMessages().subscribe({
       next: (count) => {
@@ -173,7 +209,39 @@ export class PurchaseComponent implements OnInit,OnDestroy {
     this.loadData();
     this.applyMembershipDiscount();
   }
-  checkMembership : boolean = false;
+
+  /**
+   * Tải danh sách voucher của người dùng từ API
+   */
+  loadUserVouchers(): void {
+    if (!this.userId) {
+      return;
+    }
+
+    this.userVoucherService.getUserVouchers(this.userId).subscribe({
+      next: (response) => {
+        if (response.responseCode === 200 && response.data) {
+          // Chuyển đổi dữ liệu từ API sang định dạng hiển thị
+          this.voucherList = response.data.map(voucher => ({
+            code: voucher.voucherCode,
+            name: voucher.voucherDescription,
+            status: voucher.status === 1 ? null : 'Không khả dụng', // 1 là trạng thái khả dụng
+            expiry: new Date(voucher.expiryDate).toLocaleDateString('vi-VN'),
+            discountType: voucher.discountType,
+            discountValue: voucher.discountValue,
+            remainingQuantity: voucher.remainingQuantity
+          }));
+          console.log('Loaded vouchers:', this.voucherList);
+        } else {
+          console.error('Error loading vouchers:', response.message);
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching vouchers:', error);
+      }
+    });
+  }
+  checkMembership: boolean = false;
   onCheckMembership() {
     if (this.isLoggedIn) {
       this.membershipService.checkMembership().subscribe({
@@ -187,7 +255,7 @@ export class PurchaseComponent implements OnInit,OnDestroy {
           console.error('Error checking membership:', error);
         }
       });
-    } 
+    }
   }
   appliedPoints: { points: number; amount: number }[] = []; // Mảng lưu lịch sử các lần áp dụng điểm thưởng
 
@@ -196,22 +264,22 @@ export class PurchaseComponent implements OnInit,OnDestroy {
       this.toastr.warning('Số điểm nhập vào vượt quá số điểm hiện có!', 'Cảnh báo');
       return;
     }
-  
+
     const discountPointAmount = this.rewardPointsInput * this.getRewardPoint.pointRate;
-  
+
     if (this.totalAmount < discountPointAmount) {
       this.toastr.warning('Số điểm nhập vào vượt quá số tổng số tiền của đơn hàng!', 'Cảnh báo');
       return;
     }
-  
+
     this.appliedPoints.push({ points: this.rewardPointsInput, amount: discountPointAmount });
-  
+
     this.discountAmount += discountPointAmount;
-  
+
     this.updateTotals();
-  
+
     this.rewardPointsInput = 0;
-  
+
     this.toastr.success('Áp dụng điểm thưởng thành công!', 'Thông báo');
   }
   onCancelPoint(): void {
@@ -219,13 +287,13 @@ export class PurchaseComponent implements OnInit,OnDestroy {
       this.appliedPoints.forEach((entry) => {
         this.discountAmount -= entry.amount;
       });
-  
+
       this.appliedPoints = [];
-  
+
       this.rewardPointsInput = 0;
-  
+
       this.updateTotals();
-  
+
       this.toastr.success('Đã hủy tất cả các lần áp dụng điểm thưởng!', 'Thông báo');
     } else {
       this.toastr.info('Không có điểm thưởng nào được áp dụng để hủy!', 'Thông báo');
@@ -242,10 +310,10 @@ export class PurchaseComponent implements OnInit,OnDestroy {
   scrollToSection(sectionId: string): void {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
-  onDisconnect(){
+  onDisconnect() {
     this.seatService.disconnect()
   }
   applyMembershipDiscount(): void {
@@ -253,14 +321,14 @@ export class PurchaseComponent implements OnInit,OnDestroy {
       return;
     }
     this.membershipService.getPriceMembershipPreview(this.totalAmount, this.totalTicketPrice).subscribe({
-      next: (response : any) => {
+      next: (response: any) => {
         if (response.responseCode === 200) {
           const discountData = response.data;
-         this.discountAmount = discountData.discountAmount;
+          this.discountAmount = discountData.discountAmount;
           this.pointWillEarn = discountData.pointWillEarn;
           this.freeService = discountData.freeService;
           console.log('List', this.freeService);
-          this.updateTotals(); 
+          this.updateTotals();
         } else {
         }
       },
@@ -275,16 +343,16 @@ export class PurchaseComponent implements OnInit,OnDestroy {
     if (this.selectedPaymentMethod === 'MULTI-WALLET') {
       const usdcAmount = this.convertVNDToUSDC(this.totalAmount);
       if (usdcAmount !== null) {
-        this.displayAmount = usdcAmount.toFixed(6); 
-        this.displayCurrency = 'USDC'; 
+        this.displayAmount = usdcAmount.toFixed(6);
+        this.displayCurrency = 'USDC';
       } else {
-        this.displayAmount = 'N/A'; 
+        this.displayAmount = 'N/A';
         this.displayCurrency = 'USDC';
       }
     } else {
 
       this.displayAmount = this.totalAmount.toLocaleString('vi-VN');
-      this.displayCurrency = 'VND'; 
+      this.displayCurrency = 'VND';
     }
   }
 
@@ -323,7 +391,7 @@ export class PurchaseComponent implements OnInit,OnDestroy {
   }
   TimeUp(): void {
     this.modalService.openTimeUpModal();
-    
+
   }
   private autoCloseTimer: any;
 
@@ -332,7 +400,7 @@ export class PurchaseComponent implements OnInit,OnDestroy {
       clearTimeout(this.autoCloseTimer);
     }
     this.modalService.openNeedMoreTimeModal();
-}
+  }
   fetchUSDCPriceUSD(): void {
     this.orderService.getUSDCPriceUSD().subscribe({
       next: (price) => {
@@ -379,24 +447,24 @@ export class PurchaseComponent implements OnInit,OnDestroy {
     };
     localStorage.setItem('orderDataPayment', JSON.stringify(orderData));
     const paymentData: PaymentModelReq = {
-      amount: Math.round(this.totalAmount), 
+      amount: Math.round(this.totalAmount),
       orderDesc: 'Thanh toán đơn hàng',
       createdDate: new Date().toISOString(),
       status: 'Pending',
-      paymentTranId: 0, 
-      bankCode: 'VCB', 
+      paymentTranId: 0,
+      bankCode: 'VCB',
       payStatus: 'Pending',
-      orderInfo: 'Thông tin đơn hàng' 
+      orderInfo: 'Thông tin đơn hàng'
     };
 
     console.log('Order data payment:', paymentData);
     this.createPayment(paymentData, orderData);
   }
-  getPaymentMethod(){
+  getPaymentMethod() {
     this.orderService.getPaymentMethod().subscribe({
-      next:(res:any) =>{
+      next: (res: any) => {
         this.listPaymentMethod = res.data
-        console.log(this.listPaymentMethod,'Payment Method');
+        console.log(this.listPaymentMethod, 'Payment Method');
       },
       error: (error) => {
         console.error('Error get payment:', error);
@@ -408,7 +476,7 @@ export class PurchaseComponent implements OnInit,OnDestroy {
       const usdcPriceInVND = this.usdcPriceVND; // Giá 1 USDC theo VND
       return vndAmount / usdcPriceInVND; // Chuyển đổi từ VND sang USDC
     }
-    return null; 
+    return null;
   }
   createPayment(paymentData: PaymentModelReq, orderData: OrderModelReq) {
     if (this.selectedPaymentMethod === 'VNPAY') {
@@ -433,15 +501,15 @@ export class PurchaseComponent implements OnInit,OnDestroy {
             return;
           }
           this.walletAddress = walletAddress;
-  
+
           // Chuyển đổi từ VND sang USDC
           const usdcAmount = this.convertVNDToUSDC(this.totalAmount);
           if (usdcAmount === null) {
             this.toastr.error('Không thể chuyển đổi VND sang USDC. Vui lòng thử lại.');
             return;
           }
-            
-           this.roundedUSDCAmount = parseFloat(usdcAmount.toFixed(6));
+
+          this.roundedUSDCAmount = parseFloat(usdcAmount.toFixed(6));
           if (isNaN(this.roundedUSDCAmount) || this.roundedUSDCAmount <= 0) {
             this.toastr.error('Invalid USDC amount. Please try again.');
             return;
@@ -451,7 +519,7 @@ export class PurchaseComponent implements OnInit,OnDestroy {
         })
         .then((txHash) => {
           if (txHash && typeof txHash === 'string') {
-            orderData.transactionCode = txHash; 
+            orderData.transactionCode = txHash;
             orderData.totalPriceMethod = this.roundedUSDCAmount.toString();
           } else {
             this.toastr.error('Invalid transaction hash. Please try again.');
@@ -463,10 +531,10 @@ export class PurchaseComponent implements OnInit,OnDestroy {
               //   this.toastr.error('❌ Đơn hàng không thành công:' + response.Message , "Thông Báo");
               //   return;
               // }
-               const seatsToUpdate: SeatStatusUpdateRequest[] = orderData.tickets.map((ticket: TicketReq) => ({
-                            SeatId: ticket.seatByShowTimeId,
-                            Status: 5
-                          }));
+              const seatsToUpdate: SeatStatusUpdateRequest[] = orderData.tickets.map((ticket: TicketReq) => ({
+                SeatId: ticket.seatByShowTimeId,
+                Status: 5
+              }));
               this.seatService.payment(seatsToUpdate);
               this.toastr.success('Đơn hàng đã được tạo thành công!', 'Thông Báo');
               this.router.navigate(['/']);

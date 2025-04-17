@@ -162,7 +162,8 @@
                                 <section class="grid gap-6 py-6">
                                     <h3 class="sr-only">Payment Options</h3>
                                     <div class="grid gap-4">
-                                        <h4 class="flex items-baseline justify-between text-xl font-semibold">Phương thức thanh toán</h4>
+                                        <h4 class="flex items-baseline justify-between text-xl font-semibold">Phương
+                                            thức thanh toán</h4>
                                         <div class="grid gap-2">
                                             <div class="grid gap-2"><button type="button"
                                                     class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white md:text-base flex items-center gap-4 text-base"><svg
@@ -252,58 +253,71 @@
                                                                 </h2>
                                                             </button>
                                                             <div data-state="open" id="radix-:r2b:" role="region"
-                                                            aria-labelledby="radix-:r2a:" data-orientation="vertical"
-                                                            class="accordion__content overflow-clip"
-                                                            style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width); --radix-collapsible-content-height: 319px; --radix-collapsible-content-width: 460px;">
-                                                            <div class="flex gap-4">
-                                                                <div class="m-1 h-[21px] w-[21px]"></div>
-                                                                <label class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed max-w-[90%]">
-                                                                    <div class="grid grid-cols-2 gap-8">
-                                                                        <div class="amc-input amc-input--box">
-                                                                            <input 
-                                                                              [(ngModel)]="rewardPointsInput" 
-                                                                              class="input outline-none" 
-                                                                              maxlength="20" 
-                                                                              minlength="1" 
-                                                                              placeholder="Nhập số điểm" 
-                                                                              spellcheck="false" 
-                                                                              type="number" 
-                                                                              name="rewardPointsInput">
-                                                                          </div>
-                                                                    </div>
-                                                        
-                                                                    <div class="flex flex-col gap-2 p-4 bg-gray-800 rounded-lg shadow-md text-white mt-4">
-                                                                        <!-- Hiển thị số điểm hiện tại -->
-                                                                        <div class="flex justify-between items-center text-sm">
-                                                                          <h4 class="font-medium">Số điểm hiện tại:</h4>
-                                                                          <p class="font-bold text-green-400">{{ getRewardPoint.totalPoint }}</p>
+                                                                aria-labelledby="radix-:r2a:"
+                                                                data-orientation="vertical"
+                                                                class="accordion__content overflow-clip"
+                                                                style="--radix-accordion-content-height: var(--radix-collapsible-content-height); --radix-accordion-content-width: var(--radix-collapsible-content-width); --radix-collapsible-content-height: 319px; --radix-collapsible-content-width: 460px;">
+                                                                <div class="flex gap-4">
+                                                                    <div class="m-1 h-[21px] w-[21px]"></div>
+                                                                    <label
+                                                                        class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed max-w-[90%]">
+                                                                        <div class="grid grid-cols-2 gap-8">
+                                                                            <div class="amc-input amc-input--box">
+                                                                                <input [(ngModel)]="rewardPointsInput"
+                                                                                    class="input outline-none"
+                                                                                    maxlength="20" minlength="1"
+                                                                                    placeholder="Nhập số điểm"
+                                                                                    spellcheck="false" type="number"
+                                                                                    name="rewardPointsInput">
+                                                                            </div>
                                                                         </div>
-                                                                      
-                                                                        <!-- Hiển thị tỷ lệ quy đổi điểm -->
-                                                                        <div class="flex justify-between items-center text-sm">
-                                                                          <h4 class="font-medium">Tỷ lệ quy đổi:</h4>
-                                                                          <p class="font-bold text-blue-400">1 điểm = {{ getRewardPoint.pointRate }} đ</p>
+
+                                                                        <div
+                                                                            class="flex flex-col gap-2 p-4 bg-gray-800 rounded-lg shadow-md text-white mt-4">
+                                                                            <!-- Hiển thị số điểm hiện tại -->
+                                                                            <div
+                                                                                class="flex justify-between items-center text-sm">
+                                                                                <h4 class="font-medium">Số điểm hiện
+                                                                                    tại:</h4>
+                                                                                <p class="font-bold text-green-400">{{
+                                                                                    getRewardPoint.totalPoint }}</p>
+                                                                            </div>
+
+                                                                            <!-- Hiển thị tỷ lệ quy đổi điểm -->
+                                                                            <div
+                                                                                class="flex justify-between items-center text-sm">
+                                                                                <h4 class="font-medium">Tỷ lệ quy đổi:
+                                                                                </h4>
+                                                                                <p class="font-bold text-blue-400">1
+                                                                                    điểm = {{ getRewardPoint.pointRate
+                                                                                    }} đ</p>
+                                                                            </div>
+
+                                                                            <!-- Hiển thị số tiền có thể giảm -->
+                                                                            <div
+                                                                                class="flex justify-between items-center text-sm">
+                                                                                <h4 class="font-medium">Số tiền có thể
+                                                                                    giảm:</h4>
+                                                                                <p class="font-bold text-red-400">
+                                                                                    {{ getRewardPoint.totalPoint }} x {{
+                                                                                    getRewardPoint.pointRate }} = {{
+                                                                                    getRewardPoint.rewardPoint |
+                                                                                    number:'1.0-0' }} đ
+                                                                                </p>
+                                                                            </div>
                                                                         </div>
-                                                                      
-                                                                        <!-- Hiển thị số tiền có thể giảm -->
-                                                                        <div class="flex justify-between items-center text-sm">
-                                                                          <h4 class="font-medium">Số tiền có thể giảm:</h4>
-                                                                          <p class="font-bold text-red-400">
-                                                                            {{ getRewardPoint.totalPoint }} x {{ getRewardPoint.pointRate }} = {{ getRewardPoint.rewardPoint | number:'1.0-0' }} đ
-                                                                          </p>
+                                                                        <div
+                                                                            class="flex flex-wrap items-center gap-4 py-4 justify-start">
+                                                                            <button type="button"
+                                                                                (click)=" onCancelPoint()"
+                                                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm md:text-base h-12">Cancel</button><button
+                                                                                type="button" (click)="onApplyPoint()"
+                                                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">Apply</button>
                                                                         </div>
-                                                                      </div>
-                                                                      <div
-                                                                      class="flex flex-wrap items-center gap-4 py-4 justify-start">
-                                                                      <button type="button" (click)=" onCancelPoint()"
-                                                                          class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm md:text-base h-12">Cancel</button><button
-                                                                          type="button" (click)="onApplyPoint()"
-                                                                          class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">Apply</button>
-                                                                  </div>
-                                                                </label>
-                                                                
+                                                                    </label>
+
+                                                                </div>
                                                             </div>
-                                                        </div>
                                                         </div>
                                                     </div>
                                                     <div class="text-sm md:text-base" data-orientation="vertical">
@@ -367,6 +381,16 @@
                                                                                             class="text-gray-400 text-sm">
                                                                                             HSD: {{voucher.expiry}}
                                                                                         </div>
+                                                                                        <div *ngIf="voucher.remainingQuantity !== undefined"
+                                                                                            class="text-green-400 text-sm mt-1 flex items-center">
+                                                                                            <span>Bạn còn lại:</span>
+                                                                                            <span
+                                                                                                class="text-green-200 px-2 py-0.5 rounded-full text-xs"
+                                                                                                style="font-weight: bold !important">
+                                                                                                {{voucher.remainingQuantity}}
+                                                                                            </span>
+                                                                                            <span>Voucher</span>
+                                                                                        </div>
                                                                                     </div>
                                                                                     <button
                                                                                         (click)="toggleVoucherDetail(voucher.code)"
@@ -401,14 +425,15 @@
                                                                                         <button
                                                                                             (click)="applyVoucher(voucher.code)"
                                                                                             [disabled]="voucher.status !== null"
-                                                                                                                                                                                                        [ngClass]="{
+                                                                                            [ngClass]="{
                                                                                                                                     'bg-white hover:bg-blue-500 text-black cursor-pointer': voucher.status === null,
                                                                                                                                     'bg-gray-400 text-gray-600 cursor-not-allowed': voucher.status !== null
-                                                                                                                                }" class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 rounded-full px-4 min-w-[8ch] text-sm h-9">
-                                                                                                                                                                                                        Áp dụng
-                                                                                                                                                                                                    </button>
-                                                                                                                                                                                                </div>
-                                                                                                                                                                                            </div>
+                                                                                                                                }"
+                                                                                            class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 rounded-full px-4 min-w-[8ch] text-sm h-9">
+                                                                                            Áp dụng
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
 
                                                                                 <!-- Chi tiết voucher -->
                                                                                 <div *ngIf="selectedVoucher === voucher.code"
@@ -431,6 +456,15 @@
                                                                                                     class="text-gray-400">Hạn
                                                                                                     sử dụng:</span>
                                                                                                 {{voucher.expiry}}</p>
+                                                                                            <p
+                                                                                                *ngIf="voucher.remainingQuantity !== undefined">
+                                                                                                <span
+                                                                                                    class="text-gray-400">Số
+                                                                                                    lượng còn
+                                                                                                    lại:</span>
+                                                                                                <span
+                                                                                                    class="text-green-400 font-semibold">{{voucher.remainingQuantity}}</span>
+                                                                                            </p>
                                                                                             <p><span
                                                                                                     class="text-gray-400">Điều
                                                                                                     kiện áp dụng:</span>
@@ -463,25 +497,34 @@
                                                     </div>
 
                                                     <div class="text-sm md:text-base" data-orientation="vertical">
-                                                          
-                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                 </section>
                             </div>
                         </div>
                         <div class="rich-text">
                             <p
                                 class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                <span class="italic text-100" style="color: rgb(128, 128, 128);">Xin lỗi, không hoàn lại tiền sau thời gian chiếu được hiển thị.</span>
+                                <span class="italic text-100" style="color: rgb(128, 128, 128);">Xin lỗi, không hoàn lại
+                                    tiền sau thời gian chiếu được hiển thị.</span>
                             </p>
                         </div>
                         <div class="rich-text">
                             <p
                                 class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                             <span class="text-100 footnote" style="color: rgb(128, 128, 128);">GIẢM TỚI 20% giá cơ sở vé buổi tối cho cùng tiêu đề và loại vé (Người lớn, Trẻ em, Người cao tuổi, v.v.) cho giờ chiếu trước 4 giờ chiều tại một số địa điểm AMC, AMC DINE-IN và AMC CLASSIC. Giá chưa bao gồm thuế. Ưu đãi chỉ có giá trị tại các địa điểm tham gia. Giảm giá được áp dụng tự động. Có sẵn tại phòng vé, trực tuyến tại AMCTheatres.com và Ứng dụng di động AMC. Không có giá trị với bất kỳ ưu đãi nào khác. Ưu đãi không thể kết hợp với giảm giá AMC Stubs Giảm giá Thứ Ba. Giá thấp hơn sẽ được tôn trọng. Phụ phí sẽ được áp dụng cho các định dạng cao cấp, nội dung thay thế và các sự kiện đặc biệt. Các loại trừ được áp dụng.</span>
+                                <span class="text-100 footnote" style="color: rgb(128, 128, 128);">GIẢM TỚI 20% giá cơ
+                                    sở vé buổi tối cho cùng tiêu đề và loại vé (Người lớn, Trẻ em, Người cao tuổi, v.v.)
+                                    cho giờ chiếu trước 4 giờ chiều tại một số địa điểm AMC, AMC DINE-IN và AMC CLASSIC.
+                                    Giá chưa bao gồm thuế. Ưu đãi chỉ có giá trị tại các địa điểm tham gia. Giảm giá
+                                    được áp dụng tự động. Có sẵn tại phòng vé, trực tuyến tại AMCTheatres.com và Ứng
+                                    dụng di động AMC. Không có giá trị với bất kỳ ưu đãi nào khác. Ưu đãi không thể kết
+                                    hợp với giảm giá AMC Stubs Giảm giá Thứ Ba. Giá thấp hơn sẽ được tôn trọng. Phụ phí
+                                    sẽ được áp dụng cho các định dạng cao cấp, nội dung thay thế và các sự kiện đặc
+                                    biệt. Các loại trừ được áp dụng.</span>
                             </p>
                         </div>
                     </div>
@@ -510,7 +553,7 @@
                                                 </div>
                                                 <p
                                                     class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                    {{ seat.total | number:'1.0-0'  }} đ
+                                                    {{ seat.total | number:'1.0-0' }} đ
                                                 </p>
                                             </div>
                                             <p class="text-white text-xs font-semibold leading-tight tracking-normal">
@@ -535,7 +578,7 @@
                                                 </div>
                                                 <p
                                                     class="my-auto text-white text-base font-semibold leading-tight tracking-normal">
-                                                    {{ sv.price | number:'1.0-0'  }} đ
+                                                    {{ sv.price | number:'1.0-0' }} đ
                                                 </p>
                                             </div>
                                             <p class="text-white text-xs font-semibold leading-tight tracking-normal">
@@ -566,15 +609,20 @@
                                                     </p>
                                                 </div>
                                             </li>
-                                            <div class="discount-container bg-green-100 text-green-800 p-4 rounded-lg shadow-md flex items-center gap-4">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
-                                                  <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"></path>
+                                            <div
+                                                class="discount-container bg-green-100 text-green-800 p-4 rounded-lg shadow-md flex items-center gap-4">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                    viewBox="0 0 24 24" class="w-6 h-6">
+                                                    <path
+                                                        d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z">
+                                                    </path>
                                                 </svg>
                                                 <div>
-                                                  <h4 class="text-lg font-semibold">Bạn đã tiết kiệm được:</h4>
-                                                  <p class="text-xl font-bold">{{ discountAmount |  number:'1.0-0' }} đ</p>
+                                                    <h4 class="text-lg font-semibold">Bạn đã tiết kiệm được:</h4>
+                                                    <p class="text-xl font-bold">{{ discountAmount | number:'1.0-0' }} đ
+                                                    </p>
                                                 </div>
-                                              </div>
+                                            </div>
                                         </ul>
                                     </div>
                                 </section>
@@ -589,36 +637,29 @@
 
                                 </section>
                                 <label class="checkbox-container">
-                                    <input 
-                                      type="checkbox" 
-                                      class="form-checkbox"
-                                      [(ngModel)]="isTermsAccepted"
-                                      [ngModelOptions]="{standalone: true}"
-                                      (change)="onCheckboxChange()"
-                                    />
+                                    <input type="checkbox" class="form-checkbox" [(ngModel)]="isTermsAccepted"
+                                        [ngModelOptions]="{standalone: true}" (change)="onCheckboxChange()" />
                                     <span>
-                                      Tôi hiểu và chấp nhận rằng nếu không đăng ký tài khoản, hệ thống sẽ không chịu trách nhiệm khi có sự cố xảy ra.
+                                        Tôi hiểu và chấp nhận rằng nếu không đăng ký tài khoản, hệ thống sẽ không chịu
+                                        trách nhiệm khi có sự cố xảy ra.
                                     </span>
-                                  </label>
-                                  
-                                  <label class="checkbox-container">
-                                    <input 
-                                      type="checkbox" 
-                                      class="form-checkbox"
-                                      [(ngModel)]="isAgeConfirmed"
-                                      [ngModelOptions]="{standalone: true}"
-                                      (change)="onCheckboxChange()"
-                                    />
+                                </label>
+
+                                <label class="checkbox-container">
+                                    <input type="checkbox" class="form-checkbox" [(ngModel)]="isAgeConfirmed"
+                                        [ngModelOptions]="{standalone: true}" (change)="onCheckboxChange()" />
                                     <span>
-                                      Tôi xác nhận rằng tôi đủ 18 tuổi trở lên.
+                                        Tôi xác nhận rằng tôi đủ 18 tuổi trở lên.
                                     </span>
-                                  </label>
-                            
+                                </label>
+
                                 <p
                                     class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                     <span
-                                        class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span> {{ selectedPaymentMethod === 'MULTI-WALLET' ? '$' + displayAmount : totalAmount | number:'1.0-0' }}
-                                        {{ selectedPaymentMethod === 'MULTI-WALLET' ? 'USDC' : 'đ' }}
+                                        class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>
+                                    {{ selectedPaymentMethod === 'MULTI-WALLET' ? '$' + displayAmount : totalAmount |
+                                    number:'1.0-0' }}
+                                    {{ selectedPaymentMethod === 'MULTI-WALLET' ? 'USDC' : 'đ' }}
                                 </p>
                             </div>
                         </div>
@@ -635,7 +676,8 @@
                                     <span class="text-200">Bằng cách tiến hành mua, tôi đồng ý với </span><a
                                         class="group transition-colors text-blue-500 hocus:text-white"
                                         rel="noopener noreferrer" target="_blank" href="/terms-and-conditions"><span
-                                            class="text-200">Điều khoản và điều kiện Cinex.</span></a><span class="">.</span>
+                                            class="text-200">Điều khoản và điều kiện Cinex.</span></a><span
+                                        class="">.</span>
                                 </p>
                             </div>
                         </div>
@@ -644,8 +686,9 @@
                             <div class="flex items-center gap-2"><span
                                     class="hidden text-sm font-semibold uppercase text-gray-200 lg:block">Total</span>
                                 <section>
-                                    <div aria-label="Order Total" class="hidden gap-2 lg:flex"><span
-                                            class="font-bold"> {{ selectedPaymentMethod === 'MULTI-WALLET' ? '$' + displayAmount : totalAmount | number:'1.0-0' }}
+                                    <div aria-label="Order Total" class="hidden gap-2 lg:flex"><span class="font-bold">
+                                            {{ selectedPaymentMethod === 'MULTI-WALLET' ? '$' + displayAmount :
+                                            totalAmount | number:'1.0-0' }}
                                             {{ selectedPaymentMethod === 'MULTI-WALLET' ? 'USDC' : 'đ' }}</span></div>
                                     <div class="lg:hidden">
                                         <div><button type="button"
@@ -759,7 +802,8 @@
                                                                 <p
                                                                     class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                                                     <span
-                                                                        class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>${{totalAmount | number:'1.0-0' }}
+                                                                        class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Total</span>${{totalAmount
+                                                                    | number:'1.0-0' }}
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -771,13 +815,13 @@
                                 </section>
                             </div>
                             <div class="flex items-center gap-2 ">
-                                <p *ngIf="!isTermsAccepted || !isAgeConfirmed" class="hidden text-xs font-semibold italic text-gray-100 lg:block">Bạn cần phải chập nhận các điều khoản của chúng tôi trước khi thanh toán.</p>
-                                <button 
-                                (click)="onPurchase()"
-                                [disabled]="!isTermsAccepted || !isAgeConfirmed"
-                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12">
-                                Thanh Toán
-                              </button>
+                                <p *ngIf="!isTermsAccepted || !isAgeConfirmed"
+                                    class="hidden text-xs font-semibold italic text-gray-100 lg:block">Bạn cần phải chập
+                                    nhận các điều khoản của chúng tôi trước khi thanh toán.</p>
+                                <button (click)="onPurchase()" [disabled]="!isTermsAccepted || !isAgeConfirmed"
+                                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12">
+                                    Thanh Toán
+                                </button>
                                 <!-- <button hidden="" type="submit"
                                     aria-label="Purchase"></button> -->
                             </div>
