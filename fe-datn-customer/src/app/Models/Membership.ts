@@ -40,7 +40,7 @@ export interface UserMembershipDetails {
     rewardPoint: number;
   }
   export interface PointHistory {
-    title: string;
-    date: string;
-    points: number;
+    reason: string;      
+    pointChange: number;  
+    createdDate: string; 
   }

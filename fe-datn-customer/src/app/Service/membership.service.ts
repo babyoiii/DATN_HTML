@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { CheckMembership, MembershipData, MembershipPreview, RewardPointData } from '../Models/Membership';
+import { CheckMembership, MembershipData, MembershipPreview, PointHistory, RewardPointData } from '../Models/Membership';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -27,5 +27,9 @@ export class MembershipService {
     getPointByUser(): Observable<RewardPointData> {
       const url = `${this.baseUrl}/Membership/GetPointByUser`;
       return this.http.get<RewardPointData>(url);
+    }
+    getPointHistory(type: number, currentPage: number, recordPerPage: number): Observable<PointHistory> {
+      const url = `${this.baseUrl}/Membership/GetPointHistory?type=${type}&currentPage=${currentPage}&recordPerPage=${recordPerPage}`;
+      return this.http.get<PointHistory>(url);
     }
 }

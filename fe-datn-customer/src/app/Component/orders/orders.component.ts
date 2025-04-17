@@ -50,13 +50,39 @@ export class OrdersComponent implements OnInit, OnDestroy {
       clearTimeout(this.autoCloseTimer);
     }
   }
-
+  clearLocalStorageData(): void {
+    // Xóa dữ liệu liên quan đến ghế
+    localStorage.removeItem('selectedSeats');
+    localStorage.removeItem('seatData');
+    localStorage.removeItem('currentShowtimeId');
+  
+    // Xóa dữ liệu liên quan đến dịch vụ
+    localStorage.removeItem('selectedServices');
+    localStorage.removeItem('serviceData');
+  
+    // Xóa dữ liệu liên quan đến đơn hàng
+    localStorage.removeItem('orderData');
+    localStorage.removeItem('orderDataPayment');
+  
+    // Xóa dữ liệu liên quan đến phim và suất chiếu
+    localStorage.removeItem('currentMovieInfo');
+    localStorage.removeItem('reloadOnce');
+  
+  }
   ngOnInit(): void {
     this.getListServiceType();
     this.subscription = this.authServiceService.isLoggedIn$.subscribe(status => {
       this.isLoggedIn = status;
       console.log('Login status from BehaviorSubject:', status);
     });
+
+    // Khôi phục selectedServices từ localStorage
+    const savedServices = localStorage.getItem('selectedServices');
+    if (savedServices) {
+      this.selectedServices = JSON.parse(savedServices);
+      console.log('✅ Dịch vụ đã khôi phục:', this.selectedServices);
+    }
+
     this.seatService.getJoinRoomMessages().subscribe({
       next: (count) => {
         if (count !== null) {
@@ -64,14 +90,14 @@ export class OrdersComponent implements OnInit, OnDestroy {
           const seconds = count % 60;
           this.countdown = `${minutes}:${seconds.toString().padStart(2, '0')}`;
           this.cdr.markForCheck();
-          if (count === 60  && !this.seatService.hasShownWarning()) {
+          if (count === 60 && !this.seatService.hasShownWarning()) {
             this.AddMoreTime();
             this.autoCloseTimer = setTimeout(() => {
               this.modalService.closeNeedMoreTimeModal();
             }, 5000);
           }
           if (count === 0) {
-           this.TimeUp();
+            this.TimeUp();
           }
         }
       },
@@ -79,28 +105,28 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
 
     const data = localStorage.getItem('selectedSeats');
-    console.log(data,'dataTuSeat');
-    
+    console.log(data, 'dataTuSeat');
+
     if (data) {
       try {
-          const seats: Seat[] = JSON.parse(data);
-  
-          this.seatSummary = seats.reduce((summary, seat) => {
-              if (!summary[seat.SeatTypeName]) {
-                  summary[seat.SeatTypeName] = { count: 0, total: 0, seatIds: [] };
-              }
-              summary[seat.SeatTypeName].count++;
-              summary[seat.SeatTypeName].total += seat.price;
-              summary[seat.SeatTypeName].seatIds.push(seat.seatId); 
-  
-              return summary;
-          }, {} as { [key: string]: { count: number; total: number; seatIds: string[] } });
-  
-          console.log('📊 Thống kê số lượng, tổng tiền và seatIds:', this.seatSummary);
+        const seats: Seat[] = JSON.parse(data);
+
+        this.seatSummary = seats.reduce((summary, seat) => {
+          if (!summary[seat.SeatTypeName]) {
+            summary[seat.SeatTypeName] = { count: 0, total: 0, seatIds: [] };
+          }
+          summary[seat.SeatTypeName].count++;
+          summary[seat.SeatTypeName].total += seat.price;
+          summary[seat.SeatTypeName].seatIds.push(seat.seatId);
+
+          return summary;
+        }, {} as { [key: string]: { count: number; total: number; seatIds: string[] } });
+
+        console.log('📊 Thống kê số lượng, tổng tiền và seatIds:', this.seatSummary);
       } catch (error) {
-          console.error('❌ Dữ liệu ghế không hợp lệ:', error);
+        console.error('❌ Dữ liệu ghế không hợp lệ:', error);
       }
-  }
+    }
   }
   checkLogin(): boolean {
     const logged = this.authServiceService.isLoggedIn();
@@ -242,6 +268,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
       totalTicketPrice: this.getTotalTicketPrice(),
       totalServiceAmount: this.getTotalService(),
     };
+  
+    localStorage.setItem('selectedServices', JSON.stringify(this.selectedServices));
   
     localStorage.setItem('orderData', JSON.stringify(orderData));
     this.router.navigate(['/thanh-toan'], { state: { seats: this.seatSummary, selectedSeats: this.selectedServices, totalAmount: this.getTotalAmount() } });

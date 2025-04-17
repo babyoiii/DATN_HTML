@@ -312,4 +312,30 @@
   .font-bold {
     font-weight: 700; /* Độ đậm cao */
   }
+  .use-all-points-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    text-align: center;
+    color: #fef08a; /* Màu chữ vàng nhạt */
+    background: linear-gradient(to right, #22c55e, #4ade80); /* Gradient từ xanh lá đậm đến nhạt */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bóng đổ */
+    padding: 12px 32px; /* Khoảng cách bên trong nút */
+    border-radius: 9999px; /* Bo góc tròn */
+    min-width: 12ch; /* Chiều rộng tối thiểu */
+    font-size: 0.875rem; /* Kích thước chữ */
+    transition: all 0.3s ease-in-out; /* Hiệu ứng chuyển đổi */
+  }
   
+  .use-all-points-btn:hover {
+    background: linear-gradient(to right, #16a34a, #22c55e); /* Gradient khi hover */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Tăng bóng đổ khi hover */
+    transform: scale(1.05); /* Phóng to nhẹ khi hover */
+    color: #ffffff; /* Màu chữ chuyển sang trắng khi hover */
+  }
+  
+  .use-all-points-btn:disabled {
+    opacity: 0.4; /* Làm mờ nút khi bị vô hiệu hóa */
+    cursor: not-allowed; /* Hiển thị con trỏ không cho phép */
+  }

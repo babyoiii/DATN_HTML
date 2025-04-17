@@ -110,18 +110,18 @@
                                         <!-- Tab 1: Lịch sử nhận điểm -->
                                         <div *ngIf="activeTab === 'earned'" class="max-h-[300px] overflow-y-auto pr-2">
                                             <div class="grid grid-cols-1 gap-2">
-                                                <div *ngFor="let item of earnedPoints"
+                                                <div *ngFor="let item of pointHistory"
                                                     class="grid grid-cols-12 items-center p-3 bg-purple-800/20 rounded-lg border border-gray-700">
                                                     <img alt="Earned Points" loading="lazy" width="45" height="45"
                                                         decoding="async" data-nimg="1" class="col-span-2 self-start"
                                                         src="https://amc-theatres-res.cloudinary.com/image/upload/c_fill/c_limit,w_30/f_auto/q_auto/amc-cdn/static/images/2024/icon-points-earned-coin-lg-3d.png"
                                                         style="color: transparent;">
                                                     <div class="col-span-7 flex flex-col">
-                                                        <span class="text-200 font-semibold">{{ item.title }}</span>
-                                                        <span class="text-100 text-gray-300">{{ item.date }}</span>
+                                                        <span class="text-200 font-semibold">{{ item.reason }}</span>
+                                                        <span class="text-100 text-gray-300">{{ item.createdDate | date:'dd/MM/yyyy' }}</span>
                                                     </div>
                                                     <div class="col-span-3 text-right text-white font-bold">
-                                                        +{{ item.points }} điểm
+                                                        + {{ item.pointChange }} điểm
                                                     </div>
                                                 </div>
                                             </div>
@@ -130,18 +130,18 @@
                                         <!-- Tab 2: Lịch sử đổi điểm -->
                                         <div *ngIf="activeTab === 'redeemed'" class="max-h-[300px] overflow-y-auto pr-2">
                                             <div class="grid grid-cols-1 gap-2">
-                                                <div *ngFor="let item of redeemedPoints"
+                                                <div *ngFor="let item of pointHistory"
                                                     class="grid grid-cols-12 items-center p-3 bg-purple-800/20 rounded-lg border border-gray-700">
                                                     <img alt="Redeemed Points" loading="lazy" width="45" height="45"
                                                         decoding="async" data-nimg="1" class="col-span-2 self-start"
-                                                        src="https://amc-theatres-res.cloudinary.com/image/upload/c_limit,w_45/f_auto/q_auto/v1729028682/amc-cdn/content/general/tff39jrsaw0cxx3sqwb8.png"
+                                                        src="https://amc-theatres-res.cloudinary.com/image/upload/c_fill/c_limit,w_30/f_auto/q_auto/amc-cdn/static/images/2024/icon-points-earned-coin-lg-3d.png"
                                                         style="color: transparent;">
                                                     <div class="col-span-7 flex flex-col">
-                                                        <span class="text-200 font-semibold">{{ item.title }}</span>
-                                                        <span class="text-100 text-gray-300">{{ item.date }}</span>
+                                                        <span class="text-200 font-semibold">{{ item.reason }}</span>
+                                                        <span class="text-100 text-gray-300">{{ item.createdDate | date:'dd/MM/yyyy' }}</span>
                                                     </div>
                                                     <div class="col-span-3 text-right text-red-500 font-bold">
-                                                        -{{ item.points }} điểm
+                                                        {{ item.pointChange }} điểm
                                                     </div>
                                                 </div>
                                             </div>
@@ -156,10 +156,11 @@
                                         <dt class="sr-only">Điểm hiện tại </dt>
                                         <dd class="label">Cùng sử dụng điểm để đổi thưởng cho các dịch vụ
                                         </dd>
-                                        <dd><span class="font-extrabold caption">Điểm hiện tại: </span>5000</dd>
-                                    </dl><a
-                                        class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full bg-red-500 hocus:bg-red-400 text-sm md:text-base h-12 ml-auto min-w-max px-4 text-100 label"
-                                        href="#">Mua vé ngay</a>
+                                        <dd><span class="font-extrabold caption">Điểm hiện tại: </span>{{getRewardPoint.totalPoint}}</dd>
+                                    </dl>
+                                    <a 
+                                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full bg-red-500 hocus:bg-red-400 text-sm md:text-base h-12 ml-auto min-w-max px-4 text-100 label" 
+                                    [routerLink]="'/showtimes'">Mua vé ngay </a>
                                 </div>
                             </div>
                         </div>

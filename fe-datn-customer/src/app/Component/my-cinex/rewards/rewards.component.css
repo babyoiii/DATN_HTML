@@ -1,0 +1,6 @@
+.single-line {
+    white-space: nowrap; /* Không cho phép xuống dòng */
+    overflow: hidden;    /* Ẩn nội dung tràn */
+    text-overflow: ellipsis; /* Thêm dấu "..." nếu nội dung bị cắt */
+    font-size: 0.875rem; /* Kích thước chữ nhỏ hơn (14px) */
+}
