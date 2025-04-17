@@ -131,7 +131,7 @@ export class MovieDetailNghiaComponent implements OnInit {
       .pipe(
         catchError(error => {
           this.error = 'Error loading movie details. Please try again.';
-          console.error('Error fetching movie details:', error);
+          // console.error('Error fetching movie details:', error);
           return of(null);
         }),
         finalize(() => {
@@ -153,7 +153,7 @@ export class MovieDetailNghiaComponent implements OnInit {
     this.movieService.getMovies(status, 1, 6)
       .pipe(
         catchError(error => {
-          console.error('Error fetching related movies:', error);
+          // console.error('Error fetching related movies:', error);
           return of(null);
         }),
         map(response => {
@@ -263,7 +263,7 @@ export class MovieDetailNghiaComponent implements OnInit {
       .pipe(
         catchError(error => {
           this.commentError = 'Error loading comments. Please try again.';
-          console.error('Error fetching all comments:', error);
+          // console.error('Error fetching all comments:', error);
           return of(null);
         })
       )
@@ -278,7 +278,7 @@ export class MovieDetailNghiaComponent implements OnInit {
             .pipe(
               catchError(error => {
                 this.commentError = 'Error loading comments. Please try again.';
-                console.error('Error fetching paged comments:', error);
+                // console.error('Error fetching paged comments:', error);
                 return of(null);
               }),
               finalize(() => {

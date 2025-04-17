@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -153,7 +153,8 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     private authServiceService: AuthServiceService,
     private walletService: WalletOnboardService,
     private membershipService: MembershipService,
-    private userVoucherService: UserVoucherService
+    private userVoucherService: UserVoucherService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) { }
   ngOnDestroy(): void {
     this.seatService.resetWarning();
@@ -170,7 +171,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     this.subscription = this.authServiceService.isLoggedIn$.subscribe(status => {
       this.isLoggedIn = status;
     });
-    if (this.isLoggedIn) {
+    if (this.isLoggedIn && isPlatformBrowser(this.platformId)) {
       this.email = localStorage.getItem('email') || '';
       this.userId = localStorage.getItem('userId') || null;
       if (this.userId) {
@@ -203,7 +204,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         console.log('Reward Point Data:', this.getRewardPoint);
       },
       error: (err) => {
-        console.error('Error fetching points:', err);
+        // console.error('Error fetching points:', err);
       }
     });
     this.loadData();
@@ -237,7 +238,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         }
       },
       error: (error) => {
-        console.error('Error fetching vouchers:', error);
+        // console.error('Error fetching vouchers:', error);
       }
     });
   }
@@ -258,66 +259,67 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     }
   }
   clearLocalStorageData(): void {
-    // Xóa dữ liệu liên quan đến ghế
-    localStorage.removeItem('selectedSeats');
-    localStorage.removeItem('seatData');
-    localStorage.removeItem('currentShowtimeId');
-  
-    // Xóa dữ liệu liên quan đến dịch vụ
-    localStorage.removeItem('selectedServices');
-    localStorage.removeItem('serviceData');
-  
-    // Xóa dữ liệu liên quan đến đơn hàng
-    localStorage.removeItem('orderData');
-    localStorage.removeItem('orderDataPayment');
-  
-    // Xóa dữ liệu liên quan đến phim và suất chiếu
-    localStorage.removeItem('currentMovieInfo');
-    localStorage.removeItem('reloadOnce');
-  
+    if (isPlatformBrowser(this.platformId)) {
+      // Xóa dữ liệu liên quan đến ghế
+      localStorage.removeItem('selectedSeats');
+      localStorage.removeItem('seatData');
+      localStorage.removeItem('currentShowtimeId');
+
+      // Xóa dữ liệu liên quan đến dịch vụ
+      localStorage.removeItem('selectedServices');
+      localStorage.removeItem('serviceData');
+
+      // Xóa dữ liệu liên quan đến đơn hàng
+      localStorage.removeItem('orderData');
+      localStorage.removeItem('orderDataPayment');
+
+      // Xóa dữ liệu liên quan đến phim và suất chiếu
+      localStorage.removeItem('currentMovieInfo');
+      localStorage.removeItem('reloadOnce');
+    }
   }
   appliedPoints: { points: number; amount: number }[] = []; // Mảng lưu lịch sử các lần áp dụng điểm thưởng
 
   onApplyPoint(): void {
     const totalAppliedPoints = this.appliedPoints.reduce((total, entry) => total + entry.points, 0);
-  
+
     // Kiểm tra nếu tổng số điểm áp dụng vượt quá số điểm hiện có
     if (totalAppliedPoints + this.rewardPointsInput > this.getRewardPoint.totalPoint) {
       this.toastr.warning('Tổng số điểm áp dụng vượt quá số điểm hiện có!', 'Cảnh báo');
       return;
     }
-  
+
     // Tính số tiền giảm dựa trên số điểm nhập vào
     let discountPointAmount = this.rewardPointsInput * this.getRewardPoint.pointRate;
-  
+
     // Kiểm tra nếu số tiền giảm vượt quá tổng số tiền
     if (discountPointAmount > this.totalAmount) {
       // Điều chỉnh số điểm thưởng để khớp với tổng số tiền
       this.rewardPointsInput = Math.ceil(this.totalAmount / this.getRewardPoint.pointRate);
       discountPointAmount = Math.round(this.rewardPointsInput * this.getRewardPoint.pointRate);
-  
+
       console.log('Điều chỉnh số điểm thưởng:', this.rewardPointsInput);
       console.log('Điều chỉnh số điểm thưởng discountPointAmount:', discountPointAmount);
-      
+
       // Nếu sau khi điều chỉnh số điểm vẫn không hợp lệ, hiển thị cảnh báo
       if (this.rewardPointsInput <= 0 || discountPointAmount > this.totalAmount) {
         this.toastr.warning('Số điểm nhập vào vượt quá tổng số tiền của đơn hàng!', 'Cảnh báo');
         return;
       }
     }
-  
+
     // Làm tròn số tiền giảm để xử lý sai số nhỏ
     discountPointAmount = Math.min(Math.round(discountPointAmount), this.totalAmount);
-  
+
     // Lưu lại số điểm đã áp dụng
     this.appliedPoints.push({ points: this.rewardPointsInput, amount: discountPointAmount });
-  
+
     // Cập nhật số tiền giảm
     this.discountAmount += discountPointAmount;
-  
+
     // Cập nhật tổng số tiền
     this.updateTotals();
-  
+
     // Reset input điểm thưởng
     this.rewardPointsInput = 0;
 
@@ -329,41 +331,41 @@ export class PurchaseComponent implements OnInit, OnDestroy {
       this.toastr.info('Tổng số tiền đã bằng 0, không cần sử dụng thêm điểm thưởng!', 'Thông báo');
       return;
     }
-  
+
     // Tính số điểm cần thiết để giảm toàn bộ số tiền
     let requiredPoints = this.totalAmount / this.getRewardPoint.pointRate;
-  
+
     // Làm tròn số điểm cần thiết
     requiredPoints = Math.ceil(requiredPoints);
-  
+
     // Giới hạn số điểm cần thiết trong phạm vi số điểm hiện có
     const pointsToUse = Math.min(requiredPoints, this.getRewardPoint.totalPoint);
-  
+
     if (pointsToUse <= 0) {
       this.toastr.warning('Không thể sử dụng điểm thưởng!', 'Cảnh báo');
       return;
     }
-  
+
     // Tính số tiền giảm dựa trên số điểm sử dụng
     let discountPointAmount = pointsToUse * this.getRewardPoint.pointRate;
-  
+
     // Điều chỉnh số tiền giảm để đảm bảo tổng số tiền bằng 0
     if (discountPointAmount > this.totalAmount) {
       discountPointAmount = this.totalAmount;
     }
-  
+
     // Lưu lại số điểm đã áp dụng
     this.appliedPoints.push({ points: pointsToUse, amount: discountPointAmount });
-  
+
     // Cập nhật số tiền giảm
     this.discountAmount += discountPointAmount;
-  
+
     // Đặt tổng số tiền về 0
     this.totalAmount = 0;
-  
+
     // Cập nhật hiển thị
     this.updateTotals();
-  
+
     this.toastr.success(`Đã sử dụng ${pointsToUse} điểm thưởng để giảm toàn bộ số tiền!`, 'Thông báo');
   }
   onCancelPoint(): void {
@@ -448,29 +450,31 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     return logged;
   }
   loadData() {
-    const orderDataString = localStorage.getItem('orderData');
-    if (orderDataString) {
-      try {
-        const orderData = JSON.parse(orderDataString);
+    if (isPlatformBrowser(this.platformId)) {
+      const orderDataString = localStorage.getItem('orderData');
+      if (orderDataString) {
+        try {
+          const orderData = JSON.parse(orderDataString);
 
-        this.seats = Object.entries(orderData.seats).map(([type, data]: any) => ({
-          type: data.type,
-          count: data.count,
-          total: data.total,
-          seatIds: data.seatIds || []
-        }));
+          this.seats = Object.entries(orderData.seats).map(([type, data]: any) => ({
+            type: data.type,
+            count: data.count,
+            total: data.total,
+            seatIds: data.seatIds || []
+          }));
 
-        this.services = orderData.services || [];
-        this.totalAmount = orderData.totalAmount || 0;
-        this.totalTicketPrice = orderData.totalTicketPrice || 0;
-        this.totalServiceAmount = orderData.totalServiceAmount || 0;
-        this.fee = orderData.fee || 0;
+          this.services = orderData.services || [];
+          this.totalAmount = orderData.totalAmount || 0;
+          this.totalTicketPrice = orderData.totalTicketPrice || 0;
+          this.totalServiceAmount = orderData.totalServiceAmount || 0;
+          this.fee = orderData.fee || 0;
 
-        // Cập nhật tổng số tiền
-        this.updateTotals();
-      } catch (error) {
+          // Cập nhật tổng số tiền
+          this.updateTotals();
+        } catch (error) {
+        }
+      } else {
       }
-    } else {
     }
   }
   TimeUp(): void {
@@ -516,7 +520,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
       this.completeOrderWithoutPayment();
       console.log('Đơn hàng không có phí dịch vụ, không cần thanh toán.');
       return;
-    } 
+    }
     if (!this.selectedPaymentMethod) {
       this.toastr.warning('Vui lòng chọn phương thức thanh toán.');
       return;
@@ -595,7 +599,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         seatByShowTimeId: seatId
       })),
     };
-   
+
     this.orderService.createOrder(orderData).subscribe({
       next: (response: any) => {
         this.toastr.success('Đơn hàng đã được hoàn tất mà không cần thanh toán!', 'Thông báo');
@@ -682,18 +686,18 @@ export class PurchaseComponent implements OnInit, OnDestroy {
   updateTotals(): void {
     // Tính tổng tiền vé
     this.totalTicketPrice = this.seats.reduce((total, seat) => total + seat.total, 0);
-  
+
     // Tính tổng tiền dịch vụ
     this.totalServiceAmount = this.services.reduce((total, service) => total + (service.price * service.quantity), 0);
-  
+
     // Tính tổng tiền cuối cùng
     this.totalAmount = this.totalTicketPrice + this.totalServiceAmount - this.discountAmount - this.discountPointAmount;
-  
+
     // Đảm bảo tổng số tiền không âm
     if (this.totalAmount < 0) {
       this.totalAmount = 0;
     }
-  
+
     // Cập nhật số tiền hiển thị dựa trên phương thức thanh toán
     if (this.selectedPaymentMethod === 'MULTI-WALLET') {
       const usdcAmount = this.convertVNDToUSDC(this.totalAmount);
@@ -708,7 +712,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
       this.displayAmount = this.totalAmount.toLocaleString('vi-VN');
       this.displayCurrency = 'VND';
     }
-  
+
     console.log('Updated Totals:', {
       totalTicketPrice: this.totalTicketPrice,
       totalServiceAmount: this.totalServiceAmount,

@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, Renderer2, ElementRef, ViewChild } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, Renderer2, ElementRef, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, Location, isPlatformBrowser } from '@angular/common';
 import { DurationFormatPipe } from '../../duration-format.pipe';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SeatService } from '../../Service/seat.service';
@@ -81,7 +81,8 @@ export class SeatsComponent implements OnInit, OnDestroy {
     private location: Location,
     private modalService: ModalService,
     private showtimeService: ShowtimeService,
-    private authServiceService: AuthServiceService
+    private authServiceService: AuthServiceService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
 
@@ -95,7 +96,9 @@ export class SeatsComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         const showtimeId = params['id'];
         this.loadSeatsByShowtimeId(showtimeId)
-        localStorage.setItem('currentShowtimeId', showtimeId);
+        if (isPlatformBrowser(this.platformId)) {
+          localStorage.setItem('currentShowtimeId', showtimeId);
+        }
         const userId = this.ensureUserId();
         console.log(userId);
 
@@ -114,10 +117,12 @@ export class SeatsComponent implements OnInit, OnDestroy {
         }
       });
 
-    const shouldReload = sessionStorage.getItem('reloadOnce');
-    if (shouldReload) {
-      sessionStorage.removeItem('reloadOnce');
-      this.reloadCurrentRoute();
+    if (isPlatformBrowser(this.platformId)) {
+      const shouldReload = sessionStorage.getItem('reloadOnce');
+      if (shouldReload) {
+        sessionStorage.removeItem('reloadOnce');
+        this.reloadCurrentRoute();
+      }
     }
 
     this.seatDataService.seats$.pipe(takeUntil(this.destroy$)).subscribe(seats => {
@@ -144,12 +149,14 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
 
 
-    const movieInfoStr = localStorage.getItem('currentMovieInfo');
-    if (movieInfoStr) {
-      this.movieInfo = JSON.parse(movieInfoStr);
+    if (isPlatformBrowser(this.platformId)) {
+      const movieInfoStr = localStorage.getItem('currentMovieInfo');
+      if (movieInfoStr) {
+        this.movieInfo = JSON.parse(movieInfoStr);
+      }
     }
 
-    console.log("Dữ liệu nghĩa", movieInfoStr)
+    console.log("Dữ liệu phim:", this.movieInfo)
 
   }
 
@@ -172,23 +179,24 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
 
   clearLocalStorageData(): void {
-    // Xóa dữ liệu liên quan đến ghế
-    localStorage.removeItem('selectedSeats');
-    localStorage.removeItem('seatData');
-    localStorage.removeItem('currentShowtimeId');
+    if (isPlatformBrowser(this.platformId)) {
+      // Xóa dữ liệu liên quan đến ghế
+      localStorage.removeItem('selectedSeats');
+      localStorage.removeItem('seatData');
+      localStorage.removeItem('currentShowtimeId');
 
-    // Xóa dữ liệu liên quan đến dịch vụ
-    localStorage.removeItem('selectedServices');
-    localStorage.removeItem('serviceData');
+      // Xóa dữ liệu liên quan đến dịch vụ
+      localStorage.removeItem('selectedServices');
+      localStorage.removeItem('serviceData');
 
-    // Xóa dữ liệu liên quan đến đơn hàng
-    localStorage.removeItem('orderData');
-    localStorage.removeItem('orderDataPayment');
+      // Xóa dữ liệu liên quan đến đơn hàng
+      localStorage.removeItem('orderData');
+      localStorage.removeItem('orderDataPayment');
 
-    // Xóa dữ liệu liên quan đến phim và suất chiếu
-    localStorage.removeItem('currentMovieInfo');
-    localStorage.removeItem('reloadOnce');
-
+      // Xóa dữ liệu liên quan đến phim và suất chiếu
+      localStorage.removeItem('currentMovieInfo');
+      localStorage.removeItem('reloadOnce');
+    }
   }
   TimeUp(): void {
     this.modalService.openTimeUpModal();
@@ -213,8 +221,11 @@ export class SeatsComponent implements OnInit, OnDestroy {
     this.error = null;
     this.cdr.markForCheck();
 
-    const selectedSeatsStr = localStorage.getItem('selectedSeats');
-    const selectedSeats = selectedSeatsStr ? JSON.parse(selectedSeatsStr) : [];
+    let selectedSeats: any[] = [];
+    if (isPlatformBrowser(this.platformId)) {
+      const selectedSeatsStr = localStorage.getItem('selectedSeats');
+      selectedSeats = selectedSeatsStr ? JSON.parse(selectedSeatsStr) : [];
+    }
 
     this.initializeWebSocket(showtimeId, userId);
 
@@ -318,13 +329,16 @@ export class SeatsComponent implements OnInit, OnDestroy {
   }
 
   private ensureUserId(): string {
-    let userId = localStorage.getItem('userId');
+    if (isPlatformBrowser(this.platformId)) {
+      let userId = localStorage.getItem('userId');
 
-    if (!userId) {
-      userId = this.generateUserId();
-      localStorage.setItem('userId', userId);
+      if (!userId) {
+        userId = this.generateUserId();
+        localStorage.setItem('userId', userId);
+      }
+      return userId;
     }
-    return userId;
+    return this.generateUserId();
   }
 
   private generateUserId(): string {

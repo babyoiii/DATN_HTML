@@ -212,7 +212,7 @@ export class ShowtimesComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Error fetching movies:', err);
+        // console.error('Error fetching movies:', err);
       }
     });
   }
@@ -271,7 +271,7 @@ export class ShowtimesComponent implements OnInit {
         console.log('Data received:', this.listData);
       },
       error: (err) => {
-        console.error('Error fetching showtimes:', err);
+        // console.error('Error fetching showtimes:', err);
       }
     });
   }

@@ -39,7 +39,7 @@ export class RewardsComponent implements OnInit {
         console.log('Reward Point Data:', this.getRewardPoint);
       },
       error: (err) => {
-        console.error('Error fetching points:', err);
+        // console.error('Error fetching points:', err);
       }
     });
 
@@ -84,7 +84,7 @@ export class RewardsComponent implements OnInit {
         this.isLoading = false;
       },
       error: (err) => {
-        console.error('Lỗi khi lấy lịch sử điểm:', err);
+        // console.error('Lỗi khi lấy lịch sử điểm:', err);
         this.isLoading = false;
       }
     });
