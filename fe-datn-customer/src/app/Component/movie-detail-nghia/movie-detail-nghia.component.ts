@@ -316,19 +316,10 @@ export class MovieDetailNghiaComponent implements OnInit {
     // Sử dụng giá trị userRating đã được chọn
     const ratingValue = this.userRating;
 
-    // Lấy userId từ localStorage
-    const currentUserId = localStorage.getItem('userId');
-    if (!currentUserId) {
-      this.ratingError = 'Bạn cần đăng nhập để đánh giá phim';
-      this.isSubmittingComment = false;
-      return;
-    }
-
     // Tạo rating trước
     const ratingData = {
       movieId: this.movieId,
-      ratingValue: ratingValue,
-      userID: currentUserId
+      ratingValue: ratingValue
     };
 
     this.ratingService.createRating(ratingData)
@@ -349,8 +340,7 @@ export class MovieDetailNghiaComponent implements OnInit {
           // Tạo comment
           const commentData = {
             content: this.newComment.trim(),
-            movieID: this.movieId,
-            userID: currentUserId
+            movieID: this.movieId
           };
 
           this.commentService.addComment(commentData)

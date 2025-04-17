@@ -45,7 +45,7 @@ export class ShowtimesComponent implements OnInit {
   listMoive: GetAllNameMovie[] = [];
   movieId: string = '';
   location: string = '';
-  date: string = new Date().toISOString().split('T')[0];
+  date: string = '';
   currentPage = 1;
   recordPerPage = 100;
   selectedMovie: {
@@ -75,6 +75,9 @@ export class ShowtimesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // Khởi tạo ngày với múi giờ Việt Nam (UTC+7)
+    this.date = this.getVietnamDate(new Date()).toISOString().split('T')[0];
+
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
@@ -94,10 +97,7 @@ export class ShowtimesComponent implements OnInit {
           }
         });
       }
-      // Initialize with current date if not set
-      if (!this.date) {
-        this.date = new Date().toISOString().split('T')[0];
-      }
+
       this.getmovieName();
       this.getShowTimes();
       this.loadCinemas();
@@ -217,6 +217,17 @@ export class ShowtimesComponent implements OnInit {
     });
   }
 
+  // Hàm chuyển đổi ngày sang múi giờ Việt Nam (UTC+7)
+  getVietnamDate(date: Date): Date {
+    // Tạo một bản sao của ngày để không thay đổi ngày gốc
+    const vietnamDate = new Date(date);
+
+    // Đặt giờ, phút, giây, mili giây về 0 để chỉ lấy ngày
+    vietnamDate.setHours(7, 0, 0, 0);
+
+    return vietnamDate;
+  }
+
   getShowTimes() {
     if (this.selectedCinemaId) {
       const selectedCinema = this.cinemas.find(c => c.cinemasId === this.selectedCinemaId);
@@ -228,15 +239,16 @@ export class ShowtimesComponent implements OnInit {
     let dateObj: Date;
     try {
       const [year, month, day] = this.date.split('-').map(Number);
-      dateObj = new Date(year, month - 1, day);
+      // Tạo ngày với múi giờ Việt Nam (UTC+7)
+      dateObj = this.getVietnamDate(new Date(year, month - 1, day));
 
       if (isNaN(dateObj.getTime())) {
         console.error("Ngày không hợp lệ/ pick ngày hiện tại");
-        dateObj = new Date();
+        dateObj = this.getVietnamDate(new Date());
       }
     } catch (error) {
       console.error("lỗi", error);
-      dateObj = new Date();
+      dateObj = this.getVietnamDate(new Date());
     }
 
     console.log('NGHĨA:', {
@@ -348,26 +360,26 @@ export class ShowtimesComponent implements OnInit {
   }
 
 
-  // Updated onDateChange method to handle timezone correctly
+  // Updated onDateChange method to handle timezone correctly with Vietnam timezone (UTC+7)
   onDateChange(event: MatDatepickerInputEvent<Date>) {
     if (event.value) {
-      // Create date using local timezone to avoid conversion issues
-      const selectedDate = new Date(event.value);
+      // Chuyển đổi ngày được chọn sang múi giờ Việt Nam (UTC+7)
+      const selectedDate = this.getVietnamDate(new Date(event.value));
 
       // Format to YYYY-MM-DD to avoid timezone issues
       this.date = selectedDate.getFullYear() + '-' +
         String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
         String(selectedDate.getDate()).padStart(2, '0');
 
-      // console.log('Selected date:', this.date);
+      console.log('Selected date (Vietnam timezone):', this.date);
       this.getShowTimes();
     }
   }
 
 
   dateFilter = (d: Date | null): boolean => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // Sử dụng múi giờ Việt Nam (UTC+7) để so sánh ngày
+    const today = this.getVietnamDate(new Date());
     return d ? d >= today : false;
   };
   Trailer: string = '';
