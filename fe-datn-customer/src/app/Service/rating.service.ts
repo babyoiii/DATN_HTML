@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 export interface RatingRequest {
   movieId: string;
   ratingValue: number;
+  userID: string;
 }
 
 @Injectable({

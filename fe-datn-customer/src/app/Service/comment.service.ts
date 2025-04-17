@@ -24,6 +24,7 @@ export interface CommentResponse {
 export interface CreateCommentRequest {
   content: string;
   movieID: string;
+  userID: string;
 }
 
 @Injectable({

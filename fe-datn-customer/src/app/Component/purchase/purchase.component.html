@@ -18,7 +18,7 @@
                             </path>
                         </svg></button>
                     <div class="relative flex w-full items-center justify-center text-sm md:text-base">
-                        <h1>Confirm Purchase</h1>
+                        <h1>Xác nhận thanh toán</h1>
                         <div class="absolute right-0 mr-8 text-300 font-semibold md:mr-12">
                             <div class="countdown-container">
                                 <div class="countdown-timer">
@@ -361,10 +361,11 @@
                                                                                 name="voucherCode">
                                                                         </div>
                                                                         <!-- Danh sách voucher -->
-                                                                        <div class="space-y-2">
+                                                                        <div class="voucher-container"
+                                                                            style="max-height: 300px; overflow-y: auto; border: 1px solid #374151; border-radius: 0.5rem; padding-right: 8px; margin-bottom: 16px;">
 
                                                                             <div *ngFor="let voucher of voucherList"
-                                                                                class="relative bg-gray-700/85 rounded-lg p-4 border border-white/10 hover:border-blue-500 transition-colors duration-200">
+                                                                                class="relative bg-gray-700/85 rounded-lg p-4 border border-white/10 hover:border-blue-500 transition-colors duration-200 mb-2">
                                                                                 <div
                                                                                     class="flex justify-between items-start gap-4">
                                                                                     <div class="flex-1 min-w-0">
@@ -394,8 +395,6 @@
                                                                                     </div>
                                                                                     <button
                                                                                         (click)="toggleVoucherDetail(voucher.code)"
-                                                                                        (mouseenter)="showVoucherDetail(voucher.code)"
-                                                                                        (mouseleave)="hideVoucherDetail()"
                                                                                         class="text-blue hover:text-blue-500 transition-colors">
                                                                                         Chi tiết
                                                                                     </button>
@@ -437,13 +436,31 @@
 
                                                                                 <!-- Chi tiết voucher -->
                                                                                 <div *ngIf="selectedVoucher === voucher.code"
-                                                                                    class="absolute left-full top-0 ml-4 w-72 bg-gray-800 rounded-lg p-4 border border-gray-600 shadow-lg"
-                                                                                    style="z-index: 100;">
+                                                                                    class="tooltip-voucher fixed w-72 bg-gray-800 rounded-lg p-4 border border-gray-600 shadow-lg"
+                                                                                    style="z-index: 1000; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%);">
                                                                                     <div class="space-y-3">
-                                                                                        <h4
-                                                                                            class="font-semibold text-white">
-                                                                                            Chi tiết mã giảm giá
-                                                                                        </h4>
+                                                                                        <div
+                                                                                            class="flex justify-between items-center">
+                                                                                            <h4
+                                                                                                class="font-semibold text-white">
+                                                                                                Chi tiết mã giảm giá
+                                                                                            </h4>
+                                                                                            <button
+                                                                                                (click)="hideVoucherDetail()"
+                                                                                                class="text-gray-400 hover:text-white">
+                                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                    class="h-5 w-5"
+                                                                                                    fill="none"
+                                                                                                    viewBox="0 0 24 24"
+                                                                                                    stroke="currentColor">
+                                                                                                    <path
+                                                                                                        stroke-linecap="round"
+                                                                                                        stroke-linejoin="round"
+                                                                                                        stroke-width="2"
+                                                                                                        d="M6 18L18 6M6 6l12 12" />
+                                                                                                </svg>
+                                                                                            </button>
+                                                                                        </div>
                                                                                         <div
                                                                                             class="space-y-2 text-sm text-gray-300">
                                                                                             <p><span
@@ -486,9 +503,10 @@
                                                                         <div
                                                                             class="flex flex-wrap items-center gap-4 py-4 justify-start">
                                                                             <button type="button"
-                                                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm md:text-base h-12">Cancel</button><button
+                                                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm md:text-base h-12">Hủy</button><button
                                                                                 type="button"
-                                                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">Apply</button>
+                                                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">Áp
+                                                                                dụng</button>
                                                                         </div>
                                                                     </label>
                                                                 </div>
