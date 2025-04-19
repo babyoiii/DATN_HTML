@@ -1,9 +1,4 @@
-<app-need-more-time></app-need-more-time>
-<app-time-up></app-time-up>
-
-
-
-<main id="Nghia_test_main" class="relative bg-black text-white [&amp;:has(dialog[open],[data-body-scroll=disabled])]:overflow-hidden"
+<main class="relative bg-black text-white [&amp;:has(dialog[open],[data-body-scroll=disabled])]:overflow-hidden"
   monica-id="ofpnmcalabcbjgholdjcjblkibolbppb" monica-version="7.8.0">
   <div class="flex h-[100dvh] flex-col">
     <!--$-->
@@ -44,7 +39,7 @@
           </div>
 
 
-          <a (click)="clearLocalStorageData()" class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute right-0"
+          <a class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute right-0"
             href="/"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
               viewBox="0 0 45 45" width="1em" height="100%" class="m-2 h-5 w-5">
               <title>Close</title>
@@ -131,11 +126,10 @@
 
       <div *ngIf="!checkLogin()" role="banner" class="relative caption text-200 bg-[#3B0249]">
         <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative flex items-center justify-center gap-4 py-2">
-          <p>If you're a member, NGHĨA TEST 123123123123123 benefits.</p>
+          <p>If you're a member, sign in now to take advantage of AMC Stubs benefits.</p>
           <button
             class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm h-11"
-            type="button"
-            (click)="openloginform()">Sign In</button>
+            type="button">Sign In</button>
         </div>
       </div>
 
@@ -151,15 +145,15 @@
 
 
         <div #seatMapContainer
-          class="seat-selection-container flex items-center justify-center h-full w-full overflow-auto"
-          [ngClass]="getTheaterSizeClass()">
-          <div class="seat-map-content mx-auto transform scale-100 md:scale-100 transition-all" [ngStyle]="getSeatMapStyle()">
+          class="seat-selection-container flex items-center justify-center h-full w-full overflow-auto">
+          <div class="seat-map-content mx-auto transform scale-100 md:scale-100 transition-all"
+            style="min-width: 1000px;">
             <div class="overflow-hidden transition-opacity">
               <h2 class="sr-only">Seat Map</h2>
 
 
               <div class="p-4">
-                <div class="screen-container relative mb-12" style="margin-left: 30px !important">
+                <div class="screen-container relative mb-12">
                   <p class="p-12 text-center text-5xl uppercase font-thin text-gray-300 tracking-wider">Screen</p>
                   <div class="screen">
                     <div class="w-full"><svg focusable="false" xmlns="http://www.w3.org/2000/svg"
@@ -184,11 +178,14 @@
                 </div>
 
 
-                <div *ngFor="let row of seats | groupBy: 'RowNumber'; let i = index" class="relative z-10 flex justify-center mb-4">
-                  <div class="seat-row-container flex items-center">
-                    <span class="font-bold w-12 flex-shrink-0 text-center mr-2">{{ getRowLabel(i + 1) }}</span>
-                    <div class="flex justify-center gap-2" [ngStyle]="getRowStyle(row.length)">
-                      <ng-container *ngFor="let seat of row">
+
+
+
+                <div *ngFor="let row of seats | groupBy: 'RowNumber'; let i = index" class="relative z-10 grid gap-4"
+                  style="margin-right: 60px !important"
+                  [style]="'grid-template-columns: 60px repeat(' + getMaxSeatsPerRow() + ', 60px)'">
+                  <span class="font-bold">{{ getRowLabel(i + 1) }}</span>
+                  <ng-container *ngFor="let seat of row">
 
 
 
@@ -258,9 +255,8 @@
                       </div>
                     </ng-template>
 
-                      </ng-container>
-                    </div>
-                  </div>
+                  </ng-container>
+
                 </div>
 
 
@@ -348,6 +344,7 @@
 
 
 
+
     </main>
 
 
@@ -362,7 +359,6 @@
             <a class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12"
               (click)="onContinue()">Tiếp Tục</a>
           </div>
-
         </div>
       </div>
     </footer>
@@ -384,36 +380,3 @@
   </dialog>
 
 </main>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

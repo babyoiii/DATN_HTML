@@ -16,6 +16,7 @@ import { stringify } from 'node:querystring';
 import { EMPTY } from 'rxjs';
 import { LocationService } from '../../Service/location.service';
 import { Log } from 'ethers';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-showtimes',
@@ -26,7 +27,7 @@ import { Log } from 'ethers';
 })
 export class ShowtimesComponent implements OnInit {
   listData: GetShowTimeLandingRes[] = [];
-  listLocation : string[] = []
+  listLocation: string[] = []
   groupedData: {
     [key: string]: {
       id: string; // Thêm thuộc tính id (phục vụ việc đổi link)
@@ -44,7 +45,7 @@ export class ShowtimesComponent implements OnInit {
   listMoive: GetAllNameMovie[] = [];
   movieId: string = '';
   location: string = '';
-  date: string = new Date().toISOString().split('T')[0];
+  date: string = '';
   currentPage = 1;
   recordPerPage = 100;
   selectedMovie: {
@@ -60,15 +61,23 @@ export class ShowtimesComponent implements OnInit {
   cinemas: CinemaRes[] = [];
   selectedCinemaId: string = '';
 
+  // Room type filter
+  roomTypes: any[] = [];
+  selectedRoomTypeId: string = '';
+
 
   constructor(
     private movieService: MovieService,
     private route: ActivatedRoute,
     private cinemaService: CinemaService,
-    private locationService : LocationService
+    private locationService: LocationService,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
+    // Khởi tạo ngày với múi giờ Việt Nam (UTC+7)
+    this.date = this.getVietnamDate(new Date()).toISOString().split('T')[0];
+
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
@@ -88,14 +97,12 @@ export class ShowtimesComponent implements OnInit {
           }
         });
       }
-      // Initialize with current date if not set
-      if (!this.date) {
-        this.date = new Date().toISOString().split('T')[0];
-      }
+
       this.getmovieName();
       this.getShowTimes();
       this.loadCinemas();
       this.loadLocations();
+      this.loadRoomTypes();
     });
   }
 
@@ -118,9 +125,9 @@ export class ShowtimesComponent implements OnInit {
 
 
 
-loadLocations(): void {
+  loadLocations(): void {
     this.locationService.getProvinces().subscribe({
-      next: (response : any) => {
+      next: (response: any) => {
         this.listLocation = response.data.map((location: any) => location.name)
         console.log('List locations:', this.listLocation);
       },
@@ -128,6 +135,32 @@ loadLocations(): void {
         console.error('Error loading locations:', error);
       }
     })
+  }
+
+
+  // CÁI NÀY HIỆN TẠI CỨ NHƯ VẬY TRƯỚC VÌ NGHĨA LƯỜI TẠO SERVICE MỚI :V, CALL THẲNG V CHO NHANH
+  loadRoomTypes(): void {
+    this.http.get<any>('https://localhost:7105/api/RoomType/GetListRoomType?currentPage=1&recordPerPage=1000', {
+      headers: { 'Content-Type': 'application/json' }
+    }).subscribe({
+      next: (response) => {
+        if (response.responseCode === 200 && response.data) {
+          this.roomTypes = response.data;
+        }
+      },
+      error: (error) => {
+        console.error('LỖI:', error);
+      }
+    });
+  }
+
+
+
+  onRoomTypeChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedRoomTypeId = selectElement.value;
+    console.log('Selected room type ID:', this.selectedRoomTypeId);
+    this.getShowTimes();
   }
   onChangeLocation(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
@@ -155,11 +188,11 @@ loadLocations(): void {
 
   getSelectedCinemaName(): string {
     if (!this.location) {
-        return 'Tất cả các rạp';
+      return 'Tất cả các rạp';
     }
 
-    return this.location; 
-}
+    return this.location;
+  }
 
   getmovieName() {
     this.movieService.getAllNameMovies().subscribe({
@@ -179,13 +212,23 @@ loadLocations(): void {
         }
       },
       error: (err) => {
-        console.error('Error fetching movies:', err);
+        // console.error('Error fetching movies:', err);
       }
     });
   }
 
+  // Hàm chuyển đổi ngày sang múi giờ Việt Nam (UTC+7)
+  getVietnamDate(date: Date): Date {
+    // Tạo một bản sao của ngày để không thay đổi ngày gốc
+    const vietnamDate = new Date(date);
+
+    // Đặt giờ, phút, giây, mili giây về 0 để chỉ lấy ngày
+    vietnamDate.setHours(7, 0, 0, 0);
+
+    return vietnamDate;
+  }
+
   getShowTimes() {
-    // Get the selected cinema's address to use as location filter if a cinema is selected
     if (this.selectedCinemaId) {
       const selectedCinema = this.cinemas.find(c => c.cinemasId === this.selectedCinemaId);
       if (selectedCinema && selectedCinema.address) {
@@ -196,16 +239,16 @@ loadLocations(): void {
     let dateObj: Date;
     try {
       const [year, month, day] = this.date.split('-').map(Number);
-      dateObj = new Date(year, month - 1, day);
+      // Tạo ngày với múi giờ Việt Nam (UTC+7)
+      dateObj = this.getVietnamDate(new Date(year, month - 1, day));
 
-      // Kiểm tra xem dateObj có hợp lệ không
       if (isNaN(dateObj.getTime())) {
         console.error("Ngày không hợp lệ/ pick ngày hiện tại");
-        dateObj = new Date();
+        dateObj = this.getVietnamDate(new Date());
       }
     } catch (error) {
       console.error("lỗi", error);
-      dateObj = new Date();
+      dateObj = this.getVietnamDate(new Date());
     }
 
     console.log('NGHĨA:', {
@@ -228,13 +271,10 @@ loadLocations(): void {
         console.log('Data received:', this.listData);
       },
       error: (err) => {
-        console.error('Error fetching showtimes:', err);
+        // console.error('Error fetching showtimes:', err);
       }
     });
   }
-
-
-
 
 
 
@@ -268,11 +308,33 @@ loadLocations(): void {
         };
       }
 
-      acc[item.movieName].theaters[item.name].showtimes.push(...item.showtimes);
+      // Filter showtimes by room type if a room type is selected
+      let filteredShowtimes = [...item.showtimes];
+      if (this.selectedRoomTypeId) {
+        filteredShowtimes = item.showtimes.filter((showtime: any) =>
+          showtime.roomTypeId === this.selectedRoomTypeId
+        );
+      }
+
+      acc[item.movieName].theaters[item.name].showtimes.push(...filteredShowtimes);
       return acc;
     }, {});
 
-    console.log('Dữ liệu sau khi nhóm:', this.groupedData);
+    // Remove empty theaters (no showtimes after filtering)
+    for (const movieName in this.groupedData) {
+      const movie = this.groupedData[movieName];
+      for (const theaterName in movie.theaters) {
+        if (movie.theaters[theaterName].showtimes.length === 0) {
+          delete movie.theaters[theaterName];
+        }
+      }
+      // Remove movies with no theaters
+      if (Object.keys(movie.theaters).length === 0) {
+        delete this.groupedData[movieName];
+      }
+    }
+
+    console.log('Dữ liệu sau khi nhóm và lọc:', this.groupedData);
   }
 
 
@@ -298,26 +360,26 @@ loadLocations(): void {
   }
 
 
-  // Updated onDateChange method to handle timezone correctly
+  // Updated onDateChange method to handle timezone correctly with Vietnam timezone (UTC+7)
   onDateChange(event: MatDatepickerInputEvent<Date>) {
     if (event.value) {
-      // Create date using local timezone to avoid conversion issues
-      const selectedDate = new Date(event.value);
+      // Chuyển đổi ngày được chọn sang múi giờ Việt Nam (UTC+7)
+      const selectedDate = this.getVietnamDate(new Date(event.value));
 
       // Format to YYYY-MM-DD to avoid timezone issues
       this.date = selectedDate.getFullYear() + '-' +
         String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
         String(selectedDate.getDate()).padStart(2, '0');
 
-      // console.log('Selected date:', this.date);
+      console.log('Selected date (Vietnam timezone):', this.date);
       this.getShowTimes();
     }
   }
 
 
   dateFilter = (d: Date | null): boolean => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // Sử dụng múi giờ Việt Nam (UTC+7) để so sánh ngày
+    const today = this.getVietnamDate(new Date());
     return d ? d >= today : false;
   };
   Trailer: string = '';
@@ -326,7 +388,6 @@ loadLocations(): void {
     return this.Trailer = trailer;
   }
 
-  // Cập nhật hàm selectMovie
   selectMovie(movieName: string, movieData: any) {
     const duration = movieData.duration;
 
@@ -344,17 +405,31 @@ loadLocations(): void {
   }
 
 
-
-
-
-
-
-
-
   getSelectedMovieName(): string {
     if (!this.movieId) return 'All Movies';
     const selectedMovie = this.listMoive.find(movie => movie.id === this.movieId);
     return selectedMovie ? selectedMovie.movieName : 'Tất cả các phim';
+  }
+
+  getSelectedRoomTypeName(): string {
+    if (!this.selectedRoomTypeId) return 'Tất cả loại phòng';
+    const selectedRoomType = this.roomTypes.find(rt => rt.roomTypeId === this.selectedRoomTypeId);
+    return selectedRoomType ? selectedRoomType.name : 'Tất cả loại phòng';
+  }
+
+  // CÁI NÀY SAU MÌNH CUSTOM LẠI SAU
+  getRoomTypeColor(roomTypeName: string): string {
+    // Màu sắc cho các loại phòng khác nhau
+    const colorMap: { [key: string]: string } = {
+      // 'IMAX': '#3366cc',  // Xanh dương đậm
+      // '2D': '#4CAF50',    // Xanh lá
+      // '3D': '#9c27b0',    // Tím
+      // '4D': '#ff9800',    // Cam
+      // 'VIP': '#e91e63',   // Hồng
+      // 'PREMIUM': '#f44336' // Đỏ
+    };
+
+    return colorMap[roomTypeName] || '#607d8b'; // Màu mặc định nếu không tìm thấy
   }
 
 

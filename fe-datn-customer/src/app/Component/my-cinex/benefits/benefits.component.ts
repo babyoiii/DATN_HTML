@@ -42,7 +42,7 @@ export class BenefitsComponent implements OnInit {
         localStorage.setItem('nextLevelBenefitsId', JSON.stringify(this.membershipData.nextLevelBenefits[0]?.membershipId));
       },
       error: (error) => {
-        console.error('Error fetching membership data:', error);
+        // console.error('Error fetching membership data:', error);
       }
     });
 }

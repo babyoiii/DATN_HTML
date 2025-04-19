@@ -34,7 +34,7 @@ export class HistoryComponent implements OnInit {
         }
       },
       error: (error) => {
-        console.error('Error fetching ticket data:', error);
+        // console.error('Error fetching ticket data:', error);
       }
     });
   }
@@ -75,7 +75,7 @@ export class HistoryComponent implements OnInit {
         }
       },
       error: (error) => {
-        console.error('Error fetching ticket data:', error);
+        // console.error('Error fetching ticket data:', error);
         this.listDataFilter = [];
       },
     });

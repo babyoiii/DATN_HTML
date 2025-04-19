@@ -1,0 +1,36 @@
+.voucher-section {
+  position: relative;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.voucher-section:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Thêm một chút khoảng cách giữa các phần */
+.voucher-section + .voucher-section {
+  margin-top: 3rem;
+}
+
+/* Cải thiện hiển thị nút */
+button {
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Cải thiện hiển thị tiêu đề */
+h3 {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+/* Thêm một chút padding cho phần nội dung */
+.rich-text {
+  padding: 0.5rem 0;
+}

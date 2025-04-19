@@ -33,7 +33,7 @@ export class ProfileComponent {
         console.log('User Information:', this.userInfo);
       },
       error: (error) => {
-        console.error('Error fetching user information:', error);
+        // console.error('Error fetching user information:', error);
       }
     });
   }
