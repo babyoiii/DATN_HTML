@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, Renderer2, ElementRef, ViewChild } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, Renderer2, ElementRef, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, Location, isPlatformBrowser } from '@angular/common';
 import { DurationFormatPipe } from '../../duration-format.pipe';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SeatService } from '../../Service/seat.service';
@@ -35,7 +35,7 @@ interface SeatStatusUpdateRequest {
 @Component({
   selector: 'app-seats',
   standalone: true,
-  imports: [CommonModule, DurationFormatPipe, GroupByPipe, RouterLink, NeedMoreTimeComponent, TimeUpComponent],
+  imports: [CommonModule, GroupByPipe],
   templateUrl: './seats.component.html',
   styleUrls: ['./seats.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -80,8 +80,9 @@ export class SeatsComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private location: Location,
     private modalService: ModalService,
-    private showtimeService : ShowtimeService,
-    private authServiceService: AuthServiceService
+    private showtimeService: ShowtimeService,
+    private authServiceService: AuthServiceService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
 
@@ -95,7 +96,9 @@ export class SeatsComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         const showtimeId = params['id'];
         this.loadSeatsByShowtimeId(showtimeId)
-        localStorage.setItem('currentShowtimeId', showtimeId);
+        if (isPlatformBrowser(this.platformId)) {
+          localStorage.setItem('currentShowtimeId', showtimeId);
+        }
         const userId = this.ensureUserId();
         console.log(userId);
 
@@ -114,10 +117,12 @@ export class SeatsComponent implements OnInit, OnDestroy {
         }
       });
 
-    const shouldReload = sessionStorage.getItem('reloadOnce');
-    if (shouldReload) {
-      sessionStorage.removeItem('reloadOnce');
-      this.reloadCurrentRoute();
+    if (isPlatformBrowser(this.platformId)) {
+      const shouldReload = sessionStorage.getItem('reloadOnce');
+      if (shouldReload) {
+        sessionStorage.removeItem('reloadOnce');
+        this.reloadCurrentRoute();
+      }
     }
 
     this.seatDataService.seats$.pipe(takeUntil(this.destroy$)).subscribe(seats => {
@@ -144,12 +149,14 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
 
 
-    const movieInfoStr = localStorage.getItem('currentMovieInfo');
-    if (movieInfoStr) {
-      this.movieInfo = JSON.parse(movieInfoStr);
+    if (isPlatformBrowser(this.platformId)) {
+      const movieInfoStr = localStorage.getItem('currentMovieInfo');
+      if (movieInfoStr) {
+        this.movieInfo = JSON.parse(movieInfoStr);
+      }
     }
 
-    console.log("Dữ liệu nghĩa", movieInfoStr)
+    console.log("Dữ liệu phim:", this.movieInfo)
 
   }
 
@@ -172,23 +179,24 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
 
   clearLocalStorageData(): void {
-    // Xóa dữ liệu liên quan đến ghế
-    localStorage.removeItem('selectedSeats');
-    localStorage.removeItem('seatData');
-    localStorage.removeItem('currentShowtimeId');
-  
-    // Xóa dữ liệu liên quan đến dịch vụ
-    localStorage.removeItem('selectedServices');
-    localStorage.removeItem('serviceData');
-  
-    // Xóa dữ liệu liên quan đến đơn hàng
-    localStorage.removeItem('orderData');
-    localStorage.removeItem('orderDataPayment');
-  
-    // Xóa dữ liệu liên quan đến phim và suất chiếu
-    localStorage.removeItem('currentMovieInfo');
-    localStorage.removeItem('reloadOnce');
-  
+    if (isPlatformBrowser(this.platformId)) {
+      // Xóa dữ liệu liên quan đến ghế
+      localStorage.removeItem('selectedSeats');
+      localStorage.removeItem('seatData');
+      localStorage.removeItem('currentShowtimeId');
+
+      // Xóa dữ liệu liên quan đến dịch vụ
+      localStorage.removeItem('selectedServices');
+      localStorage.removeItem('serviceData');
+
+      // Xóa dữ liệu liên quan đến đơn hàng
+      localStorage.removeItem('orderData');
+      localStorage.removeItem('orderDataPayment');
+
+      // Xóa dữ liệu liên quan đến phim và suất chiếu
+      localStorage.removeItem('currentMovieInfo');
+      localStorage.removeItem('reloadOnce');
+    }
   }
   TimeUp(): void {
     this.modalService.openTimeUpModal();
@@ -200,7 +208,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
       clearTimeout(this.autoCloseTimer);
     }
     this.modalService.openNeedMoreTimeModal();
-}
+  }
 
   openSignIn() {
     this.modalService.openSignInModal();
@@ -213,8 +221,11 @@ export class SeatsComponent implements OnInit, OnDestroy {
     this.error = null;
     this.cdr.markForCheck();
 
-    const selectedSeatsStr = localStorage.getItem('selectedSeats');
-    const selectedSeats = selectedSeatsStr ? JSON.parse(selectedSeatsStr) : [];
+    let selectedSeats: any[] = [];
+    if (isPlatformBrowser(this.platformId)) {
+      const selectedSeatsStr = localStorage.getItem('selectedSeats');
+      selectedSeats = selectedSeatsStr ? JSON.parse(selectedSeatsStr) : [];
+    }
 
     this.initializeWebSocket(showtimeId, userId);
 
@@ -254,9 +265,9 @@ export class SeatsComponent implements OnInit, OnDestroy {
         error: (error) => this.handleCountdownError(error)
       });
   }
-   checkLogin(): boolean {
-   return this.authServiceService.isLoggedIn();
-   }
+  checkLogin(): boolean {
+    return this.authServiceService.isLoggedIn();
+  }
   private processSeatData(data: SeatInfo[]): void {
 
     this.seatsCore = [...data].flat();
@@ -318,13 +329,16 @@ export class SeatsComponent implements OnInit, OnDestroy {
   }
 
   private ensureUserId(): string {
-    let userId = localStorage.getItem('userId');
+    if (isPlatformBrowser(this.platformId)) {
+      let userId = localStorage.getItem('userId');
 
-    if (!userId) {
-      userId = this.generateUserId();
-      localStorage.setItem('userId', userId);
+      if (!userId) {
+        userId = this.generateUserId();
+        localStorage.setItem('userId', userId);
+      }
+      return userId;
     }
-    return userId;
+    return this.generateUserId();
   }
 
   private generateUserId(): string {
@@ -477,6 +491,54 @@ export class SeatsComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Phương thức tìm các ghế lẻ trong một hàng
+  findIsolatedSeatsInRow(seats: SeatInfo[]): SeatInfo[] {
+    // Nếu không có ghế nào đang chọn thì không có ghế lẻ
+    const hasSelected = seats.some(s => s.Status === SeatStatus.Selected);
+    if (!hasSelected) return [];
+
+    // occupancy: 1 = Selected/Booked, 0 = Available
+    const occupancy = seats.map(s =>
+      (s.Status === SeatStatus.Selected || s.Status === SeatStatus.Booked) ? 1 : 0
+    );
+
+    const total = seats.length;
+    const isolatedSeats: SeatInfo[] = [];
+
+    for (let i = 0; i < total; i++) {
+      // chỉ quan tâm ghế trống
+      if (occupancy[i] === 0) {
+        // kiểm tra bên trái
+        const leftIsEdge = i === 0;
+        const leftOccupied = leftIsEdge
+          // nếu là lối đi, bạn có thể cho phép (thì đổi true thành false)
+          ? true
+          : occupancy[i - 1] === 1;
+
+        // kiểm tra bên phải
+        const rightIsEdge = i === total - 1;
+        const rightOccupied = rightIsEdge
+          // nếu là lối đi, bạn có thể cho phép (thì đổi true thành false)
+          ? true
+          : occupancy[i + 1] === 1;
+
+        // nếu hai bên đều occupied → có nguy cơ ghế lẻ
+        if (leftOccupied && rightOccupied) {
+          // ngoại lệ: ghế này có ghế "đối ứng" (paired seat) cũng đang Selected → cho phép
+          const seat = seats[i];
+          const paired = this.findPairedSeat(seat);
+          const pairedIsSelected = paired?.Status === SeatStatus.Selected;
+
+          if (!pairedIsSelected) {
+            isolatedSeats.push(seat);
+          }
+        }
+      }
+    }
+
+    return isolatedSeats;
+  }
+
   validateRowSeats(seats: SeatInfo[]): boolean {
     // Nếu không có ghế nào đang chọn thì ok luôn
     const hasSelected = seats.some(s => s.Status === SeatStatus.Selected);
@@ -538,15 +600,62 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
   validateSeats(): boolean {
     if (this.selectedSeats.length === 0) {
-      this.toastr.warning('Vui lòng chọn ít nhất một ghế!','Cảnh báo');
+      this.toastr.warning('Vui lòng chọn ít nhất một ghế!', 'Cảnh báo');
       return false;
     }
 
-    for (const row of this.Rows) {
-      const rowSeats = this.seatsPerRow[row];
-      if (!this.validateRowSeats(rowSeats)) {
-        return false;
-      }
+    // Tìm tất cả các ghế lẻ trong tất cả các hàng
+    const allIsolatedSeats: SeatInfo[] = [];
+
+    // Nhóm ghế theo hàng
+    const groupedSeats = this.groupSeatsByRow();
+
+    // Kiểm tra từng hàng
+    for (const rowNumber in groupedSeats) {
+      const rowSeats = groupedSeats[rowNumber];
+      const isolatedSeatsInRow = this.findIsolatedSeatsInRow(rowSeats);
+      allIsolatedSeats.push(...isolatedSeatsInRow);
+    }
+
+    // Nếu có ghế lẻ, hiển thị thông báo lỗi
+    if (allIsolatedSeats.length > 0) {
+      // Nhóm các ghế lẻ theo hàng để hiển thị thông báo gọn hơn
+      const isolatedByRow: { [key: string]: string[] } = {};
+
+      allIsolatedSeats.forEach(seat => {
+        const rowLabel = this.getRowLabel(seat.RowNumber);
+        if (!isolatedByRow[rowLabel]) {
+          isolatedByRow[rowLabel] = [];
+        }
+        isolatedByRow[rowLabel].push(seat.ColNumber.toString());
+      });
+
+      // Tạo thông báo lỗi
+      let errorMessage = 'Không thể để lẻ ghế ở các vị trí sau:<br><br>';
+
+      // Tạo danh sách các hàng ghế có vấn đề
+      const rowEntries = Object.entries(isolatedByRow);
+
+      // Sắp xếp các hàng theo thứ tự alphabet
+      rowEntries.sort((a, b) => a[0].localeCompare(b[0]));
+
+      // Tạo HTML cho thông báo
+      rowEntries.forEach(([rowLabel, seatNumbers], index) => {
+        // Sắp xếp số ghế theo thứ tự tăng dần
+        const sortedSeatNumbers = [...seatNumbers].sort((a, b) => parseInt(a) - parseInt(b));
+
+        // Thêm mỗi hàng vào một dòng riêng
+        errorMessage += `<b>Hàng ${rowLabel}</b>: ghế ${sortedSeatNumbers.join(', ')}`;
+
+        // Thêm dấu xuống dòng nếu không phải dòng cuối cùng
+        if (index < rowEntries.length - 1) {
+          errorMessage += '<br>';
+        }
+      });
+
+      // Sử dụng enableHtml: true để hiển thị HTML trong toast
+      this.toastr.error(errorMessage, 'Lỗi chọn ghế', { enableHtml: true, timeOut: 5000 });
+      return false;
     }
 
     return true;

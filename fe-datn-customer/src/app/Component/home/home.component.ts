@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { GetMovieLandingRes } from '../../Models/MovieModel';
 import { MovieService } from '../../Service/movie.service';
 import { DurationFormatPipe } from '../../duration-format.pipe';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -17,24 +17,25 @@ export class HomeComponent implements OnInit {
   selectedType: number = 1;
   pageSize: number = 20;
   pageIndex: number = 1;
-  totalItems: number = 0; 
-
-  constructor(private movieService: MovieService) {}
+  totalItems: number = 0; // Total number of items for pagination
+  constructor(
+    private movieService: MovieService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
     this.getMovies();
-    this.loadScript('./JavaScript/Slide.js');
   }
 
   loadScript(src: string): void {
-    const script = document.createElement('script');
-    script.src = src;
-    script.async = true;
-    document.body.appendChild(script);
+    if (isPlatformBrowser(this.platformId)) {
+      const script = document.createElement('script');
+      script.src = src;
+      script.async = true;
+      document.body.appendChild(script);
+    }
   }
-
-  // Hàm gọi API để lấy danh sách phim
-  getMovies(): void {
+  getMovies() {
     this.movieService.getMovies(this.selectedType, this.pageIndex, this.pageSize).subscribe({
       next: (res) => {
         this.dataMovies = res.data;
@@ -42,7 +43,7 @@ export class HomeComponent implements OnInit {
         console.log('Movies:', this.dataMovies);
       },
       error: (err) => {
-        console.error('Error fetching movies:', err);
+        // console.error('Error fetching movies:', err);
       }
     });
   }

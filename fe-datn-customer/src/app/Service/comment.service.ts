@@ -11,6 +11,7 @@ export interface Comment {
   status: number;
   movieId: string;
   userId: string;
+  ratingvalue: number;
 }
 
 export interface CommentResponse {
@@ -81,7 +82,7 @@ export class CommentService {
    * @returns boolean indicating login status
    */
   isLoggedIn(): boolean {
-    return localStorage.getItem('token') !== null;
+    return localStorage.getItem('accessToken') !== null;
   }
 
   /**
@@ -89,16 +90,6 @@ export class CommentService {
    * @returns User ID or null if not logged in
    */
   getCurrentUserId(): string | null {
-    const userData = localStorage.getItem('userData');
-    if (userData) {
-      try {
-        const parsedData = JSON.parse(userData);
-        return parsedData.id || null;
-      } catch (e) {
-        console.error('Error parsing user data', e);
-        return null;
-      }
-    }
-    return null;
+    return localStorage.getItem('userId');
   }
 }

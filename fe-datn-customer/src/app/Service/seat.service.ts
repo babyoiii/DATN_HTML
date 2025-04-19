@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { SeatInfo } from '../Models/SeatModel';
 
@@ -11,7 +12,7 @@ export interface WebSocketMessage {
   Action?: string;
   i?: number;
   SeatStatusUpdateRequests?: SeatStatusUpdateRequest[];
-  ExtensionDuration?: number; 
+  ExtensionDuration?: number;
 }
 
 @Injectable({
@@ -32,34 +33,42 @@ export class SeatService {
   private connectionTimer: any;
   private warningShown = false;
 
-  constructor() {
-    this.restoreCountdownFromStorage();
-    this.restoreConnection();
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.restoreCountdownFromStorage();
+      this.restoreConnection();
+    }
   }
 
   private restoreCountdownFromStorage() {
-    const storedCountdown = localStorage.getItem('roomCountdown');
-    if (storedCountdown) {
-      const countdown = parseInt(storedCountdown, 10);
-      if (!isNaN(countdown)) {
-        console.log('🔄 Khôi phục countdown từ storage:', countdown);
-        this.joinRoomSubject.next(countdown);
+    if (isPlatformBrowser(this.platformId)) {
+      const storedCountdown = localStorage.getItem('roomCountdown');
+      if (storedCountdown) {
+        const countdown = parseInt(storedCountdown, 10);
+        if (!isNaN(countdown)) {
+          console.log('🔄 Khôi phục countdown từ storage:', countdown);
+          this.joinRoomSubject.next(countdown);
+        }
       }
     }
   }
 
   private restoreConnection() {
-    const savedConnection = localStorage.getItem('websocketConnection');
-    if (savedConnection) {
-      const { roomId, userId } = JSON.parse(savedConnection);
-      this.currentRoomId = roomId;
-      this.currentUserId = userId;
-      this.connect(roomId, userId);
+    if (isPlatformBrowser(this.platformId)) {
+      const savedConnection = localStorage.getItem('websocketConnection');
+      if (savedConnection) {
+        const { roomId, userId } = JSON.parse(savedConnection);
+        this.currentRoomId = roomId;
+        this.currentUserId = userId;
+        this.connect(roomId, userId);
+      }
     }
   }
 
   private saveConnection(roomId: string, userId: string) {
-    localStorage.setItem('websocketConnection', JSON.stringify({ roomId, userId }));
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('websocketConnection', JSON.stringify({ roomId, userId }));
+    }
   }
 
   private setupConnectionTimeout() {
@@ -77,7 +86,7 @@ export class SeatService {
   private handleConnectionError() {
     if (this.reconnectAttempts < this.maxReconnectAttempts) {
       this.reconnectAttempts++;
-      
+
       setTimeout(() => {
         if (this.currentRoomId && this.currentUserId) {
           this.connect(this.currentRoomId, this.currentUserId);
@@ -93,23 +102,23 @@ export class SeatService {
       console.log('✅ WebSocket đã được kết nối với cùng roomId và userId');
       return;
     }
-  
+
     if (this.isConnected) {
       console.log('🔄 Đóng kết nối cũ trước khi tạo kết nối mới');
       this.close();
     }
-  
+
     this.currentRoomId = roomId;
     this.currentUserId = userId;
     this.saveConnection(roomId, userId);
     this.reconnectAttempts = 0;
-  
+
     setTimeout(() => {
       const wsUrl = `wss://localhost:7105/ws/KeepSeat?roomId=${roomId}&userId=${userId}`;
       this.socket = new WebSocket(wsUrl);
-  
+
       this.setupConnectionTimeout();
-  
+
       this.socket.onopen = () => {
         console.log('✅ WebSocket connected');
         this.isConnected = true;
@@ -120,15 +129,15 @@ export class SeatService {
         this.joinRoom();
         this.getList();
       };
-  
+
       this.socket.onmessage = (event) => this.handleMessage(event.data);
-  
+
       this.socket.onerror = (error) => {
         console.error('❌ WebSocket error:', error);
         this.isConnected = false;
         this.handleConnectionError();
       };
-  
+
       this.socket.onclose = (event) => {
         console.log('🔴 WebSocket disconnected', event);
         this.isConnected = false;
@@ -174,25 +183,29 @@ export class SeatService {
   }
 
   private updateCountdown(countdown: number) {
-    // Lưu countdown vào localStorage
-    localStorage.setItem('roomCountdown', countdown.toString());
-    this.joinRoomSubject.next(countdown);
-    // Xóa 'selectedSeats' khi countdown kết thúc
-    if (countdown <= 0) {
-        console.log('🧹 Countdown kết thúc, xóa selectedSeats khỏi localStorage');
-        localStorage.removeItem('selectedSeats');
-        this.getList();
+    if (isPlatformBrowser(this.platformId)) {
+      // Lưu countdown vào localStorage
+      localStorage.setItem('roomCountdown', countdown.toString());
+      this.joinRoomSubject.next(countdown);
+      // Xóa 'selectedSeats' khi countdown kết thúc
+      if (countdown <= 0) {
+          console.log('🧹 Countdown kết thúc, xóa selectedSeats khỏi localStorage');
+          localStorage.removeItem('selectedSeats');
+          this.getList();
+      }
+    } else {
+      this.joinRoomSubject.next(countdown);
     }
   }
   private isSeatUpdate(message: WebSocketMessage): boolean {
     const action = message.Action?.toLowerCase();
-    return action === 'UpdateStatus' && 
+    return action === 'UpdateStatus' &&
            Array.isArray(message.SeatStatusUpdateRequests);
   }
 
   private updateSeatStatus(updates: SeatStatusUpdateRequest[]): void {
     console.log('🔄 Đang cập nhật trạng thái ghế:', updates);
-    
+
     updates.forEach(({ SeatId, Status }) => {
       const seat = this.seats.find(s => s.SeatStatusByShowTimeId === SeatId);
       if (seat) {
@@ -256,7 +269,9 @@ export class SeatService {
 
   // Thêm phương thức để reset countdown
   resetCountdown() {
-    localStorage.removeItem('roomCountdown');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('roomCountdown');
+    }
     this.joinRoomSubject.next(null);
   }
 
@@ -271,23 +286,25 @@ export class SeatService {
       console.warn('⚠️ Thời gian gia hạn không hợp lệ.');
       return;
     }
-  
+
     const requestData = {
       Action: 'ExtendCountdown',
       ExtensionDuration: extensionDuration
     };
-  
+
     this.sendMessage('ExtendCountdown', requestData);
     console.log(`🔄 Yêu cầu gia hạn countdown thêm ${extensionDuration} giây đã được gửi.`);
   }
   // Thêm phương thức để xóa kết nối khi cần
   clearConnection() {
-    
+
     if (this.connectionTimer) {
       clearTimeout(this.connectionTimer);
     }
     this.resetWarning();
-    localStorage.removeItem('websocketConnection');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('websocketConnection');
+    }
     this.close();
     this.currentRoomId = null;
     this.currentUserId = null;
@@ -303,7 +320,7 @@ export class SeatService {
       console.log('WebSocket connection disconnected');
       this.clearLocalStorageData()
     }
- 
+
   }
   clearLocalStorageData(): void {
     // Xóa dữ liệu liên quan đến ghế
