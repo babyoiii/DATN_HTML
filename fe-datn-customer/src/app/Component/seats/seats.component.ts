@@ -35,7 +35,7 @@ interface SeatStatusUpdateRequest {
 @Component({
   selector: 'app-seats',
   standalone: true,
-  imports: [CommonModule, DurationFormatPipe, GroupByPipe, RouterLink, NeedMoreTimeComponent, TimeUpComponent],
+  imports: [CommonModule, GroupByPipe],
   templateUrl: './seats.component.html',
   styleUrls: ['./seats.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
