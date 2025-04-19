@@ -49,13 +49,13 @@
                                 <button type="button"
                                         (click)="changeTab(2)"
                                         [ngClass]="{
-                                          'underline text-blue-500': selectedType === 2,
+                                          'underline text-blue-500': selectedType === 3,
                                           'text-gray-400': selectedType !== 2
                                         }"
                                         role="tab"
-                                        [attr.aria-selected]="selectedType === 2"
+                                        [attr.aria-selected]="selectedType === 3"
                                         aria-controls="radix-coming-soon"
-                                        [attr.data-state]="selectedType === 2 ? 'active' : 'inactive'"
+                                        [attr.data-state]="selectedType === 3 ? 'active' : 'inactive'"
                                         id="radix-trigger-coming-soon"
                                         class="font-semibold decoration-2 underline-offset-8 transition-colors hover:text-blue-500"
                                         tabindex="-1"
@@ -117,44 +117,51 @@
                                         class="aspect-[2/3] w-full object-cover"
                                         srcset="{{item.thumbnail}}"
                                         src="{{item.thumbnail}}"
-                                        style="color: transparent;"></a><a
-                                    class="group transition-colors hocus:text-blue-500 text-balance headline text-500"
-                                    aria-label="Captain America: Brave New World details"
-                                    href="/movies/captain-america-brave-new-world-67472">{{item.movieName}}</a>
-                                <div class="grid gap-2 text-100 text-gray-200 caption text-100">
-                                    <ul class="flex flex-wrap gap-y-2 leading-none">
-                                        <li
-                                            class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-                                            <span class="flex items-center gap-[0.5ch]" aria-label="Runtime: 1 HR 58 MIN"
-                                                role="group">{{ item.duration ? (item.duration | durationFormat) : 'N/A' }}
-                                                <button
-                                                    class="h-[1em] w-[1em] text-blue-500 transition-colors hover:text-white"
-                                                    aria-label="More Info" type="button" aria-haspopup="dialog"
-                                                    aria-expanded="false" aria-controls="radix-:r41:"
-                                                    data-state="closed"><svg xmlns="http://www.w3.org/2000/svg"
-                                                        fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%"
-                                                        class="h-[1em] w-[1em]">
-                                                        <path
-                                                            d="M22.5 45C10.125 45 0 34.875 0 22.5S10.125 0 22.5 0 45 10.125 45 22.5 34.875 45 22.5 45zm0-41.625c-10.35 0-18.9 8.55-18.9 18.9 0 10.35 8.55 18.9 18.9 18.9 10.35 0 18.9-8.55 18.9-18.9 0-10.35-8.55-18.9-18.9-18.9z">
-                                                        </path>
-                                                        <path
-                                                            d="M15.75 17.55c0-3.6 3.15-6.075 6.75-6.075 3.15 0 6.75 2.25 6.75 5.625 0 2.25-1.125 3.825-2.925 4.95-.675.45-1.35.9-1.8 1.575-.675.675-.9 1.575-.9 2.7H20.7c-.225-.45-.225-.9-.225-1.35 0-4.5 5.4-4.725 5.4-7.875 0-1.575-1.575-2.7-3.15-2.7-2.025 0-3.375 1.575-3.375 3.375v.675l-3.375-.225c-.225.225-.225-.225-.225-.675zm6.3 15.75c1.125 0 2.025-.9 2.025-2.025s-.9-2.025-2.025-2.025-2.025.9-2.025 2.025c-.225.9.9 2.025 2.025 2.025z">
-                                                        </path>
-                                                    </svg></button></span></li>
-                                        <li
-                                            class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-                                            <span class="inline-flex items-center gap-1 uppercase"
-                                                aria-label="MPAA Rating: PG13" role="group">PG13</span></li>
-                                    </ul>
-                                    <p class="pb-2 text-xs">{{item.releaseDate}}</p>
-                                </div><a
-                                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12"
-                                    aria-label="Get Tickets for Captain America: Brave New World"
-                                    href="/showtimes/{{item.id}}">Get Tickets</a>
+                                        style="color: transparent;"></a>
+                                        
+                                        <div class="center-link">
+                                            <a
+                                              class="group transition-colors hocus:text-blue-500 text-balance headline text-500"
+                                              aria-label="Captain America: Brave New World details"
+                                              href="/movies/captain-america-brave-new-world-67472">
+                                              {{item.movieName}}
+                                            </a>
+                                          </div>
+                                    <div class="center-content grid gap-2 text-100 text-gray-200 caption text-100">
+                                        <ul class="flex flex-wrap gap-y-2 leading-none">
+                                          <li
+                                            class="-translate-x-[0.5ch] pl-[0.5ch] [&:not(:last-child)]:border-r-2 [&:not(:last-child)]:border-r-gray-300 [&:not(:last-child)]:pr-[0.5ch]">
+                                            <span class="flex items-center gap-[0.5ch]" aria-label="Runtime: 1 HR 58 MIN" role="group">
+                                              {{ item.duration ? (item.duration | durationFormat) : 'N/A' }}
+                                              <button
+                                                class="h-[1em] w-[1em] text-blue-500 transition-colors hover:text-white"
+                                                aria-label="More Info" type="button" aria-haspopup="dialog"
+                                                aria-expanded="false" aria-controls="radix-:r41:" data-state="closed">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%" class="h-[1em] w-[1em]">
+                                                  <path d="M22.5 45C10.125 45 0 34.875 0 22.5S10.125 0 22.5 0 45 10.125 45 22.5 34.875 45 22.5 45zm0-41.625c-10.35 0-18.9 8.55-18.9 18.9 0 10.35 8.55 18.9 18.9 18.9 10.35 0 18.9-8.55 18.9-18.9 0-10.35-8.55-18.9-18.9-18.9z"></path>
+                                                  <path d="M15.75 17.55c0-3.6 3.15-6.075 6.75-6.075 3.15 0 6.75 2.25 6.75 5.625 0 2.25-1.125 3.825-2.925 4.95-.675.45-1.35.9-1.8 1.575-.675.675-.9 1.575-.9 2.7H20.7c-.225-.45-.225-.9-.225-1.35 0-4.5 5.4-4.725 5.4-7.875 0-1.575-1.575-2.7-3.15-2.7-2.025 0-3.375 1.575-3.375 3.375v.675l-3.375-.225c-.225.225-.225-.225-.225-.675zm6.3 15.75c1.125 0 2.025-.9 2.025-2.025s-.9-2.025-2.025-2.025-2.025.9-2.025 2.025c-.225.9.9 2.025 2.025 2.025z"></path>
+                                                </svg>
+                                              </button>
+                                            </span>
+                                          </li>
+                                          <li
+                                            class="-translate-x-[0.5ch] pl-[0.5ch] [&:not(:last-child)]:border-r-2 [&:not(:last-child)]:border-r-gray-300 [&:not(:last-child)]:pr-[0.5ch]">
+                                            <span class="inline-flex items-center gap-1 uppercase" aria-label="MPAA Rating: 5 Star" role="group">
+                                              {{item.rate}} 🌟
+                                            </span>
+                                          </li>
+                                        </ul>
+                                        <p class="pb-2 text-xs">{{item.releaseDate | date:'dd/MM/yyyy'}}</p>
+                                        <a
+                                          class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12"
+                                          aria-label="Get Tickets for Captain America: Brave New World"
+                                          href="/showtimes/{{item.id}}">
+                                          Đặt vé
+                                        </a>
+                                      </div>
                             </div>
                         }
                    
-                      
                     </div>
                     <div class="pagination-container">
                         <ul class="pagination modal-5">

@@ -46,4 +46,10 @@ export class BenefitsComponent implements OnInit {
       }
     });
 }
+checkNextLevelBenefits(): boolean {
+  if (this.membershipData.nextLevelBenefits.length > 0) {
+    return true; 
+  }
+  return false;
+}
 }

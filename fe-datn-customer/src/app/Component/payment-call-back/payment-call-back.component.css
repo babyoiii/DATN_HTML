@@ -1,75 +1,79 @@
-.payment-result-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f8f9fa;
-    padding: 20px;
+.payment-status {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #f9f9f9, #ffffff);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.status-icon {
+  font-size: 100px;
+  margin-bottom: 20px;
+  animation: bounce 1.5s infinite;
+}
+
+.success-icon {
+  color: #28a745;
+}
+
+.error-icon {
+  color: #dc3545;
+}
+
+.success-text {
+  color: #28a745;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.error-text {
+  color: #dc3545;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.redirect-message {
+  font-size: 16px;
+  color: #6c757d;
+  margin-top: 10px;
+}
+
+.retry-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.retry-button:hover {
+  background-color: #0056b3;
+}
+
+/* Hiệu ứng fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-  
-  .payment-result-card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    padding: 30px;
-    width: 100%;
-    max-width: 500px;
-    text-align: center;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .icon-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    margin: 0 auto;
+}
+
+/* Hiệu ứng bounce */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
   }
-  
-  .success-icon {
-    font-size: 40px;
-    color: white;
-    background-color: #28a745;
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  50% {
+    transform: translateY(-10px);
   }
-  
-  .error-icon {
-    font-size: 40px;
-    color: white;
-    background-color: #dc3545;
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .success-content {
-    color: #28a745;
-  }
-  
-  .error-content {
-    color: #dc3545;
-  }
-  
-  .action-buttons {
-    margin-top: 30px;
-  }
-  
-  .btn {
-    padding: 10px 20px;
-    border-radius: 5px;
-  }
-  
-  .btn-primary {
-    background-color: #007bff;
-    color: white;
-    border: none;
-  }
+}

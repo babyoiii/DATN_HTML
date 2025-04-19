@@ -539,19 +539,68 @@ export class PurchaseComponent implements OnInit,OnDestroy {
       }
     });
   }
+  handleSuccessfulPayment(transactionCode: string, orderData: OrderModelReq) {
+    const orderDataString = localStorage.getItem('orderDataPayment');
+    if (orderDataString) {
+      orderData.transactionCode = transactionCode;
+      this.orderService.createOrder(orderData).subscribe({
+        next: (response) => {
+          if (response.responseCode !== 200) {
+            this.toastr.error('❌ Đơn hàng không thành công: ' + response.Message, "Thông Báo");
+            return;
+          }
+  
+          const seatsToUpdate: SeatStatusUpdateRequest[] = orderData.tickets.map((ticket: TicketReq) => ({
+            SeatId: ticket.seatByShowTimeId,
+            Status: 5
+          }));
+  
+          this.seatService.payment(seatsToUpdate);
+          console.log(seatsToUpdate,'tseatsToUpdate');
+          
+          this.toastr.success('✅ Đơn hàng đã được tạo thành công!', "Thông Báo");
+  
+          localStorage.removeItem('selectedSeats');
+          localStorage.removeItem('orderData');
+          localStorage.removeItem('orderDataPayment');
+          this.router.navigate(['/']);
+        },
+        error: (error) => {
+          const seatsToUpdate: SeatStatusUpdateRequest[] = orderData.tickets.map((ticket: TicketReq) => ({
+            SeatId: ticket.seatByShowTimeId,
+            Status: 5
+          }));
+  
+          this.seatService.payment(seatsToUpdate);
+          console.error('Error creating order:', error);
+          this.toastr.error('❌ Lỗi khi tạo đơn hàng', "Thông Báo");
+        }
+      });
+    }
+  }
   createPayment(paymentData: PaymentModelReq, orderData: OrderModelReq) {
     if (this.selectedPaymentMethod === 'VNPAY') {
       this.orderService.createPayment(paymentData).subscribe({
         next: (response: any) => {
           if (response.responseCode === 1) {
-            window.location.href = response.data;
+            localStorage.setItem('orderDataPayment', JSON.stringify(orderData));
+            const callbackWindow = window.open(response.data, '_blank');
+            window.addEventListener('message', (event) => {
+              if (!event.data || !event.data.type) return;
+  
+              if (event.data.type === 'PAYMENT_SUCCESS') {
+                this.handleSuccessfulPayment(event.data.transactionCode,orderData);
+              } else if (event.data.type === 'PAYMENT_FAILED') {
+                this.toastr.error('❌ Thanh toán thất bại.', "Thông Báo");
+              }
+            });
           } else {
-            this.toastr.error('❌ Lỗi khi tạo thanh toán:', "Thông Báo");
+            this.toastr.error('❌ Lỗi khi tạo thanh toán:', 'Thông Báo');
           }
         },
         error: (error) => {
           console.error('Error creating payment:', error);
-          this.toastr.error('❌ Lỗi khi tạo thanh toán:', "Thông Báo");
+          this.toastr.error('❌ Lỗi khi tạo thanh toán:', 'Thông Báo');
         }
       });
     } else if (this.selectedPaymentMethod === 'MULTI-WALLET') {
@@ -588,10 +637,10 @@ export class PurchaseComponent implements OnInit,OnDestroy {
           }
           this.orderService.createOrder(orderData).subscribe({
             next: (response: any) => {
-              // if (response.ResponseCode != 200){
-              //   this.toastr.error('❌ Đơn hàng không thành công:' + response.Message , "Thông Báo");
-              //   return;
-              // }
+              if (response.responseCode != 200){
+                this.toastr.error('❌ Đơn hàng không thành công:' + response.Message , "Thông Báo");
+                return;
+              }
                const seatsToUpdate: SeatStatusUpdateRequest[] = orderData.tickets.map((ticket: TicketReq) => ({
                             SeatId: ticket.seatByShowTimeId,
                             Status: 5

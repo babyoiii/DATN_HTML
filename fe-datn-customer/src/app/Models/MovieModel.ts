@@ -8,6 +8,7 @@ export interface GetMovieLandingRes {
   duration: number;
   releaseDate: Date;
   status: number; // Thêm thuộc tính status
+  rate : number;
 }
 export interface ShowtimesLandingRes {
   id: string;

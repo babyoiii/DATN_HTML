@@ -321,7 +321,6 @@ export class SeatService {
   
     // Xóa dữ liệu liên quan đến phim và suất chiếu
     localStorage.removeItem('currentMovieInfo');
-    localStorage.removeItem('reloadOnce');
   
   }
 
@@ -338,5 +337,7 @@ export class SeatService {
     };
 
     this.sendMessage('Payment', requestData);
+    this.clearLocalStorageData();
+    this.disconnect();
   }
 }
