@@ -33,7 +33,7 @@ export class MoviesComponent implements OnInit {
         console.log('Movies:', this.dataMovies);
       },
       error: (err) => {
-        console.error('Error fetching movies:', err);
+        // console.error('Error fetching movies:', err);
       }
     });
   }

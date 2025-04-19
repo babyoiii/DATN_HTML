@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, HostListener, OnDestroy, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ModalService } from '../../Service/modal.service';
 import { AuthServiceService } from '../../Service/auth-service.service';
@@ -20,10 +20,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   displayName : string = ''
   constructor(
     public modalService: ModalService,
-    private authService: AuthServiceService
+    private authService: AuthServiceService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
   ngOnInit() {
-    this.displayName = localStorage.getItem('displayName') || '';
+    if (isPlatformBrowser(this.platformId)) {
+      this.displayName = localStorage.getItem('displayName') || '';
+    }
     this.subscription = this.authService.isLoggedIn$.subscribe(status => {
       this.isLoggedIn = status;
       console.log('Login status from BehaviorSubject:', status);
@@ -88,12 +91,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
-    const userMenuButton = document.getElementById('user-menu-button');
-    const dropdownMenu = document.querySelector('.dropdown-menu');
-    if (!userMenuButton?.contains(event.target as Node) &&
-        !dropdownMenu?.contains(event.target as Node) &&
-        this.isDropdownOpen) {
-      this.isDropdownOpen = false;
+    if (isPlatformBrowser(this.platformId)) {
+      const userMenuButton = document.getElementById('user-menu-button');
+      const dropdownMenu = document.querySelector('.dropdown-menu');
+      if (!userMenuButton?.contains(event.target as Node) &&
+          !dropdownMenu?.contains(event.target as Node) &&
+          this.isDropdownOpen) {
+        this.isDropdownOpen = false;
+      }
     }
   }
 

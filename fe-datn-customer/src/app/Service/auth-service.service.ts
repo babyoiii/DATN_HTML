@@ -99,15 +99,15 @@ export class AuthServiceService {
       localStorage.removeItem('userName');
       localStorage.removeItem('displayName');
       localStorage.removeItem('email');
-  
+
       this.cookieService.delete('accessToken', '/');
       this.cookieService.delete('userId', '/');
       this.cookieService.delete('userName', '/');
       this.cookieService.delete('displayName', '/');
       this.cookieService.delete('email', '/');
-  
-      localStorage.clear(); 
-      sessionStorage.clear(); 
+
+      localStorage.clear();
+      sessionStorage.clear();
     }
     this.loggedIn.next(false);
   }
@@ -145,24 +145,29 @@ export class AuthServiceService {
     if (response?.data) {
       const { userId, userName, displayName, email } = response.data;
 
-      localStorage.setItem('userId', userId);
-      localStorage.setItem('userName', userName);
-      localStorage.setItem('displayName', displayName);
-      localStorage.setItem('email', email);
+      if (isPlatformBrowser(this.platformId)) {
+        localStorage.setItem('userId', userId);
+        localStorage.setItem('userName', userName);
+        localStorage.setItem('displayName', displayName);
+        localStorage.setItem('email', email);
 
-      this.cookieService.set('userId', userId);
-      this.cookieService.set('userName', userName);
-      this.cookieService.set('displayName', displayName);
-      this.cookieService.set('email', email);
+        this.cookieService.set('userId', userId);
+        this.cookieService.set('userName', userName);
+        this.cookieService.set('displayName', displayName);
+        this.cookieService.set('email', email);
+      }
 
       console.log('User data saved:', { userId, userName, displayName, email });
     }
   }
   getUserData(): { userId: string; userName: string; displayName: string } | null {
-    const userId = localStorage.getItem('userId') ?? '';
-    const userName = localStorage.getItem('userName') ?? '';
-    const displayName = localStorage.getItem('displayName') ?? '';
-    return userId ? { userId, userName, displayName } : null;
+    if (isPlatformBrowser(this.platformId)) {
+      const userId = localStorage.getItem('userId') ?? '';
+      const userName = localStorage.getItem('userName') ?? '';
+      const displayName = localStorage.getItem('displayName') ?? '';
+      return userId ? { userId, userName, displayName } : null;
+    }
+    return null;
   }
   ChangePassword(changePasswordModel: ChangePasswordModel): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/Auth/ChangePassword`, changePasswordModel);

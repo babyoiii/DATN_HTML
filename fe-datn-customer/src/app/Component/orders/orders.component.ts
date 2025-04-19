@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SeatService } from '../../Service/seat.service';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -29,7 +30,7 @@ interface Seat {
 export class OrdersComponent implements OnInit, OnDestroy {
   countdown: string | null = null;
   seatSummary: { [key: string]: { count: number; total: number } } = {};
-  selectedServices: { service: Service; quantity: number }[] = [];  
+  selectedServices: { service: Service; quantity: number }[] = [];
   listServiceTypes : GetServiceType[] = [];
   accordionStates: boolean[] = [];
   isLoggedIn: boolean = false;
@@ -42,7 +43,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
     private orderService: OrdersService,
     private serviceService: ServiceService,
     private modalService: ModalService,
-    private authServiceService: AuthServiceService
+    private authServiceService: AuthServiceService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
   ngOnDestroy(): void {
     this.seatService.resetWarning();
@@ -51,23 +53,24 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
   }
   clearLocalStorageData(): void {
-    // Xóa dữ liệu liên quan đến ghế
-    localStorage.removeItem('selectedSeats');
-    localStorage.removeItem('seatData');
-    localStorage.removeItem('currentShowtimeId');
-  
-    // Xóa dữ liệu liên quan đến dịch vụ
-    localStorage.removeItem('selectedServices');
-    localStorage.removeItem('serviceData');
-  
-    // Xóa dữ liệu liên quan đến đơn hàng
-    localStorage.removeItem('orderData');
-    localStorage.removeItem('orderDataPayment');
-  
-    // Xóa dữ liệu liên quan đến phim và suất chiếu
-    localStorage.removeItem('currentMovieInfo');
-    localStorage.removeItem('reloadOnce');
-  
+    if (isPlatformBrowser(this.platformId)) {
+      // Xóa dữ liệu liên quan đến ghế
+      localStorage.removeItem('selectedSeats');
+      localStorage.removeItem('seatData');
+      localStorage.removeItem('currentShowtimeId');
+
+      // Xóa dữ liệu liên quan đến dịch vụ
+      localStorage.removeItem('selectedServices');
+      localStorage.removeItem('serviceData');
+
+      // Xóa dữ liệu liên quan đến đơn hàng
+      localStorage.removeItem('orderData');
+      localStorage.removeItem('orderDataPayment');
+
+      // Xóa dữ liệu liên quan đến phim và suất chiếu
+      localStorage.removeItem('currentMovieInfo');
+      localStorage.removeItem('reloadOnce');
+    }
   }
   ngOnInit(): void {
     this.getListServiceType();
@@ -77,10 +80,12 @@ export class OrdersComponent implements OnInit, OnDestroy {
     });
 
     // Khôi phục selectedServices từ localStorage
-    const savedServices = localStorage.getItem('selectedServices');
-    if (savedServices) {
-      this.selectedServices = JSON.parse(savedServices);
-      console.log('✅ Dịch vụ đã khôi phục:', this.selectedServices);
+    if (isPlatformBrowser(this.platformId)) {
+      const savedServices = localStorage.getItem('selectedServices');
+      if (savedServices) {
+        this.selectedServices = JSON.parse(savedServices);
+        console.log('✅ Dịch vụ đã khôi phục:', this.selectedServices);
+      }
     }
 
     this.seatService.getJoinRoomMessages().subscribe({
@@ -104,27 +109,29 @@ export class OrdersComponent implements OnInit, OnDestroy {
       error: (err) => console.error('❌ Lỗi khi nhận countdown:', err)
     });
 
-    const data = localStorage.getItem('selectedSeats');
-    console.log(data, 'dataTuSeat');
+    if (isPlatformBrowser(this.platformId)) {
+      const data = localStorage.getItem('selectedSeats');
+      console.log(data, 'dataTuSeat');
 
-    if (data) {
-      try {
-        const seats: Seat[] = JSON.parse(data);
+      if (data) {
+        try {
+          const seats: Seat[] = JSON.parse(data);
 
-        this.seatSummary = seats.reduce((summary, seat) => {
-          if (!summary[seat.SeatTypeName]) {
-            summary[seat.SeatTypeName] = { count: 0, total: 0, seatIds: [] };
-          }
-          summary[seat.SeatTypeName].count++;
-          summary[seat.SeatTypeName].total += seat.price;
-          summary[seat.SeatTypeName].seatIds.push(seat.seatId);
+          this.seatSummary = seats.reduce((summary, seat) => {
+            if (!summary[seat.SeatTypeName]) {
+              summary[seat.SeatTypeName] = { count: 0, total: 0, seatIds: [] };
+            }
+            summary[seat.SeatTypeName].count++;
+            summary[seat.SeatTypeName].total += seat.price;
+            summary[seat.SeatTypeName].seatIds.push(seat.seatId);
 
-          return summary;
-        }, {} as { [key: string]: { count: number; total: number; seatIds: string[] } });
+            return summary;
+          }, {} as { [key: string]: { count: number; total: number; seatIds: string[] } });
 
-        console.log('📊 Thống kê số lượng, tổng tiền và seatIds:', this.seatSummary);
-      } catch (error) {
-        console.error('❌ Dữ liệu ghế không hợp lệ:', error);
+          console.log('📊 Thống kê số lượng, tổng tiền và seatIds:', this.seatSummary);
+        } catch (error) {
+          console.error('❌ Dữ liệu ghế không hợp lệ:', error);
+        }
       }
     }
   }
@@ -134,7 +141,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
   TimeUp(): void {
     this.modalService.openTimeUpModal();
-    
+
   }
 
   AddMoreTime(): void {
@@ -154,7 +161,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       next: (res: any) => {
         console.log('✅ Danh sách loại dịch vụ:', res.data);
         this.listServiceTypes = res.data;
-        this.accordionStates = new Array(res.data.length).fill(false); 
+        this.accordionStates = new Array(res.data.length).fill(false);
       },
       error: (err) => {
         console.error('❌ Lỗi khi lấy danh sách loại dịch vụ:', err);
@@ -163,26 +170,26 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   toggleAccordion(index: number): void {
-    this.accordionStates[index] = !this.accordionStates[index]; 
+    this.accordionStates[index] = !this.accordionStates[index];
   }
 
-  
+
   getTotalAmount(): number {
     const totalSeatsAmount = Object.values(this.seatSummary).reduce(
       (sum, seat) => sum + seat.total,
       0
     );
-  
+
     const totalServiceAmount = this.selectedServices.reduce(
       (sum, item) => sum + item.service.price * item.quantity,
       0
     );
-  
+
     const subtotal = totalSeatsAmount + totalServiceAmount;
-  
-    return subtotal; 
+
+    return subtotal;
   }
-  
+
   getTotalTicketPrice(): number {
     return Object.values(this.seatSummary).reduce(
       (sum, ticket) => sum + ticket.total,
@@ -194,31 +201,37 @@ export class OrdersComponent implements OnInit, OnDestroy {
       return total + (item.service.price * item.quantity);
     }, 0);
   }
-  
-  
+
+
   getSeatNamesByType(type: string): string {
-    const data = localStorage.getItem('selectedSeats');
-    if (data) {
-      const seats: Seat[] = JSON.parse(data);
-      return seats
-        .filter(seat => seat.SeatTypeName === type)
-        .map(seat => seat.seatName)
-        .join(', ');
+    if (isPlatformBrowser(this.platformId)) {
+      const data = localStorage.getItem('selectedSeats');
+      if (data) {
+        const seats: Seat[] = JSON.parse(data);
+        return seats
+          .filter(seat => seat.SeatTypeName === type)
+          .map(seat => seat.seatName)
+          .join(', ');
+      }
     }
     return 'Không có ghế';
   }
 
   goBackToSeats(): void {
-    const showtimeId = localStorage.getItem('currentShowtimeId');
-    if (showtimeId) {
-      sessionStorage.setItem('reloadOnce', 'true'); // Đánh dấu cần reload
-      this.router.navigate(['/booking/', showtimeId], {
-        state: {
-          seats: this.seatSummary,
-          selectedSeats: this.selectedServices,
-          totalAmount: this.getTotalAmount()
-        }
-      });
+    if (isPlatformBrowser(this.platformId)) {
+      const showtimeId = localStorage.getItem('currentShowtimeId');
+      if (showtimeId) {
+        sessionStorage.setItem('reloadOnce', 'true'); // Đánh dấu cần reload
+        this.router.navigate(['/booking/', showtimeId], {
+          state: {
+            seats: this.seatSummary,
+            selectedSeats: this.selectedServices,
+            totalAmount: this.getTotalAmount()
+          }
+        });
+      } else {
+        this.router.navigate(['/showtimes'], { queryParams: { reload: 'true' } });
+      }
     } else {
       this.router.navigate(['/showtimes'], { queryParams: { reload: 'true' } });
     }
@@ -250,7 +263,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
   continue(): void {
     console.log(this.seatSummary, 'dataSeatOrder');
-  
+
     const orderData = {
       seats: Object.entries(this.seatSummary).map(([type, data]: any) => ({
         type,
@@ -268,10 +281,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
       totalTicketPrice: this.getTotalTicketPrice(),
       totalServiceAmount: this.getTotalService(),
     };
-  
-    localStorage.setItem('selectedServices', JSON.stringify(this.selectedServices));
-  
-    localStorage.setItem('orderData', JSON.stringify(orderData));
+
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('selectedServices', JSON.stringify(this.selectedServices));
+      localStorage.setItem('orderData', JSON.stringify(orderData));
+    }
     this.router.navigate(['/thanh-toan'], { state: { seats: this.seatSummary, selectedSeats: this.selectedServices, totalAmount: this.getTotalAmount() } });
     console.log('✅ Dữ liệu đã lưu:', orderData);
   }
