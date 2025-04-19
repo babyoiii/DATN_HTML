@@ -1,0 +1,109 @@
+<main id="main">
+    <div class="empty:hidden">
+        <section class="mx-auto max-w-[1248px] px-2 py-8 empty:hidden sm:px-4 xl:px-0">
+            <header class="max-w-[630px]">
+                <h1 class="border-b border-b-gray-500 pb-2 text-700 headline">Gửi lại Email Xác nhận</h1>
+                <div class="rich-text">
+                    <p
+                        class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
+                        <span class="">Nhập địa chỉ email và ngày chiếu của bạn bên dưới để nhận email xác nhận vé
+                            . Nếu bạn không chắc chắn về ngày, chỉ cần nhập địa chỉ email của bạn và
+                            email xác nhận đơn mua hàng gần đây nhất của bạn sẽ được gửi cho bạn.</span></p>
+                </div>
+            </header>
+            <form class="grid max-w-screen-sm gap-4 pt-4">
+                <div class="amc-input amc-input--box"><input class="input" type="hidden" name="captcha"></div><label
+                    class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed">
+                    <div class="amc-input amc-input--box"><input class="input col-span-3" placeholder="Địa chỉ Email của bạn"
+                            inputmode="email" type="email" name="emailAddress"></div>
+                </label><label class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed">
+                    <div role="group" aria-label="data" class="flex flex-wrap gap-4"><label
+                            class="min-w-max flex-1"><span class="sr-only"> Tháng</span>
+                            <div class="amc-input amc-input--box relative"><select class="">
+                                    <option value="">Tháng</option>
+                                    <option value="01">Tháng 1</option>
+                                    <option value="02">Tháng 2</option>
+                                    <option value="03">Tháng 3</option>
+                                    <option value="04">Tháng 4</option>
+                                    <option value="05">Tháng 5 </option>
+                                    <option value="06">Tháng 6</option>
+                                    <option value="07">Tháng 7</option>
+                                    <option value="08">Tháng 8</option>
+                                    <option value="09">Tháng 9</option>
+                                    <option value="10">Tháng 10</option>
+                                    <option value="11">Tháng 11</option>
+                                    <option value="12">Tháng 12</option>
+                                </select><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
+                                    width="1em" height="100%"
+                                    class="pointer-events-none absolute right-4 h-[1em] w-[1em]"
+                                    aria-label="Expand Options">
+                                    <path
+                                        d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
+                                    </path>
+                                </svg></div>
+                        </label><label class="min-w-max flex-1"><span class="sr-only"> Ngày</span>
+                            <div class="amc-input amc-input--box relative"><select class="" name="day">
+                                    <option value="">Ngày</option>
+                                    <option value="01">1</option>
+                                    <option value="02">2</option>
+                                    <option value="03">3</option>
+                                    <option value="04">4</option>
+                                    <option value="05">5</option>
+                                    <option value="06">6</option>
+                                    <option value="07">7</option>
+                                    <option value="08">8</option>
+                                    <option value="09">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="24">24</option>
+                                    <option value="25">25</option>
+                                    <option value="26">26</option>
+                                    <option value="27">27</option>
+                                    <option value="28">28</option>
+                                    <option value="29">29</option>
+                                    <option value="30">30</option>
+                                    <option value="31">31</option>
+                                </select><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
+                                    width="1em" height="100%"
+                                    class="pointer-events-none absolute right-4 h-[1em] w-[1em]"
+                                    aria-label="Expand Options">
+                                    <path
+                                        d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
+                                    </path>
+                                </svg></div>
+                        </label>
+                        <!-- Chỉ có thể chọn năm ở trong tương lai, tối đa là 1 năm vì có thể đặt xuất chiếu sớm. -->
+                        <label class="min-w-max flex-1"><span class="sr-only"> Năm</span>
+                            <div class="amc-input amc-input--box relative"><select class="">
+                                    <option value="">Năm</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                </select><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
+                                    width="1em" height="100%"
+                                    class="pointer-events-none absolute right-4 h-[1em] w-[1em]"
+                                    aria-label="Expand Options">
+                                    <path
+                                        d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
+                                    </path>
+                                </svg></div>
+                        </label></div>
+                </label>
+                <div class="flex flex-wrap items-center gap-4 py-4 justify-end"><button type="submit"
+                        class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">
+                        Gửi Email</button></div>
+            </form>
+        </section>
+    </div>
+</main>
