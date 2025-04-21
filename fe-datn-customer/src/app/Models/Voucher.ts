@@ -10,10 +10,10 @@ export interface UserVoucher {
   remainingQuantity: number;
   voucherCode: string;
   voucherDescription: string;
+  voucherType : number; 
   discountType: string; // PERCENT, FIXED
   discountValue: number;
-  userName: string;
-  userEmail: string;
+  minOrderValue: number;
 }
 
 export interface UserVoucherResponse {
@@ -34,3 +34,4 @@ export interface ClaimVoucherResponse {
   message: string;
   data: string;
 }
+

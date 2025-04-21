@@ -42,12 +42,18 @@
     z-index: 1;
 }
 
+.fill-yellow-500 {
+    fill: #f59e0b; /* Màu vàng */
+  }
 
 
-
-
-
-
+  .bg-yellow-500 {
+    background-color: #f59e0b; /* Màu vàng */
+  }
+  
+  .text-gray-300 {
+    color: #d1d5db; /* Màu chữ xám nhạt */
+  }
 
 
 

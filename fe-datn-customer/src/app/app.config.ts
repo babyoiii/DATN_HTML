@@ -4,7 +4,7 @@ import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptorFn } from './Interceptors/auth.interceptor';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { SeatService } from './Service/seat.service';
 import { ToastrModule } from 'ngx-toastr';
 import { WebSocketInterceptor } from './Interceptors/WebSocket.interceptor';
@@ -14,6 +14,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(),
     provideHttpClient(),
+    provideAnimations(),
+    importProvidersFrom([BrowserAnimationsModule]),
     provideHttpClient(withInterceptors([authInterceptorFn])),
     importProvidersFrom([
       BrowserAnimationsModule,

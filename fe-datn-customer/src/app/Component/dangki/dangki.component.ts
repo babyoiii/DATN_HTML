@@ -5,17 +5,20 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+import { OtpVerificationComponent } from '../otp-verification/otp-verification.component';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-dangki',
   standalone: true,
-  imports: [MatNativeDateModule,CommonModule, FormsModule, GoogleMapsModule, RouterModule,MatDatepickerModule, MatFormFieldModule, MatInputModule],
+  imports: [NgxSpinnerModule,MatNativeDateModule,CommonModule, FormsModule, GoogleMapsModule, RouterModule,MatDatepickerModule, MatFormFieldModule, MatInputModule],
   templateUrl: './dangki.component.html',
   styleUrls: ['./dangki.component.css']
 })
@@ -28,14 +31,14 @@ export class DangkiComponent implements OnInit {
     confirmPassword: '',
     address: '',
     dob: new Date(),
-    sex: 0
+    sex: 1
   };
   latitude!: number;
   longitude!: number;
   currentAddress: string = '';
   date: Date | null = null;
   provinces: any[] = [];
-  constructor(private AuthService: AuthServiceService, private http: HttpClient,private toast : ToastrService) {}
+  constructor( private router: Router,private spinner: NgxSpinnerService,private AuthService: AuthServiceService, private http: HttpClient,private toast : ToastrService,private dialog: MatDialog) {}
   ngOnInit(): void {
   
   }
@@ -98,15 +101,84 @@ export class DangkiComponent implements OnInit {
       });
     }
   }
-  signUp(){
-    console.log('Đăng ký:', this._signUpData);
-  this.AuthService.SignUp(this._signUpData).subscribe({
-    next: (response: any) => {
-     this.toast.success('Đăng ký thành công!',"Thông báo");
-    },
-    error: (error: any) => {
-      this.toast.error('Đăng ký thất bại! Vui lòng thử lại.');
+  signUp() {
+    if (!this._signUpData.email) {
+      this.toast.error('Email không được để trống!', 'Lỗi');
+      return;
     }
-  });
+  
+    if (!this._signUpData.password) {
+      this.toast.error('Mật khẩu không được để trống!', 'Lỗi');
+      return;
+    }
+  
+    if (!this._signUpData.confirmPassword) {
+      this.toast.error('Xác nhận mật khẩu không được để trống!', 'Lỗi');
+      return;
+    }
+  
+    if (this._signUpData.password !== this._signUpData.confirmPassword) {
+      this.toast.error('Mật khẩu và xác nhận mật khẩu không khớp!', 'Lỗi');
+      return;
+    }
+  
+    if (!this._signUpData.name) {
+      this.toast.error('Họ và tên không được để trống!', 'Lỗi');
+      return;
+    }
+  
+    if (!this._signUpData.phoneNumber) {
+      this.toast.error('Số điện thoại không được để trống!', 'Lỗi');
+      return;
+    }
+  
+    if (!this._signUpData.dob) {
+      this.toast.error('Ngày sinh không được để trống!', 'Lỗi');
+      return;
+    }
+  
+    if (!this._signUpData.sex) {
+      this.toast.error('Vui lòng chọn giới tính!', 'Lỗi');
+      return;
+    }
+  
+    if (!this._signUpData.address) {
+      this.toast.error('Địa chỉ không được để trống!', 'Lỗi');
+      return;
+    }
+    this.spinner.show(); // Hiển thị spinner trong khi xử lý
+    this.AuthService.SignUp(this._signUpData).subscribe({
+      next: (response: any) => {
+        if (response.responseCode === 200) {
+          console.log('Đăng ký thành công:', response);
+  
+          const dialogRef = this.dialog.open(OtpVerificationComponent, {
+            width: '600px', // Kích thước dialog
+            disableClose: true, // Không cho phép đóng dialog khi click ra ngoài
+            data: { email: this._signUpData.email, serverOtp: response.data.otp } // Truyền email và OTP từ server
+          });
+  
+          // Xử lý kết quả sau khi dialog đóng
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+              this.router.navigate(['/login'])
+              this.toast.success('Xác nhận OTP thành công!', 'Thông báo');
+            } else {
+              this.toast.error('Xác nhận OTP thất bại!', 'Lỗi');
+              this.router.navigate(['/'])
+            }
+          });
+        } else {
+          console.log('Đăng ký thất bại:', response.message);
+          this.toast.error('Đăng ký thất bại!', response.message);
+        }
+        this.spinner.hide(); // Ẩn spinner sau khi xử lý xong
+      },
+      error: (error: any) => {
+        console.error('Lỗi khi đăng ký:', error);
+        this.toast.error('Đăng ký thất bại! Vui lòng thử lại.', 'Lỗi');
+        this.spinner.hide(); // Ẩn spinner khi có lỗi
+      }
+    });
 }
 }

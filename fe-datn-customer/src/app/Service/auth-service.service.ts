@@ -31,7 +31,7 @@ export class AuthServiceService {
 
   // Đăng ký người dùng
   SignUp(signUpData: SignUp): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/Auth/SignUp`, signUpData);
+    return this.http.post<any>(`${this.baseUrl}/Auth/Resgister`, signUpData);
   }
 
   // Đăng nhập
@@ -111,7 +111,11 @@ export class AuthServiceService {
     }
     this.loggedIn.next(false);
   }
-
+  VerifyOtp(email: string, otp: string): Observable<any> {
+    const payload = { email, otp };
+    console.log('Payload for OTP verification:', payload); 
+    return this.http.post<any>(`${this.baseUrl}/Auth/verify-otp`, payload);
+  }
   isLoggedIn(): boolean {
     const token = this.getToken();
     return !!token;

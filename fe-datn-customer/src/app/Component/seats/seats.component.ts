@@ -57,7 +57,16 @@ export class SeatsComponent implements OnInit, OnDestroy {
   movieInfo: any = null;
   private subscription!: Subscription;
   @ViewChild('seatMapContainer') seatMapContainer!: ElementRef;
-
+  movieByShowtimeData: MovieByShowtimeData = {
+    thumbnail: '',
+    movieName: '',
+    cinemaName: '',
+    startTime: '',
+    startTimeFormatted: '',
+    durationFormatted: '',
+    averageRating: 0,
+    roomTypeName: ''
+  };
   currentZoom: number = 1;
   minZoom: number = 0.6;
   maxZoom: number = 2.0;
@@ -96,6 +105,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         const showtimeId = params['id'];
         this.loadSeatsByShowtimeId(showtimeId)
+        this.loadMovieByShowtime(showtimeId);
         if (isPlatformBrowser(this.platformId)) {
           localStorage.setItem('currentShowtimeId', showtimeId);
         }
@@ -176,7 +186,20 @@ export class SeatsComponent implements OnInit, OnDestroy {
     console.log("đã gọi");
 
   }
-
+  loadMovieByShowtime(showtimeId: string): void {
+    this.showtimeService.getMovieByShowtime(showtimeId).subscribe({
+      next: (response) => {
+        if (response && response.data) {
+          this.movieByShowtimeData = response.data; 
+          console.log('✅ Movie Detail:123', this.movieByShowtimeData);
+          this.cdr.markForCheck(); 
+        }
+      },
+      error: (err) => {
+        console.error('❌ Error loading movie detail:', err);
+      }
+    });
+  }
 
   clearLocalStorageData(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -441,9 +464,9 @@ export class SeatsComponent implements OnInit, OnDestroy {
       case SeatStatus.Selected:
         return 'fill-red-500';
       case SeatStatus.Booked:
-        return 'fill-gray-500';
-      case SeatStatus.Busy:
         return 'fill-gray-200';
+      case SeatStatus.Busy:
+        return 'fill-yellow-500'; 
       case SeatStatus.Unavailable:
         return 'cursor-not-allowed invisible';
       default:

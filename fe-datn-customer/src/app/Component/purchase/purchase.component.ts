@@ -17,12 +17,19 @@ import { MembershipService } from '../../Service/membership.service';
 import { Log } from 'ethers';
 import { RewardPointData } from '../../Models/Membership';
 import { UserVoucherService } from '../../Service/user-voucher.service';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { UserVoucher } from '../../Models/Voucher';
+
+enum VoucherType {
+  Ticket = 1,         // Giảm giá cho vé xem phim
+  All = 2,            // Giảm giá toàn bộ (vé + dịch vụ)
+  Service = 3         // Giảm giá cho dịch vụ (combo, bắp rang, nước uống, v.v.)
+}
 
 @Component({
   selector: 'app-purchase',
   standalone: true,
-  imports: [CommonModule, FormsModule, NeedMoreTimeComponent, TimeUpComponent,RouterModule],
+  imports: [CommonModule, FormsModule, NeedMoreTimeComponent, TimeUpComponent,RouterModule,NgxSpinnerModule],
   templateUrl: './purchase.component.html',
   styleUrls: ['./purchase.component.css'],
   animations: [
@@ -37,6 +44,7 @@ import { UserVoucher } from '../../Models/Voucher';
     ])
   ]
 })
+
 export class PurchaseComponent implements OnInit, OnDestroy {
   countdown: string | null = null;
   seats: { type: string; count: number; total: number; seatIds: string[] }[] = [];
@@ -64,15 +72,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
   freeService: string[] | null = null;
   userId: string | null = null;
   rewardPointsInput: number = 0; // Số điểm thưởng nhập vào từ người dùng
-  voucherList: {
-    code: string;
-    name: string;
-    status: string | null;
-    expiry: string;
-    discountType?: string;
-    discountValue?: number;
-    remainingQuantity?: number;
-  }[] = [];
+  userVoucher: UserVoucher[] = []; // Danh sách voucher của người dùng
   currentPoints: number = 500; // Số điểm hiện tại của người dùng
   discountPointAmount: number = 0; // Số tiền có thể giảm
 
@@ -103,33 +103,56 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     this.toastr.success('Đã sao chép mã giảm giá!');
   }
 
-  applyVoucher(code: string) {
+  applyVoucher(code: string): void {
     if (!this.userId) {
       this.toastr.warning('Bạn cần đăng nhập để sử dụng voucher!', 'Thông báo');
       return;
     }
-
-    // Kiểm tra tính khả dụng của voucher
-    this.userVoucherService.checkVoucherAvailability(this.userId, code).subscribe({
+    this.userVoucherService.checkVoucherAvailability(code).subscribe({
       next: (response) => {
+        console.log('Voucher check response:', response);
+        
         if (response.responseCode === 200) {
-          this.voucherCode = code;
-          this.toastr.success('Áp dụng voucher thành công!', 'Thông báo');
-
-          // Tìm voucher trong danh sách để lấy thông tin giảm giá
-          const selectedVoucher = this.voucherList.find(v => v.code === code);
-          if (selectedVoucher && selectedVoucher.discountType && selectedVoucher.discountValue) {
-            // Tính toán số tiền giảm giá dựa trên loại voucher
-            if (selectedVoucher.discountType === 'PERCENT') {
-              // Giảm giá theo phần trăm
-              this.discountAmount = (this.totalAmount * selectedVoucher.discountValue) / 100;
-            } else if (selectedVoucher.discountType === 'FIXED') {
-              // Giảm giá cố định
-              this.discountAmount = selectedVoucher.discountValue;
+          const selectedVoucher = this.userVoucher.find(v => v.voucherCode === code);
+          console.log('Selected Voucher:', selectedVoucher);
+            this.voucherCode = code;
+          if (selectedVoucher) {
+            switch (selectedVoucher.voucherType) {
+              case 1: 
+                if (selectedVoucher.discountType === 'PERCENT') {
+                  this.toastr.success('Áp dụng giảm giá phần trăm cho vé xem phim!', 'Thông báo');
+                  this.discountAmount = (this.totalTicketPrice * selectedVoucher.discountValue) / 100;
+                } else if (selectedVoucher.discountType === 'FIXED') {
+                  this.toastr.success('Áp dụng giảm giá cố định cho vé xem phim!', 'Thông báo');
+                  this.discountAmount = selectedVoucher.discountValue;
+                }
+                break;
+              case 2: // All
+                if (selectedVoucher.discountType === 'PERCENT') {
+                  this.toastr.success('Áp dụng giảm giá phần trăm cho toàn bộ đơn hàng!', 'Thông báo');
+                  this.discountAmount = (this.totalAmount * selectedVoucher.discountValue) / 100;
+                } else if (selectedVoucher.discountType === 'FIXED') {
+                  this.toastr.success('Áp dụng giảm giá cố định cho toàn bộ đơn hàng!', 'Thông báo');
+                  this.discountAmount = selectedVoucher.discountValue;
+                }
+                break;
+              case 3: 
+                if (selectedVoucher.discountType === 'PERCENT') {
+                  this.toastr.success('Áp dụng giảm giá phần trăm cho dịch vụ!', 'Thông báo');
+                  this.discountAmount = (this.totalServiceAmount * selectedVoucher.discountValue) / 100;
+                } else if (selectedVoucher.discountType === 'FIXED') {
+                  this.toastr.success('Áp dụng giảm giá cố định cho dịch vụ!', 'Thông báo');
+                  this.discountAmount = selectedVoucher.discountValue;
+                }
+                break;
+  
+              default:
+                this.toastr.warning('Loại voucher không hợp lệ!', 'Thông báo');
+                return;
             }
-
-            // Cập nhật tổng tiền
             this.updateTotals();
+          } else {
+            this.toastr.error('Không tìm thấy voucher!', 'Lỗi');
           }
         } else {
           this.toastr.error(response.message || 'Voucher không khả dụng!', 'Lỗi');
@@ -141,8 +164,9 @@ export class PurchaseComponent implements OnInit, OnDestroy {
       }
     });
   }
+  
   isTermsAccepted: boolean = false; // Trạng thái checkbox 1
-  isAgeConfirmed: boolean = false; // Trạng thái checkbox 2
+  isAgeConfirmed: boolean = false; 
   constructor(
     private seatService: SeatService,
     private cdr: ChangeDetectorRef,
@@ -154,6 +178,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     private walletService: WalletOnboardService,
     private membershipService: MembershipService,
     private userVoucherService: UserVoucherService,
+    private spinner: NgxSpinnerService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
   ngOnDestroy(): void {
@@ -218,27 +243,39 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     if (!this.userId) {
       return;
     }
-
-    this.userVoucherService.getUserVouchers(this.userId).subscribe({
+  
+    this.userVoucherService.getUserVouchers().subscribe({
       next: (response) => {
         if (response.responseCode === 200 && response.data) {
-          // Chuyển đổi dữ liệu từ API sang định dạng hiển thị
-          this.voucherList = response.data.map(voucher => ({
-            code: voucher.voucherCode,
-            name: voucher.voucherDescription,
-            status: voucher.status === 1 ? null : 'Không khả dụng', // 1 là trạng thái khả dụng
-            expiry: new Date(voucher.expiryDate).toLocaleDateString('vi-VN'),
+          // Ánh xạ dữ liệu từ API vào danh sách voucher
+          this.userVoucher = response.data.map((voucher: any) => ({
+            id: voucher.id,
+            voucherId: voucher.voucherId,
+            userId: voucher.userId,
+            claimedAt: new Date(voucher.claimedAt).toLocaleString('vi-VN'), // Định dạng ngày nhận
+            expiryDate: new Date(voucher.expiryDate).toLocaleString('vi-VN'), // Định dạng ngày hết hạn
+            status: voucher.status, // Ensure status remains a number
+            quantity: voucher.quantity,
+            usedQuantity: voucher.usedQuantity,
+            remainingQuantity: voucher.remainingQuantity,
+            voucherCode: voucher.voucherCode,
+            voucherDescription: voucher.voucherDescription,
             discountType: voucher.discountType,
             discountValue: voucher.discountValue,
-            remainingQuantity: voucher.remainingQuantity
+            voucherType: voucher.voucherType,
+            minOrderValue: voucher.minOrderValue,
+   
           }));
-          console.log('Loaded vouchers:', this.voucherList);
+  
+          console.log('Danh sách voucher đã tải:', this.userVoucher);
         } else {
-          console.error('Error loading vouchers:', response.message);
+          console.error('Lỗi khi tải danh sách voucher:', response.message);
+          this.toastr.error(response.message || 'Không thể tải danh sách voucher!', 'Lỗi');
         }
       },
       error: (error) => {
-        // console.error('Error fetching vouchers:', error);
+        console.error('Lỗi khi gọi API voucher:', error);
+        this.toastr.error('Có lỗi xảy ra khi tải danh sách voucher!', 'Lỗi');
       }
     });
   }
@@ -257,6 +294,36 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+   applyDiscount(voucherType: VoucherType): number {
+    let discountedAmount = 0;
+  
+    switch (voucherType) {
+      case VoucherType.Ticket:
+        console.log('Giảm giá cho vé xem phim');
+        break;
+      case VoucherType.All:
+        console.log('Giảm giá toàn bộ (vé + dịch vụ)');
+        break;
+      case VoucherType.Service:
+        console.log('Giảm giá cho dịch vụ (combo, bắp rang, nước uống, v.v.)');
+        break;
+      default:
+        console.warn('Loại voucher không hợp lệ');
+        break;
+    }
+  
+    return discountedAmount;
+  }
+  applyMembershipBenefits(): void {
+    if (!this.checkMembership) {
+      this.toastr.error('Bạn chưa có Membership. Vui lòng đăng ký!', 'Thông Báo');
+      return;
+    }
+  
+    this.toastr.success('Lợi ích Membership đã được áp dụng!', 'Thông Báo');
+    // Thêm logic xử lý khi áp dụng Membership, ví dụ:
+    this.discountAmount = 100000; // Giảm giá 100,000đ khi sử dụng Membership
   }
   clearLocalStorageData(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -581,6 +648,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     return null;
   }
   completeOrderWithoutPayment(): void {
+    this.spinner.show(); 
     const allSeatIds = this.seats.flatMap(seat => seat.seatIds);
     const orderData: OrderModelReq = {
       email: this.email,
@@ -599,15 +667,17 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         seatByShowTimeId: seatId
       })),
     };
-
+  
     this.orderService.createOrder(orderData).subscribe({
       next: (response: any) => {
         this.toastr.success('Đơn hàng đã được hoàn tất mà không cần thanh toán!', 'Thông báo');
+        this.spinner.hide(); // Ẩn spinner khi xử lý thành công
         this.router.navigate(['/']);
       },
       error: (error) => {
         console.error('Error creating order without payment:', error);
         this.toastr.error('❌ Lỗi khi hoàn tất đơn hàng.', 'Thông báo');
+        this.spinner.hide(); // Ẩn spinner khi xảy ra lỗi
       }
     });
   }
@@ -651,28 +721,45 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     }
   }
   createPayment(paymentData: PaymentModelReq, orderData: OrderModelReq) {
+    this.spinner.show();
     if (this.selectedPaymentMethod === 'VNPAY') {
       this.orderService.createPayment(paymentData).subscribe({
         next: (response: any) => {
           if (response.responseCode === 1) {
             localStorage.setItem('orderDataPayment', JSON.stringify(orderData));
             const callbackWindow = window.open(response.data, '_blank');
-            window.addEventListener('message', (event) => {
+  
+            // Lắng nghe sự kiện message từ cửa sổ thanh toán
+            const messageListener = (event: MessageEvent) => {
               if (!event.data || !event.data.type) return;
   
               if (event.data.type === 'PAYMENT_SUCCESS') {
-                this.handleSuccessfulPayment(event.data.transactionCode,orderData);
+                this.handleSuccessfulPayment(event.data.transactionCode, orderData);
+                this.toastr.success('✅ Thanh toán thành công!', "Thông Báo");
               } else if (event.data.type === 'PAYMENT_FAILED') {
                 this.toastr.error('❌ Thanh toán thất bại.', "Thông Báo");
               }
-            });
+  
+              // Đóng cửa sổ thanh toán và xóa listener
+              if (callbackWindow) {
+                callbackWindow.close();
+              }
+              window.removeEventListener('message', messageListener);
+  
+              // Ẩn spinner sau khi xử lý xong
+              this.spinner.hide();
+            };
+  
+            window.addEventListener('message', messageListener);
           } else {
             this.toastr.error('❌ Lỗi khi tạo thanh toán:', 'Thông Báo');
+            this.spinner.hide(); // Ẩn spinner khi lỗi xảy ra
           }
         },
         error: (error) => {
           console.error('Error creating payment:', error);
           this.toastr.error('❌ Lỗi khi tạo thanh toán:', 'Thông Báo');
+          this.spinner.hide(); // Ẩn spinner khi lỗi xảy ra
         }
       });
     } else if (this.selectedPaymentMethod === 'MULTI-WALLET') {
@@ -680,22 +767,26 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         .then((walletAddress) => {
           if (!walletAddress) {
             this.toastr.error('Failed to connect wallet.');
+            this.spinner.hide(); // Ẩn spinner khi lỗi xảy ra
             return;
           }
           this.walletAddress = walletAddress;
-
+  
           // Chuyển đổi từ VND sang USDC
           const usdcAmount = this.convertVNDToUSDC(this.totalAmount);
           if (usdcAmount === null) {
             this.toastr.error('Không thể chuyển đổi VND sang USDC. Vui lòng thử lại.');
+            this.spinner.hide(); // Ẩn spinner khi lỗi xảy ra
             return;
           }
-
+  
           this.roundedUSDCAmount = parseFloat(usdcAmount.toFixed(6));
           if (isNaN(this.roundedUSDCAmount) || this.roundedUSDCAmount <= 0) {
             this.toastr.error('Invalid USDC amount. Please try again.');
+            this.spinner.hide(); // Ẩn spinner khi lỗi xảy ra
             return;
           }
+  
           // Gọi hàm makePayment sau khi kết nối ví thành công
           return this.walletService.makePayment(this.roundedUSDCAmount.toString());
         })
@@ -705,30 +796,38 @@ export class PurchaseComponent implements OnInit, OnDestroy {
             orderData.totalPriceMethod = this.roundedUSDCAmount.toString();
           } else {
             this.toastr.error('Invalid transaction hash. Please try again.');
+            this.spinner.hide(); 
             return;
           }
+  
           this.orderService.createOrder(orderData).subscribe({
             next: (response: any) => {
-              if (response.responseCode != 200){
-                this.toastr.error('❌ Đơn hàng không thành công:' + response.Message , "Thông Báo");
+              if (response.responseCode != 200) {
+                this.toastr.error('❌ Đơn hàng không thành công:' + response.Message, "Thông Báo");
+                this.spinner.hide();
                 return;
               }
-               const seatsToUpdate: SeatStatusUpdateRequest[] = orderData.tickets.map((ticket: TicketReq) => ({
-                            SeatId: ticket.seatByShowTimeId,
-                            Status: 5
-                          }));
+  
+              const seatsToUpdate: SeatStatusUpdateRequest[] = orderData.tickets.map((ticket: TicketReq) => ({
+                SeatId: ticket.seatByShowTimeId,
+                Status: 5
+              }));
               this.seatService.payment(seatsToUpdate);
               this.toastr.success('Đơn hàng đã được tạo thành công!', 'Thông Báo');
+              this.spinner.hide(); // Ẩn spinner khi thành công
               this.router.navigate(['/']);
             },
             error: (error) => {
               console.error('Error creating order:', error);
               this.toastr.error('❌ Lỗi khi tạo đơn hàng.', 'Thông Báo');
+              this.spinner.hide(); // Ẩn spinner khi lỗi xảy ra
             }
           });
         })
         .catch((error) => {
+          console.error('Error during wallet payment:', error);
           this.toastr.error('An error occurred during the payment process. Please try again.');
+          this.spinner.hide(); // Ẩn spinner khi lỗi xảy ra
         });
     }
   }
