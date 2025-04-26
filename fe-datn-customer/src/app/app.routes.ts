@@ -29,6 +29,7 @@ import { TimeUpComponent } from './Component/time-up/time-up.component';
 import { TestDialogComponent } from './Component/test-dialog/test-dialog.component';
 import { DetailsTicketComponent } from './Component/my-cinex/details-ticket/details-ticket.component';
 import { VipMemberComponent } from './Component/my-cinex/vip-member/vip-member.component';
+import { VerifyOptComponent } from './Component/verify-opt/verify-opt.component';
 
 export const routes: Routes = [
     {
@@ -66,7 +67,7 @@ export const routes: Routes = [
     { path: 'payment-callback', component: PaymentCallBackComponent },
     { path: 'NeedMoreTime', component: NeedMoreTimeComponent },
     { path: 'TimeUpComponent', component: TimeUpComponent },
+    { path: 'VerifyOpt', component: VerifyOptComponent },
     { path: 'test', component: TestDialogComponent },
-    
     { path: 'thanhtoanMembership', component: VipMemberComponent},
 ];

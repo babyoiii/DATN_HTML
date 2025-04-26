@@ -45,243 +45,167 @@
                     </div>
                     <div class="flex-1 pb-6">
                         <form class="grid grid-cols-6 gap-x-4 gap-y-6" aria-label="Sign-Up">
-                            <label class="text-300 [&amp;:has(input[disabled])]:cursor-not-allowed col-span-6 grid gap-2">
+                            <label class="text-gray-300 col-span-6 grid gap-2">
                                 <span class="label">Email</span>
                                 <div class="amc-input amc-input--box">
-                                  <input
-                                    class="input"
-                                    id="email"
-                                    inputmode="email"
-                                    autocomplete="email"
-                                    type="email"
-                                    name="email"
-                                    [(ngModel)]="_signUpData.email"
-                                    #email="ngModel"
-                                    required
-                                    email>
+                                    <input class="input border border-gray-600 bg-gray-800 text-white p-2 rounded-md" id="email" inputmode="email" autocomplete="email" type="email" name="email" [(ngModel)]="_signUpData.email" #email="ngModel" required email>
                                 </div>
                                 <div *ngIf="email.invalid && email.touched" class="text-red-500 text-sm">
-                                  <p *ngIf="email.errors?.['required']">Email không được để trống.</p>
-                                  <p *ngIf="email.errors?.['email']">Email không hợp lệ.</p>
+                                    <p *ngIf="email.errors?.['required']">Email không được để trống.</p>
+                                    <p *ngIf="email.errors?.['email']">Email không hợp lệ.</p>
                                 </div>
                             </label>
 
                             <!-- Mật khẩu -->
-                            <label class="text-300 col-span-6 grid gap-2">
-                              <span class="label">Mật khẩu</span>
-                              <div class="amc-input amc-input--box">
-                                <input
-                                  class="input"
-                                  autocomplete="new-password"
-                                  type="password"
-                                  name="password"
-                                  [(ngModel)]="_signUpData.password"
-                                  #password="ngModel"
-                                  required
-                                  minlength="6"
-                                  pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$">
-                              </div>
-                              <div *ngIf="password.invalid && password.touched" class="text-red-500 text-sm">
-                                <p *ngIf="password.errors?.['required']">Mật khẩu không được để trống.</p>
-                                <p *ngIf="password.errors?.['minlength']">Mật khẩu phải có ít nhất 6 ký tự.</p>
-                                <p *ngIf="password.errors?.['pattern']">Mật khẩu phải chứa ít nhất một chữ cái viết hoa, một số và một ký tự đặc biệt.</p>
-                              </div>
-                                <p class="text-gray-subtle text-sm font-semibold leading-tight tracking-normal">Phải
-                                    chứa một chữ cái viết hoa và một số hoặc ký tự đặc biệt.</p>
+                            <label class="text-gray-300 col-span-6 grid gap-2">
+                                <span class="label">Mật khẩu</span>
+                                <div class="amc-input amc-input--box">
+                                    <input class="input border border-gray-600 bg-gray-800 text-white p-2 rounded-md" autocomplete="new-password" type="password" name="password" [(ngModel)]="_signUpData.password" #password="ngModel" required minlength="6" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$">
+                                </div>
+                                <div *ngIf="password.invalid && password.touched" class="text-red-500 text-sm">
+                                    <p *ngIf="password.errors?.['required']">Mật khẩu không được để trống.</p>
+                                    <p *ngIf="password.errors?.['minlength']">Mật khẩu phải có ít nhất 6 ký tự.</p>
+                                    <p *ngIf="password.errors?.['pattern']">Mật khẩu phải chứa ít nhất một chữ cái viết hoa, một số và một ký tự đặc biệt.</p>
+                                </div>
+                                <p class="text-gray-400 text-sm font-semibold leading-tight tracking-normal">Phải chứa một chữ cái viết hoa và một số hoặc ký tự đặc biệt.</p>
                             </label>
-                            <label class="text-300 col-span-6 grid gap-2">
+                            <label class="text-gray-300 col-span-6 grid gap-2">
                                 <span class="label">Xác nhận mật khẩu</span>
                                 <div class="amc-input amc-input--box">
-                                  <input
-                                    class="input"
-                                    autocomplete="new-password"
-                                    type="password"
-                                    name="confirmPassword"
-                                    [(ngModel)]="_signUpData.confirmPassword"
-                                    #confirmPassword="ngModel"
-                                    required>
+                                    <input class="input border border-gray-600 bg-gray-800 text-white p-2 rounded-md" autocomplete="new-password" type="password" name="confirmPassword" [(ngModel)]="_signUpData.confirmPassword" #confirmPassword="ngModel" required>
                                 </div>
                                 <div *ngIf="_signUpData.password !== _signUpData.confirmPassword && confirmPassword.touched" class="text-red-500 text-sm">
-                                  <p>Mật khẩu và xác nhận mật khẩu không khớp.</p>
+                                    <p>Mật khẩu và xác nhận mật khẩu không khớp.</p>
                                 </div>
-                              </label>
-                           <!-- Họ và tên -->
-                            <label class="text-300 col-span-6 grid gap-2">
+                            </label>
+
+                            <!-- Họ và tên -->
+                            <label class="text-gray-300 col-span-6 grid gap-2">
                                 <span class="label">Họ và tên</span>
                                 <div class="amc-input amc-input--box">
-                                <input
-                                    class="input"
-                                    type="text"
-                                    name="name"
-                                    [(ngModel)]="_signUpData.name"
-                                    #name="ngModel"
-                                    required>
+                                    <input class="input border border-gray-600 bg-gray-800 text-white p-2 rounded-md" type="text" name="name" [(ngModel)]="_signUpData.name" #name="ngModel" required>
                                 </div>
                                 <div *ngIf="name.invalid && name.touched" class="text-red-500 text-sm">
-                                <p>Họ và tên không được để trống.</p>
+                                    <p>Họ và tên không được để trống.</p>
                                 </div>
                             </label>
-                        <!-- Số điện thoại -->
-                        <label class="text-300 col-span-6 grid gap-2">
-                            <span class="label">Số điện thoại</span>
-                            <div class="amc-input amc-input--box">
-                            <input
-                                class="input"
-                                type="text"
-                                name="phoneNumber"
-                                [(ngModel)]="_signUpData.phoneNumber"
-                                #phoneNumber="ngModel"
-                                required
-                                pattern="^[0-9]{10}$">
-                            </div>
-                            <div *ngIf="phoneNumber.invalid && phoneNumber.touched" class="text-red-500 text-sm">
-                            <p *ngIf="phoneNumber.errors?.['required']">Số điện thoại không được để trống.</p>
-                            <p *ngIf="phoneNumber.errors?.['pattern']">Số điện thoại phải có 10 chữ số.</p>
-                            </div>
-                        </label>
+
+                            <!-- Số điện thoại -->
+                            <label class="text-gray-300 col-span-6 grid gap-2">
+                                <span class="label">Số điện thoại</span>
+                                <div class="amc-input amc-input--box">
+                                    <input class="input border border-gray-600 bg-gray-800 text-white p-2 rounded-md" type="text" name="phoneNumber" [(ngModel)]="_signUpData.phoneNumber" #phoneNumber="ngModel" required pattern="^[0-9]{10}$">
+                                </div>
+                                <div *ngIf="phoneNumber.invalid && phoneNumber.touched" class="text-red-500 text-sm">
+                                    <p *ngIf="phoneNumber.errors?.['required']">Số điện thoại không được để trống.</p>
+                                    <p *ngIf="phoneNumber.errors?.['pattern']">Số điện thoại phải có 10 chữ số.</p>
+                                </div>
+                            </label>
+
                             <!-- Ngày sinh -->
-                            <label class="grid gap-2 text-300 col-span-6">
+                            <label class="grid gap-2 text-gray-300 col-span-6">
                                 <span class="label">Ngày Sinh</span>
                                 <mat-form-field appearance="fill" class="w-full">
-                                <mat-label>Chọn ngày sinh của bạn</mat-label>
-                                <input
-                                    matInput
-                                    [matDatepicker]="picker"
-                                    [(ngModel)]="_signUpData.dob"
-                                    name="dob"
-                                    #dob="ngModel"
-                                    required>
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
+                                    <mat-label>Chọn ngày sinh của bạn</mat-label>
+                                    <input 
+                                        matInput 
+                                        [matDatepicker]="picker" 
+                                        [(ngModel)]="_signUpData.dob" 
+                                        name="dob" 
+                                        #dob="ngModel" 
+                                        [max]="today" 
+                                        required>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
                                 <div *ngIf="dob.invalid && dob.touched" class="text-red-500 text-sm">
-                                <p>Ngày sinh không được để trống.</p>
+                                    <p *ngIf="dob.errors?.['required']">Ngày sinh không được để trống.</p>
+                                    <p *ngIf="dob.errors?.['matDatepickerMax']">Ngày sinh phải nhỏ hơn ngày hiện tại.</p>
                                 </div>
-                                                        </label>
-                                                    <!-- Giới tính -->
+                            </label>
+
+                            <!-- Giới tính -->
                             <div class="grid gap-2 text-gray-700 col-span-6">
                                 <div class="grid gap-2 text-white">
-                                <span class="label md:col-span-3">Giới tính</span>
-                                <div class="flex items-center gap-4">
-                                    <label class="flex items-center gap-2">
-                                    <input
-                                        type="radio"
-                                        name="sex"
-                                        [value]="1"
-                                        [(ngModel)]="_signUpData.sex"
-                                        class="h-4 w-4 text-blue-500 focus:ring-blue-500"
-                                        required />
-                                    <span class="text-white">Nam</span>
-                                    </label>
-                                    <label class="flex items-center gap-2">
-                                    <input
-                                        type="radio"
-                                        name="sex"
-                                        [value]="2"
-                                        [(ngModel)]="_signUpData.sex"
-                                        class="h-4 w-4 text-blue-500 focus:ring-blue-500"
-                                        required />
-                                    <span class="text-white">Nữ</span>
-                                    </label>
-                                </div>
-                                <div *ngIf="_signUpData.sex === 0" class="text-red-500 text-sm">
-                                    <p>Vui lòng chọn giới tính.</p>
-                                </div>
+                                    <span class="label md:col-span-3">Giới tính</span>
+                                    <div class="flex items-center gap-4">
+                                        <label class="flex items-center gap-2">
+                                            <input type="radio" name="sex" [value]="1" [(ngModel)]="_signUpData.sex" class="h-4 w-4 text-blue-500 focus:ring-blue-500" required />
+                                            <span class="text-white">Nam</span>
+                                        </label>
+                                        <label class="flex items-center gap-2">
+                                            <input type="radio" name="sex" [value]="2" [(ngModel)]="_signUpData.sex" class="h-4 w-4 text-blue-500 focus:ring-blue-500" required />
+                                            <span class="text-white">Nữ</span>
+                                        </label>
+                                    </div>
+                                    <div *ngIf="_signUpData.sex === 0" class="text-red-500 text-sm">
+                                        <p>Vui lòng chọn giới tính.</p>
+                                    </div>
                                 </div>
                             </div>
-                            <label
-                                        class="text-300 [&amp;:has(input[disabled])]:cursor-not-allowed col-span-6 grid gap-2"><span
-                                            class="label">Địa chỉ</span>
-                                        <div class="amc-input amc-input--box">
-                                            
-                                            <input
-                                            class="input"
-                                            placeholder="Địa chỉ của bạn"
-                                            type="text"
-                                            name="address"
-                                            [(ngModel)]="_signUpData.address"
-                                            #address="ngModel"
-                                            required>
-                                        
-                                        
-                                        <button type="button"><svg
-                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
-                                            width="1em" height="100%"
-                                            class="transition-all duration-200 hover:fill-blue-500">
+
+                            <!-- Địa chỉ -->
+                            <label class="text-gray-300 col-span-6 grid gap-2">
+                                <span class="label">Địa chỉ</span>
+                                <div class="amc-input amc-input--box">
+                                    <input class="input border border-gray-600 bg-gray-800 text-white p-2 rounded-md" placeholder="Địa chỉ của bạn" type="text" name="address" [(ngModel)]="_signUpData.address" #address="ngModel" required>
+                                    <button type="button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%" class="transition-all duration-200 hover:fill-blue-500">
                                             <title>Search Theatres</title>
-                                            <path
-                                                d="M37.151 17.176A17.176 17.176 0 1 0 19.976 34.35 17.204 17.204 0 0 0 37.15 17.176zM19.976 32.27A15.095 15.095 0 1 1 35.07 17.176 15.095 15.095 0 0 1 19.976 32.27zm13.493.393a1.05 1.05 0 0 0-1.63 1.322l8.573 10.625a1.05 1.05 0 1 0 1.63-1.32z">
-                                            </path>
-                                        </svg></button>
-                                        <div *ngIf="address.invalid && address.touched" class="text-red-500 text-sm">
-                                            <p>Địa chỉ không được để trống.</p>
-                                          </div>
-                                    
+                                            <path d="M37.151 17.176A17.176 17.176 0 1 0 19.976 34.35 17.204 17.204 0 0 0 37.15 17.176zM19.976 32.27A15.095 15.095 0 1 1 35.07 17.176 15.095 15.095 0 0 1 19.976 32.27zm13.493.393a1.05 1.05 0 0 0-1.63 1.322l8.573 10.625a1.05 1.05 0 1 0 1.63-1.32z"></path>
+                                        </svg>
+                                    </button>
+                                    <div *ngIf="address.invalid && address.touched" class="text-red-500 text-sm">
+                                        <p>Địa chỉ không được để trống.</p>
                                     </div>
-                                            <button  (click)="getCurrentLocation()" type="button"
-                                            class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white flex items-center gap-2 text-sm md:text-base"><svg
-                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em"
-                                                height="100%">
-                                                <path
-                                                    d="M45 22.5a1.012 1.012 0 0 0-1.013-1.012h-4.612A16.875 16.875 0 0 0 23.512 5.625V1.013a1.012 1.012 0 0 0-2.024 0v4.612A16.875 16.875 0 0 0 5.963 21.488h-4.95a1.012 1.012 0 0 0 0 2.024H5.99A16.706 16.706 0 0 0 21.488 39.01v4.978a1.012 1.012 0 0 0 2.024 0v-4.95a16.875 16.875 0 0 0 15.863-15.524h4.64A1.012 1.012 0 0 0 45 22.5zM22.669 37.097A14.766 14.766 0 1 1 37.434 22.33 14.794 14.794 0 0 1 22.67 37.097z">
-                                                </path>
-                                                <path
-                                                    d="M22.669 12.769a9.563 9.563 0 1 0 9.562 9.562 9.59 9.59 0 0 0-9.562-9.562zm0 17.128a7.566 7.566 0 1 1 7.565-7.538 7.566 7.566 0 0 1-7.565 7.538z">
-                                                </path>
-                                            </svg>Sử dụng địa chỉ hiện tại</button>
-                                        <google-map
-                                          *ngIf="latitude && longitude"
-                                          [center]="{lat: latitude, lng: longitude}"
-                                          [zoom]="15"
-                                          height="400px"
-                                          width="100%">
-                                          <map-marker
-                                            [position]="{lat: latitude, lng: longitude}"
-                                            [title]="'Your Location'">
-                                          </map-marker>
-                                        </google-map>
+                                </div>
+                                <button (click)="getCurrentLocation()" type="button" class="text-center justify-center w-max font-bold transition duration-200 rounded-full text-blue-500 hover:text-white flex items-center gap-2 text-sm md:text-base">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%">
+                                        <path d="M45 22.5a1.012 1.012 0 0 0-1.013-1.012h-4.612A16.875 16.875 0 0 0 23.512 5.625V1.013a1.012 1.012 0 0 0-2.024 0v4.612A16.875 16.875 0 0 0 5.963 21.488h-4.95a1.012 1.012 0 0 0 0 2.024H5.99A16.706 16.706 0 0 0 21.488 39.01v4.978a1.012 1.012 0 0 0 2.024 0v-4.95a16.875 16.875 0 0 0 15.863-15.524h4.64A1.012 1.012 0 0 0 45 22.5zM22.669 37.097A14.766 14.766 0 1 1 37.434 22.33 14.794 14.794 0 0 1 22.67 37.097z"></path>
+                                        <path d="M22.669 12.769a9.563 9.563 0 1 0 9.562 9.562 9.59 9.59 0 0 0-9.562-9.562zm0 17.128a7.566 7.566 0 1 1 7.565-7.538 7.566 7.566 0 0 1-7.565 7.538z"></path>
+                                    </svg>
+                                    Sử dụng địa chỉ hiện tại
+                                </button>
+                                <google-map *ngIf="latitude && longitude" [center]="{lat: latitude, lng: longitude}" [zoom]="15" height="400px" width="100%">
+                                    <map-marker [position]="{lat: latitude, lng: longitude}" [title]="'Your Location'"></map-marker>
+                                </google-map>
                             </label>
-                            <div class="col-span-6 [&amp;_p]:mb-0" role="group" aria-label="Terms and Conditions"><label
-                                    class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed mb-2">
+
+                            <div class="col-span-6" role="group" aria-label="Terms and Conditions">
+                                <label class="grid gap-2 text-gray-300 mb-2">
                                     <div class="flex items-start gap-2">
-                                        <div class="m-1 inline-block h-5 w-5"><input
-                                                class="h-5 w-5 appearance-none rounded border bg-[length:75%] bg-[50%] bg-no-repeat border-2 border-white/60 checked:border-0 checked:bg-blue-500 checked:bg-[url(https://amc-theatres-res.cloudinary.com/amc-cdn/static/images/forms/checkbox_checkmark.png)] checked:hover:bg-blue-700 disabled:cursor-not-allowed disabled:brightness-50 disabled:grayscale"
-                                                type="checkbox" name="termsAndConditions.0"></div>
+                                        <div class="m-1 inline-block h-5 w-5">
+                                            <input class="h-5 w-5 appearance-none rounded border border-gray-600 checked:bg-blue-500" type="checkbox" name="termsAndConditions.0">
+                                        </div>
                                         <div class="rich-text">
-                                            <p
-                                                class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                                <span class="text-300 caption">Tôi đồng ý</span><span
-                                                    class="text-300 caption">&nbsp;</span><a
-                                                    class="group transition-colors text-blue-500 hocus:text-white"
-                                                    rel="noopener noreferrer" target="_blank"
-                                                    href="/amcstubs/terms-and-conditions"><span
-                                                        class="text-300 caption">Cinex Cinema Terms  &amp;
-                                                        Điều kiện</span></a><span
-                                                    class="italic text-300 footnote">.</span></p>
+                                            <p class="mb-4 flex-wrap items-center gap-4">
+                                                <span class="caption">Tôi đồng ý</span>
+                                                <span class="caption">&nbsp;</span>
+                                                <a class="group transition-colors text-blue-500 hover:text-white" rel="noopener noreferrer" target="_blank" href="/amcstubs/terms-and-conditions">
+                                                    <span class="caption">Cinex Cinema Terms &amp; Điều kiện</span>
+                                                </a>
+                                                <span class="italic text-gray-400 footnote">.</span>
+                                            </p>
                                         </div>
                                     </div>
                                 </label>
-                                
-                                <label
-                                    class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
-                                        class="label flex items-center gap-2">
-                                        <div class="m-1 inline-block h-5 w-5"><input
-                                                class="h-5 w-5 appearance-none rounded border bg-[length:75%] bg-[50%] bg-no-repeat border-2 border-white/60 checked:border-0 checked:bg-blue-500 checked:bg-[url(https://amc-theatres-res.cloudinary.com/amc-cdn/static/images/forms/checkbox_checkmark.png)] checked:hover:bg-blue-700 disabled:cursor-not-allowed disabled:brightness-50 disabled:grayscale"
-                                                readonly="" type="checkbox" checked=""></div><span
-                                            class="text-300 caption">Đăng ký nhận thông tin liên lạc của Cinex Cinema để nhận các ưu đãi độc quyền
-                                            và tin tức chuyển nhà mới nhất. <button type="button"
-                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-sm md:text-base">Chi tiết</button></span>
+
+                                <label class="grid gap-2 text-gray-300">
+                                    <span class="label flex items-center gap-2">
+                                        <div class="m-1 inline-block h-5 w-5">
+                                            <input class="h-5 w-5 appearance-none rounded border border-gray-600 checked:bg-blue-500" readonly="" type="checkbox" checked="">
+                                        </div>
+                                        <span class="caption">Đăng ký nhận thông tin liên lạc của Cinex Cinema để nhận các ưu đãi độc quyền và tin tức chuyển nhà mới nhất.
+                                            <button type="button" class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 rounded-full text-blue-500 hover:text-white text-sm md:text-base">Chi tiết</button>
+                                        </span>
                                     </span>
-                                
                                 </label>
+
                                 <div class="flex flex-wrap items-center gap-4 py-4 justify-end col-span-6">
-                                    <button
-                                      type="submit"
-                                      (click)="signUp()"
-                                      class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">
-                                      Tiếp tục
+                                    <button type="submit" (click)="signUp()" class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 rounded-full text-black bg-blue-500 hover:bg-blue-600 px-6 min-w-[10ch] h-12">
+                                        Tiếp tục
                                     </button>
-                                  </div>
+                                </div>
                             </div>
                         </form>
                     </div>

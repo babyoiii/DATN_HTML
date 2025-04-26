@@ -1,0 +1,88 @@
+/* General styles for the component */
+    .bg-gray-100 {
+        background: linear-gradient(to bottom right, #353535, #605f5f); /* New vibrant gradient background */
+    }
+
+    .bg-white {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 400px; /* Adjusted width for better styling */
+    }
+
+    /* Centering styles */
+    .min-h-screen {
+        display: flex;
+        align-items: center; /* Center vertically */
+        justify-content: center; /* Center horizontally */
+        height: 100vh; /* Full viewport height */
+    }
+
+    /* Heading styles */
+    h2 {
+        color: #333;
+    }
+
+    /* Input styles */
+    input[type="text"] {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 10px;
+        transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+        border-color: #4a90e2;
+        outline: none;
+    }
+
+    /* Button styles */
+    button {
+        cursor: pointer;
+    }
+
+    /* Error message styles */
+    #error {
+        color: #e74c3c; /* Red color for error messages */
+    }
+
+    /* Link styles */
+    a {
+        color: #4a90e2;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    /* Tùy chỉnh container của spinner */
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  
+  /* Tùy chỉnh văn bản */
+  .wave-text {
+    margin-top: 1rem;
+    font-size: 1.25rem; /* Tăng kích thước chữ */
+    color: #4A90E2; /* Màu xanh đẹp */
+    animation: fadeIn 1.5s infinite; /* Hiệu ứng mờ dần */
+  }
+  
+  /* Hiệu ứng mờ dần */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.3;
+    }
+  }

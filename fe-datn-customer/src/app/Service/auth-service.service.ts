@@ -176,4 +176,8 @@ export class AuthServiceService {
   ChangePassword(changePasswordModel: ChangePasswordModel): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/Auth/ChangePassword`, changePasswordModel);
   }
+  ReSendOtp(email: string): Observable<any> {
+    const payload = { email };
+    return this.http.post<any>(`${this.baseUrl}/Auth/ReSendOpt`, payload);
+  }
 }

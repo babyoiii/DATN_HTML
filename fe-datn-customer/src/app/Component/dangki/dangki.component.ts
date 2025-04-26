@@ -12,7 +12,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
-import { OtpVerificationComponent } from '../otp-verification/otp-verification.component';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -33,6 +32,7 @@ export class DangkiComponent implements OnInit {
     dob: new Date(),
     sex: 1
   };
+  today: Date = new Date(); 
   latitude!: number;
   longitude!: number;
   currentAddress: string = '';
@@ -146,38 +146,19 @@ export class DangkiComponent implements OnInit {
       this.toast.error('Địa chỉ không được để trống!', 'Lỗi');
       return;
     }
-    this.spinner.show(); // Hiển thị spinner trong khi xử lý
+    this.spinner.show(); 
     this.AuthService.SignUp(this._signUpData).subscribe({
       next: (response: any) => {
         if (response.responseCode === 200) {
-          console.log('Đăng ký thành công:', response);
-  
-          const dialogRef = this.dialog.open(OtpVerificationComponent, {
-            width: '600px', // Kích thước dialog
-            disableClose: true, // Không cho phép đóng dialog khi click ra ngoài
-            data: { email: this._signUpData.email, serverOtp: response.data.otp } // Truyền email và OTP từ server
-          });
-  
-          // Xử lý kết quả sau khi dialog đóng
-          dialogRef.afterClosed().subscribe((result) => {
-            if (result) {
-              this.router.navigate(['/login'])
-              this.toast.success('Xác nhận OTP thành công!', 'Thông báo');
-            } else {
-              this.toast.error('Xác nhận OTP thất bại!', 'Lỗi');
-              this.router.navigate(['/'])
-            }
-          });
-        } else {
-          console.log('Đăng ký thất bại:', response.message);
-          this.toast.error('Đăng ký thất bại!', response.message);
+          this.router.navigate(['/VerifyOpt'], { queryParams: { email: this._signUpData.email } });
+        }else {
+          this.toast.error(response.message || 'Đăng ký thất bại!', 'Lỗi');
         }
-        this.spinner.hide(); // Ẩn spinner sau khi xử lý xong
+          this.spinner.hide();
       },
       error: (error: any) => {
-        console.error('Lỗi khi đăng ký:', error);
         this.toast.error('Đăng ký thất bại! Vui lòng thử lại.', 'Lỗi');
-        this.spinner.hide(); // Ẩn spinner khi có lỗi
+        this.spinner.hide(); 
       }
     });
 }

@@ -671,6 +671,11 @@ export class PurchaseComponent implements OnInit, OnDestroy {
     this.orderService.createOrder(orderData).subscribe({
       next: (response: any) => {
         this.toastr.success('Đơn hàng đã được hoàn tất mà không cần thanh toán!', 'Thông báo');
+        const seatsToUpdate: SeatStatusUpdateRequest[] = orderData.tickets.map((ticket: TicketReq) => ({
+          SeatId: ticket.seatByShowTimeId,
+          Status: 5
+        }));
+        this.seatService.payment(seatsToUpdate);
         this.spinner.hide(); // Ẩn spinner khi xử lý thành công
         this.router.navigate(['/']);
       },
