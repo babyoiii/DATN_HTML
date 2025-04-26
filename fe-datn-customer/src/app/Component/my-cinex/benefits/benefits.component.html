@@ -114,6 +114,19 @@
                                             </dl>
                                         </div>
                                     }
+                                    <div *ngIf="!checkNextLevelBenefits()" class="grid grid-cols-1 items-center gap-4 rounded-lg p-6 bg-gradient-to-r from-gray-100 to-gray-200 text-center shadow-lg border border-gray-300">
+                                        <p class="text-xl font-bold text-gray-900">
+                                          🎉 Bạn đã đăng ký hết tất cả các hạn mức thẻ thành viên của Cinex Cinema!
+                                        </p>
+                                        <p class="text-sm text-gray-600">
+                                          Cảm ơn bạn đã đồng hành cùng chúng tôi. Hãy tiếp tục tận hưởng những lợi ích tuyệt vời từ CineX Cinema.
+                                        </p>
+                                        <img 
+                                          src="https://cdn-icons-png.flaticon.com/512/190/190411.png" 
+                                          alt="Membership Complete" 
+                                          class="mx-auto w-16 h-16"
+                                        />
+                                      </div>
                                         <div *ngIf="checkNextLevelBenefits()" class="grid grid-cols-3 items-center gap-4 rounded-b-lg p-3"
                                             style="background-image: url(&quot;https://amc-theatres-res.cloudinary.com/image/upload/f_auto/q_auto:low/amc-cdn/static/images/2024/bg-banner-premiere.png&quot;); background-repeat: no-repeat; background-size: cover;">
                                             <dl class="col-span-2 flex flex-col gap-2 text-100 text-black">

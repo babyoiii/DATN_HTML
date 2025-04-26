@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-history',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterLink],
+  imports: [CommonModule, FormsModule,RouterLink,NgxSpinnerModule],
   templateUrl: './history.component.html',
   styleUrl: './history.component.css'
 })
@@ -19,7 +20,7 @@ export class HistoryComponent implements OnInit {
   selectedDateFilter: string = '30';
   yearOptions: number[] = [];
   IsRefund : boolean = false;
-  constructor(private ordersService : OrdersService,private toast : ToastrService) { }
+  constructor(private ordersService : OrdersService,private toast : ToastrService,private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
    this.getListTicket()
@@ -78,12 +79,11 @@ onRefundOrder(orderId: string): void {
     return;
   }
 
-  // Hiển thị thông báo chờ
   const toastRef = this.toast.info('Đang xử lý yêu cầu hoàn vé...', 'Vui lòng chờ', {
     disableTimeOut: true, 
     closeButton: true, 
   });
-
+  this.spinner.show();
   this.ordersService.refundOrder(orderId).subscribe({
     next: (response: any) => {
       this.toast.clear(toastRef.toastId);
@@ -92,13 +92,16 @@ onRefundOrder(orderId: string): void {
         const pointsRefunded = response.data?.pointRefund || 0; 
         this.toast.success(`Hoàn vé thành công! Số điểm được hoàn là: ${pointsRefunded}`, 'Thông báo');
         this.getListTicket(); 
+
       } else {
         this.toast.error('Không thể hoàn vé. Vui lòng thử lại sau.', 'Lỗi');
+       
       }
+      this.spinner.hide();
     },
     error: (error) => {
       this.toast.clear(toastRef.toastId);
-
+      this.spinner.hide();
       console.error('Lỗi khi hoàn vé:', error);
       this.toast.error('Đã xảy ra lỗi khi hoàn vé.', 'Lỗi');
     }

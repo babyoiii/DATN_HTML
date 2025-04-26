@@ -1,0 +1,29 @@
+/* Tùy chỉnh container của spinner */
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  
+  /* Tùy chỉnh văn bản */
+  .wave-text {
+    margin-top: 1rem;
+    font-size: 1.25rem; /* Tăng kích thước chữ */
+    color: #4A90E2; /* Màu xanh đẹp */
+    animation: fadeIn 1.5s infinite; /* Hiệu ứng mờ dần */
+  }
+  
+  /* Hiệu ứng mờ dần */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.3;
+    }
+  }

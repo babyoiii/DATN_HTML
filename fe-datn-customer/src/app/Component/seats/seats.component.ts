@@ -18,6 +18,7 @@ import { AuthServiceService } from '../../Service/auth-service.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { NeedMoreTimeComponent } from "../need-more-time/need-more-time.component";
 import { TimeUpComponent } from "../time-up/time-up.component";
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 enum SeatStatus {
   Available = 0,
@@ -35,7 +36,7 @@ interface SeatStatusUpdateRequest {
 @Component({
   selector: 'app-seats',
   standalone: true,
-  imports: [CommonModule, GroupByPipe],
+  imports: [CommonModule, GroupByPipe,NgxSpinnerModule],
   templateUrl: './seats.component.html',
   styleUrls: ['./seats.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -91,6 +92,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
     private modalService: ModalService,
     private showtimeService: ShowtimeService,
     private authServiceService: AuthServiceService,
+    private spinner: NgxSpinnerService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
@@ -168,6 +170,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
     console.log("Dữ liệu phim:", this.movieInfo)
 
+  
   }
 
   private reloadCurrentRoute(): void {
@@ -237,6 +240,8 @@ export class SeatsComponent implements OnInit, OnDestroy {
     this.modalService.openSignInModal();
   }
   private loadSeats(showtimeId: string, userId: string): void {
+    this.spinner.show(); // Hiển thị spinner khi bắt đầu tải ghế
+
     this.seats = [];
     this.selectedSeats = [];
     this.totalAmount = 0;
@@ -253,6 +258,8 @@ export class SeatsComponent implements OnInit, OnDestroy {
     this.initializeWebSocket(showtimeId, userId);
 
     this.selectedSeats = selectedSeats;
+  this.spinner.hide();
+  
   }
 
   private initializeWebSocket(showtimeId: string, userId: string): void {
@@ -626,7 +633,10 @@ export class SeatsComponent implements OnInit, OnDestroy {
       this.toastr.warning('Vui lòng chọn ít nhất một ghế!', 'Cảnh báo');
       return false;
     }
-
+ // Nếu chỉ chọn 1 ghế, cho phép đặt lẻ
+  if (this.selectedSeats.length === 1) {
+    return true;
+  }
     // Tìm tất cả các ghế lẻ trong tất cả các hàng
     const allIsolatedSeats: SeatInfo[] = [];
 

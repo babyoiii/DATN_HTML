@@ -733,29 +733,42 @@ export class PurchaseComponent implements OnInit, OnDestroy {
           if (response.responseCode === 1) {
             localStorage.setItem('orderDataPayment', JSON.stringify(orderData));
             const callbackWindow = window.open(response.data, '_blank');
-  
+            let paymentSuccess = false; // Biến để theo dõi trạng thái thanh toán
+      
             // Lắng nghe sự kiện message từ cửa sổ thanh toán
             const messageListener = (event: MessageEvent) => {
               if (!event.data || !event.data.type) return;
-  
+      
               if (event.data.type === 'PAYMENT_SUCCESS') {
+                paymentSuccess = true; // Đánh dấu thanh toán thành công
                 this.handleSuccessfulPayment(event.data.transactionCode, orderData);
                 this.toastr.success('✅ Thanh toán thành công!', "Thông Báo");
               } else if (event.data.type === 'PAYMENT_FAILED') {
                 this.toastr.error('❌ Thanh toán thất bại.', "Thông Báo");
               }
-  
+      
               // Đóng cửa sổ thanh toán và xóa listener
               if (callbackWindow) {
                 callbackWindow.close();
               }
               window.removeEventListener('message', messageListener);
-  
+      
               // Ẩn spinner sau khi xử lý xong
               this.spinner.hide();
             };
-  
+      
             window.addEventListener('message', messageListener);
+      
+            // Kiểm tra trạng thái của cửa sổ thanh toán
+            const checkWindowClosed = setInterval(() => {
+              if (callbackWindow && callbackWindow.closed) {
+                clearInterval(checkWindowClosed); // Dừng kiểm tra
+                if (!paymentSuccess) {
+                  this.toastr.error('❌ Thanh toán thất bại do cửa sổ bị đóng.', "Thông Báo");
+                  this.spinner.hide();
+                }
+              }
+            }, 500); // Kiểm tra mỗi 500ms
           } else {
             this.toastr.error('❌ Lỗi khi tạo thanh toán:', 'Thông Báo');
             this.spinner.hide(); // Ẩn spinner khi lỗi xảy ra
