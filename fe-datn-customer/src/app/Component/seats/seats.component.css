@@ -42,16 +42,50 @@
     z-index: 1;
 }
 
+.fill-yellow-500 {
+    fill: #f59e0b; /* Màu vàng */
+  }
+
+
+  .bg-yellow-500 {
+    background-color: #f59e0b; /* Màu vàng */
+  }
+  
+  .text-gray-300 {
+    color: #d1d5db; /* Màu chữ xám nhạt */
+  }
 
 
 
-
-
-
-
-
-
-
+/* Tùy chỉnh container của spinner */
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  
+  /* Tùy chỉnh văn bản */
+  .wave-text {
+    margin-top: 1rem;
+    font-size: 1.25rem; /* Tăng kích thước chữ */
+    color: #4A90E2; /* Màu xanh đẹp */
+    animation: fadeIn 1.5s infinite; /* Hiệu ứng mờ dần */
+  }
+  
+  /* Hiệu ứng mờ dần */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.3;
+    }
+  }
 
 
 

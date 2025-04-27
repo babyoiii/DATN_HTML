@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { OrdersService } from '../../Service/Orders.Service';
-import { OrderModelReq, TicketReq } from '../../Models/Order';
 import { ToastrService } from 'ngx-toastr';
-import { SeatService, SeatStatusUpdateRequest } from '../../Service/seat.service';
 
 @Component({
   selector: 'app-payment-callback',
@@ -15,70 +11,34 @@ import { SeatService, SeatStatusUpdateRequest } from '../../Service/seat.service
   styleUrls: ['./payment-call-back.component.css']
 })
 export class PaymentCallBackComponent implements OnInit {
-  isSuccess = false;
   responseCode = '';
-   transactionCode : string = ''
+  transactionCode: string = '';
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private ordersService: OrdersService,
-    private http: HttpClient,
-    private toastr: ToastrService,
-    private seatService: SeatService 
+    private toastr: ToastrService
   ) {}
+
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.responseCode = params['vnp_ResponseCode'];
       this.transactionCode = params['vnp_TxnRef'];
-      const orderDataString = localStorage.getItem('orderDataPayment');
-      console.log(orderDataString, 'dataaaaa');
-      this.isSuccess = this.responseCode === '00';
-      if (this.isSuccess) {
-        this.createOrder();
+      const isSuccess = this.responseCode === '00';
+      if (isSuccess) {
+        window.opener?.postMessage({
+          type: 'PAYMENT_SUCCESS',
+          transactionCode: this.transactionCode
+        }, '*');
+        this.toastr.success('✅ Thanh toán thành công, đang xử lý đơn hàng...', "Thông Báo");
       } else {
+        window.opener?.postMessage({
+          type: 'PAYMENT_FAILED',
+          transactionCode: this.transactionCode
+        }, '*');
         this.toastr.error('❌ Thanh toán thất bại.', "Thông Báo");
       }
+      setTimeout(() => window.close(), 3000);
     });
-  }
-  createOrder() {
-    const orderDataString = localStorage.getItem('orderDataPayment');
-    if (orderDataString) {
-      try {
-        const orderData: OrderModelReq = JSON.parse(orderDataString);
-        orderData.transactionCode = this.transactionCode;
-        console.log(orderData, 'orderDataaaaaaa');
-        
-        this.ordersService.createOrder(orderData).subscribe({
-          next: (response) => {
-            console.log(response, 'responseeeeeee');
-            if (response.responseCode != 200){
-              this.toastr.error('❌ Đơn hàng không thành công:' + response.Message , "Thông Báo");
-              return;
-            }
-            const seatsToUpdate: SeatStatusUpdateRequest[] = orderData.tickets.map((ticket: TicketReq) => ({
-              SeatId: ticket.seatByShowTimeId,
-              Status: 5
-            }));
-            this.seatService.payment(seatsToUpdate);
-            this.toastr.success('✅ Đơn hàng đã được tạo thành công:', "Thông Báo!");
-            localStorage.removeItem('selectedSeats');
-            localStorage.removeItem('orderData');
-            localStorage.removeItem('orderDataPayment');
-            this.router.navigate(['/']);
-          },
-          error: (error) => {
-            this.toastr.error('❌ Lỗi khi tạo đơn hàng:', "Thông Báo");
-          }
-        });
-      } catch (error) {
-        console.error('❌ Lỗi khi parse dữ liệu order:', error);
-      }
-    } else {
-      console.warn('⚠️ Không tìm thấy dữ liệu order trong localStorage.');
-    }
-  }
-
-  backToHome() {
-    this.router.navigate(['/']);
   }
 }

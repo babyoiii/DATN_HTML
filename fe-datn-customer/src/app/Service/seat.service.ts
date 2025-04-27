@@ -323,24 +323,22 @@ export class SeatService {
 
   }
   clearLocalStorageData(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      // Xóa dữ liệu liên quan đến ghế
-      localStorage.removeItem('selectedSeats');
-      localStorage.removeItem('seatData');
-      localStorage.removeItem('currentShowtimeId');
-
-      // Xóa dữ liệu liên quan đến dịch vụ
-      localStorage.removeItem('selectedServices');
-      localStorage.removeItem('serviceData');
-
-      // Xóa dữ liệu liên quan đến đơn hàng
-      localStorage.removeItem('orderData');
-      localStorage.removeItem('orderDataPayment');
-
-      // Xóa dữ liệu liên quan đến phim và suất chiếu
-      localStorage.removeItem('currentMovieInfo');
-      localStorage.removeItem('reloadOnce');
-    }
+    // Xóa dữ liệu liên quan đến ghế
+    localStorage.removeItem('selectedSeats');
+    localStorage.removeItem('seatData');
+    localStorage.removeItem('currentShowtimeId');
+  
+    // Xóa dữ liệu liên quan đến dịch vụ
+    localStorage.removeItem('selectedServices');
+    localStorage.removeItem('serviceData');
+  
+    // Xóa dữ liệu liên quan đến đơn hàng
+    localStorage.removeItem('orderData');
+    localStorage.removeItem('orderDataPayment');
+  
+    // Xóa dữ liệu liên quan đến phim và suất chiếu
+    localStorage.removeItem('currentMovieInfo');
+  
   }
 
   // Add the payment method to handle the payment status update
@@ -356,5 +354,7 @@ export class SeatService {
     };
 
     this.sendMessage('Payment', requestData);
+    this.clearLocalStorageData();
+    this.disconnect();
   }
 }

@@ -19,9 +19,9 @@ export class UserVoucherService {
    * @param recordPerPage Số bản ghi mỗi trang
    * @returns Observable chứa danh sách voucher
    */
-  getUserVouchers(userId: string, currentPage: number = 1, recordPerPage: number = 100): Observable<UserVoucherResponse> {
+  getUserVouchers(currentPage: number = 1, recordPerPage: number = 100): Observable<UserVoucherResponse> {
     return this.http.get<UserVoucherResponse>(
-      `${this.baseUrl}/UserVoucher/GetUserVouchers?userId=${userId}&currentPage=${currentPage}&recordPerPage=${recordPerPage}`
+      `${this.baseUrl}/UserVoucher/GetUserVouchers?currentPage=${currentPage}&recordPerPage=${recordPerPage}`
     );
   }
 
@@ -31,9 +31,8 @@ export class UserVoucherService {
    * @param voucherCode Mã voucher
    * @returns Observable chứa kết quả kiểm tra
    */
-  checkVoucherAvailability(userId: string, voucherCode: string): Observable<any> {
+  checkVoucherAvailability(voucherCode: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/UserVoucher/CheckVoucherAvailability`, {
-      userId: userId,
       voucherCode: voucherCode
     });
   }

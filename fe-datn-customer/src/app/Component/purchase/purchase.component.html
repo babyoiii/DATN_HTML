@@ -1,7 +1,35 @@
 <app-need-more-time></app-need-more-time>
 <app-time-up></app-time-up>
-
-<body class="relative bg-black text-white [&amp;:has(dialog[open],[data-body-scroll=disabled])]:overflow-hidden"
+<ngx-spinner type="ball-scale-multiple">
+  <p class="wave-text">
+    <span style="--i:1">Đ</span>
+    <span style="--i:2">ă</span>
+    <span style="--i:3">n</span>
+    <span style="--i:4">g</span>
+    <span style="--i:5"> </span>
+    <span style="--i:6">T</span>
+    <span style="--i:7">h</span>
+    <span style="--i:8">ự</span>
+    <span style="--i:9">c</span>
+    <span style="--i:10"> </span>
+    <span style="--i:11">H</span>
+    <span style="--i:12">i</span>
+    <span style="--i:13">ệ</span>
+    <span style="--i:14">n</span>
+    <span style="--i:15"> </span>
+    <span style="--i:16">T</span>
+    <span style="--i:17">h</span>
+    <span style="--i:18">a</span>
+    <span style="--i:19">n</span>
+    <span style="--i:20">h</span>
+    <span style="--i:21"> </span>
+    <span style="--i:22">T</span>
+    <span style="--i:23">o</span>
+    <span style="--i:24">á</span>
+    <span style="--i:25">n</span>
+  </p>
+</ngx-spinner>
+<div class="relative bg-black text-white [&amp;:has(dialog[open],[data-div-scroll=disabled])]:overflow-hidden"
     monica-id="ofpnmcalabcbjgholdjcjblkibolbppb" monica-version="7.8.0">
     <div class="flex h-[100dvh] flex-col"><!--$--><!--$--><!--$--><!--/$--><!--/$--><!--/$-->
         <header class="flex flex-col border-b border-gray-700 bg-checkout-black">
@@ -225,6 +253,17 @@
                                                     </svg>
                                                 </h2>
                                             </button>
+
+                                            <div *ngIf="!checkLogin()" class="flex flex-col items-center justify-center gap-4 p-6 bg-gray-800 rounded-lg shadow-md">
+                                                <h2 class="text-lg font-semibold text-white">Bạn cần đăng nhập để sử dụng các tiện ích</h2>
+                                                <p class="text-sm text-gray-400">Đăng nhập để sử dụng điểm thưởng, mã giảm giá và các tiện ích khác.</p>
+                                                <button
+                                                  (click)="openSignIn()"
+                                                  class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">
+                                                  Đăng nhập
+                                                </button>
+                                              </div>
+                                              <div *ngIf="checkLogin()" class="accordion__content overflow-clip">
                                             <div *ngIf="isOpen" @slideToggle data-state="open" id="radix-:r29:"
                                                 role="region" aria-labelledby="radix-:r28:" data-orientation="vertical"
                                                 class="accordion__content overflow-clip"
@@ -237,7 +276,7 @@
                                                                 data-orientation="vertical" id="radix-:r2a:"
                                                                 class="accordion__trigger justify-start text-left"
                                                                 data-radix-collection-item="" aria-disabled="true">
-                                                                <h2
+                                                                <h2 *ngIf="checkLogin()"
                                                                     class="flex w-max items-center justify-center gap-4 rounded-full text-center font-semibold text-blue-500 transition duration-200 disabled:opacity-40 hocus:text-white">
                                                                     <svg xmlns="http://www.w3.org/2000/svg"
                                                                         fill="currentColor" viewBox="0 0 45 45"
@@ -251,8 +290,8 @@
                                                                         </path>
                                                                     </svg>Sử dụng điểm thưởng
                                                                 </h2>
-                                                            </button>
-                                                            <div data-state="open" id="radix-:r2b:" role="region"
+                                                            </button >
+                                                            <div  *ngIf="checkLogin()" data-state="open" id="radix-:r2b:" role="region"
                                                                 aria-labelledby="radix-:r2a:"
                                                                 data-orientation="vertical"
                                                                 class="accordion__content overflow-clip"
@@ -380,15 +419,15 @@
                                                                             <div class="voucher-container"
                                                                                 style="max-height: 300px; overflow-y: auto; border: 1px solid #374151; border-radius: 0.5rem; padding-right: 8px; margin-bottom: 16px;">
 
-                                                                                <div *ngFor="let voucher of voucherList"
+                                                                                <div *ngFor="let voucher of userVoucher"
                                                                                     class="relative bg-gray-700/85 rounded-lg p-4 border border-white/10 hover:border-blue-500 transition-colors duration-200 mb-2">
                                                                                     <div
                                                                                         class="flex justify-between items-start gap-4">
                                                                                         <div class="flex-1 min-w-0">
                                                                                             <h3
                                                                                                 class="font-semibold text-white mb-2">
-                                                                                                {{voucher.code}} -
-                                                                                                {{voucher.name}}
+                                                                                                {{voucher.voucherCode}} -
+                                                                                                {{voucher.voucherDescription}}
                                                                                             </h3>
                                                                                             <div
                                                                                                 class="text-red-500 text-sm mb-1">
@@ -396,7 +435,7 @@
                                                                                             </div>
                                                                                             <div
                                                                                                 class="text-gray-400 text-sm">
-                                                                                                HSD: {{voucher.expiry}}
+                                                                                                HSD: {{voucher.expiryDate}}
                                                                                             </div>
                                                                                             <div *ngIf="voucher.remainingQuantity !== undefined"
                                                                                                 class="text-green-400 text-sm mt-1 flex items-center">
@@ -411,7 +450,7 @@
                                                                                             </div>
                                                                                         </div>
                                                                                         <button
-                                                                                            (click)="toggleVoucherDetail(voucher.code)"
+                                                                                            (click)="toggleVoucherDetail(voucher.voucherCode)"
                                                                                             class="text-blue hover:text-blue-500 transition-colors">
                                                                                             Chi tiết
                                                                                         </button>
@@ -420,10 +459,10 @@
                                                                                     <div
                                                                                         class="mt-4 flex items-center gap-3">
                                                                                         <span
-                                                                                            class="bg-gray-800 px-3 py-1.5 rounded font-mono text-gray-200">{{voucher.code}}</span>
+                                                                                            class="bg-gray-800 px-3 py-1.5 rounded font-mono text-gray-200">{{voucher.voucherCode}}</span>
                                                                                         <div class="flex gap-2">
                                                                                             <button
-                                                                                                (click)="copyVoucherCode(voucher.code)"
+                                                                                                (click)="copyVoucherCode(voucher.voucherCode)"
                                                                                                 class="p-2 hover:bg-gray-600 rounded-full transition-colors"
                                                                                                 title="Sao chép mã">
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -439,20 +478,20 @@
                                                                                                 </svg>
                                                                                             </button>
                                                                                             <button
-                                                                                                (click)="applyVoucher(voucher.code)"
-                                                                                                [disabled]="voucher.status !== null"
-                                                                                                [ngClass]="{
-                                                                                                                                    'bg-white hover:bg-blue-500 text-black cursor-pointer': voucher.status === null,
-                                                                                                                                    'bg-gray-400 text-gray-600 cursor-not-allowed': voucher.status !== null
-                                                                                                                                }"
-                                                                                                class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 rounded-full px-4 min-w-[8ch] text-sm h-9">
-                                                                                                Áp dụng
-                                                                                            </button>
+                                                                                            (click)="applyVoucher(voucher.voucherCode)"
+                                                                                            [disabled]="voucher.status !== 1"
+                                                                                            [ngClass]="{
+                                                                                              'bg-white hover:bg-blue-500 text-black cursor-pointer': voucher.status === 1,
+                                                                                              'bg-gray-400 text-gray-600 cursor-not-allowed': voucher.status !== 1
+                                                                                            }"
+                                                                                            class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 rounded-full px-4 min-w-[8ch] text-sm h-9">
+                                                                                            Áp dụng
+                                                                                          </button>
                                                                                         </div>
                                                                                     </div>
 
                                                                                     <!-- Chi tiết voucher -->
-                                                                                    <div *ngIf="selectedVoucher === voucher.code"
+                                                                                    <div *ngIf="selectedVoucher === voucher.voucherCode"
                                                                                         class="tooltip-voucher fixed w-72 bg-gray-800 rounded-lg p-4 border border-gray-600 shadow-lg"
                                                                                         style="z-index: 1000; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%);">
                                                                                         <div class="space-y-3">
@@ -482,14 +521,14 @@
                                                                                                 class="space-y-2 text-sm text-gray-300">
                                                                                                 <p><span
                                                                                                         class="text-gray-400">Mã:</span>
-                                                                                                    {{voucher.code}}</p>
+                                                                                                    {{voucher.voucherCode}}</p>
                                                                                                 <p><span
                                                                                                         class="text-gray-400">Tên:</span>
-                                                                                                    {{voucher.name}}</p>
+                                                                                                    {{voucher.voucherDescription}}</p>
                                                                                                 <p><span
                                                                                                         class="text-gray-400">Hạn
                                                                                                         sử dụng:</span>
-                                                                                                    {{voucher.expiry}}
+                                                                                                    {{voucher.expiryDate}}
                                                                                                 </p>
                                                                                                 <p
                                                                                                     *ngIf="voucher.remainingQuantity !== undefined">
@@ -541,6 +580,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
                                         </div>
                                     </div>
                                 </section>
@@ -676,6 +716,12 @@
                                     </header>
 
                                 </section>
+                                 <label *ngIf="checkMembership" class="checkbox-container">
+                                    <input type="checkbox" class="form-checkbox"/>
+                                    <span>
+                                       Bạn có muốn sử dụng khuyến mãi và sự kiện đặc biệt từ thẻ thành viên không?
+                                    </span>
+                                </label>
                                 <label class="checkbox-container">
                                     <input type="checkbox" class="form-checkbox" [(ngModel)]="isTermsAccepted"
                                         [ngModelOptions]="{standalone: true}" (change)="onCheckboxChange()" />
@@ -877,4 +923,4 @@
     <dialog
         class="flex items-center justify-center empty:hidden w-[100vw] h-[100dvh] bg-transparent max-w-[100vw] max-h-[100dvh]">
     </dialog>
-</body>
+</div>

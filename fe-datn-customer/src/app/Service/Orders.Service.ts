@@ -85,4 +85,9 @@ export class OrdersService {
   checkRefund(orderId: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/Movie/CheckRefund?orderId=${orderId}`);
   }
+  refundOrder(orderId: string): Observable<any> {
+    const url = `${this.baseUrl}/Movie/RefundOrder`;
+    const body = { orderId }; 
+    return this.http.post<any>(url, body);
+  }
  }

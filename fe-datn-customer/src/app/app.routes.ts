@@ -29,9 +29,7 @@ import { TimeUpComponent } from './Component/time-up/time-up.component';
 import { TestDialogComponent } from './Component/test-dialog/test-dialog.component';
 import { DetailsTicketComponent } from './Component/my-cinex/details-ticket/details-ticket.component';
 import { VipMemberComponent } from './Component/my-cinex/vip-member/vip-member.component';
-import { RefundComponent } from './Component/refund/refund.component';
-import { YeuCauXacNhanComponent } from './Component/refund/yeu-cau-xac-nhan/yeu-cau-xac-nhan.component';
-import { YeuCauHoanTienComponent } from './Component/refund/yeu-cau-hoan-tien/yeu-cau-hoan-tien.component';
+import { VerifyOptComponent } from './Component/verify-opt/verify-opt.component';
 
 export const routes: Routes = [
     {
@@ -45,8 +43,7 @@ export const routes: Routes = [
             { path: 'discounts', component: DiscountsComponent },
             { path: 'on-demand', component: OnDemandComponent },
             { path: 'movies/:id', component: MovieDetailNghiaComponent},
-            { path: 'trogiup', component: RefundComponent},
-            { path: 'xacnhanemail', component: YeuCauXacNhanComponent},
+
             {
                 path: 'my-cinex', component: MyCinexComponent, children: [
                     { path: '', component: BenefitsComponent },
@@ -64,7 +61,7 @@ export const routes: Routes = [
     { path: 'dangki', component: DangkiComponent },
     { path: 'timkiemrap', component: TimkiemrapComponent },
     { path: 'signin', component: SignInComponent },
-    { path: 'yeucauhoantien', component: YeuCauHoanTienComponent },
+
     { path: 'booking/:id', component: SeatsComponent },
     { path: 'chon-ve', component: TicketSeatsComponent },
     { path: 'orders', component: OrdersComponent },
@@ -72,8 +69,8 @@ export const routes: Routes = [
     { path: 'payment-callback', component: PaymentCallBackComponent },
     { path: 'NeedMoreTime', component: NeedMoreTimeComponent },
     { path: 'TimeUpComponent', component: TimeUpComponent },
+    { path: 'VerifyOpt', component: VerifyOptComponent },
     { path: 'test', component: TestDialogComponent },
-    
     { path: 'thanhtoanMembership', component: VipMemberComponent},
     
 

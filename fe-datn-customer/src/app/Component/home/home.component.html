@@ -110,22 +110,30 @@
                     <div dir="ltr" data-orientation="horizontal">
                         <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0">
                             <header class="flex flex-wrap justify-between gap-x-12 border-b-2 pb-2 pt-8">
-                                <h2 class="w-max max-w-[90vw] text-800 headline">Movies at AMC</h2>
+                                <h2 class="w-max max-w-[90vw] text-800 headline">Phim tại Cinex</h2>
                                 <div class="flex items-center gap-3 font-semibold">
-                                    <div role="tablist" aria-orientation="horizontal" class="contents" tabindex="0"
-                                        data-orientation="horizontal" style="outline: none;"><button type="button"
-                                            role="tab" aria-selected="true"
-                                            aria-controls="radix-:rhm:-content-Now-Playing" data-state="active"
-                                            id="radix-:rhm:-trigger-Now-Playing"
-                                            class="font-semibold decoration-2 underline-offset-8 transition-colors data-[state=inactive]:text-gray-200 data-[state=active]:underline hover:data-[state=inactive]:text-blue-500"
-                                            tabindex="-1" data-orientation="horizontal"
-                                            data-radix-collection-item="">Now Playing</button><button type="button"
-                                            role="tab" aria-selected="false"
-                                            aria-controls="radix-:rhm:-content-Coming-Soon" data-state="inactive"
-                                            id="radix-:rhm:-trigger-Coming-Soon"
-                                            class="font-semibold decoration-2 underline-offset-8 transition-colors data-[state=inactive]:text-gray-200 data-[state=active]:underline hover:data-[state=inactive]:text-blue-500"
-                                            tabindex="-1" data-orientation="horizontal"
-                                            data-radix-collection-item="">Coming Soon</button></div>
+                                    <div role="tablist" aria-orientation="horizontal" class="contents" tabindex="0" data-orientation="horizontal" style="outline: none;">
+                                        <button
+                                          type="button"
+                                          role="tab"
+                                          [attr.aria-selected]="selectedType === 1"
+                                          [attr.data-state]="selectedType === 1 ? 'active' : 'inactive'"
+                                          id="radix-:rhm:-trigger-Now-Playing"
+                                          class="font-semibold decoration-2 underline-offset-8 transition-colors data-[state=inactive]:text-gray-200 data-[state=active]:underline hover:data-[state=inactive]:text-blue-500"
+                                          (click)="onTabClick(1)">
+                                          Đang chiếu
+                                        </button>
+                                        <button
+                                          type="button"
+                                          role="tab"
+                                          [attr.aria-selected]="selectedType === 3"
+                                          [attr.data-state]="selectedType === 3 ? 'active' : 'inactive'"
+                                          id="radix-:rhm:-trigger-Coming-Soon"
+                                          class="font-semibold decoration-2 underline-offset-8 transition-colors data-[state=inactive]:text-gray-200 data-[state=active]:underline hover:data-[state=inactive]:text-blue-500"
+                                          (click)="onTabClick(3)">
+                                         Sắp chiếu
+                                        </button>
+                                      </div>
                                 </div>
                             </header>
                         </div>
@@ -198,11 +206,11 @@
                                                                     <span
                                                                         class="inline-flex items-center gap-1 uppercase"
                                                                         aria-label="MPAA Rating: 5 Star" role="group">
-                                                                        5 Sao
+                                                                        <!-- {{item.rate}} 🌟 --> 🌟
                                                                     </span>
                                                                 </li>
                                                             </ul>
-                                                            <p class="pb-2 text-xs">{{ item.releaseDate }}</p>
+                                                            <p class="pb-2 text-xs">{{ item.releaseDate | date:'dd/MM/yyyy' }}</p>
                                                         </div>
                                                         <a class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12"
                                                             href="/showtimes/{{item.id}}"

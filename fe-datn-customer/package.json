@@ -38,6 +38,7 @@
     "ngx-cookie-service": "^18.0.0",
     "ngx-material-timepicker": "^13.1.1",
     "ngx-pagination": "^6.0.3",
+    "ngx-spinner": "^17.0.0",
     "ngx-toastr": "^19.0.0",
     "reown": "^1.1.4",
     "rxjs": "~7.8.0",

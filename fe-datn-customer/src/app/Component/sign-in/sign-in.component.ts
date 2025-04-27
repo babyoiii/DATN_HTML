@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthServiceService } from '../../Service/auth-service.service';
 import { ModalService } from '../../Service/modal.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 interface SignInData {
   userName: string;
@@ -14,7 +15,7 @@ interface SignInData {
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,NgxSpinnerModule],
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css']
 })
@@ -28,7 +29,8 @@ export class SignInComponent {
     private authService: AuthServiceService, 
     private router: Router,
     public modalService: ModalService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private spinner: NgxSpinnerService
   ) {}
 
   onSubmit(): void {
@@ -38,7 +40,7 @@ export class SignInComponent {
       tapToDismiss: false,
       closeButton: false
     });
-
+  this.spinner.show(); // Hiển thị spinner
     this.authService.SignIn(this.SignInData).subscribe({
       next: (result: any) => {
         console.log('Response:', result);
@@ -54,13 +56,16 @@ export class SignInComponent {
           this.authService.saveToken(accessToken);
           this.authService.saveUserData(result);
           this.modalService.closeSignInModal();
+          this.spinner.hide(); // Ẩn spinner
           this.router.navigate(['/']); 
         } else {
           console.error('No data found in the response');
+          this.spinner.hide(); // Ẩn spinner
           this.toast.error('Không tìm thấy dữ liệu đăng nhập!');
         }
       },
       error: (error: any) => {
+        this.spinner.hide(); // Ẩn spinner
         console.error('Error:', error);
         this.toast.clear(loadingToast.toastId);
         this.toast.error('Đăng nhập thất bại, vui lòng thử lại sau!');

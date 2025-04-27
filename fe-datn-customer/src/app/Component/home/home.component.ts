@@ -8,13 +8,13 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink,DurationFormatPipe,CommonModule],
+  imports: [RouterLink, DurationFormatPipe, CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
- dataMovies: GetMovieLandingRes[] = [];
-  selectedType: number = 1; // Mặc định là "Now Playing"
+  dataMovies: GetMovieLandingRes[] = [];
+  selectedType: number = 1;
   pageSize: number = 20;
   pageIndex: number = 1;
   totalItems: number = 0; // Total number of items for pagination
@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getMovies();
   }
+
   loadScript(src: string): void {
     if (isPlatformBrowser(this.platformId)) {
       const script = document.createElement('script');
@@ -47,4 +48,11 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  onTabClick(type: number): void {
+    if (this.selectedType !== type) {
+      this.selectedType = type; 
+      this.pageIndex = 1; 
+      this.getMovies(); 
+    }
+  }
 }

@@ -1,3 +1,10 @@
+<ngx-spinner type="ball-scale-multiple" size="medium" color="#4A90E2">
+  <div class="spinner-container">
+    <p class="wave-text text-lg font-semibold text-blue-600 animate-pulse">
+      Đang tải, vui lòng chờ...
+    </p>
+  </div>
+</ngx-spinner>
 <main class="relative bg-black text-white [&amp;:has(dialog[open],[data-body-scroll=disabled])]:overflow-hidden"
   monica-id="ofpnmcalabcbjgholdjcjblkibolbppb" monica-version="7.8.0">
   <div class="flex h-[100dvh] flex-col">
@@ -62,54 +69,28 @@
 
 
         <div class="flex flex-col md:gap-2">
-          <h3 class="text-800 headline">Captain America: Brave New World</h3>
+          <h3 class="text-800 headline">{{movieByShowtimeData?.movieName}}</h3>
           <ul
             class="flex flex-wrap gap-y-2 leading-none relative z-50 mt-2 text-50 font-semibold uppercase md:text-100">
             <li
               class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              AMC Village 7</li>
+            {{movieByShowtimeData?.cinemaName}}</li>
             <li
               class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              Tuesday, February 18, 2025</li>
+              {{movieByShowtimeData?.startTime | date:'dd/MM/yyyy'}}</li>
             <li
               class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              12:30 pm</li>
+              {{movieByShowtimeData?.startTimeFormatted}}</li>
             <li
               class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              <span class="flex items-center gap-[0.5ch]" aria-label="Runtime: 1 HR 58 MIN" role="group">1
-                HR 58 MIN
-                <!-- --> <button class="h-[1em] w-[1em] text-blue-500 transition-colors hover:text-white"
-                  aria-label="More Info" type="button" aria-haspopup="dialog" aria-expanded="false"
-                  aria-controls="radix-:Rqbj5ufknpuiv4ja:" data-state="closed"><svg xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%" class="h-[1em] w-[1em]">
-                    <path
-                      d="M22.5 45C10.125 45 0 34.875 0 22.5S10.125 0 22.5 0 45 10.125 45 22.5 34.875 45 22.5 45zm0-41.625c-10.35 0-18.9 8.55-18.9 18.9 0 10.35 8.55 18.9 18.9 18.9 10.35 0 18.9-8.55 18.9-18.9 0-10.35-8.55-18.9-18.9-18.9z">
-                    </path>
-                    <path
-                      d="M15.75 17.55c0-3.6 3.15-6.075 6.75-6.075 3.15 0 6.75 2.25 6.75 5.625 0 2.25-1.125 3.825-2.925 4.95-.675.45-1.35.9-1.8 1.575-.675.675-.9 1.575-.9 2.7H20.7c-.225-.45-.225-.9-.225-1.35 0-4.5 5.4-4.725 5.4-7.875 0-1.575-1.575-2.7-3.15-2.7-2.025 0-3.375 1.575-3.375 3.375v.675l-3.375-.225c-.225.225-.225-.225-.225-.675zm6.3 15.75c1.125 0 2.025-.9 2.025-2.025s-.9-2.025-2.025-2.025-2.025.9-2.025 2.025c-.225.9.9 2.025 2.025 2.025z">
-                    </path>
-                  </svg></button></span>
-            </li>
             <li
               class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
               <span class="inline-flex items-center gap-1 uppercase" aria-label="MPAA Rating: PG13"
-                role="group">PG13</span>
+                role="group">{{movieByShowtimeData?.roomTypeName}}</span>
             </li>
             <li
               class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              AMC Signature Recliners</li>
-            <li
-              class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              Reserved Seating</li>
-            <li
-              class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              RealD 3D</li>
-            <li
-              class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              Laser at AMC</li>
-            <li
-              class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              Closed Caption</li>
+              {{movieByShowtimeData?.averageRating}} 🌟</li>
           </ul>
         </div>
 
@@ -306,35 +287,31 @@
 
 
         <div class="flex items-center justify-center gap-4 divide-x divide-gray-700">
-          <ul class="p-2 pr-20">
-            <li>
-              <div class="flex items-center">
-                <div class="h-4 w-4 rounded bg-black border border-white"></div><span class="ml-2 text-xs">Ghế
-                  trống</span>
-              </div>
+          <ul class="p-4 pr-10 bg-gray-800 rounded-lg shadow-lg">
+            <li class="flex items-center mb-2">
+              <div class="h-4 w-4 rounded bg-green-600 border border-white transition duration-300 hover:scale-110"></div>
+              <span class="ml-2 text-sm text-white">Ghế trống</span>
             </li>
-            <li class="pt-2">
-              <div class="flex items-center">
-                <div class="h-4 w-4 rounded bg-red-500 border border-white"></div><span class="ml-2 text-xs">Ghế đã
-                  chọn</span>
-              </div>
+            <li class="flex items-center mb-2">
+              <div class="h-4 w-4 rounded bg-yellow-500 border border-white transition duration-300 hover:scale-110"></div>
+              <span class="ml-2 text-sm text-gray-300">Ghế đang có người giữ</span>
+            </li>
+            <li class="flex items-center mb-2">
+              <div class="h-4 w-4 rounded bg-red-500 border border-white transition duration-300 hover:scale-110"></div>
+              <span class="ml-2 text-sm text-white">Ghế đã chọn</span>
             </li>
           </ul>
-          <ul class="p-2">
-            <li class="flex"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="1em" height="100%"
-                class="mr-2 h-5 w-5">
-                <path fill="transparent"
-                  d="M45.756 15.035h-2.91c-.79 0-2.268 1.007-2.81 1.51.078-.28.104-1.268.104-1.569v-.85a3.19 3.19 0 0 0-1.255-2.536c.294-.497.496-1.204.496-2.204v-2.02c0-2.78-1.896-4.433-5.073-4.433H15.686c-3.178 0-5.074 1.66-5.074 4.433v2.007c0 1.007.203 1.707.497 2.203a3.209 3.209 0 0 0-1.255 2.537v.85c0 .301-.354 1.295-.275 1.57-.582-.74-1.589-1.51-2.38-1.51H4.25a3.043 3.043 0 0 0-3.04 3.04v20.413c0 1.68 1.366 3.04 3.04 3.04h3.707c-.163.471-.261.948-.261 1.426 0 2.824 2.216 4.112 4.283 4.112H38.04c2.06 0 4.283-1.288 4.283-4.112 0-.478-.105-.955-.262-1.426h3.708c1.68 0 3.04-1.366 3.04-3.04v-20.4a3.063 3.063 0 0 0-3.054-3.04Z">
-                </path>
-                <path fill="currentColor"
-                  d="M46.803 14.525h-3.865c-.837 0-1.588.327-2.157.857.085-.294.13-.602.13-.922v-.89a3.364 3.364 0 0 0-1.314-2.667c.308-.523.523-1.262.523-2.315V6.476c0-2.916-1.994-4.662-5.329-4.662H15.215c-3.335 0-5.329 1.74-5.329 4.662v2.112c0 1.053.216 1.798.523 2.315a3.364 3.364 0 0 0-1.314 2.668v.889c0 .32.046.628.13.915a3.18 3.18 0 0 0-2.157-.856h-3.87A3.216 3.216 0 0 0 0 17.723v21.446a3.198 3.198 0 0 0 3.197 3.197h3.89c-.17.497-.28 1-.28 1.498 0 2.968 2.334 4.322 4.498 4.322h27.383c2.165 0 4.499-1.354 4.499-4.322 0-.497-.111-1-.275-1.498h3.89A3.198 3.198 0 0 0 50 39.17V17.723a3.202 3.202 0 0 0-3.197-3.198ZM11.678 6.476c0-1.902 1.19-2.87 3.537-2.87h19.57c2.347 0 3.537.968 3.537 2.87v2.112c0 .497-.065 1.321-.47 1.628-.105-.013-.21-.013-.321-.013H12.469a5.04 5.04 0 0 0-.32.013c-.406-.3-.471-1.13-.471-1.628V6.476Zm-.798 7.095a1.59 1.59 0 0 1 1.589-1.59h25.069a1.59 1.59 0 0 1 1.588 1.59v.889a1.59 1.59 0 0 1-1.588 1.589c-.033 0-.06.006-.092.006-.065-.006-.13-.006-.19-.006a.893.893 0 0 0-.895.896c0 .496.399.895.895.895.648 0 2.492.484 2.492 2.629v17.085c-.896-.72-2.204-1.295-4.277-1.295h-20.93c-2.072 0-3.38.576-4.276 1.295V20.469c0-2.145 1.844-2.629 2.485-2.629a.893.893 0 0 0 .896-.895.893.893 0 0 0-.896-.896c-.065 0-.13.006-.19.006-.032 0-.058-.006-.091-.006a1.59 1.59 0 0 1-1.589-1.59v-.888ZM8.474 39.169c0 .778-.634 1.406-1.406 1.406h-3.87a1.408 1.408 0 0 1-1.406-1.406V17.723c0-.778.634-1.406 1.405-1.406h3.865c.778 0 1.405.634 1.405 1.406v21.446h.007Zm30.22 7.232H11.313c-.452 0-2.707-.125-2.707-2.537 0-.962.725-2.184 1.51-3.361l.085-.124c.759-1.145 1.543-2.328 4.342-2.328h20.93c2.798 0 3.583 1.183 4.341 2.328l.085.124c.785 1.177 1.51 2.4 1.51 3.36-.006 2.413-2.262 2.538-2.713 2.538Zm9.521-7.232c0 .778-.634 1.406-1.406 1.406h-3.864a1.408 1.408 0 0 1-1.406-1.406V17.723c0-.778.634-1.406 1.406-1.406h3.864c.778 0 1.406.634 1.406 1.406v21.446Z">
-                </path>
-              </svg><span class="text-xs">Ghế đôi</span></li>
-            <li class="pt-2">
-              <div class="flex items-center">
-                <div class="h-4 w-4 rounded bg-gray-200 border border-white"></div><span class="ml-2 text-xs">Ghế đã có
-                  người</span>
-              </div>
+          <ul class="p-4 bg-gray-800 rounded-lg shadow-lg">
+            <li class="flex items-center mb-2">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="1em" height="100%" class="mr-2 h-6 w-6 text-white">
+                <path fill="transparent" d="M45.756 15.035h-2.91c-.79 0-2.268 1.007-2.81 1.51.078-.28.104-1.268.104-1.569v-.85a3.19 3.19 0 0 0-1.255-2.536c.294-.497.496-1.204.496-2.204v-2.02c0-2.78-1.896-4.433-5.073-4.433H15.686c-3.178 0-5.074 1.66-5.074 4.433v2.007c0 1.007.203 1.707.497 2.203a3.209 3.209 0 0 0-1.255 2.537v.85c0 .301-.354 1.295-.275 1.57-.582-.74-1.589-1.51-2.38-1.51H4.25a3.043 3.043 0 0 0-3.04 3.04v20.413c0 1.68 1.366 3.04 3.04 3.04h3.707c-.163.471-.261.948-.261 1.426 0 2.824 2.216 4.112 4.283 4.112H38.04c2.06 0 4.283-1.288 4.283-4.112 0-.478-.105-.955-.262-1.426h3.708c1.68 0 3.04-1.366 3.04-3.04v-20.4a3.063 3.063 0 0 0-3.054-3.04Z"></path>
+                <path fill="currentColor" d="M46.803 14.525h-3.865c-.837 0-1.588.327-2.157.857.085-.294.13-.602.13-.922v-.89a3.364 3.364 0 0 0-1.314-2.667c.308-.523.523-1.262.523-2.315V6.476c0-2.916-1.994-4.662-5.329-4.662H15.215c-3.335 0-5.329 1.74-5.329 4.662v2.112c0 1.053.216 1.798.523 2.315a3.364 3.364 0 0 0-1.314 2.668v.889c0 .32.046.628.13.915a3.18 3.18 0 0 0-2.157-.856h-3.87A3.216 3.216 0 0 0 0 17.723v21.446a3.198 3.198 0 0 0 3.197 3.197h3.89c-.17.497-.28 1-.28 1.498 0 2.968 2.334 4.322 4.498 4.322h27.383c2.165 0 4.499-1.354 4.499-4.322 0-.497-.111-1-.275-1.498h3.89A3.198 3.198 0 0 0 50 39.17V17.723a3.202 3.202 0 0 0-3.197-3.198ZM11.678 6.476c0-1.902 1.19-2.87 3.537-2.87h19.57c2.347 0 3.537.968 3.537 2.87v2.112c0 .497-.065 1.321-.47 1.628-.105-.013-.21-.013-.321-.013H12.469a5.04 5.04 0 0 0-.32.013c-.406-.3-.471-1.13-.471-1.628V6.476Zm-.798 7.095a1.59 1.59 0 0 1 1.589-1.59h25.069a1.59 1.59 0 0 1 1.588 1.59v.889a1.59 1.59 0 0 1-1.588 1.589c-.033 0-.06.006-.092.006-.065-.006-.13-.006-.19-.006a.893.893 0 0 0-.895.896c0 .496.399.895.895.895.648 0 2.492.484 2.492 2.629v17.085c-.896-.72-2.204-1.295-4.277-1.295h-20.93c-2.072 0-3.38.576-4.276 1.295V20.469c0-2.145 1.844-2.629 2.485-2.629a.893.893 0 0 0 .896-.895.893.893 0 0 0-.896-.896c-.065 0-.13.006-.19.006-.032 0-.058-.006-.091-.006a1.59 1.59 0 0 1-1.589-1.59v-.888ZM8.474 39.169c0 .778-.634 1.406-1.406 1.406h-3.87a1.408 1.408 0 0 1-1.406-1.406V17.723c0-.778.634-1.406 1.405-1.406h3.865c.778 0 1.405.634 1.405 1.406v21.446h.007Zm30.22 7.232H11.313c-.452 0-2.707-.125-2.707-2.537 0-.962.725-2.184 1.51-3.361l.085-.124c.759-1.145 1.543-2.328 4.342-2.328h20.93c2.798 0 3.583 1.183 4.341 2.328l.085.124c.785 1.177 1.51 2.4 1.51 3.36-.006 2.413-2.262 2.538-2.713 2.538Zm9.521-7.232c0 .778-.634 1.406-1.406 1.406h-3.864a1.408 1.408 0 0 1-1.406-1.406V17.723c0-.778.634-1.406 1.406-1.406h3.864c.778 0 1.406.634 1.406 1.406v21.446Z"></path>
+              </svg>
+              <span class="text-sm text-white">Ghế đôi</span>
+            </li>
+            <li class="flex items-center mb-2">
+              <div class="h-4 w-4 rounded bg-gray-400 border border-white transition duration-300 hover:scale-110"></div>
+              <span class="ml-2 text-sm text-gray-300">Ghế đã có người</span>
             </li>
           </ul>
         </div>

@@ -336,6 +336,118 @@
   }
   
   .use-all-points-btn:disabled {
-    opacity: 0.4; /* Làm mờ nút khi bị vô hiệu hóa */
-    cursor: not-allowed; /* Hiển thị con trỏ không cho phép */
+    opacity: 0.4;
+    cursor: not-allowed; 
+  } 
+  .wave-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px; 
   }
+  
+  .wave-text span {
+    display: inline-block;
+    font-size: 20px; 
+    font-weight: bold; 
+    color: #ffffff; 
+    text-transform: uppercase;
+    animation: wave-effect 2s infinite ease-in-out; 
+    animation-delay: calc(var(--i) * 0.1s); /* Tạo độ trễ cho từng ký tự */
+  }
+  
+  /* Hiệu ứng sóng */
+  @keyframes wave-effect {
+    0%, 100% {
+      transform: translateY(0); /* Vị trí ban đầu */
+      color: #ffffff; /* Màu chữ ban đầu */
+    }
+    50% {
+      transform: translateY(-5px); /* Nổi lên nhẹ hơn */
+      color: #57f2f7; /* Màu vàng khi nổi lên */
+    }
+  }
+  /* Nút chung */
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem; /* Kích thước padding */
+    font-size: 1rem; /* Kích thước chữ */
+    font-weight: bold; /* Độ đậm của chữ */
+    border-radius: 9999px; /* Bo góc tròn */
+    transition: all 0.3s ease-in-out; /* Hiệu ứng chuyển đổi */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
+  }
+  
+  /* Hiệu ứng hover */
+  .action-btn:hover {
+    transform: translateY(-2px); /* Nổi lên khi hover */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Tăng bóng đổ khi hover */
+  }
+  
+  /* Màu sắc nút */
+  .bg-gray-700 {
+    background-color: #4b5563; /* Màu xám đậm */
+  }
+  
+  .bg-gray-700:hover {
+    background-color: #374151; /* Màu xám đậm hơn khi hover */
+  }
+  
+  .bg-blue-500 {
+    background-color: #3b82f6; /* Màu xanh dương */
+  }
+  
+  .bg-blue-500:hover {
+    background-color: #2563eb; /* Màu xanh dương đậm hơn khi hover */
+  }
+  
+  .bg-green-500 {
+    background-color: #22c55e; /* Màu xanh lá */
+  }
+  
+  .bg-green-500:hover {
+    background-color: #16a34a; /* Màu xanh lá đậm hơn khi hover */
+  }
+  
+  .bg-purple-500 {
+    background-color: #a855f7; /* Màu tím */
+  }
+  
+  .bg-purple-500:hover {
+    background-color: #9333ea; /* Màu tím đậm hơn khi hover */
+  }
+  .flex {
+    display: flex;
+  }
+  
+  .items-center {
+    align-items: center;
+  }
+  
+  .justify-between {
+    justify-content: space-between;
+  }
+  
+  .gap-2 {
+    gap: 0.5rem; /* Khoảng cách giữa các phần tử */
+  }
+  
+  .py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .text-sm {
+    font-size: 0.875rem; /* Kích thước chữ nhỏ */
+  }
+  
+  .text-xs {
+    font-size: 0.75rem; /* Kích thước chữ rất nhỏ */
+  }
+  
+  .whitespace-nowrap {
+    white-space: nowrap; /* Ngăn nội dung xuống dòng */
+  }
+  

@@ -9,7 +9,7 @@
                         <div class="grid h-fit w-full grid-cols-1 gap-4" style="grid-area: loyalty-card;">
                             <div>
                                 <header>
-                                    <h1 class="sr-only">Your CineX Card</h1>
+                                    <h1 class="sr-only">Thẻ CineX của bạn</h1>
                                 </header>
                                 <div class="mx-auto h-fit max-w-[450px] rounded-xl p-4 border border-white/90"
                                     style="background-image: url(&quot;https://amc-theatres-res.cloudinary.com/image/upload/f_auto/q_auto:low/amc-cdn/static/images/2024/bg-card-insider.png&quot;); background-repeat: no-repeat; background-size: cover;">
@@ -22,10 +22,18 @@
                                             style="color: transparent;">
                                             <div class="grid aspect-square place-items-center bg-black bg-cover bg-no-repeat [clip-path:circle(50%_at_center)] min-w-[200px] max-w-[200px]"
                                             style="background-color: white;">
-                                           <img src="data:image/png;base64,{{membershipData.userMembershipDetails.memberCodeBase64}}"
-                                                alt="Loyalty Card QR Code"
-                                                class="w-full h-full rounded-full object-cover">
+                                         <img *ngIf="membershipData.userMembershipDetails?.memberCodeBase64; else noMembershipCard"
+                                              src="data:image/png;base64,{{membershipData.userMembershipDetails.memberCodeBase64}}"
+                                              alt="Loyalty Card QR Code"
+                                              class="w-full h-full rounded-full object-cover">
                                        </div>
+                                       
+                                       <ng-template #noMembershipCard>
+                                         <div class="flex flex-col items-center justify-center text-center text-gray-500">
+                                           <p class="text-lg font-semibold">Bạn chưa có thẻ Membership</p>
+                                           <p class="text-sm">Vui lòng nâng cấp để nhận thẻ Membership.</p>
+                                         </div>
+                                       </ng-template>
                                         <span class="text-center text-600 headline">{{membershipData.userMembershipDetails.userName}}</span><span
                                             class="text-center text-200 caption">{{membershipData.userMembershipDetails.memberCode}}</span>
                                         <div class="mt-5 grid place-items-center max-w-[130px]">
@@ -35,14 +43,14 @@
                                 </div>
                                 <footer class="mx-auto mt-4 flex flex-col items-center gap-1 text-gray-200">
                                     <div class="text-200">
-                                      Member Since: 
+                                        Thành viên kể từ:
                                       <span class="font-bold text-white">{{ membershipData.userMembershipDetails.purchasedAt | date: 'dd/MM/yyyy' }}</span>
                                     </div>
                                     <div class="text-200">
-                                      Expiry Date: 
+                                        Ngày hết hạn: 
                                       <span class="font-bold text-red-500">{{ membershipData.userMembershipDetails.expiryDate | date: 'dd/MM/yyyy' }}</span>
                                     </div>
-                                    <p class="text-100 footnote">Thank you for being a valued CineX member.</p>
+                                    <p class="text-100 footnote">Cảm ơn bạn đã là thành viên có giá trị của CineX.</p>
                                   </footer>
                             </div>
                         </div>
@@ -106,16 +114,29 @@
                                             </dl>
                                         </div>
                                     }
-                                        <div class="grid grid-cols-3 items-center gap-4 rounded-b-lg p-3"
+                                    <div *ngIf="!checkNextLevelBenefits()" class="grid grid-cols-1 items-center gap-4 rounded-lg p-6 bg-gradient-to-r from-gray-100 to-gray-200 text-center shadow-lg border border-gray-300">
+                                        <p class="text-xl font-bold text-gray-900">
+                                          🎉 Bạn đã đăng ký hết tất cả các hạn mức thẻ thành viên của Cinex Cinema!
+                                        </p>
+                                        <p class="text-sm text-gray-600">
+                                          Cảm ơn bạn đã đồng hành cùng chúng tôi. Hãy tiếp tục tận hưởng những lợi ích tuyệt vời từ CineX Cinema.
+                                        </p>
+                                        <img 
+                                          src="https://cdn-icons-png.flaticon.com/512/190/190411.png" 
+                                          alt="Membership Complete" 
+                                          class="mx-auto w-16 h-16"
+                                        />
+                                      </div>
+                                        <div *ngIf="checkNextLevelBenefits()" class="grid grid-cols-3 items-center gap-4 rounded-b-lg p-3"
                                             style="background-image: url(&quot;https://amc-theatres-res.cloudinary.com/image/upload/f_auto/q_auto:low/amc-cdn/static/images/2024/bg-banner-premiere.png&quot;); background-repeat: no-repeat; background-size: cover;">
                                             <dl class="col-span-2 flex flex-col gap-2 text-100 text-black">
                                                 <dt class="sr-only">Premiere Upgrade</dt>
-                                                <dd class="label">Unlock this benefit and more with CineX Premiere!
+                                                <dd class="label">Mở khóa lợi ích này và nhiều hơn nữa với CineX Premiere!
                                                 </dd>
-                                            </dl><a
+                                            </dl><a 
                                             class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full bg-red-500 hocus:bg-red-400 text-sm md:text-base h-12 ml-auto min-w-max px-4 text-100 label"
                                             [routerLink]="'/thanhtoanMembership'">
-                                            Upgrade
+                                           Nâng cấp thẻ
                                           </a>
                                         </div>
                                     </div>

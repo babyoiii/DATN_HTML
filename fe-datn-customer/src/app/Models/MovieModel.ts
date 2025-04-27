@@ -44,4 +44,6 @@ export interface MovieByShowtimeData {
   startTime: string;
   startTimeFormatted: string;
   durationFormatted: string;
+  averageRating: number;
+  roomTypeName: string;
 }

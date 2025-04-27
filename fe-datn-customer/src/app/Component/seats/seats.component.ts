@@ -18,6 +18,7 @@ import { AuthServiceService } from '../../Service/auth-service.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { NeedMoreTimeComponent } from "../need-more-time/need-more-time.component";
 import { TimeUpComponent } from "../time-up/time-up.component";
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 enum SeatStatus {
   Available = 0,
@@ -35,7 +36,7 @@ interface SeatStatusUpdateRequest {
 @Component({
   selector: 'app-seats',
   standalone: true,
-  imports: [CommonModule, GroupByPipe],
+  imports: [CommonModule, GroupByPipe,NgxSpinnerModule],
   templateUrl: './seats.component.html',
   styleUrls: ['./seats.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -57,7 +58,16 @@ export class SeatsComponent implements OnInit, OnDestroy {
   movieInfo: any = null;
   private subscription!: Subscription;
   @ViewChild('seatMapContainer') seatMapContainer!: ElementRef;
-
+  movieByShowtimeData: MovieByShowtimeData = {
+    thumbnail: '',
+    movieName: '',
+    cinemaName: '',
+    startTime: '',
+    startTimeFormatted: '',
+    durationFormatted: '',
+    averageRating: 0,
+    roomTypeName: ''
+  };
   currentZoom: number = 1;
   minZoom: number = 0.6;
   maxZoom: number = 2.0;
@@ -82,6 +92,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
     private modalService: ModalService,
     private showtimeService: ShowtimeService,
     private authServiceService: AuthServiceService,
+    private spinner: NgxSpinnerService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
@@ -96,6 +107,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         const showtimeId = params['id'];
         this.loadSeatsByShowtimeId(showtimeId)
+        this.loadMovieByShowtime(showtimeId);
         if (isPlatformBrowser(this.platformId)) {
           localStorage.setItem('currentShowtimeId', showtimeId);
         }
@@ -158,6 +170,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
     console.log("Dữ liệu phim:", this.movieInfo)
 
+  
   }
 
   private reloadCurrentRoute(): void {
@@ -176,7 +189,20 @@ export class SeatsComponent implements OnInit, OnDestroy {
     console.log("đã gọi");
 
   }
-
+  loadMovieByShowtime(showtimeId: string): void {
+    this.showtimeService.getMovieByShowtime(showtimeId).subscribe({
+      next: (response) => {
+        if (response && response.data) {
+          this.movieByShowtimeData = response.data; 
+          console.log('✅ Movie Detail:123', this.movieByShowtimeData);
+          this.cdr.markForCheck(); 
+        }
+      },
+      error: (err) => {
+        console.error('❌ Error loading movie detail:', err);
+      }
+    });
+  }
 
   clearLocalStorageData(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -214,6 +240,8 @@ export class SeatsComponent implements OnInit, OnDestroy {
     this.modalService.openSignInModal();
   }
   private loadSeats(showtimeId: string, userId: string): void {
+    this.spinner.show(); // Hiển thị spinner khi bắt đầu tải ghế
+
     this.seats = [];
     this.selectedSeats = [];
     this.totalAmount = 0;
@@ -230,6 +258,8 @@ export class SeatsComponent implements OnInit, OnDestroy {
     this.initializeWebSocket(showtimeId, userId);
 
     this.selectedSeats = selectedSeats;
+  this.spinner.hide();
+  
   }
 
   private initializeWebSocket(showtimeId: string, userId: string): void {
@@ -441,9 +471,9 @@ export class SeatsComponent implements OnInit, OnDestroy {
       case SeatStatus.Selected:
         return 'fill-red-500';
       case SeatStatus.Booked:
-        return 'fill-gray-500';
-      case SeatStatus.Busy:
         return 'fill-gray-200';
+      case SeatStatus.Busy:
+        return 'fill-yellow-500'; 
       case SeatStatus.Unavailable:
         return 'cursor-not-allowed invisible';
       default:
@@ -603,7 +633,10 @@ export class SeatsComponent implements OnInit, OnDestroy {
       this.toastr.warning('Vui lòng chọn ít nhất một ghế!', 'Cảnh báo');
       return false;
     }
-
+ // Nếu chỉ chọn 1 ghế, cho phép đặt lẻ
+  if (this.selectedSeats.length === 1) {
+    return true;
+  }
     // Tìm tất cả các ghế lẻ trong tất cả các hàng
     const allIsolatedSeats: SeatInfo[] = [];
 
