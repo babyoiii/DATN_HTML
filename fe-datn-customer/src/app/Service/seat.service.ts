@@ -310,6 +310,7 @@ export class SeatService {
     this.currentUserId = null;
     this.isConnected = false;
     this.reconnectAttempts = 0;
+    this.clearReCountdown();
   }
   disconnect(): void {
     if (this.socket) {
@@ -320,27 +321,25 @@ export class SeatService {
       console.log('WebSocket connection disconnected');
       this.clearLocalStorageData()
     }
-
+  }
+  clearReCountdown(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('roomCountdown');
+      console.log('🧹 Countdown đã được xóa khỏi localStorage');
+    }
+    this.joinRoomSubject.next(null);
+    console.log('🔄 Countdown đã được reset');
   }
   clearLocalStorageData(): void {
-    // Xóa dữ liệu liên quan đến ghế
     localStorage.removeItem('selectedSeats');
     localStorage.removeItem('seatData');
     localStorage.removeItem('currentShowtimeId');
-  
-    // Xóa dữ liệu liên quan đến dịch vụ
     localStorage.removeItem('selectedServices');
     localStorage.removeItem('serviceData');
-  
-    // Xóa dữ liệu liên quan đến đơn hàng
     localStorage.removeItem('orderData');
     localStorage.removeItem('orderDataPayment');
-  
-    // Xóa dữ liệu liên quan đến phim và suất chiếu
     localStorage.removeItem('currentMovieInfo');
-  
   }
-
   // Add the payment method to handle the payment status update
   payment(seats: SeatStatusUpdateRequest[]): void {
     if (!seats || seats.length === 0) {
