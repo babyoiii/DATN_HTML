@@ -20,7 +20,7 @@
 
           <button type="button"
             class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute left-0 z-10"
-            aria-label="Browser Back" (click)="goBack()">
+            aria-label="Browser Back" (click)="goBack($event)">
             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%"
               class="m-2 h-5 w-5">
               <title>Back</title>
@@ -46,61 +46,60 @@
           </div>
 
 
-          <a class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute right-0"
-            href="/"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
-              viewBox="0 0 45 45" width="1em" height="100%" class="m-2 h-5 w-5">
-              <title>Close</title>
-              <path stroke-width="4.0358"
-                d="M40.341 4.769a1.112 1.112 0 0 1-.022 1.587L24.071 22.604 40.32 38.85a1.112 1.112 0 0 1-1.566 1.566L22.506 24.169 6.236 40.417a1.112 1.112 0 0 1-1.565-1.566l16.27-16.247L4.67 6.356a1.125 1.125 0 0 1-.303-.767A1.13 1.13 0 0 1 5.49 4.465c.285 0 .56.11.768.304l16.248 16.269 16.268-16.27a1.117 1.117 0 0 1 1.566 0Z">
-              </path>
-            </svg></a>
+          <a (click)="confirmDisconnect($event)" class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute right-0"
+          href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor" viewBox="0 0 45 45" width="1em" height="100%" class="m-2 h-5 w-5">
+            <title>Close</title>
+            <path stroke-width="4.0358"
+              d="M40.341 4.769a1.112 1.112 0 0 1-.022 1.587L24.071 22.604 40.32 38.85a1.112 1.112 0 0 1-1.566 1.566L22.506 24.169 6.236 40.417a1.112 1.112 0 0 1-1.565-1.566l16.27-16.247L4.67 6.356a1.125 1.125 0 0 1-.303-.767A1.13 1.13 0 0 1 5.49 4.465c.285 0 .56.11.768.304l16.248 16.269 16.268-16.27a1.117 1.117 0 0 1 1.566 0Z">
+            </path>
+          </svg>
+        </a>
         </div>
       </div>
-      <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 flex items-center gap-4 py-2 md:py-4">
-        <h2 class="sr-only">Showtime Information</h2>
-
-
-
-        <img alt="Movie Poster" width="90" height="90"
-          class="aspect-square w-[90px] hidden md:inline-block rounded object-cover" style="color:transparent"
-          [src]="movieInfo?.thumbnail">
-
-
-
-
-        <div class="flex flex-col md:gap-2">
-          <h3 class="text-800 headline">{{movieByShowtimeData?.movieName}}</h3>
-          <ul
-            class="flex flex-wrap gap-y-2 leading-none relative z-50 mt-2 text-50 font-semibold uppercase md:text-100">
-            <li
-              class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-            {{movieByShowtimeData?.cinemaName}}</li>
-            <li
-              class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              {{movieByShowtimeData?.startTime | date:'dd/MM/yyyy'}}</li>
-            <li
-              class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              {{movieByShowtimeData?.startTimeFormatted}}</li>
-            <li
-              class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-            <li
-              class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              <span class="inline-flex items-center gap-1 uppercase" aria-label="MPAA Rating: PG13"
-                role="group">{{movieByShowtimeData?.roomTypeName}}</span>
+      <div class="mx-auto w-full max-w-[1248px] px-6 xl:px-0 flex items-center gap-6 py-4 md:py-6 bg-gray-800 rounded-lg shadow-lg">
+        <!-- Poster -->
+        <img alt="Movie Poster" width="120" height="120"
+          class="aspect-square w-[120px] hidden md:inline-block rounded-lg object-cover shadow-md"
+          [src]="movieByShowtimeData?.thumbnail">
+      
+        <!-- Thông tin phim -->
+        <div class="flex flex-col gap-4 text-white">
+          <!-- Tên phim -->
+          <h3 class="text-3xl font-bold md:text-4xl">{{ movieByShowtimeData?.movieName }}</h3>
+      
+          <!-- Thông tin chi tiết -->
+          <ul class="flex flex-wrap gap-6 text-sm md:text-base font-medium">
+            <li class="flex items-center gap-2">
+              <span class="text-gray-400">Rạp:</span>
+              <span class="text-white">{{ movieByShowtimeData?.cinemaName }}</span>
             </li>
-            <li
-              class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-              {{movieByShowtimeData?.averageRating}} 🌟</li>
+            <li class="flex items-center gap-2">
+              <span class="text-gray-400">Địa chỉ:</span>
+              <span class="text-white">{{ movieByShowtimeData?.cinemaAddress }}</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-gray-400">Ngày:</span>
+              <span class="text-white">{{ movieByShowtimeData?.startTime | date: 'dd/MM/yyyy' }}</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-gray-400">Giờ:</span>
+              <span class="text-white">{{ movieByShowtimeData?.startTimeFormatted }}</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-gray-400">Phòng:</span>
+              <span class="text-white">{{ movieByShowtimeData?.roomTypeName }}</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-gray-400">Đánh giá:</span>
+              <span class="text-yellow-400">{{ movieByShowtimeData?.averageRating }} 🌟</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-gray-400">Độ tuổi:</span>
+              <span class="text-white">{{ movieByShowtimeData?.minimumAge }}+</span>
+            </li>
           </ul>
         </div>
-
-
-
-
-
-
-
-
       </div>
     </header>
     <main id="main" class="relative flex-1 overflow-auto flex h-full flex-col">
@@ -108,18 +107,11 @@
       <div *ngIf="!checkLogin()" role="banner" class="relative caption text-200 bg-[#3B0249]">
         <div class="mx-auto w-full max-w-[1248px] px-4 xl:px-0 relative flex items-center justify-center gap-4 py-2">
           <p>If you're a member, sign in now to take advantage of AMC Stubs benefits.</p>
-          <button
+          <button  (click)="openloginform()"
             class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full ring-inset ring-2 ring-white hocus:ring-blue-500 hocus:text-blue-500 text-white outline-offset-[-5px] px-6 min-w-[10ch] text-sm h-11"
             type="button">Sign In</button>
         </div>
       </div>
-
-
-
-
-
-
-
 
       <!-- Phần danh sách ghế, nghĩa sửa lại -->
       <div class="relative flex-1 overflow-hidden">

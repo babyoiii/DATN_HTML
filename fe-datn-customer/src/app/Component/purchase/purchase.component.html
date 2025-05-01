@@ -1,34 +1,5 @@
 <app-need-more-time></app-need-more-time>
 <app-time-up></app-time-up>
-<ngx-spinner type="ball-scale-multiple">
-  <p class="wave-text">
-    <span style="--i:1">Đ</span>
-    <span style="--i:2">ă</span>
-    <span style="--i:3">n</span>
-    <span style="--i:4">g</span>
-    <span style="--i:5"> </span>
-    <span style="--i:6">T</span>
-    <span style="--i:7">h</span>
-    <span style="--i:8">ự</span>
-    <span style="--i:9">c</span>
-    <span style="--i:10"> </span>
-    <span style="--i:11">H</span>
-    <span style="--i:12">i</span>
-    <span style="--i:13">ệ</span>
-    <span style="--i:14">n</span>
-    <span style="--i:15"> </span>
-    <span style="--i:16">T</span>
-    <span style="--i:17">h</span>
-    <span style="--i:18">a</span>
-    <span style="--i:19">n</span>
-    <span style="--i:20">h</span>
-    <span style="--i:21"> </span>
-    <span style="--i:22">T</span>
-    <span style="--i:23">o</span>
-    <span style="--i:24">á</span>
-    <span style="--i:25">n</span>
-  </p>
-</ngx-spinner>
 <div class="relative bg-black text-white [&amp;:has(dialog[open],[data-div-scroll=disabled])]:overflow-hidden"
     monica-id="ofpnmcalabcbjgholdjcjblkibolbppb" monica-version="7.8.0">
     <div class="flex h-[100dvh] flex-col"><!--$--><!--$--><!--$--><!--/$--><!--/$--><!--/$-->
@@ -56,7 +27,7 @@
                             </div>
                         </div>
                     </div>
-                    <a (click)="onDisconnect()"
+                    <a (click)="confirmDisconnect($event)"
                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base absolute right-0"
                         href="/"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
                             viewBox="0 0 45 45" width="1em" height="100%" class="m-2 h-5 w-5">
@@ -74,57 +45,59 @@
             <main id="main" class="relative flex-1 overflow-auto">
                 <div class="w-full border-b border-gray-700">
                     <div class="w-full bg-checkout-black py-2">
-                        <div class="mx-auto max-w-[1248px] px-4 xl:px-0 relative z-10 flex w-full items-center gap-4">
-                            <img alt="" config="[object Object]" loading="lazy" width="90" height="90" decoding="async"
-                                data-nimg="1" class="aspect-square w-[90px] hidden md:block"
-                                srcset="https://amc-theatres-res.cloudinary.com/image/upload/c_thumb,w_90,h_90,g_face/r_max/f_auto/q_auto/v1734114336/amc-cdn/production/2/movies/67500/67472/PosterDynamic/168453.jpg 1x, https://amc-theatres-res.cloudinary.com/image/upload/c_thumb,w_90,h_90,g_face/r_max/f_auto/q_auto/v1734114336/amc-cdn/production/2/movies/67500/67472/PosterDynamic/168453.jpg 2x"
-                                src="https://amc-theatres-res.cloudinary.com/image/upload/c_thumb,w_90,h_90,g_face/r_max/f_auto/q_auto/v1734114336/amc-cdn/production/2/movies/67500/67472/PosterDynamic/168453.jpg"
-                                style="color: transparent;">
-                            <div class="flex flex-col md:gap-2">
-                                <h2 class="text-700 headline">Captain America: Brave New World</h2>
-                                <ul
-                                    class="flex flex-wrap gap-y-2 leading-none mt-2 text-50 font-semibold uppercase md:text-100">
-                                    <li
-                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-                                        AMC Village 7</li>
-                                    <li
-                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-                                        Tuesday, February 18, 2025</li>
-                                    <li
-                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-                                        12:30pm</li>
-                                    <li
-                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-                                        <span class="flex items-center gap-[0.5ch]" aria-label="Runtime: 1 HR 58 MIN"
-                                            role="group">1 HR 58 MIN <button
-                                                class="h-[1em] w-[1em] text-blue-500 transition-colors hover:text-white"
-                                                aria-label="More Info" type="button" aria-haspopup="dialog"
-                                                aria-expanded="false" aria-controls="radix-:ru:"
-                                                data-state="closed"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%"
-                                                    class="h-[1em] w-[1em]">
-                                                    <path
-                                                        d="M22.5 45C10.125 45 0 34.875 0 22.5S10.125 0 22.5 0 45 10.125 45 22.5 34.875 45 22.5 45zm0-41.625c-10.35 0-18.9 8.55-18.9 18.9 0 10.35 8.55 18.9 18.9 18.9 10.35 0 18.9-8.55 18.9-18.9 0-10.35-8.55-18.9-18.9-18.9z">
-                                                    </path>
-                                                    <path
-                                                        d="M15.75 17.55c0-3.6 3.15-6.075 6.75-6.075 3.15 0 6.75 2.25 6.75 5.625 0 2.25-1.125 3.825-2.925 4.95-.675.45-1.35.9-1.8 1.575-.675.675-.9 1.575-.9 2.7H20.7c-.225-.45-.225-.9-.225-1.35 0-4.5 5.4-4.725 5.4-7.875 0-1.575-1.575-2.7-3.15-2.7-2.025 0-3.375 1.575-3.375 3.375v.675l-3.375-.225c-.225.225-.225-.225-.225-.675zm6.3 15.75c1.125 0 2.025-.9 2.025-2.025s-.9-2.025-2.025-2.025-2.025.9-2.025 2.025c-.225.9.9 2.025 2.025 2.025z">
-                                                    </path>
-                                                </svg></button></span>
-                                    </li>
-                                    <li
-                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-                                        <span class="inline-flex items-center gap-1 uppercase"
-                                            aria-label="MPAA Rating: PG13" role="group">PG13</span>
-                                    </li>
-                                    <li
-                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-                                        AMC Signature Recliners</li>
-                                    <li
-                                        class="-translate-x-[0.5ch] pl-[0.5ch] [&amp;:not(:last-child)]:border-r-2 [&amp;:not(:last-child)]:border-r-gray-300 [&amp;:not(:last-child)]:pr-[0.5ch]">
-                                        2 seats</li>
-                                </ul>
+                        <div class="mx-auto max-w-[1248px] px-4 xl:px-0 relative z-10 flex w-full items-center gap-6 bg-gray-800 text-white p-6 rounded-lg shadow-lg">
+                            <!-- Poster -->
+                            <img 
+                              alt="Movie Poster" 
+                              loading="lazy" 
+                              width="90" 
+                              height="90" 
+                              class="aspect-square w-[90px] hidden md:block rounded-lg object-cover shadow-md"
+                              [src]="movieByShowtimeData.thumbnail"
+                            />
+                          
+                            <!-- Thông tin phim -->
+                            <div class="flex flex-col gap-4">
+                              <!-- Tên phim -->
+                              <h2 class="text-2xl font-bold md:text-3xl">{{ movieByShowtimeData.movieName }}</h2>
+                          
+                              <!-- Thông tin chi tiết -->
+                              <ul class="flex flex-wrap gap-4 text-sm md:text-base font-medium">
+                                <li class="flex items-center gap-2 border-r border-gray-500 pr-4">
+                                  <span class="text-gray-400">Rạp:</span>
+                                  <span class="text-white">{{ movieByShowtimeData.cinemaName }}</span>
+                                </li>
+                                <li class="flex items-center gap-2 border-r border-gray-500 pr-4">
+                                  <span class="text-gray-400">Địa chỉ:</span>
+                                  <span class="text-white">{{ movieByShowtimeData.cinemaAddress }}</span>
+                                </li>
+                                <li class="flex items-center gap-2 border-r border-gray-500 pr-4">
+                                  <span class="text-gray-400">Ngày:</span>
+                                  <span class="text-white">{{ movieByShowtimeData.startTime | date: 'dd/MM/yyyy' }}</span>
+                                </li>
+                                <li class="flex items-center gap-2 border-r border-gray-500 pr-4">
+                                  <span class="text-gray-400">Giờ:</span>
+                                  <span class="text-white">{{ movieByShowtimeData.startTimeFormatted }}</span>
+                                </li>
+                                <li class="flex items-center gap-2 border-r border-gray-500 pr-4">
+                                  <span class="text-gray-400">Thời lượng:</span>
+                                  <span class="text-white">{{ movieByShowtimeData.durationFormatted }}</span>
+                                </li>
+                                <li class="flex items-center gap-2 border-r border-gray-500 pr-4">
+                                  <span class="text-gray-400">Đánh giá:</span>
+                                  <span class="text-white">{{ movieByShowtimeData.averageRating }} 🌟</span>
+                                </li>
+                                <li class="flex items-center gap-2 border-r border-gray-500 pr-4">
+                                  <span class="text-gray-400">Phòng:</span>
+                                  <span class="text-white">{{ movieByShowtimeData.roomTypeName }}</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                  <span class="text-gray-400">Độ tuổi:</span>
+                                  <span class="text-white">{{ movieByShowtimeData.minimumAge }}+</span>
+                                </li>
+                              </ul>
                             </div>
-                        </div>
+                          </div>
                     </div>
                 </div>
                 <div role="banner" class="relative caption text-200" style="background-color: rgb(59, 2, 73);">
@@ -144,7 +117,7 @@
                 <div class="mx-auto w-full px-4 xl:px-0 grid max-w-[1000px] grid-cols-2 gap-20">
                     <div class="col-span-2 pt-4 md:col-span-1">
                         <div class="mb-12 divide-y divide-gray-700">
-                            <div *ngIf="checkMembership == true"
+                            <div *ngIf="checkMembership == false"
                                 class="qcALx-grid qcALx-grid-cols-2 qcALx-w-full qcALx-h-fit qcALx-rounded-xl qcALx-p-4"
                                 style="background-image: url(&quot;https://amc-theatres-res.cloudinary.com/image/upload/amc-cdn/static/images/2024/bg-banner-premiere.png&quot;); background-size: cover;">
                                 <div class="qcALx-col-span-1 qcALx-flex align-center"><img alt="AMC Stubs"
@@ -688,23 +661,23 @@
                                                         Miễn phí
                                                     </p>
                                                 </div>
-                                            </li>
-                                            <div
-                                                class="discount-container bg-green-100 text-green-800 p-4 rounded-lg shadow-md flex items-center gap-4">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                    viewBox="0 0 24 24" class="w-6 h-6">
-                                                    <path
-                                                        d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z">
-                                                    </path>
-                                                </svg>
-                                                <div>
-                                                    <h4 class="text-lg font-semibold">Bạn đã tiết kiệm được:</h4>
-                                                    <p class="text-xl font-bold">{{ discountAmount | number:'1.0-0' }} đ
-                                                    </p>
-                                                </div>
-                                            </div>
+                                             
                                         </ul>
+                                       
                                     </div>
+                                    <div
+                                    class="discount-container bg-green-100 text-green-800 p-4 rounded-lg shadow-md flex items-center gap-4"
+                                    style="z-index: 10; position: relative;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
+                                        <path
+                                            d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z">
+                                        </path>
+                                    </svg>
+                                    <div>
+                                        <h4 class="text-lg font-semibold">Bạn đã tiết kiệm được:</h4>
+                                        <p class="text-xl font-bold">{{discountAmount | number:'1.0-0'}} đ</p>
+                                    </div>
+                                </div>
                                 </section>
                                 <section class="">
                                     <header class="flex items-center justify-between py-6">
@@ -714,14 +687,19 @@
                                             class="group transition-colors text-blue-500 hocus:text-white text-sm font-semibold leading-tight tracking-normal"
                                             href="/orders">Add</a>
                                     </header>
-
                                 </section>
-                                 <label *ngIf="checkMembership" class="checkbox-container">
-                                    <input type="checkbox" class="form-checkbox"/>
+                                <label *ngIf="checkMembership == true" class="checkbox-container">
+                                    <input 
+                                    type="checkbox" 
+                                    class="form-checkbox" 
+                                    [(ngModel)]="isPromotionSelected" 
+                                    name="promotionSelected" 
+                                    (change)="onPromotionChange($event)" 
+                                  />
                                     <span>
-                                       Bạn có muốn sử dụng khuyến mãi và sự kiện đặc biệt từ thẻ thành viên không?
+                                      Bạn có muốn sử dụng khuyến mãi và sự kiện đặc biệt từ thẻ thành viên không?
                                     </span>
-                                </label>
+                                  </label>
                                 <label class="checkbox-container">
                                     <input type="checkbox" class="form-checkbox" [(ngModel)]="isTermsAccepted"
                                         [ngModelOptions]="{standalone: true}" (change)="onCheckboxChange()" />
@@ -735,7 +713,7 @@
                                     <input type="checkbox" class="form-checkbox" [(ngModel)]="isAgeConfirmed"
                                         [ngModelOptions]="{standalone: true}" (change)="onCheckboxChange()" />
                                     <span>
-                                        Tôi xác nhận rằng tôi đủ 18 tuổi trở lên.
+                                        Tôi xác nhận rằng tôi đủ {{movieByShowtimeData.minimumAge}} tuổi trở lên.
                                     </span>
                                 </label>
 

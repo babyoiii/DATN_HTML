@@ -57,7 +57,8 @@ export const routes: Routes = [
         ]
     },
     { path: 'showtimes', component: ShowtimesComponent },
-    { path: 'showtimes/:id', component: ShowtimesComponent },
+    { path: 'showtimes/movie/:id', component: ShowtimesComponent }, // Route cho movieId
+    { path: 'showtimes/cinema/:id', component: ShowtimesComponent }, // Route cho cinemaId
     { path: 'dangki', component: DangkiComponent },
     { path: 'timkiemrap', component: TimkiemrapComponent },
     { path: 'signin', component: SignInComponent },
@@ -70,7 +71,6 @@ export const routes: Routes = [
     { path: 'NeedMoreTime', component: NeedMoreTimeComponent },
     { path: 'TimeUpComponent', component: TimeUpComponent },
     { path: 'VerifyOpt', component: VerifyOptComponent },
-    { path: 'test', component: TestDialogComponent },
     { path: 'thanhtoanMembership', component: VipMemberComponent},
     
 

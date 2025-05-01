@@ -14,13 +14,15 @@ export class MembershipService {
    checkMembership(): Observable<any> {
       return this.http.get<CheckMembership>(`${this.baseUrl}/Membership/CheckMembership`);
     }
-    getPriceMembershipPreview(orderPrice: number, ticketPrice: number): Observable<MembershipPreview> {
-      return this.http.get<MembershipPreview>(`${this.baseUrl}/Membership/MembershipPreview?orderPrice=${orderPrice}&ticketPrice=${ticketPrice}`);
+    getPriceMembershipPreview(orderPrice: number, ticketPrice: number, type: number): Observable<MembershipPreview> {
+      return this.http.get<MembershipPreview>(
+        `${this.baseUrl}/Membership/MembershipPreview?orderPrice=${orderPrice}&ticketPrice=${ticketPrice}&type=${type}`
+      );
     }
     getMembershipByUserRes(): Observable<any> {
       return this.http.get<MembershipData>(`${this.baseUrl}/Membership/GetmembershipByUserRes`);
     }
-    addUserMembership(payload: { membershipId: number; paymentMethodId: string }): Observable<any> {
+      addUserMembership(payload: { membershipId: number; paymentMethodId: string }): Observable<any> {
       const url = `${this.baseUrl}/Membership/AddUserMembership`;
       return this.http.post<any>(url, payload);
     }

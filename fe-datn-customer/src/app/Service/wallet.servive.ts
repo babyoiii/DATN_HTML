@@ -151,7 +151,6 @@ export class WalletOnboardService {
 
       await tx2.wait();
       this.toast.clear(paymentConfirmToast.toastId);
-      this.toast.success("Thanh toán thành công!");
       
       console.log('Payment transaction confirmed.');
       return tx2.hash;
@@ -159,7 +158,6 @@ export class WalletOnboardService {
     } catch (error: any) {
       // Error handling with appropriate toast
       this.toast.clear(); // Clear any existing toasts
-      this.toast.error(error.message || 'Có lỗi xảy ra trong quá trình thanh toán');
       throw error;
     }
   }

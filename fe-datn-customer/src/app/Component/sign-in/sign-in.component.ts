@@ -6,6 +6,7 @@ import { AuthServiceService } from '../../Service/auth-service.service';
 import { ModalService } from '../../Service/modal.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { NotificationService } from '../../Service/notification.service';
 
 interface SignInData {
   userName: string;
@@ -30,7 +31,8 @@ export class SignInComponent {
     private router: Router,
     public modalService: ModalService,
     private toast: ToastrService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private notificationService: NotificationService
   ) {}
 
   onSubmit(): void {
@@ -52,23 +54,25 @@ export class SignInComponent {
           console.log('Refresh Token:', refreshToken);
           console.log('Roles:', roles);
 
-          this.toast.success('Đăng nhập thành công!');
+          this.notificationService.onSuccessNotification('Đăng nhập thành công!');
           this.authService.saveToken(accessToken);
           this.authService.saveUserData(result);
           this.modalService.closeSignInModal();
           this.spinner.hide(); // Ẩn spinner
-          this.router.navigate(['/']); 
+          const redirectUrl = localStorage.getItem('redirectUrl') || '/';
+          localStorage.removeItem('redirectUrl');
+          this.router.navigate([redirectUrl]);
         } else {
           console.error('No data found in the response');
           this.spinner.hide(); // Ẩn spinner
-          this.toast.error('Không tìm thấy dữ liệu đăng nhập!');
+          this.notificationService.onErrorNotification('Không tìm thấy dữ liệu đăng nhập!');
         }
       },
       error: (error: any) => {
         this.spinner.hide(); // Ẩn spinner
         console.error('Error:', error);
         this.toast.clear(loadingToast.toastId);
-        this.toast.error('Đăng nhập thất bại, vui lòng thử lại sau!');
+        this.notificationService.onErrorNotification('Đăng nhập thất bại, vui lòng thử lại sau!');
       }
     });
   }

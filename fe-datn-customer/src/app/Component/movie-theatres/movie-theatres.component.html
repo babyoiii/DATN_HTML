@@ -8,10 +8,20 @@
                     <form class="relative"><label
                             class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
                                 class="sr-only">Search for theatres by city, zip or theatre name</span>
-                            <div class="amc-input amc-input--box" data-size="700"><input class="input"
+                            <div class="amc-input amc-input--box" data-size="700">
+                                
+                                
+                                
+                                <input class="input"  [(ngModel)]="address"
                                     placeholder="Search by City, Zip or Theatre" type="text" name="q"
-                                    data-listener-added_1b3e892e="true"><button type="submit" disabled=""
-                                    class="transition-colors disabled:text-gray-200"><svg
+                                    data-listener-added_1b3e892e="true">
+                                    
+                                    
+                                    <button type="submit" disabled=""
+                                    class="transition-colors disabled:text-gray-200">
+                                    
+                                    
+                                    <svg
                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
                                         width="1em" height="100%">
                                         <title>Submit</title>
@@ -32,280 +42,98 @@
                             </path>
                         </svg>Use Current Location
                     </button>
-                    <p *ngIf="address">Address: {{ address }}</p>
 
-                    <!-- Hiện ra khi tìm rạp -->
                     <div class="flex gap-4">
                         <ul class="flex-1 divide-y overflow-auto md:max-h-[500px] md:min-w-[400px] md:pr-4">
-                            <!-- Dùng vòng lặp ở 1 li này -->
-                            <li class="grid items-baseline gap-2 py-8 md:grid-cols-[3ch,1fr]">
-                                <!-- Cái này sẽ thay đổi thành Thay đổi vị trí nếu chọn rạp khác làm vị trí đang sử dụng -->
-                                <div class="md:col-start-2"><span class="text-xs uppercase text-gray-300">Vị trí đang sử
-                                        dụng</span></div><span
-                                    class="hidden w-[2ch] justify-self-start border-r-2 border-gray-500 pr-4 text-300 label md:block">1</span>
-                                <div class="grid flex-1 gap-2">
-                                    <div class="flex items-baseline justify-between ">
-                                        <!-- Href sẽ thay đổi theo tên thành phố + tên rạp -->
-                                        <a class="group transition-colors text-white hocus:text-blue-500"
-                                            href="/movie-theatres/hanoi/aeon-ha-dong">
-                                            <!-- CineX Cinema + {{ address }} -->
-                                            <h2 class="text-600 headline">CineX Cinema AEON Hà Đông</h2>
-                                            <!-- Vị trí nằm trong + {{ address }} || Nếu nằm trong một địa điểm nào đó thì làm như này, hoặc có thể bỏ -->
-                                            <h3 class="font-semibold">Vị trí nằm trong AEON Hà Đông</h3>
-                                        </a>
-
-                                    </div>
-                                    <div class="flex justify-between text-200">
-                                        <!-- Href sẽ thay đổi thành đường dẫn của rạp -->
-                                        <a class="group transition-colors text-white hocus:text-blue-500 inline-flex items-center gap-1"
-                                            rel="noopener noreferrer" target="_blank"
-                                            href="https://www.bing.com/maps?v=2&amp%3Blvl=9&amp%3Bstyle=r&amp%3Bmode=D&amp%3Brtop=0%7E0%7E0%7E&amp%3Bcp=32.3406600000%7E-86.1772000000&amp%3Brtp=adr.%7Epos.32.3406600000_-86.1772000000_AMC+Festival+Plaza+16+7925+Vaughn+Road+MONTGOMERY+AL+36116&toWww=1&redig=0EBF7508599D4CBBBCB8BEB7C32D034B&cp=20.989874%7E105.751424&lvl=15.0">
-                                            <address class="line-clamp-1 text-sm not-italic">Dương Nội, Hà Đông, Hà Nội,
-                                                Việt Nam</address><svg xmlns="http://www.w3.org/2000/svg"
-                                                fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%"
-                                                class="chevron transition-transform group-hover:translate-x-1"
-                                                aria-hidden="true">
-                                                <path
-                                                    d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z">
-                                                </path>
-                                            </svg>
-                                        </a>
-                                    </div>
-
-                                    <div class="flex gap-4 pb-4">
-                                        <!-- href này thì là href trên + /showtimes -->
-                                        <a class="group transition-colors text-blue-500 hocus:text-white inline-flex items-center gap-1 text-sm font-semibold"
-                                            href="/movie-theatres/hanoi/aeon-ha-dong/showtimes">Xuất chiếu<svg
-                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                viewBox="0 0 45 45" width="1em" height="100%"
-                                                class="chevron transition-transform group-hover:translate-x-1"
-                                                aria-hidden="true">
-                                                <path
-                                                    d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z">
-                                                </path>
-                                            </svg></a><a
-                                            class="group transition-colors text-blue-500 hocus:text-white inline-flex items-center gap-1 text-sm font-semibold"
-                                            rel="noopener noreferrer" target="_blank"
-                                            href="https://www.bing.com/maps?v=2&amp%3Blvl=9&amp%3Bstyle=r&amp%3Bmode=D&amp%3Brtop=0%7E0%7E0%7E&amp%3Bcp=32.3406600000%7E-86.1772000000&amp%3Brtp=adr.%7Epos.32.3406600000_-86.1772000000_AMC+Festival+Plaza+16+7925+Vaughn+Road+MONTGOMERY+AL+36116&toWww=1&redig=0EBF7508599D4CBBBCB8BEB7C32D034B&cp=20.989874%7E105.751424&lvl=15.0">Google
-                                            Map<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                viewBox="0 0 45 45" width="1em" height="100%"
-                                                class="chevron transition-transform group-hover:translate-x-1"
-                                                aria-hidden="true">
-                                                <path
-                                                    d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z">
-                                                </path>
-                                            </svg></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="grid items-baseline gap-2 py-8 md:grid-cols-[3ch,1fr]">
-                                <div class="md:col-start-2"><button type="button"
-                                        class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white md:text-base text-xs uppercase">
-                                        <div class="text-xs">Thay đổi vị trí</div>
-                                    </button></div><span
-                                    class="hidden w-[2ch] justify-self-start border-r-2 border-gray-500 pr-4 text-300 label md:block">2</span>
-                                <div class="grid flex-1 gap-2">
-                                    <div class="flex items-baseline justify-between "><a
-                                            class="group transition-colors text-white hocus:text-blue-500"
-                                            href="/movie-theatres/hanoi/vincom-pham-ngoc-thach">
-                                            <h2 class="text-600 headline">CineX Cinema Vincom Phạm Ngọc Thạch</h2>
-                                            <h3 class="font-semibold">Vị trí nằm trong Vincom Phạm Ngọc Thạch</h3>
-                                        </a></div>
-                                    <div class="flex justify-between text-200"><a
-                                            class="group transition-colors text-white hocus:text-blue-500 inline-flex items-center gap-1"
-                                            rel="noopener noreferrer" target="_blank"
-                                            href="https://www.bing.com/maps?v=2&amp%3Blvl=9&amp%3Bstyle=r&amp%3Bmode=D&amp%3Brtop=0%7E0%7E0%7E&amp%3Bcp=32.3406600000%7E-86.1772000000&amp%3Brtp=adr.%7Epos.32.3406600000_-86.1772000000_AMC+Festival+Plaza+16+7925+Vaughn+Road+MONTGOMERY+AL+36116&toWww=1&redig=0EBF7508599D4CBBBCB8BEB7C32D034B&cp=21.00816%7E105.83353&lvl=16.0">
-                                            <address class="line-clamp-1 text-sm not-italic">02 P. Phạm Ngọc Thạch, Kim
-                                                Liên, Đống Đa, Hà Nội</address><svg xmlns="http://www.w3.org/2000/svg"
-                                                fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%"
-                                                class="chevron transition-transform group-hover:translate-x-1"
-                                                aria-hidden="true">
-                                                <path
-                                                    d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z">
-                                                </path>
-                                            </svg>
-                                        </a></div>
-
-                                    <div class="flex gap-4 pb-4"><a
-                                            class="group transition-colors text-blue-500 hocus:text-white inline-flex items-center gap-1 text-sm font-semibold"
-                                            href="/movie-theatres/hanoi/vincom-pham-ngoc-thach/showtimes">Xuất chiếu<svg
-                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                viewBox="0 0 45 45" width="1em" height="100%"
-                                                class="chevron transition-transform group-hover:translate-x-1"
-                                                aria-hidden="true">
-                                                <path
-                                                    d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z">
-                                                </path>
-                                            </svg></a><a
-                                            class="group transition-colors text-blue-500 hocus:text-white inline-flex items-center gap-1 text-sm font-semibold"
-                                            rel="noopener noreferrer" target="_blank"
-                                            href="https://www.bing.com/maps?v=2&amp%3Blvl=9&amp%3Bstyle=r&amp%3Bmode=D&amp%3Brtop=0%7E0%7E0%7E&amp%3Bcp=32.3406600000%7E-86.1772000000&amp%3Brtp=adr.%7Epos.32.3406600000_-86.1772000000_AMC+Festival+Plaza+16+7925+Vaughn+Road+MONTGOMERY+AL+36116&toWww=1&redig=0EBF7508599D4CBBBCB8BEB7C32D034B&cp=21.00816%7E105.83353&lvl=16.0">Google
-                                            Map<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                viewBox="0 0 45 45" width="1em" height="100%"
-                                                class="chevron transition-transform group-hover:translate-x-1"
-                                                aria-hidden="true">
-                                                <path
-                                                    d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z">
-                                                </path>
-                                            </svg></a></div>
-                                </div>
-                            </li>
-                            <li class="grid items-baseline gap-2 py-8 md:grid-cols-[3ch,1fr]">
-                                <div class="md:col-start-2"><button type="button"
-                                        class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white md:text-base text-xs uppercase">
-                                        <div class="text-xs">Thay đổi vị trí</div>
-                                    </button></div><span
-                                    class="hidden w-[2ch] justify-self-start border-r-2 border-gray-500 pr-4 text-300 label md:block">3</span>
-                                <div class="grid flex-1 gap-2">
-                                    <div class="flex items-baseline justify-between "><a
-                                            class="group transition-colors text-white hocus:text-blue-500"
-                                            href="/movie-theatres/birmingham-al/amc-summit-16">
-                                            <h2 class="text-600 headline">CineX Cinema Giải Phóng</h2>
-                                        </a></div>
-                                    <div class="flex justify-between text-200"><a
-                                            class="group transition-colors text-white hocus:text-blue-500 inline-flex items-center gap-1"
-                                            rel="noopener noreferrer" target="_blank"
-                                            href="https://www.bing.com/maps?v=2&amp%3Blvl=9&amp%3Bstyle=r&amp%3Bmode=D&amp%3Brtop=0%7E0%7E0%7E&amp%3Bcp=32.3406600000%7E-86.1772000000&amp%3Brtp=adr.%7Epos.32.3406600000_-86.1772000000_AMC+Festival+Plaza+16+7925+Vaughn+Road+MONTGOMERY+AL+36116&toWww=1&redig=0EBF7508599D4CBBBCB8BEB7C32D034B&cp=21.000388%7E105.841212&lvl=16.0">
-                                            <address class="line-clamp-1 text-sm not-italic">123 Đường Giải Phóng, Giáp
-                                                Bát, Hoàng Mai, Hà Nội</address><svg xmlns="http://www.w3.org/2000/svg"
-                                                fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%"
-                                                class="chevron transition-transform group-hover:translate-x-1"
-                                                aria-hidden="true">
-                                                <path
-                                                    d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z">
-                                                </path>
-                                            </svg>
-                                        </a></div>
-
-                                    <div class="flex gap-4 pb-4"><a
-                                            class="group transition-colors text-blue-500 hocus:text-white inline-flex items-center gap-1 text-sm font-semibold"
-                                            href="/movie-theatres/birmingham-al/amc-summit-16/showtimes">Xuất chiếu<svg
-                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                viewBox="0 0 45 45" width="1em" height="100%"
-                                                class="chevron transition-transform group-hover:translate-x-1"
-                                                aria-hidden="true">
-                                                <path
-                                                    d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z">
-                                                </path>
-                                            </svg></a><a
-                                            class="group transition-colors text-blue-500 hocus:text-white inline-flex items-center gap-1 text-sm font-semibold"
-                                            rel="noopener noreferrer" target="_blank"
-                                            href="https://www.bing.com/maps?v=2&amp%3Blvl=9&amp%3Bstyle=r&amp%3Bmode=D&amp%3Brtop=0%7E0%7E0%7E&amp%3Bcp=32.3406600000%7E-86.1772000000&amp%3Brtp=adr.%7Epos.32.3406600000_-86.1772000000_AMC+Festival+Plaza+16+7925+Vaughn+Road+MONTGOMERY+AL+36116&toWww=1&redig=0EBF7508599D4CBBBCB8BEB7C32D034B&cp=21.000388%7E105.841212&lvl=16.0">Google
-                                            Map<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                viewBox="0 0 45 45" width="1em" height="100%"
-                                                class="chevron transition-transform group-hover:translate-x-1"
-                                                aria-hidden="true">
-                                                <path
-                                                    d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z">
-                                                </path>
-                                            </svg></a></div>
-                                </div>
-                            </li>
-                            <li class="grid items-baseline gap-2 py-8 md:grid-cols-[3ch,1fr]">
-                                <div class="md:col-start-2"><button type="button"
-                                        class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white md:text-base text-xs uppercase">
-                                        <div class="text-xs">Thay đổi vị trí</div>
-                                    </button></div><span
-                                    class="hidden w-[2ch] justify-self-start border-r-2 border-gray-500 pr-4 text-300 label md:block">4</span>
-                                <div class="grid flex-1 gap-2">
-                                    <div class="flex items-baseline justify-between "><a
-                                            class="group transition-colors text-white hocus:text-blue-500"
-                                            href="/movie-theatres/birmingham-al/amc-patton-creek-15">
-                                            <h2 class="text-600 headline">CineX Cinema Tây Hồ</h2>
-                                        </a></div>
-                                    <div class="flex justify-between text-200"><a
-                                            class="group transition-colors text-white hocus:text-blue-500 inline-flex items-center gap-1"
-                                            rel="noopener noreferrer" target="_blank"
-                                            href="https://www.bing.com/maps?v=2&amp%3Blvl=9&amp%3Bstyle=r&amp%3Bmode=D&amp%3Brtop=0%7E0%7E0%7E&amp%3Bcp=32.3406600000%7E-86.1772000000&amp%3Brtp=adr.%7Epos.32.3406600000_-86.1772000000_AMC+Festival+Plaza+16+7925+Vaughn+Road+MONTGOMERY+AL+36116&toWww=1&redig=0EBF7508599D4CBBBCB8BEB7C32D034B&cp=21.031024%7E105.815151&lvl=14.5">
-                                            <address class="line-clamp-1 text-sm not-italic">29 P. Liễu Giai Ngọc Khánh,
-                                                Ba Đình, Hanoi</address><svg xmlns="http://www.w3.org/2000/svg"
-                                                fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%"
-                                                class="chevron transition-transform group-hover:translate-x-1"
-                                                aria-hidden="true">
-                                                <path
-                                                    d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z">
-                                                </path>
-                                            </svg>
-                                        </a></div>
-
-                                    <div class="flex gap-4 pb-4"><a
-                                            class="group transition-colors text-blue-500 hocus:text-white inline-flex items-center gap-1 text-sm font-semibold"
-                                            href="/movie-theatres/birmingham-al/amc-patton-creek-15/showtimes">Xuất
-                                            chiếu<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                viewBox="0 0 45 45" width="1em" height="100%"
-                                                class="chevron transition-transform group-hover:translate-x-1"
-                                                aria-hidden="true">
-                                                <path
-                                                    d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z">
-                                                </path>
-                                            </svg></a><a
-                                            class="group transition-colors text-blue-500 hocus:text-white inline-flex items-center gap-1 text-sm font-semibold"
-                                            rel="noopener noreferrer" target="_blank"
-                                            href="https://www.bing.com/maps?v=2&amp%3Blvl=9&amp%3Bstyle=r&amp%3Bmode=D&amp%3Brtop=0%7E0%7E0%7E&amp%3Bcp=32.3406600000%7E-86.1772000000&amp%3Brtp=adr.%7Epos.32.3406600000_-86.1772000000_AMC+Festival+Plaza+16+7925+Vaughn+Road+MONTGOMERY+AL+36116&toWww=1&redig=0EBF7508599D4CBBBCB8BEB7C32D034B&cp=21.031024%7E105.815151&lvl=14.5">Google
-                                            Map<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                viewBox="0 0 45 45" width="1em" height="100%"
-                                                class="chevron transition-transform group-hover:translate-x-1"
-                                                aria-hidden="true">
-                                                <path
-                                                    d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z">
-                                                </path>
-                                            </svg></a></div>
-                                </div>
-                            </li>
-
+                          <!-- Sử dụng *ngFor để lặp qua listCinema -->
+                          <li *ngFor="let cinema of listCinema; let i = index" class="grid items-baseline gap-2 py-8 md:grid-cols-[3ch,1fr]">
+                            <!-- Hiển thị vị trí đang sử dụng -->
+                            <div class="md:col-start-2">
+                              <span class="text-xs uppercase text-gray-300" *ngIf="i === 0">Vị trí đang sử dụng</span>
+                            </div>
+                            <span class="hidden w-[2ch] justify-self-start border-r-2 border-gray-500 pr-4 text-300 label md:block">{{ i + 1 }}</span>
+                            <div class="grid flex-1 gap-2">
+                              <div class="flex items-baseline justify-between">
+                                <!-- Liên kết động dựa trên dữ liệu -->
+                                <a class="group transition-colors text-white hocus:text-blue-500" [href]="'/showtimes/' + cinema.id">
+                                  <h2 class="text-600 headline">{{ cinema.name }}</h2>
+                                  <h3 class="font-semibold">Vị trí nằm trong {{ cinema.location }}</h3>
+                                </a>
+                              </div>
+                              <div class="flex justify-between text-200">
+                                <a class="group transition-colors text-white hocus:text-blue-500 inline-flex items-center gap-1"
+                                   rel="noopener noreferrer" target="_blank" [href]="cinema.mapLink">
+                                  <address class="line-clamp-1 text-sm not-italic">{{ cinema.location }}</address>
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%" class="chevron transition-transform group-hover:translate-x-1" aria-hidden="true">
+                                    <path d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z"></path>
+                                  </svg>
+                                </a>
+                              </div>
+                              <div class="flex gap-4 pb-4">
+                                <a class="group transition-colors text-blue-500 hocus:text-white inline-flex items-center gap-1 text-sm font-semibold"
+                                   [href]="'/showtimes/cinema/' + cinema.id">Xuất chiếu
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%" class="chevron transition-transform group-hover:translate-x-1" aria-hidden="true">
+                                    <path d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z"></path>
+                                  </svg>
+                                </a>
+                                <a class="group transition-colors text-blue-500 hocus:text-white inline-flex items-center gap-1 text-sm font-semibold"
+                                   rel="noopener noreferrer" target="_blank" [href]="cinema.mapLink">Google Map
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%" class="chevron transition-transform group-hover:translate-x-1" aria-hidden="true">
+                                    <path d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z"></path>
+                                  </svg>
+                                </a>
+                              </div>
+                            </div>
+                          </li>
                         </ul>
-
-                    </div>
+                      </div>
                 </div>
             </div>
         </section>
     </div>
     <div class="empty:hidden">
         <section class="mx-auto max-w-[1248px] px-2 py-8 empty:hidden sm:px-4 xl:px-0">
-            <div dir="ltr" data-orientation="horizontal">
-                <header class="flex flex-wrap justify-between gap-4 border-b-2 pb-2 pt-8">
-                    <h1 class="text-2xl font-bold md:text-4xl">All Theatres</h1>
-                    <div role="tablist" aria-orientation="horizontal" class="flex gap-3 font-semibold" tabindex="0"
-                        data-orientation="horizontal" style="outline: none;"><button type="button" role="tab"
-                            aria-selected="true" aria-controls="radix-:r6tg:-content-Markets" data-state="active"
-                            id="radix-:r6tg:-trigger-Markets"
-                            class="font-semibold decoration-2 underline-offset-8 transition-colors data-[state=active]:underline hover:data-[state=inactive]:text-blue-500 data-[state=inactive]:text-gray-200"
-                            tabindex="0" data-orientation="horizontal" data-radix-collection-item="">Tỉnh Thành</button>
-                    </div>
-                </header>
-
-                <div data-state="inactive" data-orientation="horizontal" role="tabpanel"
-                    aria-labelledby="radix-:r6tg:-trigger-States" id="radix-:r6tg:-content-States" tabindex="0"
-                    class="column-stack space-y-5 pt-5" hidden=""></div>
-            </div>
+          <div dir="ltr" data-orientation="horizontal">
+            <header class="flex flex-wrap justify-between gap-4 border-b-2 pb-2 pt-8">
+              <h1 class="text-2xl font-bold md:text-4xl">All Theatres</h1>
+              <div role="tablist" aria-orientation="horizontal" class="flex gap-3 font-semibold" tabindex="0"
+                   data-orientation="horizontal" style="outline: none;">
+                <button type="button" role="tab" aria-selected="true" aria-controls="radix-:r6tg:-content-Markets"
+                        data-state="active" id="radix-:r6tg:-trigger-Markets"
+                        class="font-semibold decoration-2 underline-offset-8 transition-colors data-[state=active]:underline hover:data-[state=inactive]:text-blue-500 data-[state=inactive]:text-gray-200"
+                        tabindex="0" data-orientation="horizontal" data-radix-collection-item="">Tỉnh Thành
+                </button>
+              </div>
+            </header>
+      
             <div data-state="active" data-orientation="horizontal" role="tabpanel"
-                aria-labelledby="radix-:r7g:-trigger-States" id="radix-:r7g:-content-States" tabindex="0"
-                class="column-stack space-y-5 pt-5">
-                @for (item of provinces; track $index) {
-                <div class="column-item space-y-5">
-                    <h2 class="font-bold">{{ item.name }}</h2>
-                    <!-- Chúng ta sẽ thêm 1 vòng lặp ở đây để lấy tất cả các rạp trong tỉnh thành này -->
-                    <div><a class="group transition-colors text-blue-500 hocus:text-white inline-flex items-center gap-1 [&amp;>.chevron]:hidden md:[&amp;>.chevron]:block"
-                            href="/movie-theatres/states/alabama/auburn">CineX Cinema AEON Hà Đông<svg xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%"
-                                class="chevron transition-transform group-hover:translate-x-1" aria-hidden="true">
-                                <path
-                                    d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z">
-                                </path>
-                            </svg></a></div>
-                    <div><a class="group transition-colors text-blue-500 hocus:text-white inline-flex items-center gap-1 [&amp;>.chevron]:hidden md:[&amp;>.chevron]:block"
-                            href="/movie-theatres/states/alabama/auburn">CineX Cinema Tây Hồ<svg xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%"
-                                class="chevron transition-transform group-hover:translate-x-1" aria-hidden="true">
-                                <path
-                                    d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z">
-                                </path>
-                            </svg></a></div>
+                 aria-labelledby="radix-:r7g:-trigger-States" id="radix-:r7g:-content-States" tabindex="0"
+                 class="column-stack space-y-5 pt-5">
+              <!-- Lặp qua danh sách các khu vực -->
+              <div *ngFor="let province of provinces" class="column-item space-y-5">
+                <h2 class="font-bold">{{ province.name }}</h2>
+      
+                <!-- Kiểm tra nếu không có rạp chiếu phim -->
+                <div *ngIf="filteredCinemasByProvince(province.name).length === 0" class="text-gray-500 italic">
+                  CineX Cinema chưa tới đây
                 </div>
-
-                }
-
+      
+                <!-- Lặp qua danh sách rạp chiếu phim đã lọc theo khu vực -->
+                <div *ngFor="let cinema of filteredCinemasByProvince(province.name)">
+                  <a class="group transition-colors text-blue-500 hocus:text-white inline-flex items-center gap-1 [&>.chevron]:hidden md:[&>.chevron]:block"
+                    [href]="'/showtimes/cinema/' + cinema.id">
+                    {{ cinema.name }}
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em" height="100%"
+                         class="chevron transition-transform group-hover:translate-x-1" aria-hidden="true">
+                      <path
+                        d="m29.6 22.543-19.31 19.31a2.085 2.085 0 0 0 2.857 2.856l20.767-20.766a2.085 2.085 0 0 0 0-2.857L13.233.291a2.085 2.085 0 0 0-2.857 2.856z">
+                      </path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
             </div>
+          </div>
         </section>
-    </div>
+      </div>
 </main>
