@@ -51,6 +51,10 @@
                                       <span class="font-bold text-red-500">{{ membershipData.userMembershipDetails.expiryDate | date: 'dd/MM/yyyy' }}</span>
                                     </div>
                                     <p class="text-100 footnote">Cảm ơn bạn đã là thành viên có giá trị của CineX.</p>
+                                    <p class="text-200 font-bold text-white">
+                                    Tên thành viên hiện tại: 
+                                    <span class="text-blue-400">{{ membershipData.userMembershipDetails.membershipName || 'Chưa có tên thành viên' }}</span>
+                                    </p>
                                   </footer>
                             </div>
                         </div>

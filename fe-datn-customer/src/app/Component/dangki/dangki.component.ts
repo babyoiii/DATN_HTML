@@ -13,6 +13,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { NotificationService } from '../../Service/notification.service';
 
 @Component({
   selector: 'app-dangki',
@@ -38,7 +39,7 @@ export class DangkiComponent implements OnInit {
   currentAddress: string = '';
   date: Date | null = null;
   provinces: any[] = [];
-  constructor( private router: Router,private spinner: NgxSpinnerService,private AuthService: AuthServiceService, private http: HttpClient,private toast : ToastrService,private dialog: MatDialog) {}
+  constructor(private notificationService : NotificationService, private router: Router,private spinner: NgxSpinnerService,private AuthService: AuthServiceService, private http: HttpClient,private toast : ToastrService,private dialog: MatDialog) {}
   ngOnInit(): void {
   
   }
@@ -103,47 +104,47 @@ export class DangkiComponent implements OnInit {
   }
   signUp() {
     if (!this._signUpData.email) {
-      this.toast.error('Email không được để trống!', 'Lỗi');
+      this.notificationService.onErrorNotification('Email không được để trống!');
       return;
     }
   
     if (!this._signUpData.password) {
-      this.toast.error('Mật khẩu không được để trống!', 'Lỗi');
+      this.notificationService.onErrorNotification('Mật khẩu không được để trống!');
       return;
     }
   
     if (!this._signUpData.confirmPassword) {
-      this.toast.error('Xác nhận mật khẩu không được để trống!', 'Lỗi');
+     this.notificationService.onErrorNotification('Xác nhận mật khẩu không được để trống!');
       return;
     }
   
     if (this._signUpData.password !== this._signUpData.confirmPassword) {
-      this.toast.error('Mật khẩu và xác nhận mật khẩu không khớp!', 'Lỗi');
+     this.notificationService.onErrorNotification('Mật khẩu và xác nhận mật khẩu không khớp!');
       return;
     }
   
     if (!this._signUpData.name) {
-      this.toast.error('Họ và tên không được để trống!', 'Lỗi');
+     this.notificationService.onErrorNotification('Họ và tên không được để trống!');
       return;
     }
   
     if (!this._signUpData.phoneNumber) {
-      this.toast.error('Số điện thoại không được để trống!', 'Lỗi');
+     this.notificationService.onErrorNotification('Số điện thoại không được để trống!');
       return;
     }
   
     if (!this._signUpData.dob) {
-      this.toast.error('Ngày sinh không được để trống!', 'Lỗi');
+     this.notificationService.onErrorNotification('Ngày sinh không được để trống!');
       return;
     }
   
     if (!this._signUpData.sex) {
-      this.toast.error('Vui lòng chọn giới tính!', 'Lỗi');
+     this.notificationService.onErrorNotification('Vui lòng chọn giới tính!');
       return;
     }
   
     if (!this._signUpData.address) {
-      this.toast.error('Địa chỉ không được để trống!', 'Lỗi');
+     this.notificationService.onErrorNotification('Địa chỉ không được để trống!');
       return;
     }
     this.spinner.show(); 
@@ -152,12 +153,12 @@ export class DangkiComponent implements OnInit {
         if (response.responseCode === 200) {
           this.router.navigate(['/VerifyOpt'], { queryParams: { email: this._signUpData.email } });
         }else {
-          this.toast.error(response.message || 'Đăng ký thất bại!', 'Lỗi');
+         this.notificationService.onErrorNotification(response.message || 'Đăng ký thất bại!');
         }
           this.spinner.hide();
       },
       error: (error: any) => {
-        this.toast.error('Đăng ký thất bại! Vui lòng thử lại.', 'Lỗi');
+       this.notificationService.onErrorNotification('Đăng ký thất bại! Vui lòng thử lại.');
         this.spinner.hide(); 
       }
     });

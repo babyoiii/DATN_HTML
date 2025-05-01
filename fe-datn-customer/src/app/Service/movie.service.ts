@@ -14,9 +14,10 @@ export class MovieService {
   getMovies(type: number, currentPage: number, recordPerPage: number) {
     return this.http.get<any>(`${this.baseUrl}/Movie/GetMovie?type=${type}&currentPage=${currentPage}&recordPerPage=${recordPerPage}`);
   }
-  getShowtimes(movieId: string, location: string, date: Date, currentPage: number, recordPerPage: number) {
+  getShowtimes(cinemaId : string,movieId: string, location: string, date: Date, currentPage: number, recordPerPage: number) {
     return this.http.get<any>(`${this.baseUrl}/Movie/GetShowTimeLanding`, {
       params: {
+        cinemaId: cinemaId,
         movieId: movieId,
         location: location,
         date: date.toISOString(),
@@ -32,5 +33,15 @@ export class MovieService {
 
   getMovieDetail(id: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/Movie/GetDetailMovie?movieId=${id}`);
+  }
+  getCinemasByLocation(location: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/Movie/GetCinemaByLocation`, {
+      params: {
+        location: location
+      }
+    });
+  }
+  getAllCinemas(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/Movie/GetCinemaAll`);
   }
 }

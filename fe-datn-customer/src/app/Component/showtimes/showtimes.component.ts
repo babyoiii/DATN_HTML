@@ -56,7 +56,8 @@ export class ShowtimesComponent implements OnInit {
     duration: number;
   } | null = null;
 
-
+ id : string = '';
+cinemaIdUrl : string = '';
 
   cinemas: CinemaRes[] = [];
   selectedCinemaId: string = '';
@@ -79,15 +80,16 @@ export class ShowtimesComponent implements OnInit {
     this.date = this.getVietnamDate(new Date()).toISOString().split('T')[0];
 
     this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id) {
-        this.movieId = id;
+      this.id = params.get('id') || '';
+       const url = this.route.snapshot.url.map(segment => segment.path).join('/');
+      if (url.includes('movie')) {
+       this.movieId = this.id;
         // Tìm trailer từ ID phim ngay từ đầu
-        this.movieService.getMovieDetail(id).subscribe(movieDetail => {
+        this.movieService.getMovieDetail(this.movieId).subscribe(movieDetail => {
           if (movieDetail && movieDetail.data && movieDetail.data.trailer) {
             this.Trailer = movieDetail.data.trailer;
             this.selectedMovie = {
-              id: id,
+              id: this.id ,
               name: movieDetail.data.movieName,
               thumbnail: movieDetail.data.thumbnail || '',
               trailer: movieDetail.data.trailer || '',
@@ -96,6 +98,8 @@ export class ShowtimesComponent implements OnInit {
 
           }
         });
+      } else if (url.includes('cinema')) {
+       this.cinemaIdUrl = this.id;
       }
 
       this.getmovieName();
@@ -259,6 +263,7 @@ export class ShowtimesComponent implements OnInit {
     });
 
     this.movieService.getShowtimes(
+      this.cinemaIdUrl || '',
       this.movieId || '',
       this.location || '',
       dateObj || '',

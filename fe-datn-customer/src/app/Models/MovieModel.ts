@@ -10,6 +10,7 @@ export interface GetMovieLandingRes {
   status: number; // Thêm thuộc tính status
   ageRatingCode?: string; // Thêm mã độ tuổi
   ageRatingId?: string; // Thêm ID độ tuổi
+  rate?: number; // Thêm thuộc tính Rate
 }
 export interface ShowtimesLandingRes {
   id: string;
@@ -38,12 +39,14 @@ export interface GetAllNameMovie {
   duration?: number;
 }
 export interface MovieByShowtimeData {
-  thumbnail: string;
-  movieName: string;
-  cinemaName: string;
-  startTime: string;
+  thumbnail: string; 
+  movieName: string; 
+  cinemaName: string; 
+  cinemaAddress: string; 
+  minimumAge: number;
+  startTime: string; 
   startTimeFormatted: string;
   durationFormatted: string;
-  averageRating: number;
+  averageRating?: number; 
   roomTypeName: string;
 }

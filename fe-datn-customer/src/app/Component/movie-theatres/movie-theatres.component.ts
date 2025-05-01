@@ -3,11 +3,15 @@ import { LocationService } from '../../Service/location.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CinemaByLocation } from '../../Models/Order';
+import { MovieService } from '../../Service/movie.service';
+import { FormsModule } from '@angular/forms';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-movie-theatres',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule,RouterLink,RouterModule],
   templateUrl: './movie-theatres.component.html',
   styleUrls: ['./movie-theatres.component.css']
 })
@@ -16,11 +20,15 @@ export class MovieTheatresComponent implements OnInit {
   latitude: number | null = null;
   longitude: number | null = null;
   address: string = '';
-
-  constructor(private locationService: LocationService, private http: HttpClient) {}
+  listCinema : CinemaByLocation[] = [];
+  listCinemaAll : CinemaByLocation[] = [];
+  filteredCinemas: CinemaByLocation[] = []; 
+  constructor(private locationService: LocationService, private http: HttpClient,private movieService: MovieService) {}
 
   ngOnInit(): void {
     this.loadProvinces();
+    this.getCinemas(this.address)
+    this. getAllCinemas()
   }
   loadProvinces() {
     this.locationService.getProvinces().subscribe({
@@ -33,7 +41,43 @@ export class MovieTheatresComponent implements OnInit {
       }
     });
   }
-
+  getCinemas(location: string): void {
+    this.movieService.getCinemasByLocation(location).subscribe({
+      next: (res: any) => {
+        this.listCinema = res.data.map((cinema: CinemaByLocation) => {
+          return {
+            ...cinema,
+            mapLink: this.generateMapLink(cinema.location) 
+          };
+        });
+        console.log('Cinemas with mapLink:', this.listCinema);
+      },
+      error: (err) => {
+        console.error('Error fetching cinemas:', err);
+      }
+    });
+  }
+  filteredCinemasByProvince(provinceName: string): CinemaByLocation[] {
+    return this.listCinemaAll.filter(cinema =>
+      cinema.location.includes(provinceName)
+    );
+  }
+  getAllCinemas(): void {
+    this.movieService.getAllCinemas().subscribe({
+      next: (res: any) => {
+        this.listCinemaAll = res.data; 
+        console.log('All Cinemas:', this.listCinemaAll);
+      },
+      error: (err) => {
+        console.error('Error fetching all cinemas:', err);
+      }
+    });
+  }
+  
+  generateMapLink(location: string): string {
+    const encodedLocation = encodeURIComponent(location);
+    return `https://www.google.com/maps/search/?api=1&query=${encodedLocation}`;
+  }
   getCurrentLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -52,20 +96,28 @@ export class MovieTheatresComponent implements OnInit {
     }
   }
 
-  // API Nominatim để lấy địa chỉ từ tọa độ
   private nominatimUrl = 'https://nominatim.openstreetmap.org/reverse';
 
   getAddressFromCoordinates() {
     if (this.latitude !== null && this.longitude !== null) {
       const url = `${this.nominatimUrl}?lat=${this.latitude}&lon=${this.longitude}&format=json`;
-
+  
       this.http.get(url).subscribe({
         next: (response: any) => {
-          if (response && response.display_name) {
-            this.address = response.display_name;
+          if (response && response.address) {
+            if (response.address.city) {
+              this.address = response.address.city; // Lấy tên thành phố
+            } else if (response.address.state) {
+              this.address = response.address.state; // Lấy tên tỉnh/thành phố
+            } else if (response.address.town) {
+              this.address = response.address.town; // Lấy tên thị trấn
+            } else {
+              this.address = 'Không tìm thấy thành phố';
+            }
           } else {
             this.address = 'Không tìm thấy địa chỉ';
           }
+          this.getCinemas(this.address)
         },
         error: (error) => {
           console.error('Lỗi lấy địa chỉ:', error);

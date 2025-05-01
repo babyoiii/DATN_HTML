@@ -18,6 +18,8 @@ export interface Service {
   }
   
   export interface OrderModelReq {
+    type : number;
+    totalPrice: number;
     email: string;
     userId : string | null;
     isAnonymous: number;
@@ -25,6 +27,7 @@ export interface Service {
     transactionCode : string;
     voucherCode : string;
     pointUse : number;
+    totalDiscount : number;
     totalPriceMethod : string;
     services: ServiceReq[];
     tickets: TicketReq[];
@@ -104,4 +107,9 @@ export interface GroupedServiceInfo {
   serviceTypeName: string;
   services: ServiceInfoModel[];
 }
-  
+export interface CinemaByLocation {
+  id: string; // ID của rạp chiếu phim
+  name: string; // Tên rạp chiếu phim
+  location: string; // Địa chỉ của rạp chiếu phim
+  mapLink?: string; // Liên kết bản đồ của rạp chiếu phim (tùy chọn)
+}

@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../environments/environment';
 import { AuthServiceService } from '../../Service/auth-service.service';
 import { ModalService } from '../../Service/modal.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-discounts',
@@ -28,7 +29,8 @@ export class DiscountsComponent implements OnInit {
     private voucherService: VoucherUIService,
     private toastr: ToastrService,
     private authService: AuthServiceService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -79,7 +81,9 @@ export class DiscountsComponent implements OnInit {
     if (!isLoggedIn) {
       this.toastr.warning('Bạn cần đăng nhập để nhận voucher', 'Chưa đăng nhập');
       // Mở modal đăng nhập
-      this.modalService.openSignInModal();
+      const currentUrl = this.router.url;
+      localStorage.setItem('redirectUrl', currentUrl);
+      this.modalService.openSignInModal();;
       return;
     }
 

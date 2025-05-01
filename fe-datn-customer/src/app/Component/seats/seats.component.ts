@@ -19,6 +19,8 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 import { NeedMoreTimeComponent } from "../need-more-time/need-more-time.component";
 import { TimeUpComponent } from "../time-up/time-up.component";
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { NotificationService } from '../../Service/notification.service';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 enum SeatStatus {
   Available = 0,
@@ -62,11 +64,13 @@ export class SeatsComponent implements OnInit, OnDestroy {
     thumbnail: '',
     movieName: '',
     cinemaName: '',
+    cinemaAddress:'',
     startTime: '',
     startTimeFormatted: '',
     durationFormatted: '',
     averageRating: 0,
-    roomTypeName: ''
+    roomTypeName: '',
+    minimumAge:0
   };
   currentZoom: number = 1;
   minZoom: number = 0.6;
@@ -93,6 +97,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
     private showtimeService: ShowtimeService,
     private authServiceService: AuthServiceService,
     private spinner: NgxSpinnerService,
+    private notificationService : NotificationService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
@@ -237,7 +242,8 @@ export class SeatsComponent implements OnInit, OnDestroy {
   }
 
   openSignIn() {
-    this.modalService.openSignInModal();
+    const currentUrl = this.router.url;
+      localStorage.setItem('redirectUrl', currentUrl);
   }
   private loadSeats(showtimeId: string, userId: string): void {
     this.spinner.show(); // Hiển thị spinner khi bắt đầu tải ghế
@@ -413,7 +419,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
       const seatsToAdd = pairedSeat ? 2 : 1;
       if (totalSelectedSeats + seatsToAdd > 8) {
-        this.toastr.warning('Bạn chỉ được chọn tối đa 8 ghế!', 'Cảnh báo');
+        this.notificationService.onWarningNotification('Bạn chỉ được chọn tối đa 8 ghế!');
         return;
       }
     }
@@ -630,7 +636,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
   validateSeats(): boolean {
     if (this.selectedSeats.length === 0) {
-      this.toastr.warning('Vui lòng chọn ít nhất một ghế!', 'Cảnh báo');
+      this.notificationService.onWarningNotification('Vui lòng chọn ít nhất một ghế!');
       return false;
     }
  // Nếu chỉ chọn 1 ghế, cho phép đặt lẻ
@@ -664,7 +670,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
       });
 
       // Tạo thông báo lỗi
-      let errorMessage = 'Không thể để lẻ ghế ở các vị trí sau:<br><br>';
+      let errorMessage = 'Không thể để lẻ ghế ở các vị trí sau: ';
 
       // Tạo danh sách các hàng ghế có vấn đề
       const rowEntries = Object.entries(isolatedByRow);
@@ -678,16 +684,16 @@ export class SeatsComponent implements OnInit, OnDestroy {
         const sortedSeatNumbers = [...seatNumbers].sort((a, b) => parseInt(a) - parseInt(b));
 
         // Thêm mỗi hàng vào một dòng riêng
-        errorMessage += `<b>Hàng ${rowLabel}</b>: ghế ${sortedSeatNumbers.join(', ')}`;
+        errorMessage += `Hàng ${rowLabel} : ghế ${sortedSeatNumbers.join(', ')}`;
 
         // Thêm dấu xuống dòng nếu không phải dòng cuối cùng
         if (index < rowEntries.length - 1) {
-          errorMessage += '<br>';
+          errorMessage += '';
         }
       });
 
       // Sử dụng enableHtml: true để hiển thị HTML trong toast
-      this.toastr.error(errorMessage, 'Lỗi chọn ghế', { enableHtml: true, timeOut: 5000 });
+      this.notificationService.onErrorNotification(errorMessage);
       return false;
     }
 
@@ -898,28 +904,30 @@ export class SeatsComponent implements OnInit, OnDestroy {
     }
   }
 
-  goBack(): void {
-    // Nếu người dùng đã chọn ghế, hiển thị dialog xác nhận
-    if (this.selectedSeats.length > 0) {
-      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        data: {
-          title: 'Xác nhận quay lại',
-          message: 'Nếu quay lại, thông tin ghế đã chọn sẽ bị mất. Bạn có chắc chắn muốn tiếp tục? (NGHĨA CHƯA ĐỔI CÁI NÀY THÀNH SWEETALERT VÀ THÔNG BÁO NÀY LÀ FAKE)'
-        },
-        width: '400px',
-        panelClass: 'custom-dialog'
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.location.back();
-        }
-      });
-    } else {
-      this.location.back();
-    }
+  goBack(event: Event): void {
+    event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+  
+    Swal.fire({
+      title: 'Xác nhận thoát',
+      text: 'Bạn có chắc chắn muốn thoát không? Mọi thay đổi sẽ không được lưu.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Có',
+      cancelButtonText: 'Không',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.location.back(); // Quay lại trang trước đó
+        this.disconnect(); // Gọi hàm disconnect nếu người dùng xác nhận
+      }
+    });
   }
-
+  disconnect(): void {
+    this.seatService.disconnect();
+    this.seatService.clearConnection()
+    this.seatService.clearReCountdown()
+  }
   // Thay thế phương thức ngAfterViewInit
   ngAfterViewInit(): void {
     if (this.seatMapContainer?.nativeElement) {
@@ -938,7 +946,25 @@ export class SeatsComponent implements OnInit, OnDestroy {
       this.addEventListenerWithCleanup(element, 'touchend', this.endDrag.bind(this));
     }
   }
-
+  confirmDisconnect(event: Event): void {
+    event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+  
+    Swal.fire({
+      title: 'Xác nhận thoát',
+      text: 'Bạn có chắc chắn muốn thoát không? Mọi thay đổi sẽ không được lưu.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Có',
+      cancelButtonText: 'Không',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+    }).then((result: SweetAlertResult<any>) => {
+      if (result.isConfirmed) {
+        this.disconnect(); 
+        this.router.navigate(['/']);
+      }
+    });
+  }
   // Giữ nguyên phương thức này
   private addEventListenerWithCleanup(
     element: HTMLElement,
@@ -958,7 +984,9 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
 
   openloginform() {
-    this.modalService.openSignInModal();
+      const currentUrl = this.router.url;
+      localStorage.setItem('redirectUrl', currentUrl);
+      this.modalService.openSignInModal();
   }
 
   /**

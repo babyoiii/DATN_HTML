@@ -12,6 +12,10 @@ import { AuthServiceService } from '../../Service/auth-service.service';
 import { Subscription } from 'rxjs';
 import { NeedMoreTimeComponent } from "../need-more-time/need-more-time.component";
 import { TimeUpComponent } from "../time-up/time-up.component";
+import { NotificationService } from '../../Service/notification.service';
+import Swal, { SweetAlertResult } from 'sweetalert2';
+import { MovieByShowtimeData } from '../../Models/MovieModel';
+import { ShowtimeService } from '../../Service/showtime.service';
 
 interface Seat {
   seatId: string;
@@ -36,6 +40,18 @@ export class OrdersComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false;
   private autoCloseTimer: any;
   private subscription!: Subscription;
+    movieByShowtimeData: MovieByShowtimeData = {
+      thumbnail: '',
+      movieName: '',
+      cinemaName: '',
+      cinemaAddress:'',
+      startTime: '',
+      startTimeFormatted: '',
+      durationFormatted: '',
+      averageRating: 0,
+      roomTypeName: '',
+      minimumAge:0
+    };
   constructor(
     private seatService: SeatService,
     private cdr: ChangeDetectorRef,
@@ -44,6 +60,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
     private serviceService: ServiceService,
     private modalService: ModalService,
     private authServiceService: AuthServiceService,
+    private notificationService : NotificationService,
+     private showtimeService: ShowtimeService, 
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
   ngOnDestroy(): void {
@@ -73,12 +91,12 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit(): void {
+    this.loadMovieByShowtime();
     this.getListServiceType();
     this.subscription = this.authServiceService.isLoggedIn$.subscribe(status => {
       this.isLoggedIn = status;
       console.log('Login status from BehaviorSubject:', status);
     });
-
     // Khôi phục selectedServices từ localStorage
     if (isPlatformBrowser(this.platformId)) {
       const savedServices = localStorage.getItem('selectedServices');
@@ -135,6 +153,30 @@ export class OrdersComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+
+  loadMovieByShowtime(): void {
+    const showtimeId = localStorage.getItem('currentShowtimeId'); // Lấy giá trị từ localStorage bên trong phương thức
+    if (!showtimeId) {
+      console.error('❌ Showtime ID is missing in localStorage');
+      return; // Thoát nếu không tìm thấy showtimeId
+    }
+  
+    this.showtimeService.getMovieByShowtime(showtimeId).subscribe({
+      next: (response) => {
+        if (response && response.data) {
+          this.movieByShowtimeData = response.data;
+          console.log('✅ Movie Detail:', this.movieByShowtimeData);
+          this.cdr.markForCheck(); // Đánh dấu để cập nhật giao diện
+        } else {
+          console.warn('⚠️ No data returned from API');
+        }
+      },
+      error: (err) => {
+        console.error('❌ Error loading movie detail:', err);
+      }
+    });
+  }
   checkLogin(): boolean {
     const logged = this.authServiceService.isLoggedIn();
     return logged;
@@ -143,7 +185,10 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.modalService.openTimeUpModal();
 
   }
-
+  disconnect(): void {
+    this.seatService.disconnect();
+    this.seatService.clearConnection()
+  }
   AddMoreTime(): void {
     if (this.autoCloseTimer) {
       clearTimeout(this.autoCloseTimer);
@@ -151,7 +196,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.modalService.openNeedMoreTimeModal();
 }
   openSignIn() {
-    this.modalService.openSignInModal();
+      const currentUrl = this.router.url;
+      localStorage.setItem('redirectUrl', currentUrl);
+      this.modalService.openSignInModal();
   }
   selectService(service: Service): void {
     console.log('Selected service:', service);
@@ -173,7 +220,24 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.accordionStates[index] = !this.accordionStates[index];
   }
 
-
+  confirmDisconnect(event: Event): void {
+    event.preventDefault();
+    Swal.fire({
+      title: 'Xác nhận thoát',
+      text: 'Bạn có chắc chắn muốn thoát không? Mọi thay đổi sẽ không được lưu.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Có',
+      cancelButtonText: 'Không',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+    }).then((result: SweetAlertResult<any>) => {
+      if (result.isConfirmed) {
+        this.disconnect(); 
+        this.router.navigate(['/']);
+      }
+    });
+  }
   getTotalAmount(): number {
     const totalSeatsAmount = Object.values(this.seatSummary).reduce(
       (sum, seat) => sum + seat.total,

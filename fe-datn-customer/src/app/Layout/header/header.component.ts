@@ -1,9 +1,11 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Component, HostListener, OnDestroy, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ModalService } from '../../Service/modal.service';
 import { AuthServiceService } from '../../Service/auth-service.service';
 import { Subscription } from 'rxjs';
+import { RewardPointData } from '../../Models/Membership';
+import { MembershipService } from '../../Service/membership.service';
 
 
 @Component({
@@ -14,6 +16,12 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+   getRewardPoint: RewardPointData = {
+      totalPoint: 0,
+      pointRate: 0,
+      rewardPoint: 0
+    };
+  caculateRewardPoint: number = 0;
   isLoggedIn: boolean = false;
   isDropdownOpen: boolean = false;
   private subscription!: Subscription;
@@ -21,6 +29,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     public modalService: ModalService,
     private authService: AuthServiceService,
+    private membershipService: MembershipService,
+    private router  : Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
   ngOnInit() {
@@ -31,6 +41,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.isLoggedIn = status;
       console.log('Login status from BehaviorSubject:', status);
     });
+    this.membershipService.getPointByUser().subscribe({
+      next: (res: any) => {
+        this.getRewardPoint = res.data;
+        this.caculateRewardPoint = 1000 * this.getRewardPoint.pointRate;
+        console.log('Reward Point Data:', this.getRewardPoint);
+      },
+      error: (err) => {
+        // console.error('Error fetching points:', err);
+      }
+    });
+
   }
 
   ngOnDestroy() {
@@ -41,7 +62,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   openSignIn() {
-    this.modalService.openSignInModal();
+    const currentUrl = this.router.url;
+      localStorage.setItem('redirectUrl', currentUrl);
   }
 
   // Sử dụng hàm checkLogin() để kiểm tra trạng thái đăng nhập

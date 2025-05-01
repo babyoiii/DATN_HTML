@@ -32,7 +32,9 @@
                                 d="M40.341 4.769a1.112 1.112 0 0 1-.022 1.587L24.071 22.604 40.32 38.85a1.112 1.112 0 0 1-1.566 1.566L22.506 24.169 6.236 40.417a1.112 1.112 0 0 1-1.565-1.566l16.27-16.247L4.67 6.356a1.125 1.125 0 0 1-.303-.767A1.13 1.13 0 0 1 5.49 4.465c.285 0 .56.11.768.304l16.248 16.269 16.268-16.27a1.117 1.117 0 0 1 1.566 0Z">
                             </path>
                         </svg></a>
+                    
                 </div>
+                
             </div>
         </header>
         <form class="contents">
@@ -101,8 +103,6 @@
                                                 }
                                             </div>
                                         </div>
-                                        <p class="text-sm italic text-gray-200">Đăng kí thành viên AMC Stubs yêu cầu thẻ
-                                            tín dụng hoặc thẻ ghi nợ.</p>
                                     </div>
                                     <style></style>
                                     <div id="rokt-below-payments" class="emtpy:hidden"></div>
@@ -110,7 +110,9 @@
                             </div><label
                                 class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed py-6">
                                 <div class="flex items-start gap-4">
-                                    <div class="m-1 inline-block h-5 w-5"><input
+                                    <div class="m-1 inline-block h-5 w-5">
+                                        
+                                        <input  [(ngModel)]="isTermsAccepted"
                                             class="h-5 w-5 appearance-none rounded border bg-[length:75%] bg-[50%] bg-no-repeat border-2 border-white/60 checked:border-0 checked:bg-blue-500 checked:bg-[url(https://amc-theatres-res.cloudinary.com/amc-cdn/static/images/forms/checkbox_checkmark.png)] checked:hover:bg-blue-700 disabled:cursor-not-allowed disabled:brightness-50 disabled:grayscale"
                                             type="checkbox" name="termsAndConditions"></div>
                                     <div class="rich-text">
@@ -170,7 +172,7 @@
                                                 <div class="flex-1">
                                                     <h4
                                                         class="my-auto text-base font-semibold leading-tight tracking-normal">
-                                                        <div class="flex flex-col">CineX Premiere </div>
+                                                        <div class="flex flex-col">Loại thẻ: {{membershipName}}</div>
                                                     </h4>
                                                 </div>
                                                 <p class="my-auto label text-white">{{totalAmount |number:'1.0-0' }}đ
@@ -180,11 +182,18 @@
                                     </ul>
                                 </section>
                                 <p
-                                    class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
-                                    <span
-                                        class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Tổngx
-                                    </span>{{totalAmount |number:'1.0-0' }}đ
-                                </p>
+                                class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
+                                <span
+                                  class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">
+                                  Tổng:
+                                </span>
+                                <ng-container *ngIf="selectedPaymentMethod === 'MULTI-WALLET'; else vndAmount">
+                                  {{ roundedUSDCAmount | number:'1.6-6' }} USDC
+                                </ng-container>
+                                <ng-template #vndAmount>
+                                  {{ totalAmount | number:'1.0-0' }}đ
+                                </ng-template>
+                              </p>
                             </div>
                         </div>
                     </aside>
@@ -195,13 +204,26 @@
                     <div class="items-center justify-between pt-2 md:pt-0 lg:flex">
                         <div class="px-4">
                             <div class="rich-text">
-                                <p
-                                    class="mb-4 flex-wrap items-center gap-4 [&amp;:has([data-rt-component=&quot;button&quot;])]:flex">
-                                    <span class="text-200">Tôi đồng ý với </span><a
-                                        class="group transition-colors text-blue-500 hocus:text-white"
-                                        rel="noopener noreferrer" target="_blank" href="#"><span class="text-200">CineX
-                                            Điều khoản và Dịch vụ</span></a><span class="">.</span>
-                                </p>
+                                <div class="flex items-center gap-4">
+                                    <!-- Nút hiển thị tên ví -->
+                                    <button
+                                      id="walletButton"
+                                      type="button"
+                                      class="wallet-button inline-flex items-center justify-center gap-2 w-max font-bold transition duration-200 rounded-full text-white bg-gradient-to-r from-blue-500 to-blue-700 px-6 py-2 min-w-[12ch] hover:from-blue-600 hover:to-blue-800 text-sm md:text-base shadow-lg"
+                                    >
+                                      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="20" height="20">
+                                        <path
+                                          d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zm0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10zm-1-15h2v6h-2zm0 8h2v2h-2z"
+                                        ></path>
+                                      </svg>
+                                      <ng-container *ngIf="walletAddress; else notConnected">
+                                        <span class="truncate">Ví: {{ walletAddress | slice:0:6 }}...{{ walletAddress | slice:-4 }}</span>
+                                      </ng-container>
+                                      <ng-template #notConnected>
+                                        <span>Chưa kết nối ví</span>
+                                      </ng-template>
+                                    </button>
+                                  </div>
                             </div>
                         </div>
                         <div
@@ -209,8 +231,16 @@
                             <div class="flex items-center gap-2"><span
                                     class="hidden text-sm font-semibold uppercase text-gray-200 lg:block">Tổng</span>
                                 <section>
-                                    <div aria-label="Order Total" class="hidden gap-2 lg:flex"><span
-                                            class="font-bold">{{totalAmount |number:'1.0-0' }}đ</span></div>
+                                    <div aria-label="Order Total" class="hidden gap-2 lg:flex">
+                                        <span class="font-bold">
+                                          <ng-container *ngIf="selectedPaymentMethod === 'MULTI-WALLET'; else vndAmount">
+                                            {{ roundedUSDCAmount | number:'1.6-6' }} USDC
+                                          </ng-container>
+                                          <ng-template #vndAmount>
+                                            {{ totalAmount | number:'1.0-0' }}đ
+                                          </ng-template>
+                                        </span>
+                                      </div>
                                     <div class="lg:hidden">
                                         <div><button type="button"
                                                 class="text-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 text-sm md:text-base flex items-center gap-3">
@@ -282,16 +312,20 @@
 
                                 </section>
                             </div>
-                            <div class="flex items-center gap-2 ">
-                                <p class="hidden text-xs font-semibold italic text-gray-100 lg:block">Bạn phải hoàn
-                                    thành
-                                    tất cả các trường bắt buộc.</p>
-
-                                <button type="button" (click)="addMembership()"
-                                    class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12">
-                                    Thanh Toán
+                            <div class="flex items-center gap-2">
+                                <!-- Hiển thị thông báo khi chưa chấp nhận điều khoản -->
+                                <p *ngIf="!isTermsAccepted" class="text-xs font-semibold italic text-gray-100 lg:block">
+                                  Bạn phải hoàn thành tất cả các trường bắt buộc.
+                                </p>
+                              
+                                <button
+                                  (click)="addMembership()"
+                                  [disabled]="!isTermsAccepted"
+                                  class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hocus:bg-red-400 text-sm md:text-base h-12 disabled:opacity-40 disabled:cursor-not-allowed"
+                                >
+                                  Thanh Toán
                                 </button>
-                            </div>
+                              </div>
                         </div>
                     </div>
                 </div>
