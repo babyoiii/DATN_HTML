@@ -50,7 +50,7 @@
                             class="cursor-default border-b-2 border-transparent transition-all ease-in-out data-[state=open]:border-blue-500"
                             data-radix-collection-item=""><a
                                 class="transition-all ease-in-out hover:text-blue-500 flex cursor-pointer items-center gap-2 py-3 text-center text-sm font-semibold leading-tight tracking-normal"
-                                data-radix-collection-item="" target="_self" href="#">More<svg
+                                data-radix-collection-item="" target="_self" [routerLink]="'help'">Trợ Giúp<svg
                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
                                     width="1em" height="100%" class="w-3">
                                     <path
@@ -65,7 +65,7 @@
                                     class="absolute right-3 cursor-pointer" type="submit" disabled=""><svg
                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
                                         width="1em" height="100%" class="text-gray-400">
-                                        <title>Search AMCTheatres.com</title>
+                                        <title>Search CineXTheatres.com</title>
                                         <path
                                             d="M37.151 17.176A17.176 17.176 0 1 0 19.976 34.35 17.204 17.204 0 0 0 37.15 17.176zM19.976 32.27A15.095 15.095 0 1 1 35.07 17.176 15.095 15.095 0 0 1 19.976 32.27zm13.493.393a1.05 1.05 0 0 0-1.63 1.322l8.573 10.625a1.05 1.05 0 1 0 1.63-1.32z">
                                         </path>
@@ -355,20 +355,16 @@
                     </li>
                     <li class="mx-2 text-xs" aria-label="Merchandise"><a id="64af006389a8bf4e71c8fe9d"
                             class="transition-all ease-in-out hover:text-blue-500" data-radix-collection-item=""
-                            target="_blank" rel="noopener noreferrer" href="https://shopee.vn/">Merchandise</a>
+                            target="_blank" rel="noopener noreferrer" href="https://shopee.vn/">Cửa Hàng</a>
                     </li>
                     <li class="mx-2 text-xs" aria-label="Gift Cards"><a id="649ca9a93f94be3227372a66"
                             class="transition-all ease-in-out hover:text-blue-500" data-radix-collection-item=""
-                            target="_self" [routerLink]="'gift-cards'">Gift Cards</a></li>
-                    <li class="mx-2 text-xs" aria-label="Offers"><a id="649ca9f03f94be3227372a68"
-                            class="transition-all ease-in-out hover:text-blue-500" data-radix-collection-item=""
-                            target="_self" [routerLink]="'offers'">Offers</a></li>
+                            target="_self" [routerLink]="'gift-cards'">Thẻ Thành Viên</a></li>
+                    
                     <li class="mx-2 text-xs" aria-label="Discounts"><a id="64af004889a8bf4e71c8fe9b"
                             class="transition-all ease-in-out hover:text-blue-500" data-radix-collection-item=""
-                            target="_self" [routerLink]="'discounts'">Discounts</a></li>
-                    <li class="mx-2 text-xs" aria-label="Discounts"><a id="64af004889a8bf4e71c8fe9b"
-                            class="transition-all ease-in-out hover:text-blue-500" data-radix-collection-item=""
-                            target="_self" [routerLink]="'trogiup'">Trợ giúp</a></li>
+                            target="_self" [routerLink]="'discounts'">Phiếu Giảm Giá</a></li>
+                    
                 </ul>
             </div>
 

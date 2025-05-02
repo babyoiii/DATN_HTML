@@ -30,6 +30,7 @@ import { TestDialogComponent } from './Component/test-dialog/test-dialog.compone
 import { DetailsTicketComponent } from './Component/my-cinex/details-ticket/details-ticket.component';
 import { VipMemberComponent } from './Component/my-cinex/vip-member/vip-member.component';
 import { VerifyOptComponent } from './Component/verify-opt/verify-opt.component';
+import { TroGiupComponent } from './Component/tro-giup/tro-giup.component';
 
 export const routes: Routes = [
     {
@@ -43,7 +44,7 @@ export const routes: Routes = [
             { path: 'discounts', component: DiscountsComponent },
             { path: 'on-demand', component: OnDemandComponent },
             { path: 'movies/:id', component: MovieDetailNghiaComponent},
-
+            { path: 'help', component: TroGiupComponent},
             {
                 path: 'my-cinex', component: MyCinexComponent, children: [
                     { path: '', component: BenefitsComponent },
