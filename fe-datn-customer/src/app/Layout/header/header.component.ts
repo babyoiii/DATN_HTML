@@ -63,9 +63,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   openSignIn() {
     const currentUrl = this.router.url;
-      localStorage.setItem('redirectUrl', currentUrl);
+    localStorage.setItem('redirectUrl', currentUrl);
+    this.modalService.openSignInModal();
   }
-
   // Sử dụng hàm checkLogin() để kiểm tra trạng thái đăng nhập
   checkLogin(): boolean {
     const logged = this.authService.isLoggedIn();

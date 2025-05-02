@@ -103,6 +103,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.seatService.resetCountdown();
     this.subscription = this.authServiceService.isLoggedIn$.subscribe(status => {
       this.isLoggedIn = status;
       console.log('Login status from BehaviorSubject:', status);
@@ -356,10 +357,14 @@ export class SeatsComponent implements OnInit, OnDestroy {
       }, 5000);
     }
     if (count === 1) {
-      this.TimeUp();
+      this.handleTimeout();
     }
   }
-
+  handleTimeout(): void {
+    this.clearLocalStorageData();
+    this.notificationService.onErrorNotification('Thời gian thanh toán đã hết. Đơn hàng của bạn đã bị hủy.');
+    this.router.navigate(['/']);
+  }
   private handleCountdownError(error: any): void {
     console.error('Lỗi khi nhận countdown:', error);
   }
