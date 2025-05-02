@@ -98,6 +98,7 @@ export class VipMemberComponent implements OnInit {
   }
 
   private handleVNPayPayment(): void {
+    this.spinner.show();
     const paymentData: PaymentModelReq = {
       amount: Math.round(this.totalAmount),
       orderDesc: 'Thanh toán đơn hàng',

@@ -3,11 +3,12 @@ import { MembershipService } from '../../../Service/membership.service';
 import { MembershipData } from '../../../Models/Membership';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-benefits',
   standalone: true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule,RouterLink,NgxSpinnerModule],
   templateUrl: './benefits.component.html',
   styleUrl: './benefits.component.css'
 })
@@ -28,7 +29,7 @@ export class BenefitsComponent implements OnInit {
     nextLevelBenefits: [],
   };
   membershipName : string = '';
- constructor( private membershipService : MembershipService) { }
+ constructor( private membershipService : MembershipService,private spinner: NgxSpinnerService) { }
   ngOnInit(): void {
     this.getMembershipData();
    

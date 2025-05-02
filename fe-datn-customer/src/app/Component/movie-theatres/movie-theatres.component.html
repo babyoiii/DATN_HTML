@@ -1,30 +1,23 @@
 <main id="main">
-    <h1 class="sr-only">Find a Theatre</h1>
+    <h1 class="sr-only">Tìm Rạp Chiếu Phim</h1>
     <div class="empty:hidden">
         <section class="mx-auto max-w-[1248px] px-2 py-8 empty:hidden sm:px-4 xl:px-0">
             <div class="grid gap-4">
-                <h2 class="text-4xl font-bold">Find a Theatre</h2>
+                <h2 class="text-4xl font-bold">Tìm Rạp Chiếu Phim</h2>
                 <div class="flex flex-col gap-4">
                     <form class="relative"><label
                             class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed"><span
-                                class="sr-only">Search for theatres by city, zip or theatre name</span>
+                                class="sr-only">Tìm kiếm rạp chiếu phim theo thành phố, mã bưu điện hoặc tên rạp</span>
                             <div class="amc-input amc-input--box" data-size="700">
-                                
-                                
-                                
                                 <input class="input"  [(ngModel)]="address"
-                                    placeholder="Search by City, Zip or Theatre" type="text" name="q"
+                                    placeholder="Tìm kiếm theo Thành phố, Mã bưu điện hoặc Tên rạp" type="text" name="q"
                                     data-listener-added_1b3e892e="true">
-                                    
-                                    
                                     <button type="submit" disabled=""
                                     class="transition-colors disabled:text-gray-200">
-                                    
-                                    
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
                                         width="1em" height="100%">
-                                        <title>Submit</title>
+                                        <title>Gửi</title>
                                         <path
                                             d="M37.151 17.176A17.176 17.176 0 1 0 19.976 34.35 17.204 17.204 0 0 0 37.15 17.176zM19.976 32.27A15.095 15.095 0 1 1 35.07 17.176 15.095 15.095 0 0 1 19.976 32.27zm13.493.393a1.05 1.05 0 0 0-1.63 1.322l8.573 10.625a1.05 1.05 0 1 0 1.63-1.32z">
                                         </path>
@@ -40,7 +33,7 @@
                             <path
                                 d="M22.669 12.769a9.563 9.563 0 1 0 9.562 9.562 9.59 9.59 0 0 0-9.562-9.562zm0 17.128a7.566 7.566 0 1 1 7.565-7.538 7.566 7.566 0 0 1-7.565 7.538z">
                             </path>
-                        </svg>Use Current Location
+                        </svg>Sử dụng Vị trí Hiện tại
                     </button>
 
                     <div class="flex gap-4">
@@ -95,7 +88,7 @@
         <section class="mx-auto max-w-[1248px] px-2 py-8 empty:hidden sm:px-4 xl:px-0">
           <div dir="ltr" data-orientation="horizontal">
             <header class="flex flex-wrap justify-between gap-4 border-b-2 pb-2 pt-8">
-              <h1 class="text-2xl font-bold md:text-4xl">All Theatres</h1>
+              <h1 class="text-2xl font-bold md:text-4xl">Tất cả Rạp Chiếu Phim</h1>
               <div role="tablist" aria-orientation="horizontal" class="flex gap-3 font-semibold" tabindex="0"
                    data-orientation="horizontal" style="outline: none;">
                 <button type="button" role="tab" aria-selected="true" aria-controls="radix-:r6tg:-content-Markets"
@@ -105,19 +98,19 @@
                 </button>
               </div>
             </header>
-      
+
             <div data-state="active" data-orientation="horizontal" role="tabpanel"
                  aria-labelledby="radix-:r7g:-trigger-States" id="radix-:r7g:-content-States" tabindex="0"
                  class="column-stack space-y-5 pt-5">
               <!-- Lặp qua danh sách các khu vực -->
               <div *ngFor="let province of provinces" class="column-item space-y-5">
                 <h2 class="font-bold">{{ province.name }}</h2>
-      
+
                 <!-- Kiểm tra nếu không có rạp chiếu phim -->
                 <div *ngIf="filteredCinemasByProvince(province.name).length === 0" class="text-gray-500 italic">
                   CineX Cinema chưa tới đây
                 </div>
-      
+
                 <!-- Lặp qua danh sách rạp chiếu phim đã lọc theo khu vực -->
                 <div *ngFor="let cinema of filteredCinemasByProvince(province.name)">
                   <a class="group transition-colors text-blue-500 hocus:text-white inline-flex items-center gap-1 [&>.chevron]:hidden md:[&>.chevron]:block"

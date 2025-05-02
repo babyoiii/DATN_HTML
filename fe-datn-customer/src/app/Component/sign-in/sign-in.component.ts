@@ -25,7 +25,11 @@ export class SignInComponent {
     userName: '',
     password: ''
   };
+  showPassword: boolean = false;
 
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
   constructor(
     private authService: AuthServiceService, 
     private router: Router,

@@ -4,7 +4,8 @@
         Đang tải, vui lòng chờ...
       </p>
     </div>
-  </ngx-spinner>
+</ngx-spinner>
+
 <div *ngIf="modalService.showSignInModal$ | async"
     class="fixed inset-0 z-[99999] backdrop-blur-sm backdrop-brightness-20"
     style="position: fixed !important; z-index: 999999 !important; display: flex !important; align-items: center !important; justify-content: center !important;">
@@ -12,13 +13,13 @@
         <header
             class="sticky top-0 z-10 flex items-center border-b border-gray-700 bg-black px-8 py-4 text-500 headline"
             style="color: white !important;">
-            Sign In
+            Đăng Nhập
             <button type="button" (click)="closeModal()"
                 class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 text-white hocus:text-blue-500 text-sm md:text-base ml-auto aspect-square rounded-full bg-black p-3"
-                aria-label="Close">
+                aria-label="Đóng">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor" viewBox="0 0 45 45"
                     width="1em" height="100%" class="h-full w-full">
-                    <title>Close</title>
+                    <title>Đóng</title>
                     <path stroke-width="4.0358"
                         d="M40.341 4.769a1.112 1.112 0 0 1-.022 1.587L24.071 22.604 40.32 38.85a1.112 1.112 0 0 1-1.566 1.566L22.506 24.169 6.236 40.417a1.112 1.112 0 0 1-1.565-1.566l16.27-16.247L4.67 6.356a1.125 1.125 0 0 1-.303-.767A1.13 1.13 0 0 1 5.49 4.465c.285 0 .56.11.768.304l16.248 16.269 16.268-16.27a1.117 1.117 0 0 1 1.566 0Z">
                     </path>
@@ -38,15 +39,15 @@
                     </label>
                     <label
                         class="grid gap-2 text-300 [&amp;:has(input[disabled])]:cursor-not-allowed min-w-[300px] flex-1">
-                        <span class="label" style="color: white !important;">Password</span>
+                        <span class="label" style="color: white !important;">Mật khẩu</span>
                         <div class="amc-input amc-input--box">
-                            <input class="input" id="password" autocomplete="current-password" type="password"
+                            <input class="input" id="password" autocomplete="current-password" [type]="showPassword ? 'text' : 'password'"
                                 name="password" [(ngModel)]="SignInData.password"
                                 style="color: rgb(177, 177, 177) !important;">
-                            <button type="button" class="cursor-pointer" aria-label="Show Password" tabindex="-1">
+                            <button type="button" class="cursor-pointer" aria-label="Hiển thị mật khẩu" tabindex="-1" (click)="togglePasswordVisibility()">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
                                     width="1em" height="100%" class="transition-all duration-200 hover:fill-blue-500">
-                                    <title>Show Password</title>
+                                    <title>Hiển thị mật khẩu</title>
                                     <path
                                         d="M22.253 17.544a10.428 10.428 0 1 0 10.427 10.54 10.456 10.456 0 0 0-10.427-10.54zm0 15.825a5.397 5.397 0 1 1 5.396-5.285 5.397 5.397 0 0 1-5.396 5.285z">
                                     </path>
@@ -60,19 +61,19 @@
                 </div>
                 <button type="button"
                     class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-sm md:text-base">
-                    Forgot Password?
+                    Quên mật khẩu?
                 </button>
 
-                <p style="color: white !important;">Not a member? <a
+                <p style="color: white !important;">Chưa phải là thành viên? <a
                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-sm md:text-base"
-                        href="/dangki">Join Now</a> and start enjoying savings, rewards, and more at movies.</p>
-                <p style="color: white !important;">Already joined AMC Stubs at a theatre? <a
+                        href="/dangki">Tham gia ngay</a> để bắt đầu tận hưởng ưu đãi, phần thưởng và nhiều hơn nữa tại rạp chiếu phim.</p>
+                <p style="color: white !important;">Đã tham gia Cinex Cinema tại rạp? <a
                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white text-sm md:text-base"
-                        href="/dangki">Register your account</a> to create a login.</p>
+                        href="/dangki">Đăng ký tài khoản</a> để tạo thông tin đăng nhập.</p>
                 <div class="flex flex-wrap items-center gap-4 py-4 justify-end">
                     <button (click)="onSubmit()" type="submit"
                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-black bg-white px-6 min-w-[10ch] hocus:bg-blue-500 text-sm md:text-base h-12">
-                        Sign in
+                        Đăng nhập
                     </button>
                 </div>
             </form>

@@ -786,6 +786,25 @@ export class PurchaseComponent implements OnInit, OnDestroy {
       timerProgressBar: true, 
     });
   }
+  onTimeoutNotification(): void {
+  Swal.fire({
+    title: 'Hết thời gian!',
+    text: 'Thời gian đặt vé của bạn đã hết. Vui lòng thử lại.',
+    icon: 'warning', // Biểu tượng cảnh báo
+    confirmButtonText: 'OK',
+    confirmButtonColor: '#d33',
+    background: '#f9f9f9',
+    customClass: {
+      popup: 'swal2-popup-custom',
+    },
+    timer: 3000, // Tự động đóng sau 3 giây
+    timerProgressBar: true, // Hiển thị thanh tiến trình
+    imageUrl: 'https://cdn-icons-png.flaticon.com/512/1828/1828884.png', // URL biểu tượng đồng hồ
+    imageWidth: 50,
+    imageHeight: 50,
+    imageAlt: 'Clock Icon',
+  });
+}
   onErrorNotification(message: string): void {
     Swal.fire({
       title: 'Thất bại!',
