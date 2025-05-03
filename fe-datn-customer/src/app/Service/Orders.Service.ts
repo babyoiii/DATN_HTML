@@ -73,11 +73,13 @@ export class OrdersService {
       map(([usdcPriceUSD, usdToVndRate]) => usdcPriceUSD * usdToVndRate)
     );
   }
- getListHistoryOrderByUser(): Observable<any> {
-    return this.http.get<GetListHistoryOrderByUser>(`${this.baseUrl}/Movie/GetListHistoryOrderByUser`);
+  getListHistoryOrderByUser(currentPage: number, recordPerPage: number): Observable<any> {
+    const url = `${this.baseUrl}/Movie/GetListHistoryOrderByUser?currentPage=${currentPage}&recordPerPage=${recordPerPage}`;
+    return this.http.get<GetListHistoryOrderByUser>(url);
   }
-  getPastShowTimesByTimeFilter(filter:string): Observable<any> {
-    return this.http.get<GetListHistoryOrderByUser>(`${this.baseUrl}/Movie/GetPastShowTimesByTimeFilter?filter=${filter}`);
+  getPastShowTimesByTimeFilter(filter: string, currentPage: number, recordPerPage: number): Observable<any> {
+    const url = `${this.baseUrl}/Movie/GetPastShowTimesByTimeFilter?filter=${filter}&currentPage=${currentPage}&recordPerPage=${recordPerPage}`;
+    return this.http.get<GetListHistoryOrderByUser>(url);
   }
   getOrderDetailLangding(orderId: string): Observable<any> {
     return this.http.get<OrderDetailLanding>(`${this.baseUrl}/Movie/GetOrderDetailLangding?orderId=${orderId}`);

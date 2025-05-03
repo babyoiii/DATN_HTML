@@ -420,6 +420,12 @@
                                                                                                 </span>
                                                                                                 <span>Voucher</span>
                                                                                             </div>
+                                                                                            <div *ngIf="voucher.minOrderValue !== undefined" class="text-blue-400 text-sm mt-1 flex items-center">
+                                                                                                <span>Giá trị đơn hàng tối thiểu:</span>
+                                                                                                <span class="text-blue-200 px-2 py-0.5 rounded-full text-xs" style="font-weight: bold !important">
+                                                                                                    {{voucher.minOrderValue | number:'1.0-0'}}₫
+                                                                                                </span>
+                                                                                            </div>
                                                                                         </div>
                                                                                         <button
                                                                                             (click)="toggleVoucherDetail(voucher.voucherCode)"
@@ -493,10 +499,12 @@
                                                                                                 class="space-y-2 text-sm text-gray-300">
                                                                                                 <p><span
                                                                                                         class="text-gray-400">Mã:</span>
-                                                                                                    {{voucher.voucherCode}}</p>
+                                                                                                    {{voucher.voucherCode}}
+                                                                                                </p>
                                                                                                 <p><span
                                                                                                         class="text-gray-400">Tên:</span>
-                                                                                                    {{voucher.voucherDescription}}</p>
+                                                                                                    {{voucher.voucherDescription}}
+                                                                                                </p>
                                                                                                 <p><span
                                                                                                         class="text-gray-400">Hạn
                                                                                                         sử dụng:</span>
@@ -510,6 +518,10 @@
                                                                                                         lại:</span>
                                                                                                     <span
                                                                                                         class="text-green-400 font-semibold">{{voucher.remainingQuantity}}</span>
+                                                                                                </p>
+                                                                                                <p *ngIf="voucher.minOrderValue !== undefined">
+                                                                                                    <span class="text-gray-400">Giá trị đơn hàng tối thiểu:</span>
+                                                                                                    <span class="text-blue-400 font-semibold">{{voucher.minOrderValue | number:'1.0-0'}}₫</span>
                                                                                                 </p>
                                                                                                 <p><span
                                                                                                         class="text-gray-400">Điều

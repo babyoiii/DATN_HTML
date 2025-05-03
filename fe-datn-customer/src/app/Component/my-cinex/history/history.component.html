@@ -17,87 +17,62 @@
                 <div class="mt-4">
                     <div class="rich-text">
                         <div class="grid grid-cols-1 gap-4 py-6 md:grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">
-                            <!-- Upcoming Event 1 -->
-                             @for (item of listDataTicket; track $index) {
-                            <div
-                                class="relative bg-[#111] rounded-lg overflow-hidden shadow-lg transition-transform hover:translate-y-[-5px] border border-[#333]">
-                                <div
-                                    class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#f84f4f] to-[#f84f4f]">
-                                </div>
-                                <div *ngIf="item.status == 2" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-[-20deg] w-48 h-48 pointer-events-none mix-blend-multiply opacity-90">
-                                    <img src="https://png.pngtree.com/png-clipart/20230802/original/pngtree-expired-stamp-label-vector-grunge-picture-image_7834599.png" 
-                                         alt="Expired Stamp" 
-                                         class="w-full h-full object-contain mix-blend-multiply"
-                                         style="filter: brightness(0.9) contrast(1.2);">
+                            <!-- Lặp qua danh sách vé được phân trang -->
+                            <div *ngFor="let item of listDataTicket" class="relative bg-[#111] rounded-lg overflow-hidden shadow-lg transition-transform hover:translate-y-[-5px] border border-[#333]">
+                              <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#f84f4f] to-[#f84f4f]"></div>
+                              <div *ngIf="item.status == 2" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-[-20deg] w-48 h-48 pointer-events-none mix-blend-multiply opacity-90">
+                                <img src="https://png.pngtree.com/png-clipart/20230802/original/pngtree-expired-stamp-label-vector-grunge-picture-image_7834599.png" 
+                                     alt="Expired Stamp" 
+                                     class="w-full h-full object-contain mix-blend-multiply"
+                                     style="filter: brightness(0.9) contrast(1.2);">
+                              </div>
+                              <div class="flex p-4 bg-opacity-30 bg-black">
+                                <img [src]="item.thumbnail" alt="Movie Poster" class="w-[100px] h-[150px] object-cover rounded mr-4">
+                                <div class="flex-1">
+                                  <h3 class="text-lg font-bold mb-2">{{item.movieName}}</h3>
+                                  <div class="text-sm text-[#bbbbbb] mb-1">
+                                    <div><i class="far fa-calendar"></i> {{item.sessionDate}}</div>
+                                    <div><i class="far fa-clock"></i> {{item.sessionTime}}</div>
                                   </div>
-                                  <div *ngIf="item.status == 0" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-[-20deg] w-48 h-48 pointer-events-none mix-blend-multiply opacity-90">
-                                    <img src="https://as1.ftcdn.net/v2/jpg/05/51/11/96/1000_F_551119610_1fI3s4HXW1fG3SDZgyZO6IisH8PoQZFJ.webp" 
-                                         alt="Expired Stamp" 
-                                         class="w-full h-full object-contain mix-blend-multiply"
-                                         style="filter: brightness(0.9) contrast(1.2);">
+                                  <div class="mt-2">
+                                    <div>{{item.cinemaName}}</div>
+                                    <div class="text-sm text-[#bbbbbb]">{{item.roomName}}</div>
                                   </div>
-                                <div class="flex p-4 bg-opacity-30 bg-black">
-                                    <img src="{{item.thumbnail}}"
-                                        alt="Movie Poster" class="w-[100px] h-[150px] object-cover rounded mr-4">
-                                    <div class="flex-1">
-                                        <h3 class="text-lg font-bold mb-2">{{item.movieName}}</h3>
-                                        <div class="text-sm text-[#bbbbbb] mb-1">
-                                            <div><i class="far fa-calendar"></i> {{item.sessionDate}}</div>
-                                            <div><i class="far fa-clock"></i> {{item.sessionTime}}</div>
-                                        </div>
-                                        <div class="mt-2">
-                                            <div>{{item.cinemaName}}</div>
-                                            <div class="text-sm text-[#bbbbbb]">{{item.roomName}}</div>
-                                        </div>
-                                    </div>
                                 </div>
-                                <div class="p-4 border-t border-dashed border-[#444]">
-                                    <div class="flex justify-between mb-2">
-                                        <span class="text-[#bbbbbb] text-sm">Booking Code:</span>
-                                        <span class="font-medium">{{item.orderCode}}</span>
-                                    </div>
-                                    <div class="flex justify-between mb-2">
-                                        <span class="text-[#bbbbbb] text-sm">Ticket Type:</span>
-                                        <span class="font-medium">IMAX 3D</span>
-                                    </div>
-                                    <div class="flex justify-between mb-2">
-                                        <span class="text-[#bbbbbb] text-sm">Seats:</span>
-                                        <div class="flex flex-wrap gap-2">
-                                            @for (seat of item.seatList; track $index) {
-                                              <span class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">{{seat}}</span>
-                                        }
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-between mb-2">
-                                        <span class="text-[#bbbbbb] text-sm">Đồ ăn:</span>
-                                        <span class="font-medium">{{item.serviceList && item.serviceList.length > 0 ? 'Yes' : 'No'}}</span>
-                                    </div>
-                                    @if (item.serviceList && item.serviceList.length > 0) {
-                                        @for (service of item.serviceList; track $index) {
-                                            <div class="flex justify-between text-sm text-[#ddd] mt-1">
-                                                <span>{{service.name}} x{{service.quantity}}</span>
-                                                <span>{{service.totalPrice | number:'1.0-0'}}₫</span>
-                                            </div>
-                                        }
-                                    }
+                              </div>
+                              <div class="p-4 border-t border-dashed border-[#444]">
+                                <div class="flex justify-between mb-2">
+                                  <span class="text-[#bbbbbb] text-sm">Booking Code:</span>
+                                  <span class="font-medium">{{item.orderCode}}</span>
                                 </div>
-                                <div 
-                                    class="flex justify-between items-center p-4 bg-opacity-20 bg-black border-t border-[#333]">
-                                    <div class="text-lg font-bold text-[#00a8e1]">{{item.totalPrice | number:'1.0-0'}}₫</div>
-                                    <div class="flex gap-3">
-                                        <button
-                                        (click)="onRefundOrder(item.id)"
-                                        [disabled]="isRefundDisabled(item.status)"
-                                        class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white border border-white px-6 min-w-[10ch] hover:bg-white hover:text-black text-sm md:text-base h-12">
-                                        Hoàn vé
-                                      </button>
-                                        <button [routerLink]="['/my-cinex/detailOrder', item.id]"
-                                            class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white bg-red-500 px-6 min-w-[10ch] hover:bg-red-400 focus:bg-red-400 text-sm md:text-base h-12"> Chi tiết</button>
-                                    </div>
+                                <div class="flex justify-between mb-2">
+                                  <span class="text-[#bbbbbb] text-sm">Seats:</span>
+                                  <div class="flex flex-wrap gap-2">
+                                    <span *ngFor="let seat of item.seatList" class="bg-[#505050] text-white px-2 py-0.5 rounded text-xs">{{seat}}</span>
+                                  </div>
                                 </div>
+                                <div class="flex justify-between mb-2">
+                                  <span class="text-[#bbbbbb] text-sm">Đồ ăn:</span>
+                                  <span class="font-medium">{{item.serviceList && item.serviceList.length > 0 ? 'Yes' : 'No'}}</span>
+                                </div>
+                              </div>
+                              <div class="flex justify-between items-center p-4 bg-opacity-20 bg-black border-t border-[#333]">
+                                <div class="text-lg font-bold text-[#00a8e1]">{{item.totalPrice | number:'1.0-0'}}₫</div>
+                                <div class="flex gap-3">
+                                  <button [routerLink]="['/my-cinex/detailOrder', item.id]" class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 rounded-full text-white bg-red-500 px-6 hover:bg-red-400 text-sm md:text-base h-12">Chi tiết</button>
+                                </div>
+                              </div>
                             </div>
-                        }
-                        </div>
+                          </div>
+                          
+                          <!-- Nút phân trang -->
+                          <div class="flex justify-center gap-4 mt-6">
+                            <button (click)="previousPageUpcoming()" [disabled]="currentPageUpcoming === 1" class="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 disabled:opacity-50">
+                                Trang trước
+                              </button>
+                            <span class="text-white">Trang {{currentPageUpcoming}} / {{totalPagesUpcoming}}</span>
+                            <button (click)="nextPageUpcoming()" [disabled]="currentPageUpcoming === totalPagesUpcoming" class="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 disabled:opacity-50">Trang sau</button>
+                          </div>
                     </div>
                     <div
                         class="grid grid-cols-1 gap-4 py-6 empty:hidden md:grid-cols-[repeat(auto-fill,minmax(400px,1fr))]">
@@ -218,6 +193,12 @@
                                     </div>
                                 </div>
                             }
+                        </div>
+                        
+                        <div class="flex justify-center gap-4 mt-6">
+                          <button (click)="previousPagePast(selectedDateFilter)" [disabled]="currentPagePast === 1" class="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 disabled:opacity-50">Trang trước</button>
+                          <span class="text-white">Trang {{currentPagePast}} / {{totalPagesPast}}</span>
+                          <button (click)="nextPagePast(selectedDateFilter)" [disabled]="currentPagePast === totalPagesPast" class="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 disabled:opacity-50">Trang sau</button>
                         </div>
                     </div>
                     <div
