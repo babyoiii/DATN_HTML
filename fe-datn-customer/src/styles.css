@@ -6405,3 +6405,15 @@ body {
 @tailwind components;
 @tailwind utilities;
 /* @import 'ngx-toastr/toastr'; */
+
+
+
+.swal2-confirm{
+    background-color: rgb(27, 228, 71) !important;
+}
+
+
+.swal2-cancel{
+    background-color: red !important;
+
+}
