@@ -25,25 +25,27 @@ export const authInterceptorFn: HttpInterceptorFn = (req: HttpRequest<any>, next
   let authReq = req;
   const token = authService.getToken();
 
+  // Nếu có token, kiểm tra hạn sử dụng và thêm vào header
   if (token && token.trim() !== '') {
     if (isTokenExpired(token)) {
       console.warn('❌ Token đã hết hạn. Đăng xuất...');
       authService.signOut();
-      router.navigate(['/login']);
-      return throwError(() => new Error('Token đã hết hạn.'));
+      return next(req); // Tiếp tục gửi yêu cầu mà không thêm token
     }
     authReq = addTokenHeader(req, token);
   }
 
+  // Nếu không có token, tiếp tục gửi yêu cầu mà không thêm header
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
       // Xử lý lỗi
       if (error instanceof HttpErrorResponse) {
         switch (error.status) {
           case 401: // Unauthorized
-            console.error('❌ Unauthorized request - Redirecting to login.');
-            authService.signOut();
-            router.navigate(['/login']);
+            if (token) {
+              authService.signOut();
+              router.navigate(['/']);
+            }
             break;
           case 403: 
             console.error('❌ Forbidden request - Access denied.');
@@ -71,6 +73,7 @@ function isTokenExpired(token: string): boolean {
     const currentTime = Math.floor(Date.now() / 1000); 
     return payload.exp < currentTime; 
   } catch (error) {
+    console.error('Lỗi khi kiểm tra token:', error);
     return true; 
   }
 }

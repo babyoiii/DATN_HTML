@@ -33,6 +33,7 @@ export class DangkiComponent implements OnInit {
     dob: new Date(),
     sex: 1
   };
+  isTermsAccepted: boolean = false;
   today: Date = new Date(); 
   latitude!: number;
   longitude!: number;
@@ -145,6 +146,10 @@ export class DangkiComponent implements OnInit {
   
     if (!this._signUpData.address) {
      this.notificationService.onErrorNotification('Địa chỉ không được để trống!');
+      return;
+    }
+    if (!this.isTermsAccepted) {
+      this.notificationService.onErrorNotification('Bạn phải đồng ý với Điều khoản & Điều kiện để tiếp tục.');
       return;
     }
     this.spinner.show(); 
