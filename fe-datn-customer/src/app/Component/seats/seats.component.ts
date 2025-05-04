@@ -103,6 +103,7 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
+    this.seatService.resetCountdown();
     this.subscription = this.authServiceService.isLoggedIn$.subscribe(status => {
       this.isLoggedIn = status;
       console.log('Login status from BehaviorSubject:', status);
@@ -347,7 +348,8 @@ export class SeatsComponent implements OnInit, OnDestroy {
     const seconds = count % 60;
     this.countdown = `${minutes}:${seconds.toString().padStart(2, '0')}`;
     this.cdr.markForCheck();
-
+    console.log('Countdown:',count);
+    
     if (count === 60 && !this.seatService.hasShownWarning()) {
       this.seatService.setWarningShown();
       this.AddMoreTime();

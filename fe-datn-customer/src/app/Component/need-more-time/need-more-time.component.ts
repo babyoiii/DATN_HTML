@@ -17,8 +17,9 @@ export class NeedMoreTimeComponent {
           private toast: ToastrService
  ){}
   onNeedMoreTime() {
+    this.seatService.resetCountdown();
     localStorage.removeItem('roomCountdown');
-    this.seatService.extendCountdown(120);
+    this.seatService.extendCountdown(180);
     this.toast.success('⏳ Thời gian đã được gia hạn thêm 2 phút.', "Thông Báo");
     this.closeModal();
   }
