@@ -191,7 +191,6 @@ export class SeatsComponent implements OnInit, OnDestroy {
   // }
   onExtendCountdown(): void {
     this.modalService.openNeedMoreTimeModal();
-    console.log("đã gọi");
 
   }
   loadMovieByShowtime(showtimeId: string): void {
@@ -367,7 +366,6 @@ export class SeatsComponent implements OnInit, OnDestroy {
   private handleCountdownError(error: any): void {
     console.error('Lỗi khi nhận countdown:', error);
   }
-
   private ensureUserId(): string {
     if (isPlatformBrowser(this.platformId)) {
       let userId = localStorage.getItem('userId');
@@ -963,8 +961,8 @@ export class SeatsComponent implements OnInit, OnDestroy {
     }
   }
   confirmDisconnect(event: Event): void {
-    event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
-  
+    event.preventDefault()
+   
     Swal.fire({
       title: 'Xác nhận thoát',
       text: 'Bạn có chắc chắn muốn thoát không? Mọi thay đổi sẽ không được lưu.',
