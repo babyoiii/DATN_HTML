@@ -5,43 +5,7 @@
   <div *ngIf="movie; else loading">
 
 
-    <!-- Breadcrumb navigation -->
-    <div class="bg-gray-900 border-b border-gray-800">
-      <div class="mx-auto w-full max-w-6xl px-4 py-3">
-        <nav aria-label="breadcrumb">
-          <ol class="flex items-center space-x-2 text-sm">
-            <li class="flex items-center">
-              <a routerLink="/" class="text-gray-400 hover:text-pink-500 transition duration-200 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-                <span>Trang chủ</span>
-              </a>
-            </li>
-            <li class="flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mx-2 text-gray-500" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-              <a routerLink="/movies" class="text-gray-400 hover:text-pink-500 transition duration-200">
-                Phim
-              </a>
-            </li>
-            <li class="flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mx-2 text-gray-500" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-              <span class="text-pink-500 font-medium truncate max-w-xs">{{ movie.movieName }}</span>
-            </li>
-            <h3><------ ( Hiện tại nghĩa đang test cái này, khả năng nếu thấy hợp thì cho vào luôn các page khác nhé
-                )</h3>
-          </ol>
-        </nav>
-      </div>
-    </div>
+  
 
 
 
