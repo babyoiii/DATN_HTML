@@ -172,10 +172,10 @@
                                                 <div class="flex-1">
                                                     <h4
                                                         class="my-auto text-base font-semibold leading-tight tracking-normal">
-                                                        <div class="flex flex-col">Loại thẻ: {{membershipName}}</div>
+                                                        <div class="flex flex-col">Loại thẻ: {{membershipModel.name}}</div>
                                                     </h4>
                                                 </div>
-                                                <p class="my-auto label text-white">{{totalAmount |number:'1.0-0' }}đ
+                                                <p class="my-auto label text-white">{{membershipModel.price |number:'1.0-0' }}đ
                                                 </p>
                                             </div>
                                         </li>
@@ -191,7 +191,7 @@
                                   {{ roundedUSDCAmount | number:'1.6-6' }} USDC
                                 </ng-container>
                                 <ng-template #vndAmount>
-                                  {{ totalAmount | number:'1.0-0' }}đ
+                                  {{ membershipModel.price| number:'1.0-0' }}đ
                                 </ng-template>
                               </p>
                             </div>
@@ -237,7 +237,7 @@
                                             {{ roundedUSDCAmount | number:'1.6-6' }} USDC
                                           </ng-container>
                                           <ng-template #vndAmount>
-                                            {{ totalAmount | number:'1.0-0' }}đ
+                                            {{ membershipModel.price   | number:'1.0-0' }}đ
                                           </ng-template>
                                         </span>
                                       </div>
@@ -257,7 +257,7 @@
                                                         <span aria-label="Number of Items in Order"
                                                             class="text-xs">1</span>
                                                     </div>
-                                                </div>{{totalAmount |number:'1.0-0' }}đ
+                                                </div>{{membershipModel.price|number:'1.0-0' }}đ
                                             </button>
                                             <div
                                                 class="fixed inset-0 z-40 bg-black transition-opacity duration-300 pointer-events-none opacity-0">
@@ -300,7 +300,7 @@
                                                                     class="flex justify-end gap-4 py-4 text-base lg:text-lg font-semibold leading-tight tracking-normal">
                                                                     <span
                                                                         class="my-auto uppercase text-gray-200 text-sm font-semibold leading-tight tracking-normal">Tổngx
-                                                                    </span>{{totalAmount |number:'1.0-0' }}đ
+                                                                    </span>{{membershipModel.price|number:'1.0-0' }}đ
                                                                 </p>
                                                             </div>
                                                         </div>

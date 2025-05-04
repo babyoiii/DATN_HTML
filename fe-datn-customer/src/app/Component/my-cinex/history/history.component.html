@@ -59,6 +59,12 @@
                               <div class="flex justify-between items-center p-4 bg-opacity-20 bg-black border-t border-[#333]">
                                 <div class="text-lg font-bold text-[#00a8e1]">{{item.totalPrice | number:'1.0-0'}}₫</div>
                                 <div class="flex gap-3">
+                                    <button
+                                         (click)="onRefundOrder(item.id)"
+                                         [disabled]="isRefundDisabled(item.status)"
+                                         class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white border border-white px-6 min-w-[10ch] hover:bg-white hover:text-black text-sm md:text-base h-12">
+                                         Hoàn vé
+                                       </button>
                                   <button [routerLink]="['/my-cinex/detailOrder', item.id]" class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 rounded-full text-white bg-red-500 px-6 hover:bg-red-400 text-sm md:text-base h-12">Chi tiết</button>
                                 </div>
                               </div>

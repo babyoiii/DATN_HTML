@@ -34,4 +34,8 @@ export class MembershipService {
       const url = `${this.baseUrl}/Membership/GetPointHistory?type=${type}&currentPage=${currentPage}&recordPerPage=${recordPerPage}`;
       return this.http.get<PointHistory>(url);
     }
+    getMembershipDetails(membershipId: number): Observable<any> {
+      const url = `${this.baseUrl}/Membership/GetMembership?membershipId=${membershipId}`;
+      return this.http.get<any>(url);
+    }
 }

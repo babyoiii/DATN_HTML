@@ -27,6 +27,7 @@ export interface UserMembershipDetails {
     logoUrl: string;
     isCurrentLevelBenefit: boolean | null; 
     isNextLevelBenefit: boolean | null; 
+    membershipPriceNext?: number;
   }
   
   export interface MembershipData {

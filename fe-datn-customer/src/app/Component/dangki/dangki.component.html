@@ -200,25 +200,32 @@
                             <div class="col-span-6" role="group" aria-label="Terms and Conditions">
                                 <label class="grid gap-2 text-gray-300 mb-2">
                                     <div class="flex items-start gap-2">
-                                        <div class="m-1 inline-block h-5 w-5">
-                                            <input
-                                                class="h-5 w-5 appearance-none rounded border border-gray-600 checked:bg-blue-500"
-                                                type="checkbox" name="termsAndConditions.0">
-                                        </div>
-                                        <div class="rich-text">
-                                            <p class="mb-4 flex-wrap items-center gap-4">
-                                                <span class="caption">Tôi đồng ý</span>
-                                                <span class="caption">&nbsp;</span>
-                                                <a class="group transition-colors text-blue-500 hover:text-white"
-                                                    rel="noopener noreferrer" target="_blank"
-                                                    href="/amcstubs/terms-and-conditions">
-                                                    <span class="caption">Cinex Cinema Điều khoản &amp; Điều kiện</span>
-                                                </a>
-                                                <span class="italic text-gray-400 footnote">.</span>
-                                            </p>
-                                        </div>
+                                      <div class="m-1 inline-block h-5 w-5">
+                                        <input
+                                          class="h-5 w-5 appearance-none rounded border border-gray-600 checked:bg-blue-500"
+                                          type="checkbox"
+                                          name="termsAndConditions"
+                                          [(ngModel)]="isTermsAccepted"
+                                          required
+                                        />
+                                      </div>
+                                      <div class="rich-text">
+                                        <p class="mb-4 flex-wrap items-center gap-4">
+                                          <span class="caption">Tôi đồng ý</span>
+                                          <span class="caption">&nbsp;</span>
+                                          <a
+                                            class="group transition-colors text-blue-500 hover:text-white"
+                                            rel="noopener noreferrer"
+                                            target="_blank"
+                                            href="/amcstubs/terms-and-conditions"
+                                          >
+                                            <span class="caption">Cinex Cinema Điều khoản &amp; Điều kiện</span>
+                                          </a>
+                                          <span class="italic text-gray-400 footnote">.</span>
+                                        </p>
+                                      </div>
                                     </div>
-                                </label>
+                                  </label>
 
                                 <label class="grid gap-2 text-gray-300">
                                     <span class="label flex items-center gap-2">
