@@ -49,6 +49,12 @@ export class SignInComponent {
   this.spinner.show(); // Hiển thị spinner
     this.authService.SignIn(this.SignInData).subscribe({
       next: (result: any) => {
+        if (result.responseCode !== 200) {
+          this.spinner.hide(); 
+          this.toast.clear(loadingToast.toastId);
+          this.notificationService.onErrorNotification(`${result.message}`);
+          return;
+        }
         console.log('Response:', result);
         this.toast.clear(loadingToast.toastId);
 
