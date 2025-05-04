@@ -17,6 +17,7 @@ import { EMPTY } from 'rxjs';
 import { LocationService } from '../../Service/location.service';
 import { Log } from 'ethers';
 import { HttpClient } from '@angular/common/http';
+import { SeatService } from '../../Service/seat.service';
 
 @Component({
   selector: 'app-showtimes',
@@ -72,10 +73,12 @@ cinemaIdUrl : string = '';
     private route: ActivatedRoute,
     private cinemaService: CinemaService,
     private locationService: LocationService,
-    private http: HttpClient
+    private http: HttpClient,
+    private seatService: SeatService
   ) { }
 
   ngOnInit(): void {
+    this.seatService.resetCountdown();
     // Khởi tạo ngày với múi giờ Việt Nam (UTC+7)
     this.date = this.getVietnamDate(new Date()).toISOString().split('T')[0];
 
@@ -84,7 +87,6 @@ cinemaIdUrl : string = '';
        const url = this.route.snapshot.url.map(segment => segment.path).join('/');
       if (url.includes('movie')) {
        this.movieId = this.id;
-        // Tìm trailer từ ID phim ngay từ đầu
         this.movieService.getMovieDetail(this.movieId).subscribe(movieDetail => {
           if (movieDetail && movieDetail.data && movieDetail.data.trailer) {
             this.Trailer = movieDetail.data.trailer;
@@ -141,8 +143,6 @@ cinemaIdUrl : string = '';
     })
   }
 
-
-  // CÁI NÀY HIỆN TẠI CỨ NHƯ VẬY TRƯỚC VÌ NGHĨA LƯỜI TẠO SERVICE MỚI :V, CALL THẲNG V CHO NHANH
   loadRoomTypes(): void {
     this.http.get<any>('https://localhost:7105/api/RoomType/GetListRoomType?currentPage=1&recordPerPage=1000', {
       headers: { 'Content-Type': 'application/json' }
@@ -157,7 +157,6 @@ cinemaIdUrl : string = '';
       }
     });
   }
-
 
 
   onRoomTypeChange(event: Event): void {

@@ -31,6 +31,8 @@ import { DetailsTicketComponent } from './Component/my-cinex/details-ticket/deta
 import { VipMemberComponent } from './Component/my-cinex/vip-member/vip-member.component';
 import { VerifyOptComponent } from './Component/verify-opt/verify-opt.component';
 import { TroGiupComponent } from './Component/tro-giup/tro-giup.component';
+import { SendMailForgotPasswordComponent } from './Component/send-mail-forgot-password/send-mail-forgot-password.component';
+import { ResetPasswordComponent } from './Component/reset-password/reset-password.component';
 
 export const routes: Routes = [
     {
@@ -73,6 +75,7 @@ export const routes: Routes = [
     { path: 'TimeUpComponent', component: TimeUpComponent },
     { path: 'VerifyOpt', component: VerifyOptComponent },
     { path: 'thanhtoanMembership', component: VipMemberComponent},
-    
-
+    { path: 'sendMailForgotPassword', component: SendMailForgotPasswordComponent},
+    { path: 'resetPassword', component: ResetPasswordComponent},
+    { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

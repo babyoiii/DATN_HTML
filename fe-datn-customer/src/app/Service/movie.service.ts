@@ -11,8 +11,18 @@ import { GetAllNameMovie } from '../Models/MovieModel';
 export class MovieService {
   private baseUrl = environment.baseUrl;
   constructor(private router: Router, private http: HttpClient) { }
-  getMovies(type: number, currentPage: number, recordPerPage: number) {
-    return this.http.get<any>(`${this.baseUrl}/Movie/GetMovie?type=${type}&currentPage=${currentPage}&recordPerPage=${recordPerPage}`);
+  getMovies(type: number, currentPage: number, recordPerPage: number, movieType?: string) {
+    const params: any = {
+      type: type,
+      currentPage: currentPage,
+      recordPerPage: recordPerPage
+    };
+
+    if (movieType) {
+      params.movieType = movieType;
+    }
+
+    return this.http.get<any>(`${this.baseUrl}/Movie/GetMovie`, { params });
   }
   getShowtimes(cinemaId : string,movieId: string, location: string, date: Date, currentPage: number, recordPerPage: number) {
     return this.http.get<any>(`${this.baseUrl}/Movie/GetShowTimeLanding`, {
@@ -43,5 +53,8 @@ export class MovieService {
   }
   getAllCinemas(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/Movie/GetCinemaAll`);
+  }
+  getMovieTypes(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/Movie/GetMovieType`);
   }
 }

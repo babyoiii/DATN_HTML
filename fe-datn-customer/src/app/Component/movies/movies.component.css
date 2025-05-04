@@ -160,3 +160,27 @@
                     text-align: center; /* Căn giữa văn bản */
                     height: 100%; /* Đảm bảo chiều cao đầy đủ */
                   }
+
+                  select {
+                    background-color: #000; /* Đặt nền đen để chữ nổi bật */
+                    color: #fff; /* Đặt màu chữ trắng */
+                    font-weight: 600; /* Làm chữ đậm hơn */
+                    border: 1px solid #4b5563; /* Đặt viền màu xám */
+                  }
+                  
+                  select:focus {
+                    outline: none;
+                    border-color: #3b82f6; /* Đổi màu viền khi focus */
+                    box-shadow: 0 0 0 2px #3b82f6; /* Thêm hiệu ứng focus */
+                  }
+                  
+                  option {
+                    background-color: #000; /* Nền đen cho các tùy chọn */
+                    color: #fff; /* Màu chữ trắng */
+                    font-weight: 500; /* Làm chữ đậm hơn */
+                  }
+                  
+                  option:hover {
+                    background-color: #1f2937; /* Đổi màu nền khi hover */
+                    color: #3b82f6; /* Đổi màu chữ khi hover */
+                  }

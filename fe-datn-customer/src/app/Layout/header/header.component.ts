@@ -41,16 +41,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.isLoggedIn = status;
       console.log('Login status from BehaviorSubject:', status);
     });
-    this.membershipService.getPointByUser().subscribe({
-      next: (res: any) => {
-        this.getRewardPoint = res.data;
-        this.caculateRewardPoint = 1000 * this.getRewardPoint.pointRate;
-        console.log('Reward Point Data:', this.getRewardPoint);
-      },
-      error: (err) => {
-        // console.error('Error fetching points:', err);
-      }
-    });
+    if (this.isLoggedIn) {
+      this.membershipService.getPointByUser().subscribe({
+        next: (res: any) => {
+          this.getRewardPoint = res.data;
+          this.caculateRewardPoint = 1000 * this.getRewardPoint.pointRate;
+          console.log('Reward Point Data:', this.getRewardPoint);
+        },
+        error: (err) => {
+        }
+      });
+    }
 
   }
 
@@ -66,7 +67,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     localStorage.setItem('redirectUrl', currentUrl);
     this.modalService.openSignInModal();
   }
-  // Sử dụng hàm checkLogin() để kiểm tra trạng thái đăng nhập
   checkLogin(): boolean {
     const logged = this.authService.isLoggedIn();
     console.log('checkLogin() returns:', logged);

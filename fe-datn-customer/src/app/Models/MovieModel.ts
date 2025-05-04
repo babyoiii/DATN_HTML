@@ -50,3 +50,7 @@ export interface MovieByShowtimeData {
   averageRating?: number; 
   roomTypeName: string;
 }
+export interface GetMovieType {
+  formatId: string; 
+  name: string;    
+}

@@ -156,6 +156,10 @@ export class PurchaseComponent implements OnInit, OnDestroy {
           if (selectedVoucher) {
             switch (selectedVoucher.voucherType) {
               case 1: 
+              if (this.totalTicketPrice < selectedVoucher.minOrderValue) {
+                this.onErrorNotification(`Giá trị đơn hàng tối thiểu để áp dụng voucher là ${selectedVoucher.minOrderValue} VND`);
+                return;
+              }
                 if (selectedVoucher.discountType === 'PERCENT') {
                   this.onSuccessNotification('Áp dụng giảm giá phần trăm cho vé xem phim!');
                   this.discountAmount = (this.totalTicketPrice * selectedVoucher.discountValue) / 100;
@@ -164,7 +168,11 @@ export class PurchaseComponent implements OnInit, OnDestroy {
                   this.discountAmount = selectedVoucher.discountValue;
                 }
                 break;
-              case 2: // All
+              case 3: // All
+              if (this.totalAmount < selectedVoucher.minOrderValue) {
+                this.onErrorNotification(`Giá trị đơn hàng tối thiểu để áp dụng voucher là ${selectedVoucher.minOrderValue} VND`);
+                return;
+              }
                 if (selectedVoucher.discountType === 'PERCENT') {
                   this.onSuccessNotification('Áp dụng giảm giá phần trăm cho toàn bộ đơn hàng!');
                   this.discountAmount = (this.totalAmount * selectedVoucher.discountValue) / 100;
@@ -173,7 +181,11 @@ export class PurchaseComponent implements OnInit, OnDestroy {
                   this.discountAmount = selectedVoucher.discountValue;
                 }
                 break;
-              case 3: 
+              case 2: 
+              if (this.totalServiceAmount < selectedVoucher.minOrderValue) {
+                this.onErrorNotification(`Giá trị đơn hàng tối thiểu để áp dụng voucher là ${selectedVoucher.minOrderValue} VND`);
+                return;
+              }
                 if (selectedVoucher.discountType === 'PERCENT') {
                   this.onSuccessNotification('Áp dụng giảm giá phần trăm cho dịch vụ!');
                   this.discountAmount = (this.totalServiceAmount * selectedVoucher.discountValue) / 100;
@@ -822,41 +834,42 @@ export class PurchaseComponent implements OnInit, OnDestroy {
   }
   handleSuccessfulPayment(transactionCode: string, orderData: OrderModelReq) {
     const orderDataString = localStorage.getItem('orderDataPayment');
-    if (orderDataString) {
-      orderData.transactionCode = transactionCode;
-      this.orderService.createOrder(orderData).subscribe({
-        next: (response) => {
-          if (response.responseCode !== 200) {
-           this.onErrorNotification('❌ Đơn hàng không thành công: ' + response.Message);
-            return;
-          }
-  
-          const seatsToUpdate: SeatStatusUpdateRequest[] = orderData.tickets.map((ticket: TicketReq) => ({
-            SeatId: ticket.seatByShowTimeId,
-            Status: 5
-          }));
-  
-          this.seatService.payment(seatsToUpdate);
-          console.log(seatsToUpdate,'tseatsToUpdate');
-          this.onSuccessNotification('Đơn hàng đã được tạo thành công!');
-          this.disconnect()
-          localStorage.removeItem('selectedSeats');
-          localStorage.removeItem('orderData');
-          localStorage.removeItem('orderDataPayment');
-          this.router.navigate(['/']);
-        },
-        error: (error) => {
-          const seatsToUpdate: SeatStatusUpdateRequest[] = orderData.tickets.map((ticket: TicketReq) => ({
-            SeatId: ticket.seatByShowTimeId,
-            Status: 5
-          }));
-  
-          this.seatService.payment(seatsToUpdate);
-          console.error('Error creating order:', error);
-          this.onErrorNotification('❌ Lỗi khi tạo đơn hàng');
-        }
-      });
+    if (!orderDataString) {
+      this.onErrorNotification('Không tìm thấy dữ liệu đơn hàng.');
+      return;
     }
+  
+    this.spinner.show(); // Hiển thị spinner khi bắt đầu xử lý
+    orderData.transactionCode = transactionCode;
+  
+    this.orderService.createOrder(orderData).subscribe({
+      next: (response) => {
+        if (response.responseCode !== 200) {
+          this.onErrorNotification('❌ Đơn hàng không thành công: ' + response.Message);
+          this.spinner.hide(); // Ẩn spinner khi xảy ra lỗi
+          return;
+        }
+  
+        const seatsToUpdate: SeatStatusUpdateRequest[] = orderData.tickets.map((ticket: TicketReq) => ({
+          SeatId: ticket.seatByShowTimeId,
+          Status: 5
+        }));
+        this.seatService.payment(seatsToUpdate);
+  
+        this.onSuccessNotification('Đơn hàng đã được tạo thành công!');
+        this.disconnect();
+        localStorage.removeItem('selectedSeats');
+        localStorage.removeItem('orderData');
+        localStorage.removeItem('orderDataPayment');
+        this.spinner.hide(); // Ẩn spinner khi hoàn tất
+        this.router.navigate(['/']);
+      },
+      error: (error) => {
+        console.error('Error creating order:', error);
+        this.onErrorNotification('❌ Lỗi khi tạo đơn hàng');
+        this.spinner.hide(); // Ẩn spinner khi xảy ra lỗi
+      }
+    });
   }
   handleTimeout(): void {
     if (this.selectedPaymentMethod === 'VNPAY') {
@@ -902,57 +915,52 @@ export class PurchaseComponent implements OnInit, OnDestroy {
   }
   createPayment(paymentData: PaymentModelReq, orderData: OrderModelReq) {
     if (this.selectedPaymentMethod === 'VNPAY') {
-    this.spinner.show();
+      this.spinner.show(); // Hiển thị spinner khi bắt đầu xử lý
       this.orderService.createPayment(paymentData).subscribe({
         next: (response: any) => {
           if (response.responseCode === 1) {
             localStorage.setItem('orderDataPayment', JSON.stringify(orderData));
             const callbackWindow = window.open(response.data, '_blank');
-            let paymentSuccess = false; // Biến để theo dõi trạng thái thanh toán
-      
-            // Lắng nghe sự kiện message từ cửa sổ thanh toán
+            let paymentSuccess = false;
+  
             const messageListener = (event: MessageEvent) => {
               if (!event.data || !event.data.type) return;
-      
+  
               if (event.data.type === 'PAYMENT_SUCCESS') {
-                paymentSuccess = true; // Đánh dấu thanh toán thành công
+                paymentSuccess = true;
                 this.handleSuccessfulPayment(event.data.transactionCode, orderData);
                 this.onSuccessNotification('✅ Thanh toán thành công!');
               } else if (event.data.type === 'PAYMENT_FAILED') {
                 this.onErrorNotification('❌ Thanh toán thất bại.');
               }
-      
-              // Đóng cửa sổ thanh toán và xóa listener
+  
               if (callbackWindow) {
                 callbackWindow.close();
               }
               window.removeEventListener('message', messageListener);
-      
-              // Ẩn spinner sau khi xử lý xong
-              this.spinner.hide();
+              this.spinner.hide(); // Ẩn spinner sau khi xử lý xong
             };
-      
+  
             window.addEventListener('message', messageListener);
-      
-            // Kiểm tra trạng thái của cửa sổ thanh toán
+  
             const checkWindowClosed = setInterval(() => {
               if (callbackWindow && callbackWindow.closed) {
-                clearInterval(checkWindowClosed); // Dừng kiểm tra
+                clearInterval(checkWindowClosed);
                 if (!paymentSuccess) {
                   this.onErrorNotification('❌ Thanh toán thất bại do cửa sổ bị đóng.');
-                  this.spinner.hide();
+                  this.spinner.hide(); // Ẩn spinner khi cửa sổ bị đóng
                 }
               }
-            }, 500); // Kiểm tra mỗi 500ms
+            }, 500);
           } else {
-            this.onErrorNotification('❌ Lỗi khi tạo thanh toán:');
-            this.spinner.hide(); 
+            this.onErrorNotification('❌ Lỗi khi tạo thanh toán.');
+            this.spinner.hide(); // Ẩn spinner khi xảy ra lỗi
           }
         },
         error: (error) => {
           console.error('Error creating payment:', error);
-          this.onErrorNotification('❌ Lỗi khi tạo thanh toán:');
-          this.spinner.hide(); // Ẩn spinner khi lỗi xảy ra
+          this.onErrorNotification('❌ Lỗi khi tạo thanh toán.');
+          this.spinner.hide(); // Ẩn spinner khi xảy ra lỗi
         }
       });
     } else if (this.selectedPaymentMethod === 'MULTI-WALLET') {
@@ -960,49 +968,48 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         .then((walletAddress) => {
           if (!walletAddress) {
             this.onErrorNotification('Failed to connect wallet.');
-            this.spinner.hide(); // Ẩn spinner khi lỗi xảy ra
-            return;
+            return Promise.reject('Wallet connection failed.');
           }
           this.walletAddress = walletAddress;
-          this.spinner.show();
+          this.spinner.show(); // Hiển thị spinner khi bắt đầu xử lý
+  
           if (this.countdown === '0:00') {
             this.onErrorNotification('Thời gian thanh toán đã hết. Giao dịch bị hủy.');
-            this.spinner.hide();
-            return;
+            this.spinner.hide(); // Ẩn spinner khi thời gian hết
+            return Promise.reject('Payment timeout.');
           }
-          // Chuyển đổi từ VND sang USDC
+  
           const usdcAmount = this.convertVNDToUSDC(this.totalAmount);
           if (usdcAmount === null) {
-           this.onErrorNotification('Không thể chuyển đổi VND sang USDC. Vui lòng thử lại.');
-            this.spinner.hide(); // Ẩn spinner khi lỗi xảy ra
-            return;
+            this.onErrorNotification('Không thể chuyển đổi VND sang USDC. Vui lòng thử lại.');
+            this.spinner.hide(); // Ẩn spinner khi xảy ra lỗi
+            return Promise.reject('USDC conversion failed.');
           }
   
           this.roundedUSDCAmount = parseFloat(usdcAmount.toFixed(6));
           if (isNaN(this.roundedUSDCAmount) || this.roundedUSDCAmount <= 0) {
             this.onErrorNotification('Invalid USDC amount. Please try again.');
-            this.spinner.hide(); // Ẩn spinner khi lỗi xảy ra
-            return;
+            this.spinner.hide(); // Ẩn spinner khi xảy ra lỗi
+            return Promise.reject('Invalid USDC amount.');
           }
   
-          // Gọi hàm makePayment sau khi kết nối ví thành công
           return this.walletService.makePayment(this.roundedUSDCAmount.toString());
         })
         .then((txHash) => {
-          if (txHash && typeof txHash === 'string') {
-            orderData.transactionCode = txHash;
-            orderData.totalPriceMethod = this.roundedUSDCAmount.toString();
-          } else {
+          if (!txHash || typeof txHash !== 'string') {
             this.onErrorNotification('Invalid transaction hash. Please try again.');
             this.spinner.hide(); 
             return;
           }
   
+          orderData.transactionCode = txHash;
+          orderData.totalPriceMethod = this.roundedUSDCAmount.toString();
+  
           this.orderService.createOrder(orderData).subscribe({
             next: (response: any) => {
-              if (response.responseCode != 200) {
-                this.onErrorNotification('❌ Đơn hàng không thành công:' + response.Message);
-                this.spinner.hide();
+              if (response.responseCode !== 200) {
+                this.onErrorNotification('❌ Đơn hàng không thành công: ' + response.Message);
+                this.spinner.hide(); 
                 return;
               }
   
@@ -1012,21 +1019,21 @@ export class PurchaseComponent implements OnInit, OnDestroy {
               }));
               this.seatService.payment(seatsToUpdate);
               this.onSuccessNotification('Đơn hàng đã được tạo thành công!');
-              this.spinner.hide(); // Ẩn spinner khi thành công
-              this.disconnect()
+              this.spinner.hide();
+              this.disconnect();
               this.router.navigate(['/']);
             },
             error: (error) => {
               console.error('Error creating order:', error);
               this.onErrorNotification('❌ Lỗi khi tạo đơn hàng.');
-              this.spinner.hide(); // Ẩn spinner khi lỗi xảy ra
+              this.spinner.hide(); // Ẩn spinner khi xảy ra lỗi
             }
           });
         })
         .catch((error) => {
           console.error('Error during wallet payment:', error);
           this.onErrorNotification('An error occurred during the payment process. Please try again.');
-          this.spinner.hide(); // Ẩn spinner khi lỗi xảy ra
+          this.spinner.hide(); // Ẩn spinner khi xảy ra lỗi
         });
     }
   }

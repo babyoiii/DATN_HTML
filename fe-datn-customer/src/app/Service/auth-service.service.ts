@@ -180,4 +180,11 @@ export class AuthServiceService {
     const payload = { email };
     return this.http.post<any>(`${this.baseUrl}/Auth/ReSendOpt`, payload);
   }
+  ForgotPassword(email: string): Observable<any> {
+    const payload = { email };
+    return this.http.post<any>(`${this.baseUrl}/Auth/ForgotPassword`, payload);
+  }
+  ResetPassword(data: { email: string; token: string; newPassword: string }): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/Auth/ResetPassword`, data);
+  }
 }

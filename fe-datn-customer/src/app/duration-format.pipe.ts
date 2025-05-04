@@ -12,9 +12,9 @@ export class DurationFormatPipe implements PipeTransform {
     const mins = minutes % 60;
     
     if (hours === 0) {
-      return `${mins} MIN`;
+      return `${mins} Phút`;
     }
     
-    return `${hours} HR ${mins > 0 ? `${mins} MIN` : ''}`;
+    return `${hours} Giờ ${mins > 0 ? `${mins} Phút` : ''}`;
   }
 }

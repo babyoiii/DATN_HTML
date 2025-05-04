@@ -53,35 +53,24 @@
                               </div>
                             </div>
                     </div>
-                </header><label class="flex items-center gap-4"><span
-                        class="inline-block pt-2 text-xs uppercase text-gray-200">Lọc theo</span>
-                    <div
-                        class="relative flex w-max items-center justify-between gap-2 transition-all duration-200 focus-within:text-blue-500 hover:text-blue-500 mt-2 w-max">
-                        <select
-                            class="absolute inset-0 w-full cursor-pointer appearance-none bg-transparent text-base text-transparent [&amp;>option[disabled]]:text-gray-200 [&amp;>option]:text-black"
-                            name="secondaryFilter">
-                            <option value="">Các Đề Nghị Cao Cấp</option>
-                            <option value="prvtrntall">Phim 2D</option>
-                            <option value="imax3d">IMAX3D</option>
-                            <option value="imax">IMAX at CineX</option>
-                            <option value="dolbycinemaatamcprime">Dolby Cinema at CineX</option>
-                            <option value="dolby3d">Dolby Cinema 3D</option>
-                            <option value="amcprime">PRIME at CineX</option>
-                            <option value="prime3d">PRIME 3D</option>
-                         
-                            <option value="closedcaption">Closed Caption</option>
-                        </select><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45"
-                            width="1em" height="100%">
-                            <path
-                                d="M23.495 29.21V1.57a.995.995 0 1 0-1.99 0v27.64a5.528 5.528 0 0 0 0 11.057v3.51a.995.995 0 0 0 1.99 0V40.24a5.528 5.528 0 0 0 0-11.029zm-.995 9.122a3.593 3.593 0 1 1 3.593-3.593 3.593 3.593 0 0 1-3.593 3.593zm16.972-33.28V1.514a.995.995 0 1 0-1.99 0v3.538a5.528 5.528 0 0 0 0 11.057v27.64a.995.995 0 0 0 1.99 0V16.11a5.528 5.528 0 0 0 0-11.057zm-.995 9.094a3.593 3.593 0 1 1 3.593-3.593 3.593 3.593 0 0 1-3.593 3.593zM7.518 17.822V1.514a.995.995 0 1 0-1.99 0v16.308a5.528 5.528 0 0 0 0 11.057v14.926a.995.995 0 0 0 1.99 0V28.879a5.528 5.528 0 0 0 0-11.057zm-.995 9.094a3.593 3.593 0 1 1 3.594-3.593 3.593 3.593 0 0 1-3.594 3.593z">
-                            </path>
-                        </svg><span class="line-clamp-2 text-ellipsis text-center">Các Đề Nghị Cao Cấp</span><svg
-                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em"
-                            height="100%" class="text-[0.7em]">
-                            <path
-                                d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z">
-                            </path>
-                        </svg></div>
+                </header>
+                <label class="flex items-center gap-4">
+                  <span class="inline-block pt-2 text-xs uppercase text-gray-200">Lọc theo</span>
+                  <div class="relative flex w-max items-center justify-between gap-2 transition-all duration-200 focus-within:text-blue-500 hover:text-blue-500 mt-2">
+                    <select
+                      class="appearance-none bg-black text-base text-white font-semibold cursor-pointer border border-gray-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+                      name="secondaryFilter"
+                      id="secondaryFilter"
+                      (change)="handleFilterChange($event)">
+                      <option value="" class="text-gray-400">Tất Cả</option>
+                      <option *ngFor="let item of getMovieType;" [value]="item.formatId" class="text-white font-medium hover:text-blue-500">
+                        {{ item.name }}
+                      </option>
+                    </select>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 45 45" width="1em" height="1em" class="ml-2">
+                      <path d="M22.464 29.594 3.067 10.48c-.856-.57-2.283-.285-2.853.856-.285.57-.285 1.141 0 1.997l20.824 20.824c.856.856 1.997.856 2.853 0L44.715 13.62c.57-.856.285-2.282-.856-2.852-.57-.286-1.426-.286-1.997 0z"></path>
+                    </svg>
+                  </div>
                 </label>
                 <div data-state="active" data-orientation="horizontal" role="tabpanel"
                     aria-labelledby="radix-:r3u:-trigger-now-playing" id="radix-:r3u:-content-now-playing" tabindex="0"
@@ -90,7 +79,7 @@
                         @for (item of dataMovies; track $index) {
                             <div  class="flex flex-col gap-2" role="group">
                                 <h2 class="sr-only">{{item.movieName}}</h2><a class="w-full" tabindex="-1"
-                                    href="/movies/captain-america-brave-new-world-67472"><img
+                                    href="/movies/{{item.id}}"><img
                                         alt="Captain America: Brave New World" config="[object Object]" fetchpriority="high"
                                         width="272" height="408" decoding="async" data-nimg="1"
                                         class="aspect-[2/3] w-full object-cover"

@@ -103,7 +103,6 @@ export class SeatsComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.seatService.resetCountdown();
     this.subscription = this.authServiceService.isLoggedIn$.subscribe(status => {
       this.isLoggedIn = status;
       console.log('Login status from BehaviorSubject:', status);
@@ -644,64 +643,76 @@ export class SeatsComponent implements OnInit, OnDestroy {
       this.notificationService.onWarningNotification('Vui lòng chọn ít nhất một ghế!');
       return false;
     }
- // Nếu chỉ chọn 1 ghế, cho phép đặt lẻ
-  if (this.selectedSeats.length === 1) {
-    return true;
-  }
-    // Tìm tất cả các ghế lẻ trong tất cả các hàng
+  
+    if (this.selectedSeats.length === 1) {
+      return true;
+    }
+  
     const allIsolatedSeats: SeatInfo[] = [];
-
+  
     // Nhóm ghế theo hàng
     const groupedSeats = this.groupSeatsByRow();
-
+  
     // Kiểm tra từng hàng
     for (const rowNumber in groupedSeats) {
       const rowSeats = groupedSeats[rowNumber];
       const isolatedSeatsInRow = this.findIsolatedSeatsInRow(rowSeats);
       allIsolatedSeats.push(...isolatedSeatsInRow);
     }
-
-    // Nếu có ghế lẻ, hiển thị thông báo lỗi
-    if (allIsolatedSeats.length > 0) {
+  
+    // Lọc bỏ các ghế lẻ thuộc ghế đôi mà ghế đối ứng không được chọn
+    const filteredIsolatedSeats = allIsolatedSeats.filter(seat => {
+      const pairedSeat = this.findPairedSeat(seat);
+  
+      // Nếu ghế lẻ thuộc ghế đôi và ghế đối ứng không được chọn, bỏ qua
+      if (pairedSeat && pairedSeat.PairId && pairedSeat.Status !== SeatStatus.Selected) {
+        return false;
+      }
+  
+      return !(pairedSeat && pairedSeat.Status === SeatStatus.Selected);
+    });
+  
+    // Nếu vẫn còn ghế lẻ, hiển thị thông báo lỗi
+    if (filteredIsolatedSeats.length > 0) {
       // Nhóm các ghế lẻ theo hàng để hiển thị thông báo gọn hơn
       const isolatedByRow: { [key: string]: string[] } = {};
-
-      allIsolatedSeats.forEach(seat => {
+  
+      filteredIsolatedSeats.forEach(seat => {
         const rowLabel = this.getRowLabel(seat.RowNumber);
         if (!isolatedByRow[rowLabel]) {
           isolatedByRow[rowLabel] = [];
         }
         isolatedByRow[rowLabel].push(seat.ColNumber.toString());
       });
-
+  
       // Tạo thông báo lỗi
       let errorMessage = 'Không thể để lẻ ghế ở các vị trí sau: ';
-
+  
       // Tạo danh sách các hàng ghế có vấn đề
       const rowEntries = Object.entries(isolatedByRow);
-
+  
       // Sắp xếp các hàng theo thứ tự alphabet
       rowEntries.sort((a, b) => a[0].localeCompare(b[0]));
-
+  
       // Tạo HTML cho thông báo
       rowEntries.forEach(([rowLabel, seatNumbers], index) => {
         // Sắp xếp số ghế theo thứ tự tăng dần
         const sortedSeatNumbers = [...seatNumbers].sort((a, b) => parseInt(a) - parseInt(b));
-
+  
         // Thêm mỗi hàng vào một dòng riêng
         errorMessage += `Hàng ${rowLabel} : ghế ${sortedSeatNumbers.join(', ')}`;
-
+  
         // Thêm dấu xuống dòng nếu không phải dòng cuối cùng
         if (index < rowEntries.length - 1) {
           errorMessage += '';
         }
       });
-
+  
       // Sử dụng enableHtml: true để hiển thị HTML trong toast
       this.notificationService.onErrorNotification(errorMessage);
       return false;
     }
-
+  
     return true;
   }
 

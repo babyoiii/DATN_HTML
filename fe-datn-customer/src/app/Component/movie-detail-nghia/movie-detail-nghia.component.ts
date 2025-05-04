@@ -64,7 +64,6 @@ export class MovieDetailNghiaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Kiểm tra trạng thái đăng nhập từ AuthService
     this.isLoggedIn = this.authService.isLoggedIn();
 
     // Đăng ký theo dõi trạng thái đăng nhập

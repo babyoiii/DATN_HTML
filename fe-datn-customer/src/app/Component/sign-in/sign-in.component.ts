@@ -80,7 +80,11 @@ export class SignInComponent {
       }
     });
   }
-
+  
+  forgotPassword(): void {
+    this.router.navigate(['/sendMailForgotPassword']);
+    this.modalService.closeSignInModal();
+  }
   closeModal(): void {
     this.modalService.closeSignInModal();
   }
