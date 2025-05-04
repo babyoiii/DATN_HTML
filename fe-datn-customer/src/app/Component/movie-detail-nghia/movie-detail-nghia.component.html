@@ -407,13 +407,13 @@
 
             <div *ngIf="!isLoggedIn" class="mt-8 bg-gray-800 rounded-lg p-4 text-center">
               <p class="text-gray-300 mb-2">Bạn cần đăng nhập để bình luận</p>
-              <a routerLink="/login"
+              <button (click)="openSignInModal()"
                 class="px-6 py-2 bg-pink-600 hover:bg-pink-700 transition duration-300 rounded-lg text-white font-semibold inline-block">
                 Đăng nhập
-              </a>
+              </button>
 
               <!-- Debug info -->
-              <div class="mt-4 text-left text-xs text-gray-400 border-t border-gray-700 pt-4">
+              <!-- <div class="mt-4 text-left text-xs text-gray-400 border-t border-gray-700 pt-4">
                 <p>Debug: Trạng thái đăng nhập</p>
                 <ul class="list-disc pl-5 mt-2">
                   <li>isLoggedIn: {{ isLoggedIn }}</li>
@@ -430,7 +430,11 @@
                     Giả lập đăng nhập
                   </button>
                 </div>
-              </div>
+              </div> -->
+
+
+
+
             </div>
           </section>
 

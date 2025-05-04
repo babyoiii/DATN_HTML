@@ -8,6 +8,7 @@ import { RelativeTimePipe } from '../../datetime.pipe'; // Add this import
 import { CommentService, Comment } from '../../Service/comment.service';
 import { RatingService } from '../../Service/rating.service';
 import { AuthServiceService } from '../../Service/auth-service.service';
+import { ModalService } from '../../Service/modal.service';
 import { catchError, finalize, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { GetMovieLandingRes } from '../../Models/MovieModel';
@@ -60,7 +61,8 @@ export class MovieDetailNghiaComponent implements OnInit {
     private commentService: CommentService,
     private ratingService: RatingService,
     private authService: AuthServiceService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private modalService: ModalService
   ) { }
 
   ngOnInit(): void {
@@ -488,5 +490,10 @@ export class MovieDetailNghiaComponent implements OnInit {
 
     // Thông báo cho người dùng
     alert('Đã giả lập đăng nhập thành công. Bây giờ bạn có thể thử bình luận và đánh giá.');
+  }
+
+  // Mở modal đăng nhập
+  openSignInModal(): void {
+    this.modalService.openSignInModal();
   }
 }
