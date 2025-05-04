@@ -6370,16 +6370,16 @@ body {
 .space-y-4 > * + * {
     margin-top: 1rem; /* 1rem = 16px */
   }
-  
+
   /* Nếu muốn thêm các kích thước khác */
   .space-y-6 > * + * {
     margin-top: 1.5rem; /* 1.5rem = 24px */
   }
-  
+
   .space-y-8 > * + * {
     margin-top: 2rem; /* 2rem = 32px */
   }
-  
+
   .space-y-10 > * + * {
     margin-top: 2.5rem; /* 2.5rem = 40px */
   }
@@ -6392,12 +6392,12 @@ body {
     font-family: 'Arial', sans-serif !important; /* Font chữ */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important; /* Đổ bóng */
   }
-  
+
   .custom-toast .toast-title {
     font-weight: bold !important;
     font-size: 16px !important;
   }
-  
+
   .custom-toast .toast-message {
     font-size: 14px !important;
     line-height: 1.5 !important;
@@ -6412,8 +6412,17 @@ body {
     background-color: rgb(27, 228, 71) !important;
 }
 
-
 .swal2-cancel{
     background-color: red !important;
+}
 
+/* Đảm bảo SweetAlert2 hiển thị trên cùng */
+.swal2-container {
+    z-index: 9999999 !important; /* Z-index rất cao để đảm bảo hiển thị trên tất cả các phần tử khác */
+    position: fixed !important;
+}
+
+.swal2-popup {
+    position: relative !important;
+    z-index: 9999999 !important;
 }

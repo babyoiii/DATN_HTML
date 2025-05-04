@@ -16,7 +16,7 @@ interface SignInData {
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [FormsModule, CommonModule,NgxSpinnerModule],
+  imports: [FormsModule, CommonModule, NgxSpinnerModule],
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css']
 })
@@ -31,13 +31,13 @@ export class SignInComponent {
     this.showPassword = !this.showPassword;
   }
   constructor(
-    private authService: AuthServiceService, 
+    private authService: AuthServiceService,
     private router: Router,
     public modalService: ModalService,
     private toast: ToastrService,
     private spinner: NgxSpinnerService,
     private notificationService: NotificationService
-  ) {}
+  ) { }
 
   onSubmit(): void {
     // Hiển thị thông báo loading không có thời gian timeout
@@ -46,11 +46,11 @@ export class SignInComponent {
       tapToDismiss: false,
       closeButton: false
     });
-  this.spinner.show(); // Hiển thị spinner
+    this.spinner.show(); // Hiển thị spinner
     this.authService.SignIn(this.SignInData).subscribe({
       next: (result: any) => {
         if (result.responseCode !== 200) {
-          this.spinner.hide(); 
+          this.spinner.hide();
           this.toast.clear(loadingToast.toastId);
           this.notificationService.onErrorNotification(`${result.message}`);
           return;
@@ -64,11 +64,11 @@ export class SignInComponent {
           console.log('Refresh Token:', refreshToken);
           console.log('Roles:', roles);
 
-          this.notificationService.onSuccessNotification('Đăng nhập thành công!');
-          this.authService.saveToken(accessToken);
-          this.authService.saveUserData(result);
-          this.modalService.closeSignInModal();
-          this.spinner.hide(); // Ẩn spinner
+            this.notificationService.onSuccessNotification('Đăng nhập thành công!');
+            this.authService.saveToken(accessToken);
+            this.authService.saveUserData(result);
+            this.modalService.closeSignInModal();
+            this.spinner.hide(); // Ẩn spinner
           const redirectUrl = localStorage.getItem('redirectUrl') || '/';
           localStorage.removeItem('redirectUrl');
           this.router.navigate([redirectUrl]);
@@ -86,7 +86,7 @@ export class SignInComponent {
       }
     });
   }
-  
+
   forgotPassword(): void {
     this.router.navigate(['/sendMailForgotPassword']);
     this.modalService.closeSignInModal();
