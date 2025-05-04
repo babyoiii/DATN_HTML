@@ -1,0 +1,148 @@
+.fcpjk-container {
+    width: 100%
+}
+
+@media (min-width:640px) {
+    .fcpjk-container {
+        max-width: 640px
+    }
+}
+
+@media (min-width:768px) {
+    .fcpjk-container {
+        max-width: 768px
+    }
+}
+
+@media (min-width:1024px) {
+    .fcpjk-container {
+        max-width: 1024px
+    }
+}
+
+@media (min-width:1152px) {
+    .fcpjk-container {
+        max-width: 1152px
+    }
+}
+
+@media (min-width:1280px) {
+    .fcpjk-container {
+        max-width: 1280px
+    }
+}
+
+@media (min-width:1536px) {
+    .fcpjk-container {
+        max-width: 1536px
+    }
+}
+
+.fcpjk-collapse {
+    visibility: collapse
+}
+
+.fcpjk-inline {
+    display: inline
+}
+
+.fcpjk-table {
+    display: table
+}
+
+.fcpjk-hidden {
+    display: none
+}
+
+.fcpjk-border-collapse {
+    border-collapse: collapse
+}
+
+.fcpjk-border {
+    border-width: 1px
+}
+
+.fcpjk-filter {
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)
+}
+
+.fcpjk-copy {
+    font-weight: 400;
+    line-height: 1.75;
+    letter-spacing: 0
+}
+
+@media (min-width:768px) {
+    .fcpjk-md\:flex {
+        display: flex
+    }
+
+    .fcpjk-md\:hidden {
+        display: none
+    }
+}
+
+.terms {
+    color: #C5CFD3;
+    font-weight: 400;
+    line-height: 1.75;
+}
+
+.terms h1,
+.terms h2,
+.terms h3,
+.terms h4,
+.terms strong,
+.terms th {
+    color: white;
+}
+
+.terms h1 {
+    font-weight: 900;
+    font-size: var(--font-size-800);
+}
+
+.terms h2,
+.terms h3,
+.terms h4,
+.terms strong,
+.terms th {
+    font-weight: 700;
+}
+
+.terms h2 {
+    font-size: var(--font-size-600);
+}
+
+.terms h1,
+.terms h2,
+.terms h3,
+.terms h4,
+.terms p,
+.terms li {
+    margin-top: 1em;
+}
+
+.terms .intro {
+    border: 1px solid white;
+    padding: 0.5rem;
+}
+
+.terms td,
+.terms th {
+    text-align: left;
+    border-style: solid;
+    border-width: 1px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    overflow: hidden;
+    padding: 1em;
+    word-break: normal;
+}
+
+.terms ol,
+.terms ul {
+    list-style: revert;
+    margin: revert;
+    padding: revert;
+}
