@@ -26,6 +26,12 @@
                                      class="w-full h-full object-contain mix-blend-multiply"
                                      style="filter: brightness(0.9) contrast(1.2);">
                               </div>
+                              <div *ngIf="item.status == 0" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-[-20deg] w-48 h-48 pointer-events-none mix-blend-multiply opacity-90">
+                                <img src="https://as1.ftcdn.net/v2/jpg/05/51/11/96/1000_F_551119610_1fI3s4HXW1fG3SDZgyZO6IisH8PoQZFJ.webp" 
+                                     alt="Expired Stamp" 
+                                     class="w-full h-full object-contain mix-blend-multiply"
+                                     style="filter: brightness(0.9) contrast(1.2);">
+                              </div>
                               <div class="flex p-4 bg-opacity-30 bg-black">
                                 <img [src]="item.thumbnail" alt="Movie Poster" class="w-[100px] h-[150px] object-cover rounded mr-4">
                                 <div class="flex-1">

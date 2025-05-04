@@ -128,7 +128,6 @@ export class HistoryComponent implements OnInit {
   isRefundDisabled(status: number): boolean {
     return status !== 1;
   }
-
   onRefundOrder(orderId: string): void {
     if (!orderId) {
       console.error('Order ID không hợp lệ!');
