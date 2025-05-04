@@ -1,24 +1,32 @@
-<ngx-spinner type="ball-scale-multiple" size="medium" color="#4A90E2">
+<ngx-spinner type="ball-scale-multiple" size="medium" color="#CE0E2D">
     <div class="spinner-container">
-      <p class="wave-text text-lg font-semibold text-blue-600 animate-pulse">
+      <p class="wave-text text-lg font-semibold text-red-500 animate-pulse">
         Đang tải, vui lòng chờ...
       </p>
     </div>
-  </ngx-spinner>
-<div class="min-h-screen flex items-center justify-center bg-gray-100">
-    <div class="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 class="text-2xl font-bold mb-6 text-center">Xác Thực OTP</h2>
+</ngx-spinner>
+
+<div class="min-h-screen flex items-center justify-center bg-gray-800">
+    <div class="bg-gray-700 p-8 rounded-lg shadow-lg w-96 border border-gray-600">
+        <!-- Thêm logo Cinex phía trên tiêu đề -->
+        <div class="flex justify-center mb-4">
+            <img src="https://res.cloudinary.com/dw44ghjmu/image/upload/v1745400720/cinexLogo_w6wqyi.png" 
+                 alt="Cinex Logo" 
+                 class="cinex-logo h-24 object-contain">
+        </div>
+        
+        <h2 class="text-3xl font-bold mb-6 text-center text-red-500 drop-shadow-md">Xác Thực OTP</h2>
         
         <div class="mb-4">
-            <label for="otp" class="block text-sm font-medium text-gray-700 mb-2">Nhập Mã OTP</label>
+            <label for="otp" class="block text-sm font-medium text-gray-200 mb-2">Nhập Mã OTP</label>
             <div class="flex justify-center space-x-2">
-                <input #otpInput type="text" maxlength="1" class="w-12 h-12 text-center text-xl border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                <input #otpInput type="text" maxlength="1" class="w-12 h-12 text-center text-xl border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                <input #otpInput type="text" maxlength="1" class="w-12 h-12 text-center text-xl border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                <input #otpInput type="text" maxlength="1" class="w-12 h-12 text-center text-xl border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                <input #otpInput type="text" maxlength="1" class="w-12 h-12 text-center text-xl border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                <input #otpInput type="text" maxlength="1" class="w-12 h-12 text-center text-xl border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              </div>
+                <input #otpInput type="text" maxlength="1" class="w-12 h-12 text-center text-xl border border-gray-500 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+                <input #otpInput type="text" maxlength="1" class="w-12 h-12 text-center text-xl border border-gray-500 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+                <input #otpInput type="text" maxlength="1" class="w-12 h-12 text-center text-xl border border-gray-500 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+                <input #otpInput type="text" maxlength="1" class="w-12 h-12 text-center text-xl border border-gray-500 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+                <input #otpInput type="text" maxlength="1" class="w-12 h-12 text-center text-xl border border-gray-500 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+                <input #otpInput type="text" maxlength="1" class="w-12 h-12 text-center text-xl border border-gray-500 bg-gray-800 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" />
+            </div>
         </div>
 
         <div id="error" class="text-red-500 text-sm mb-4 text-center hidden">
@@ -27,18 +35,18 @@
 
         <button 
         (click)="verifyOTP()"
-        class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
-    >
-        Xác Thực
-    </button>
+        class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition duration-300"
+        >
+            Xác Thực
+        </button>
 
-        <div class="text-center mt-4 text-sm text-gray-600">
+        <div class="text-center mt-4 text-sm text-gray-200">
             Không nhận được mã? <button 
             (click)="resendOtp()" 
-            class="text-blue-500 hover:underline bg-transparent border-none cursor-pointer"
-        >
-            Gửi lại
-        </button>
+            class="text-blue-500 hover:text-blue hover:underline bg-transparent border-none cursor-pointer"
+            >
+                Gửi lại
+            </button>
         </div>
     </div>
 </div>

@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-tro-giup',
+  selector: 'app-dieukhoan',
   standalone: true,
   imports: [RouterLink],
-  templateUrl: './tro-giup.component.html',
-  styleUrl: './tro-giup.component.css'
+  templateUrl: './dieukhoan.component.html',
+  styleUrl: './dieukhoan.component.css'
 })
-export class TroGiupComponent {
+export class DieukhoanComponent {
 
 }

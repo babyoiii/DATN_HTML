@@ -33,6 +33,8 @@ import { VerifyOptComponent } from './Component/verify-opt/verify-opt.component'
 import { TroGiupComponent } from './Component/tro-giup/tro-giup.component';
 import { SendMailForgotPasswordComponent } from './Component/send-mail-forgot-password/send-mail-forgot-password.component';
 import { ResetPasswordComponent } from './Component/reset-password/reset-password.component';
+import { DieukhoanComponent } from './Component/tro-giup/dieukhoan/dieukhoan.component';
+import { TheThanhVienComponent } from './Component/tro-giup/the-thanh-vien/the-thanh-vien.component';
 
 export const routes: Routes = [
     {
@@ -47,6 +49,8 @@ export const routes: Routes = [
             { path: 'on-demand', component: OnDemandComponent },
             { path: 'movies/:id', component: MovieDetailNghiaComponent},
             { path: 'help', component: TroGiupComponent},
+            { path: 'dieukhoan-dieukien', component: DieukhoanComponent},
+            { path: 'thethanhvien', component: TheThanhVienComponent},
             {
                 path: 'my-cinex', component: MyCinexComponent, children: [
                     { path: '', component: BenefitsComponent },
