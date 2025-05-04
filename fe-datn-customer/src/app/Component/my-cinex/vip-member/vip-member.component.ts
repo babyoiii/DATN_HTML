@@ -10,7 +10,12 @@ import { WalletOnboardService } from '../../../Service/wallet.servive';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { FormsModule } from '@angular/forms';
 import { NotificationService } from '../../../Service/notification.service';
+import Swal from 'sweetalert2';
 
+export interface MembershipModel {
+  price: number;
+  name: string;  
+}
 @Component({
   selector: 'app-vip-member',
   standalone: true,
@@ -19,11 +24,14 @@ import { NotificationService } from '../../../Service/notification.service';
   styleUrl: './vip-member.component.css'
 })
 export class VipMemberComponent implements OnInit {
+  membershipModel: MembershipModel = {
+    price: 0,
+    name: ''
+  }
   listPaymentMethod: PaymentMethod[] = [];
   email: string = '';
   usdcPriceUSD: number | null = null; // Giá USDC theo USD
   usdcPriceVND: number | null = null; // Giá USDC theo VND
-  totalAmount: number = 0; // Tổng số tiền (VND)
   membershipId: number = 0; // ID thẻ thành viên
   selectedPaymentId: string = ''; // ID phương thức thanh toán
   selectedPaymentMethod: string | null = null; // Tên phương thức thanh toán
@@ -45,14 +53,23 @@ export class VipMemberComponent implements OnInit {
     this.fetchUSDCPriceUSD();
     this.fetchUSDCPriceVND();
     this.email = localStorage.getItem('email') || '';
-    this.totalAmount = Number(localStorage.getItem('membershipPriceNext')) || 0;
     this.membershipId = Number(localStorage.getItem('nextLevelBenefitsId')) || 0;
     this.membershipName = localStorage.getItem('membershipNameNext') || '';
+    this.getMembershipDetails(this.membershipId)
     this.getPaymentMethod();
     console.log(this.email, 'email');
-    console.log(this.totalAmount, 'totalAmount');
   }
-
+  getMembershipDetails(membershipId:number): void {
+    this.membershipService.getMembershipDetails(membershipId).subscribe({
+      next: (response) => {
+        this.membershipModel = response.data;
+        console.log('Membership Details:', this.membershipModel);
+      },
+      error: (error) => {
+        console.error('Error fetching membership details:', error);
+      }
+    });
+  }
   getPaymentMethod(): void {
     this.orderService.getPaymentMethod().subscribe({
       next: (res: any) => {
@@ -70,7 +87,7 @@ export class VipMemberComponent implements OnInit {
     this.selectedPaymentMethod = this.listPaymentMethod.find(item => item.id === method)?.paymentMethodName || null;
 
     if (this.selectedPaymentMethod === 'MULTI-WALLET') {
-      const usdcAmount = this.convertVNDToUSDC(this.totalAmount);
+      const usdcAmount = this.convertVNDToUSDC(this.membershipModel.price);
       if (usdcAmount !== null) {
         this.roundedUSDCAmount = parseFloat(usdcAmount.toFixed(6)); // Làm tròn đến 6 chữ số thập phân
         console.log('Total Amount in USDC:', this.roundedUSDCAmount);
@@ -79,7 +96,29 @@ export class VipMemberComponent implements OnInit {
       this.roundedUSDCAmount = 0; // Đặt lại giá trị nếu không phải MULTI-WALLET
     }
   }
-
+onConfirmNotification(
+    message: string,
+    title: string = 'Xác nhận',
+    confirmButtonText: string = 'Yes',
+    cancelButtonText: string = 'No'
+  ): Promise<boolean> {
+    return Swal.fire({
+      title: title,
+      text: message,
+      icon: 'question', 
+      showCancelButton: true, 
+      confirmButtonText: confirmButtonText,
+      cancelButtonText: cancelButtonText,
+      confirmButtonColor: '#3085d6', 
+      cancelButtonColor: '#d33', 
+      background: '#f9f9f9',
+      customClass: {
+        popup: 'swal2-popup-custom',
+      },
+    }).then((result) => {
+      return result.isConfirmed; 
+    });
+  }
   addMembership(): void {
     if (this.selectedPaymentId === '') {
       this.notificationService.onErrorNotification('Vui lòng chọn phương thức thanh toán:');
@@ -89,18 +128,31 @@ export class VipMemberComponent implements OnInit {
       this.notificationService.onErrorNotification('Bạn phải đồng ý với điều khoản trước khi thanh toán.');
       return;
     }
-    console.log(this.selectedPaymentId, 'selectedPaymentId');
-    if (this.selectedPaymentMethod === 'VNPAY') {
-      this.handleVNPayPayment();
-    } else if (this.selectedPaymentMethod === 'MULTI-WALLET') {
-      this.handleMultiWalletPayment();
-    }
+  
+    // Hiển thị hộp thoại xác nhận
+    this.onConfirmNotification(
+      'Bạn có chắc chắn muốn thực hiện thanh toán?',
+      'Xác nhận thanh toán',
+      'Đồng ý',
+      'Hủy'
+    ).then((isConfirmed) => {
+      if (isConfirmed) {
+        console.log(this.selectedPaymentId, 'selectedPaymentId');
+        if (this.selectedPaymentMethod === 'VNPAY') {
+          this.handleVNPayPayment();
+        } else if (this.selectedPaymentMethod === 'MULTI-WALLET') {
+          this.handleMultiWalletPayment();
+        }
+      } else {
+        this.notificationService.onErrorNotification('Thanh toán đã bị hủy.');
+      }
+    });
   }
 
   private handleVNPayPayment(): void {
     this.spinner.show();
     const paymentData: PaymentModelReq = {
-      amount: Math.round(this.totalAmount),
+      amount: Math.round(this.membershipModel.price),
       orderDesc: 'Thanh toán đơn hàng',
       createdDate: new Date().toISOString(),
       status: 'Pending',

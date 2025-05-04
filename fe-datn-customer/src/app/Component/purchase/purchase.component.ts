@@ -839,7 +839,8 @@ export class PurchaseComponent implements OnInit, OnDestroy {
       return;
     }
   
-    this.spinner.show(); // Hiển thị spinner khi bắt đầu xử lý
+    console.log('Hiển thị spinner...');
+    this.spinner.show(); // Hiển thị spinner
     orderData.transactionCode = transactionCode;
   
     this.orderService.createOrder(orderData).subscribe({
@@ -861,6 +862,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
         localStorage.removeItem('selectedSeats');
         localStorage.removeItem('orderData');
         localStorage.removeItem('orderDataPayment');
+        console.log('Ẩn spinner...');
         this.spinner.hide(); // Ẩn spinner khi hoàn tất
         this.router.navigate(['/']);
       },
@@ -929,7 +931,7 @@ export class PurchaseComponent implements OnInit, OnDestroy {
               if (event.data.type === 'PAYMENT_SUCCESS') {
                 paymentSuccess = true;
                 this.handleSuccessfulPayment(event.data.transactionCode, orderData);
-                this.onSuccessNotification('✅ Thanh toán thành công!');
+                this.onSuccessNotification('Thanh toán thành công!');
               } else if (event.data.type === 'PAYMENT_FAILED') {
                 this.onErrorNotification('❌ Thanh toán thất bại.');
               }

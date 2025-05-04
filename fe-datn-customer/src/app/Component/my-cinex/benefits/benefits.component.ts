@@ -4,6 +4,7 @@ import { MembershipData } from '../../../Models/Membership';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { log } from 'node:console';
 
 @Component({
   selector: 'app-benefits',
@@ -38,25 +39,24 @@ export class BenefitsComponent implements OnInit {
     this.membershipService.getMembershipByUserRes().subscribe({
       next: (response) => {
         this.membershipData = response.data;
+        console.log(response.data, 'Membership Data List');
   
-        // Lưu giá trị membershipPriceNext
-        localStorage.setItem(
-          'membershipPriceNext',
-          JSON.stringify(this.membershipData.userMembershipDetails.membershipPriceNext)
-        );
+        const membershipPriceNext = this.membershipData.nextLevelBenefits[0]?.membershipPriceNext ?? 0; // Giá trị mặc định là 0
+        console.log(membershipPriceNext, 'Membership Price Next');
+        
+        localStorage.setItem('membershipPriceNext', JSON.stringify(membershipPriceNext));
   
-        // Lưu giá trị membershipId của cấp tiếp theo
         localStorage.setItem(
           'nextLevelBenefitsId',
           JSON.stringify(this.membershipData.nextLevelBenefits[0]?.membershipId)
         );
   
-        // Lưu giá trị membershipName của cấp tiếp theo
         localStorage.setItem(
           'membershipNameNext',
           JSON.stringify(this.membershipData.nextLevelBenefits[0]?.membershipName)
         );
-        this.membershipName  = this.membershipData.currentLevelBenefits[0]?.membershipName
+  
+        this.membershipName = this.membershipData.currentLevelBenefits[0]?.membershipName ?? '';
   
         console.log(this.membershipData.nextLevelBenefits[0]?.membershipName, 'MembershipNameNext');
       },
